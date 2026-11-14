@@ -1,0 +1,23 @@
+Worst case: the message really went out, then the brain died before saving that fact. ... ok
+test_cut_restart_restore_runs_each_step_once (tests.test_no_duplicates.NoDuplicateTests.test_cut_restart_restore_runs_each_step_once) ... ok
+test_finished_task_is_never_touched_again (tests.test_no_duplicates.NoDuplicateTests.test_finished_task_is_never_touched_again) ... ok
+test_restart_after_every_single_step (tests.test_no_duplicates.NoDuplicateTests.test_restart_after_every_single_step) ... ok
+test_failed_step_is_reported_and_blocks_dependents (tests.test_other.FailureTests.test_failed_step_is_reported_and_blocks_dependents) ... ok
+Runs the real demo: separate brain process, kill -9, restart, resume. ... ok
+test_host_and_brain_over_http (tests.test_other.HttpTests.test_host_and_brain_over_http) ... ok
+test_find_leads_plan (tests.test_other.PlannerTests.test_find_leads_plan) ... ok
+test_generic_plan_marks_online_and_sensitive (tests.test_other.PlannerTests.test_generic_plan_marks_online_and_sensitive) ... ok
+test_llama_planner_falls_back_when_no_server (tests.test_other.PlannerTests.test_llama_planner_falls_back_when_no_server) ... ok
+test_task_starts_only_at_its_time (tests.test_other.SchedulerTests.test_task_starts_only_at_its_time) ... ok
+test_approved_step_runs_once (tests.test_permissions.PermissionTests.test_approved_step_runs_once) ... ok
+test_decision_cannot_be_changed_afterwards (tests.test_permissions.PermissionTests.test_decision_cannot_be_changed_afterwards) ... ok
+test_pending_request_survives_restart (tests.test_permissions.PermissionTests.test_pending_request_survives_restart) ... ok
+test_rejected_step_never_runs (tests.test_permissions.PermissionTests.test_rejected_step_never_runs) ... ok
+test_sensitive_step_waits_for_host (tests.test_permissions.PermissionTests.test_sensitive_step_waits_for_host) ... ok
+test_connection_lost_in_the_middle_of_a_step (tests.test_resume.ResumeTests.test_connection_lost_in_the_middle_of_a_step) ... ok
+test_every_change_is_on_disk_immediately (tests.test_resume.ResumeTests.test_every_change_is_on_disk_immediately) ... ok
+test_offline_does_offline_steps_and_waits (tests.test_resume.ResumeTests.test_offline_does_offline_steps_and_waits) ... ok
+test_resume_from_step_9_after_restart (tests.test_resume.ResumeTests.test_resume_from_step_9_after_restart) ... ok
+test_retry_schedule (tests.test_resume.ResumeTests.test_retry_schedule) ... ok
+Ran 21 tests in 7.818s
+OK
