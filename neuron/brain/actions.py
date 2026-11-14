@@ -14,8 +14,9 @@ from .world import EXISTING_CONTACTS
 
 
 class Ctx:
-    def __init__(self, task, step, deps, world, artifacts):
+    def __init__(self, task, step, deps, world, artifacts, services=None):
         self.task, self.step, self.deps, self.world = task, step, deps, world
+        self.services = services or {}     # shared helpers tools may use: "llm", "sandbox", ...
         self.params = step["params"] or {}
         self.key = f"{task['id']}:{step['no']}"  # idempotency key
         self.dir = artifacts / task["id"]

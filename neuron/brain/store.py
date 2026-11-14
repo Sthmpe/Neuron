@@ -58,6 +58,17 @@ class Store:
         self.db.execute("PRAGMA journal_mode=WAL")
         self.db.execute("PRAGMA synchronous=FULL")
         self.db.executescript(SCHEMA)
+        self._migrate()
+
+    def _migrate(self):
+        """Add step-2 columns to a database created by v0.1."""
+        wanted = {"steps": [("reviewed", "INTEGER DEFAULT 0"), ("superseded", "INTEGER DEFAULT 0")],
+                  "tasks": [("revisions", "INTEGER DEFAULT 0"), ("note", "TEXT")]}
+        for table, cols in wanted.items():
+            have = {r["name"] for r in self.db.execute(f"PRAGMA table_info({table})").fetchall()}
+            for name, decl in cols:
+                if name not in have:
+                    self.db.execute(f"ALTER TABLE {table} ADD COLUMN {name} {decl}")
 
     @contextmanager
     def _tx(self):
@@ -175,6 +186,43 @@ class Store:
             self.db.execute("UPDATE executions SET outcome='interrupted', finished_at=? "
                             "WHERE outcome IS NULL", (self.clock(),))
             return [(r["task_id"], r["no"]) for r in rows]
+
+    def apply_review(self, task_id, no, decision, reason, new_steps=()):
+        """Record the planner's look at a finished step, in ONE transaction.
+
+        continue - nothing changes.
+        revise   - steps that have not run yet are dropped and `new_steps` are appended.
+                   If the reviewed step had failed it is marked superseded (another approach replaces it).
+        give_up  - steps that have not run yet are dropped; the task will end as failed.
+        """
+        with self._tx():
+            self.db.execute("UPDATE steps SET reviewed=1 WHERE task_id=? AND no=?", (task_id, no))
+            if decision == "continue":
+                self._ev(task_id, "review", f"reviewed step {no}: carry on - {reason}")
+                return
+            self.db.execute("DELETE FROM permissions WHERE task_id=? AND step_no IN (SELECT no FROM steps "
+                            "WHERE task_id=? AND status NOT IN ('done','failed','rejected','blocked','running'))",
+                            (task_id, task_id))
+            self.db.execute("DELETE FROM steps WHERE task_id=? AND status NOT IN "
+                            "('done','failed','rejected','blocked','running')", (task_id,))
+            if decision == "revise":
+                self.db.execute("UPDATE steps SET superseded=1 WHERE task_id=? AND no=? AND status='failed'",
+                                (task_id, no))
+                last = self.db.execute("SELECT MAX(no) AS m FROM steps WHERE task_id=?", (task_id,)).fetchone()["m"]
+                prev = None
+                for i, s in enumerate(new_steps, 1):
+                    self.db.execute(
+                        "INSERT INTO steps(task_id, no, title, action, params, needs_internet, sensitive, "
+                        "depends_on, status) VALUES(?,?,?,?,?,?,?,?,?)",
+                        (task_id, last + i, s.title, s.action, json.dumps(s.params), int(s.needs_internet),
+                         int(s.sensitive), json.dumps([prev] if prev else []), "pending"))
+                    prev = last + i
+                self.db.execute("UPDATE tasks SET revisions=revisions+1 WHERE id=?", (task_id,))
+                self._ev(task_id, "revision", f"plan revised after step {no}: {reason} "
+                         f"(new steps: {', '.join(s.action for s in new_steps)})")
+            else:
+                self.db.execute("UPDATE tasks SET note=? WHERE id=?", (reason, task_id))
+                self._ev(task_id, "revision", f"planner gave up after step {no}: {reason}")
 
     def executions(self, task_id):
         return self._q("SELECT * FROM executions WHERE task_id=? ORDER BY id", (task_id,))

@@ -17,15 +17,20 @@ import time
 import traceback
 from pathlib import Path
 
-from .actions import ACTIONS, Ctx
+from .actions import Ctx
 from .network import NetworkDown
+from .tools import ToolFailure, ToolResult, default_registry
 
 TERMINAL = ("done", "failed", "rejected", "blocked")
 
 
 class Engine:
     def __init__(self, store, planner, monitor, world, artifacts_dir, clock=time.time,
-                 step_delay=0.0, retry_base=1.0, retry_cap=30.0):
+                 step_delay=0.0, retry_base=1.0, retry_cap=30.0, tools=None, services=None,
+                 max_revisions=3):
+        self.tools = tools or default_registry()      # every capability is looked up here by name
+        self.services = services or {}                # shared helpers handed to tools (llm, sandbox ...)
+        self.max_revisions = max_revisions
         self.store, self.planner, self.monitor, self.world = store, planner, monitor, world
         self.artifacts = Path(artifacts_dir)
         self.clock, self.step_delay = clock, step_delay
@@ -34,7 +39,7 @@ class Engine:
     # ---- intake / restart ------------------------------------------------
     def submit(self, goal, start_at=None):
         plan = self.planner.plan(goal)
-        return self.store.create_task(goal, plan, self.planner.name, start_at)
+        return self.store.create_task(goal, plan, getattr(plan, "planner", self.planner.name), start_at)
 
     def recover(self):
         """Call once at start-up. Returns the steps that were cut off mid-run."""
@@ -51,8 +56,38 @@ class Engine:
                                     event=("schedule", "scheduled start time reached - starting"))
                 task = self.store.get_task(task["id"])
                 worked = True
+            if self._review(task):
+                worked = True
+                continue
             worked = self._advance(task, now) or worked
         return worked
+
+    # ---- reasoning loop: look at each finished step, maybe change the plan ----
+    def _review(self, task):
+        planner = self.planner
+        if not getattr(planner, "reflective", False) or not (task["planner"] or "").startswith(planner.name):
+            return False
+        tid = task["id"]
+        steps = self.store.steps(tid)
+        todo = [s for s in steps if s["status"] in ("done", "failed") and not s["reviewed"]]
+        if not todo:
+            return False
+        step = todo[0]
+        can_revise = (task["revisions"] or 0) < self.max_revisions
+        try:
+            decision, reason, new_steps = planner.review(task["goal"], steps, step, can_revise)
+        except Exception as e:
+            decision, reason, new_steps = "continue", f"review not possible ({type(e).__name__}: {e})", []
+        if decision == "revise":
+            tried = {(s["action"], json.dumps(s["params"], sort_keys=True)) for s in steps
+                     if s["status"] in ("done", "failed")}
+            repeats = [n for n in new_steps if (n.action, json.dumps(n.params, sort_keys=True)) in tried]
+            if not can_revise:
+                decision, reason = "continue", f"revision limit ({self.max_revisions}) reached; {reason}"
+            elif not new_steps or repeats:
+                decision, reason = "continue", f"revision refused: it only repeats what was already tried; {reason}"
+        self.store.apply_review(tid, step["no"], decision, reason, new_steps if decision == "revise" else ())
+        return True
 
     def _retry_delay(self, n):
         return min(self.retry_cap, self.retry_base * (2 ** min(n, 16)))
@@ -121,10 +156,16 @@ class Engine:
         tid = task["id"]
         steps = self.store.steps(tid)
         if all(s["status"] in TERMINAL for s in steps):
-            bad = [s["no"] for s in steps if s["status"] in ("failed", "blocked")]
-            self.store.set_task(tid, status="failed" if bad else "done", finished_at=now,
-                                event=("task", f"task finished with problems in steps {bad}" if bad
-                                       else "task finished: all steps accounted for"))
+            bad = [s["no"] for s in steps if s["status"] in ("failed", "blocked") and not s["superseded"]]
+            note = (self.store.get_task(tid) or {}).get("note")
+            if bad:
+                msg = f"task finished with problems in steps {bad}"
+            elif note:
+                msg = f"task NOT solved - the planner gave up: {note}"
+            else:
+                msg = "task finished: all steps accounted for"
+            self.store.set_task(tid, status="failed" if bad or note else "done", finished_at=now,
+                                event=("task", msg))
             return True
         net_wait = [s["no"] for s in steps if s["status"] == "waiting_network"]
         if net_wait and not online:
@@ -157,14 +198,24 @@ class Engine:
         attempt, exec_id = self.store.begin_execution(tid, no)
         started = self.clock()
         deps = {s["no"]: s["result"] for s in steps if s["no"] in step["depends_on"] and s["status"] == "done"}
-        ctx = Ctx(task, step, deps, self.world, self.artifacts)
+        ctx = Ctx(task, step, deps, self.world, self.artifacts, self.services)
         try:
             if self.step_delay:
                 time.sleep(self.step_delay)  # pretend the work takes time
-            result, summary, evidence = ACTIONS[step["action"]](ctx)
+            out = self.tools.get(step["action"]).run(ctx)
+            if not isinstance(out, ToolResult) or not out.evidence:
+                raise ToolFailure("the tool finished but gave no proof, so this is not counted as done")
+            result, summary, evidence = out.result, out.summary, out.evidence
         except NetworkDown as e:
             self.store.end_execution(exec_id, tid, no, "network_lost", detail=str(e), status="waiting_network",
                                      event=("step", f"step {no} lost the connection mid-step - waiting"))
+            return
+        except ToolFailure as e:
+            proof = {"summary": f"FAILED: {e.summary}", "evidence": e.evidence, "attempt": attempt,
+                     "started_at": started, "finished_at": self.clock()}
+            self.store.end_execution(exec_id, tid, no, "failed", detail=e.summary, status="failed",
+                                     error=e.summary, proof=proof,
+                                     event=("step", f"step {no} FAILED: {e.summary}"))
             return
         except Exception as e:
             proof = {"summary": f"FAILED: {type(e).__name__}: {e}", "attempt": attempt,
@@ -176,6 +227,8 @@ class Engine:
         proof = {
             "summary": summary,
             "evidence": evidence,
+            "verified": out.verified,
+            "verification": out.verification,
             "attempt": attempt,
             "idempotency_key": ctx.key,
             "network_during_step": "online" if self.monitor.last else "offline",
