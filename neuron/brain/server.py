@@ -11,6 +11,7 @@ API
   GET  /tasks/<id>/report     final report (JSON, plus a plain-text version)
   GET  /permissions?status=pending
   POST /permissions/<id>      {"decision": "approve" | "reject"}
+  GET  /tools                 every registered tool (name, description, inputs, needs internet, sensitive)
   GET  /network               state of the SIMULATED network switch
   POST /network               {"online": true|false}   (test switch, not a real network control)
 """
@@ -26,6 +27,9 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 from .engine import Engine
+from .llm import LlamaClient
+from .sandbox import Sandbox
+from .tools import default_registry
 from .network import NetworkMonitor, SimulatedSwitch
 from .planner import LlamaCppPlanner, RuleBasedPlanner
 from .report import build_report, report_text
@@ -34,16 +38,22 @@ from .world import FakeWorld
 
 
 class Brain:
-    def __init__(self, data_dir, step_delay=0.0, retry_base=1.0, retry_cap=30.0, planner=None):
+    def __init__(self, data_dir, step_delay=0.0, retry_base=1.0, retry_cap=30.0, planner=None,
+                 llama_url=None, tools_dirs=None):
         data = Path(data_dir)
         data.mkdir(parents=True, exist_ok=True)
         self.store = Store(data / "brain.db")
         self.switch = SimulatedSwitch(data / "network.json")
         self.world = FakeWorld(data / "world.db", self.switch)
         self.monitor = NetworkMonitor(self.switch.is_online, self._network_changed)
-        self.engine = Engine(self.store, planner or RuleBasedPlanner(), self.monitor, self.world,
+        self.tools = default_registry(tools_dirs)
+        self.llm = LlamaClient(llama_url) if llama_url else None
+        if planner is None:
+            planner = LlamaCppPlanner(registry=self.tools, client=self.llm) if self.llm else RuleBasedPlanner()
+        self.engine = Engine(self.store, planner, self.monitor, self.world,
                              data / "artifacts", step_delay=step_delay,
-                             retry_base=retry_base, retry_cap=retry_cap)
+                             retry_base=retry_base, retry_cap=retry_cap, tools=self.tools,
+                             services={"llm": self.llm, "sandbox": Sandbox()})
         self.stop = threading.Event()
 
     def _network_changed(self, online, previous):
@@ -97,6 +107,8 @@ def make_handler(brain):
                 return self._send(200, {"online": brain.switch.is_online(), "simulated": True})
             if path == "/tasks":
                 return self._send(200, {"tasks": store.list_tasks()})
+            if path == "/tools":
+                return self._send(200, {"tools": brain.tools.specs(planner_only=False)})
             if path == "/permissions":
                 return self._send(200, {"permissions": store.list_permissions(q.get("status", [None])[0])})
             m = re.fullmatch(r"/tasks/(\w+)(/events|/report)?", path)
@@ -152,10 +164,11 @@ def main():
     ap.add_argument("--step-delay", type=float, default=0.0, help="pretend each step takes this long")
     ap.add_argument("--retry-base", type=float, default=1.0)
     ap.add_argument("--retry-cap", type=float, default=30.0)
-    ap.add_argument("--llama-url", help="use a llama.cpp server as the planner (experimental)")
+    ap.add_argument("--llama-url", help="address of a running llama.cpp server, e.g. http://127.0.0.1:8080")
+    ap.add_argument("--tools-dir", action="append", help="extra folder with plug-in tools (repeatable)")
     a = ap.parse_args()
-    planner = LlamaCppPlanner(a.llama_url) if a.llama_url else None
-    brain = Brain(a.data, a.step_delay, a.retry_base, a.retry_cap, planner)
+    brain = Brain(a.data, a.step_delay, a.retry_base, a.retry_cap, llama_url=a.llama_url,
+                  tools_dirs=a.tools_dir)
     server = ThreadingHTTPServer(("127.0.0.1", a.port), make_handler(brain))
     threading.Thread(target=brain.run_engine, daemon=True).start()
     signal.signal(signal.SIGTERM, lambda *_: threading.Thread(target=server.shutdown).start())

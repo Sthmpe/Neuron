@@ -14,7 +14,22 @@ def build_report(store, world, task_id):
     for e in execs:
         if e["outcome"] == "done":
             done_runs[e["step_no"]] = done_runs.get(e["step_no"], 0) + 1
+    done = [s for s in steps if s["status"] == "done"]
+    verified = [s for s in done if (s["proof"] or {}).get("verified")]
+    failed = [s for s in steps if s["status"] == "failed" and not s["superseded"]]
+    if task["status"] == "done":
+        verdict = (f"COMPLETED. {len(verified)} of {len(done)} finished steps were independently checked"
+                   + (f"; {len(done) - len(verified)} rest on output that was NOT independently checked."
+                      if len(done) != len(verified) else "."))
+    elif task["status"] == "failed":
+        tried = "; ".join(f"step {s['no']} ({s['action']}): {(s['proof'] or {}).get('summary') or s['error']}"
+                          for s in failed)
+        verdict = "NOT SOLVED. " + (f"The planner gave up: {task['note']}. " if task.get("note") else "") + \
+                  (f"What was tried: {tried}" if tried else "")
+    else:
+        verdict = "NOT FINISHED YET."
     return {
+        "verdict": verdict, "revisions": task.get("revisions") or 0,
         "task_id": task_id, "goal": task["goal"], "status": task["status"], "planner": task["planner"],
         "created_at": task["created_at"], "finished_at": task["finished_at"],
         "totals": {"steps": len(steps), "done": len(count("done")), "failed": len(count("failed")),
@@ -29,6 +44,7 @@ def build_report(store, world, task_id):
         },
         "steps": [{"no": s["no"], "title": s["title"],
                    "kind": "needs internet" if s["needs_internet"] else "offline",
+                   "tool": s["action"], "inputs": s["params"], "superseded": bool(s["superseded"]),
                    "sensitive": s["sensitive"], "status": s["status"], "attempts": s["attempts"],
                    "error": s["error"], "proof": s["proof"]} for s in steps],
         "timeline": [{"at": e["at"], "kind": e["kind"], "message": e["message"]}
@@ -44,7 +60,7 @@ def _evidence_line(proof):
     if "sha256" in ev:
         bits.append(f"file {ev['file'].split('/')[-1]} sha256 {ev['sha256'][:12]}..")
     for k, v in ev.items():
-        if k not in ("receipt", "sha256", "file", "bytes") and not isinstance(v, (dict, list)):
+        if k not in ("receipt", "sha256", "file", "bytes", "diff") and not isinstance(v, (dict, list)):
             bits.append(f"{k}={v}")
     return "; ".join(bits)
 
@@ -55,6 +71,8 @@ def report_text(r):
         f"NEURON REPORT - task {r['task_id']}",
         f"Goal: {r['goal']}",
         f"Status: {r['status']}",
+        f"Verdict: {r['verdict']}",
+        f"Planner: {r['planner']}" + (f" | plan revised {r['revisions']} time(s)" if r["revisions"] else ""),
         f"Steps: {t['steps']} total | {t['done']} done | {t['failed']} failed | "
         f"{t['rejected']} rejected by host | {t['blocked']} blocked | {t['not_finished']} not finished",
         f"Duplicate check: steps completed more than once = "
@@ -72,4 +90,17 @@ def report_text(r):
         ev = _evidence_line(p)
         if ev:
             lines.append(f"       proof: {ev}")
+        if p.get("verification"):
+            lines.append(f"       checked: {'YES' if p.get('verified') else 'NO'} - {p['verification']}")
+        if s["superseded"]:
+            lines.append("       (this failed step was replaced by a different approach)")
+        for a in ((p.get("evidence") or {}).get("attempts") or []):
+            if a.get("error"):
+                what = f"rejected before testing: {a['error']}"
+            else:
+                t = a.get("test") or {}
+                what = (f"changed {a.get('file')} -> tests "
+                        + ("PASSED" if a.get("passed") else
+                           "timed out" if t.get("timed_out") else f"still failing (exit code {t.get('exit_code')})"))
+            lines.append(f"       attempt {a['n']}: {what}")
     return "\n".join(lines)
