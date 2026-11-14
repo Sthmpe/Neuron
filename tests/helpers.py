@@ -22,18 +22,19 @@ class Rig:
     `restart()` throws the engine away and builds a new one on the same files,
     which is exactly what a process restart does."""
 
-    def __init__(self):
+    def __init__(self, planner=None, services=None, tools=None):
         self.dir = Path(tempfile.mkdtemp(prefix="neuron-test-"))
         self.clock = Clock()
+        self.planner, self.services, self.tools = planner, services, tools
         self.boot()
 
     def boot(self):
         self.store = Store(self.dir / "brain.db", self.clock)
         self.switch = SimulatedSwitch(self.dir / "network.json")
         self.world = FakeWorld(self.dir / "world.db", self.switch, self.clock)
-        self.engine = Engine(self.store, RuleBasedPlanner(), NetworkMonitor(self.switch.is_online),
+        self.engine = Engine(self.store, self.planner or RuleBasedPlanner(), NetworkMonitor(self.switch.is_online),
                              self.world, self.dir / "artifacts", clock=self.clock,
-                             retry_base=1.0, retry_cap=4.0)
+                             retry_base=1.0, retry_cap=4.0, tools=self.tools, services=self.services)
 
     def restart(self):
         self.store.db.close()
