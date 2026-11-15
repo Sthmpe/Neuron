@@ -1,6 +1,6 @@
 === 1. Host sends the task ===
-[HOST ] brain is up (process 3633). Sending task: 'Find leads for our sales team'
-[HOST ] brain accepted task f6c087d0 and planned 20 steps:
+[HOST ] brain is up (process 1200). Sending task: 'Find leads for our sales team'
+[HOST ] brain accepted task 748727c2 and planned 20 steps:
            1. [offline       ] Read the brief and load the target customer criteria
            2. [offline       ] Load existing contacts from the local address book
            3. [needs internet] Search the business directory, page 1
@@ -23,150 +23,172 @@
           20. [offline       ] Write the final summary
 
 === 2. Steps 1-8 run, then the network is cut ===
-[BRAIN] 21:40:32  brain started (pid 3633); 0 unfinished task(s) found in storage; 0 step(s) had been cut off mid-run
-[BRAIN] 21:40:32  task received and planned into 20 steps
-[BRAIN] 21:40:32  network monitor started: connection is UP
-[BRAIN] 21:40:32  step 1 started (attempt 1)
-[BRAIN] 21:40:32  step 1 done: Loaded target criteria from the brief
-[BRAIN] 21:40:32  step 2 started (attempt 1)
-[BRAIN] 21:40:33  step 2 done: Loaded 3 existing contacts
-[BRAIN] 21:40:33  step 3 started (attempt 1)
-[BRAIN] 21:40:33  step 3 done: Directory page 1 returned 10 companies
-[BRAIN] 21:40:33  step 4 started (attempt 1)
-[BRAIN] 21:40:33  step 4 done: Directory page 2 returned 10 companies
-[BRAIN] 21:40:33  step 5 started (attempt 1)
-[BRAIN] 21:40:34  step 5 done: Directory page 3 returned 10 companies
-[BRAIN] 21:40:34  step 6 started (attempt 1)
-[BRAIN] 21:40:34  step 6 done: Merged 3 pages into 30 rows
-[BRAIN] 21:40:34  step 7 started (attempt 1)
-[BRAIN] 21:40:35  step 7 done: Kept 25 new companies (2 duplicates and 3 known contacts removed)
-[BRAIN] 21:40:35  step 8 started (attempt 1)
-[BRAIN] 21:40:35  step 8 done: Fetched 13 company profiles (batch 1)
-[BRAIN] 21:40:35  step 9 started (attempt 1)
+[BRAIN] 05:21:22  brain started (pid 1200); 0 unfinished task(s) found in storage; 0 step(s) had been cut off mid-run
+[BRAIN] 05:21:22  task received and planned into 20 steps
+[BRAIN] 05:21:22  network monitor started: connection is UP
+[BRAIN] 05:21:22  step 1 started (attempt 1)
+[BRAIN] 05:21:22  step 1 done: Loaded target criteria from the brief
+[BRAIN] 05:21:22  step 2 started (attempt 1)
+[BRAIN] 05:21:23  step 2 done: Loaded 3 existing contacts
+[BRAIN] 05:21:23  step 3 started (attempt 1)
+[BRAIN] 05:21:23  step 3 done: Directory page 1 returned 10 companies
+[BRAIN] 05:21:23  step 4 started (attempt 1)
+[BRAIN] 05:21:23  step 4 done: Directory page 2 returned 10 companies
+[BRAIN] 05:21:23  step 5 started (attempt 1)
+[BRAIN] 05:21:24  step 5 done: Directory page 3 returned 10 companies
+[BRAIN] 05:21:24  step 6 started (attempt 1)
+[BRAIN] 05:21:24  step 6 done: Merged 3 pages into 30 rows
+[BRAIN] 05:21:24  step 7 started (attempt 1)
+[BRAIN] 05:21:25  step 7 done: Kept 25 new companies (2 duplicates and 3 known contacts removed)
+[BRAIN] 05:21:25  step 8 started (attempt 1)
+[BRAIN] 05:21:25  step 8 done: Fetched 13 company profiles (batch 1)
+[BRAIN] 05:21:25  step 9 started (attempt 1)
 [HOST ] *** NETWORK CUT (simulated switch set to OFF) right after step 8 ***
 
 === 3. Brain switches to offline work, then waits and retries ===
-[BRAIN] 21:40:35  step 9 lost the connection mid-step - waiting
-[BRAIN] 21:40:35  network monitor: connection LOST
-[BRAIN] 21:40:35  step 10 started (attempt 1)
-[BRAIN] 21:40:36  step 10 done: Scored 13 leads in batch 1
-[BRAIN] 21:40:36  step 12 started (attempt 1)
-[BRAIN] 21:40:36  step 12 done: Drafted the outreach template
-[BRAIN] 21:40:36  step 13 started (attempt 1)
-[BRAIN] 21:40:37  step 13 done: Saved 13 interim leads to disk
-[BRAIN] 21:40:37  offline: every possible offline step is done; steps [9, 11, 14, 15, 16, 17, 18, 19, 20] are waiting (need internet: [9]); first retry in 0.5s
-[BRAIN] 21:40:37  retry #1: still offline - next retry in 1s
+[BRAIN] 05:21:26  step 9 lost the connection mid-step - waiting
+[BRAIN] 05:21:26  network monitor: connection LOST
+[BRAIN] 05:21:26  step 10 started (attempt 1)
+[BRAIN] 05:21:26  step 10 done: Scored 13 leads in batch 1
+[BRAIN] 05:21:26  step 12 started (attempt 1)
+[BRAIN] 05:21:26  step 12 done: Drafted the outreach template
+[BRAIN] 05:21:26  step 13 started (attempt 1)
+[BRAIN] 05:21:27  step 13 done: Saved 13 interim leads to disk
+[BRAIN] 05:21:27  offline: every possible offline step is done; steps [9, 11, 14, 15, 16, 17, 18, 19, 20] are waiting (need internet: [9]); first retry in 0.5s
+[BRAIN] 05:21:27  retry #1: still offline - next retry in 1s
 [HOST ] task status: waiting_network
 [HOST ] done so far: [1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 13]
 [HOST ] done while offline (skipped ahead to offline-only work): [10, 12, 13]
 [HOST ] waiting for internet: [9]; waiting on those: [11, 14, 15, 16, 17, 18, 19, 20]
 
 === 4. Brain process is killed and restarted ===
-[HOST ] *** BRAIN KILLED (kill -9 on process 3633) ***
+[HOST ] *** BRAIN KILLED (kill -9 on process 1200) ***
 [HOST ] brain does not answer - it is really gone
-[HOST ] *** BRAIN RESTARTED (new process 3845) - network is still off ***
-[BRAIN] 21:40:37  brain started (pid 3845); 1 unfinished task(s) found in storage; 0 step(s) had been cut off mid-run
-[BRAIN] 21:40:38  network monitor started: connection is DOWN
-[BRAIN] 21:40:38  retry #2: still offline - next retry in 2s
+[HOST ] *** BRAIN RESTARTED (new process 1411) - network is still off ***
+[BRAIN] 05:21:27  brain started (pid 1411); 1 unfinished task(s) found in storage; 0 step(s) had been cut off mid-run
 [HOST ] after restart: done steps still [1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 13], nothing was run again, task still waiting_network
 
 === 5. Network is restored ===
 [HOST ] *** NETWORK RESTORED (simulated switch set to ON) ***
 
 === 6. Brain resumes from step 9; host approves the sensitive step ===
-[BRAIN] 21:40:40  network monitor: connection RESTORED
-[BRAIN] 21:40:40  retry #3: network is back - resuming
-[BRAIN] 21:40:40  step 9 started (attempt 2)
-[BRAIN] 21:40:41  step 9 done: Fetched 12 company profiles (batch 2)
-[BRAIN] 21:40:41  step 11 started (attempt 1)
-[BRAIN] 21:40:41  step 11 done: Scored 12 leads in batch 2
-[BRAIN] 21:40:41  step 14 started (attempt 1)
-[BRAIN] 21:40:42  step 14 done: Checked 19 emails, 15 are valid
-[BRAIN] 21:40:42  step 15 started (attempt 1)
-[BRAIN] 21:40:42  step 15 done: Ranked the final 10 leads
-[BRAIN] 21:40:42  step 16 started (attempt 1)
-[BRAIN] 21:40:42  step 16 done: Wrote 3 personalised messages
-[BRAIN] 21:40:42  step 17 started (attempt 1)
-[BRAIN] 21:40:43  step 17 done: Wrote leads.csv with 10 rows
-[BRAIN] 21:40:43  step 18 is sensitive - asking the host for approval
-[BRAIN] 21:40:43  step 19 started (attempt 1)
+[BRAIN] 05:21:28  network monitor started: connection is DOWN
+[BRAIN] 05:21:28  retry #2: still offline - next retry in 2s
+[BRAIN] 05:21:30  network monitor: connection RESTORED
+[BRAIN] 05:21:30  retry #3: network is back - resuming
+[BRAIN] 05:21:30  step 9 started (attempt 2)
+[BRAIN] 05:21:31  step 9 done: Fetched 12 company profiles (batch 2)
+[BRAIN] 05:21:31  step 11 started (attempt 1)
+[BRAIN] 05:21:31  step 11 done: Scored 12 leads in batch 2
+[BRAIN] 05:21:31  step 14 started (attempt 1)
+[BRAIN] 05:21:31  step 14 done: Checked 19 emails, 15 are valid
+[BRAIN] 05:21:31  step 15 started (attempt 1)
+[BRAIN] 05:21:32  step 15 done: Ranked the final 10 leads
+[BRAIN] 05:21:32  step 16 started (attempt 1)
+[BRAIN] 05:21:32  step 16 done: Wrote 3 personalised messages
+[BRAIN] 05:21:32  step 17 started (attempt 1)
+[BRAIN] 05:21:33  step 17 done: Wrote leads.csv with 10 rows
+[BRAIN] 05:21:33  step 18 is sensitive - asking the host for approval
+[BRAIN] 05:21:33  step 19 started (attempt 1)
 [HOST ] >>> PERMISSION REQUEST: step 18 'Send the intro message to the top lead' -> host APPROVES
-[BRAIN] 21:40:43  host approved step 18
-[BRAIN] 21:40:43  step 19 done: Synced 10 leads to the cloud CRM
-[BRAIN] 21:40:43  step 18 started (attempt 1)
-[BRAIN] 21:40:44  step 18 done: Sent the intro message to Atlas Solar (info@atlassolar.example)
-[BRAIN] 21:40:44  step 20 started (attempt 1)
-[BRAIN] 21:40:44  step 20 done: Wrote the final summary
-[BRAIN] 21:40:44  task finished: all steps accounted for
+[BRAIN] 05:21:33  host approved step 18
+[BRAIN] 05:21:33  step 19 done: Synced 10 leads to the cloud CRM
+[BRAIN] 05:21:33  step 18 started (attempt 1)
+[BRAIN] 05:21:34  step 18 done: Sent the intro message to Atlas Solar (info@atlassolar.example)
+[BRAIN] 05:21:34  step 20 started (attempt 1)
+[BRAIN] 05:21:34  step 20 done: Wrote the final summary
+[BRAIN] 05:21:34  task finished: all steps accounted for
 
 === 7. Final report from the brain ===
-NEURON REPORT - task f6c087d0
+NEURON REPORT - task 748727c2
 Goal: Find leads for our sales team
 Status: done
+Verdict: COMPLETED. 14 of 20 finished steps were independently checked; 6 rest on output that was NOT independently checked.
+Planner: rule-based
 Steps: 20 total | 20 done | 0 failed | 0 rejected by host | 0 blocked | 0 not finished
 Duplicate check: steps completed more than once = none; outside actions = 8; duplicates blocked by idempotency key = 0
 
 Proof for each step:
   1. [done    ] [offline ] Read the brief and load the target customer criteria
-       21:40:32  Loaded target criteria from the brief
+       05:21:22  Loaded target criteria from the brief
        proof: file brief.json sha256 0365be684f69..
+       checked: YES - outside-world receipt / file hash recorded
   2. [done    ] [offline ] Load existing contacts from the local address book
-       21:40:33  Loaded 3 existing contacts
+       05:21:23  Loaded 3 existing contacts
        proof: count=3
+       checked: NO - counts recorded by the step itself
   3. [done    ] [internet] Search the business directory, page 1
-       21:40:33  Directory page 1 returned 10 companies
+       05:21:23  Directory page 1 returned 10 companies
        proof: outside-world receipt #1; count=10; first=Lagoon Logistics
+       checked: YES - outside-world receipt / file hash recorded
   4. [done    ] [internet] Search the business directory, page 2
-       21:40:33  Directory page 2 returned 10 companies
+       05:21:23  Directory page 2 returned 10 companies
        proof: outside-world receipt #2; count=10; first=Lagoon Foods
+       checked: YES - outside-world receipt / file hash recorded
   5. [done    ] [internet] Search the business directory, page 3
-       21:40:34  Directory page 3 returned 10 companies
+       05:21:24  Directory page 3 returned 10 companies
        proof: outside-world receipt #3; count=10; first=Lagoon Solar
+       checked: YES - outside-world receipt / file hash recorded
   6. [done    ] [offline ] Merge the search results into one list
-       21:40:34  Merged 3 pages into 30 rows
+       05:21:24  Merged 3 pages into 30 rows
        proof: rows=30
+       checked: NO - counts recorded by the step itself
   7. [done    ] [offline ] Remove duplicates and companies we already know
-       21:40:35  Kept 25 new companies (2 duplicates and 3 known contacts removed)
+       05:21:25  Kept 25 new companies (2 duplicates and 3 known contacts removed)
        proof: kept=25; duplicates_removed=2; known_removed=3
+       checked: NO - counts recorded by the step itself
   8. [done    ] [internet] Fetch company profiles, batch 1
-       21:40:35  Fetched 13 company profiles (batch 1)
+       05:21:25  Fetched 13 company profiles (batch 1)
        proof: outside-world receipt #4; count=13
+       checked: YES - outside-world receipt / file hash recorded
   9. [done    ] [internet] Fetch company profiles, batch 2
-       21:40:41  Fetched 12 company profiles (batch 2)
+       05:21:31  Fetched 12 company profiles (batch 2)
        proof: outside-world receipt #5; count=12
+       checked: YES - outside-world receipt / file hash recorded
  10. [done    ] [offline ] Score the leads in batch 1
-       21:40:36  Scored 13 leads in batch 1
+       05:21:26  Scored 13 leads in batch 1
        proof: count=13; best=Harbour Logistics; best_score=100
+       checked: NO - counts recorded by the step itself
  11. [done    ] [offline ] Score the leads in batch 2
-       21:40:41  Scored 12 leads in batch 2
+       05:21:31  Scored 12 leads in batch 2
        proof: count=12; best=Lagoon Solar; best_score=100
+       checked: NO - counts recorded by the step itself
  12. [done    ] [offline ] Draft the outreach message template
-       21:40:36  Drafted the outreach template
+       05:21:26  Drafted the outreach template
        proof: file template.txt sha256 e8b2cca0e9e7..
+       checked: YES - outside-world receipt / file hash recorded
  13. [done    ] [offline ] Save an interim leads file from batch 1
-       21:40:37  Saved 13 interim leads to disk
+       05:21:27  Saved 13 interim leads to disk
        proof: file interim_leads.json sha256 b869cdab41aa..
+       checked: YES - outside-world receipt / file hash recorded
  14. [done    ] [internet] Verify contact emails for the best leads
-       21:40:42  Checked 19 emails, 15 are valid
+       05:21:31  Checked 19 emails, 15 are valid
        proof: outside-world receipt #6; checked=19; valid=15
+       checked: YES - outside-world receipt / file hash recorded
  15. [done    ] [offline ] Rank the final lead list
-       21:40:42  Ranked the final 10 leads
+       05:21:32  Ranked the final 10 leads
        proof: count=10; top=Atlas Solar
+       checked: NO - counts recorded by the step itself
  16. [done    ] [offline ] Personalise messages for the top 3 leads
-       21:40:42  Wrote 3 personalised messages
+       05:21:32  Wrote 3 personalised messages
        proof: file messages.json sha256 df9786849c07..
+       checked: YES - outside-world receipt / file hash recorded
  17. [done    ] [offline ] Write the final leads CSV file
-       21:40:43  Wrote leads.csv with 10 rows
+       05:21:33  Wrote leads.csv with 10 rows
        proof: file leads.csv sha256 40ee59b494b3..; rows=10
+       checked: YES - outside-world receipt / file hash recorded
  18. [done    ] [internet] [sensitive] Send the intro message to the top lead
-       21:40:44  Sent the intro message to Atlas Solar (info@atlassolar.example)
+       05:21:34  Sent the intro message to Atlas Solar (info@atlassolar.example)
        proof: outside-world receipt #8; delivered_to=info@atlassolar.example; chars=89
+       checked: YES - outside-world receipt / file hash recorded
  19. [done    ] [internet] Sync the leads to the cloud CRM
-       21:40:43  Synced 10 leads to the cloud CRM
+       05:21:33  Synced 10 leads to the cloud CRM
        proof: outside-world receipt #7
+       checked: YES - outside-world receipt / file hash recorded
  20. [done    ] [offline ] Write the final summary
-       21:40:44  Wrote the final summary
-       proof: file summary.txt sha256 b219b7152c7d..
+       05:21:34  Wrote the final summary
+       proof: file summary.txt sha256 3b5ef3b88a5f..
+       checked: YES - outside-world receipt / file hash recorded
 
 === Demo checks ===
   PASS  planned_20_steps
