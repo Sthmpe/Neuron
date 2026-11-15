@@ -6,7 +6,10 @@ from pathlib import Path
 
 from .llm import LlamaClient
 
-DEFAULT_BIN = os.environ.get("NEURON_LLAMA_BIN", str(Path.home() / "llama" / "build" / "bin" / "llama-server"))
+_REPO = Path(__file__).resolve().parents[2]
+_CANDIDATES = [_REPO.parent / "llama" / "build" / "bin" / "llama-server",
+               Path.home() / "llama" / "build" / "bin" / "llama-server"]
+DEFAULT_BIN = os.environ.get("NEURON_LLAMA_BIN") or str(next((c for c in _CANDIDATES if c.exists()), _CANDIDATES[0]))
 DEFAULT_MODEL_DIR = Path(os.environ.get("NEURON_MODEL_DIR", str(Path(__file__).resolve().parents[2] / "models")))
 
 
@@ -33,7 +36,11 @@ class LlamaServer:
         out = open(self.log, "ab") if self.log else subprocess.DEVNULL
         self.proc = subprocess.Popen(
             [self.binary, "-m", str(self.model), "--host", "127.0.0.1", "--port", str(self.port),
-             "-c", str(self.ctx), "-t", str(self.threads), "-np", "1", "--no-webui"],
+             "-c", str(self.ctx), "-t", str(self.threads), "-np", "1", "--no-webui",
+             # load-mode none: read the model into memory once. With the default (mmap) this CPU's
+             # AMX code path keeps a second, repacked copy: 2.7 GB resident instead of 1.7 GB.
+             # cache-ram 0: no growing prompt cache, so memory stays bounded.
+             "--load-mode", "none", "--cache-ram", "0"],
             stdout=out, stderr=subprocess.STDOUT)
         client = LlamaClient(self.url)
         end = time.time() + wait

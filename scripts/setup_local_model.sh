@@ -2,8 +2,8 @@
 # Sets up the local model for NEURON: builds llama.cpp (CPU only) and downloads the model.
 # These are the steps that were used on the development machine.
 set -euo pipefail
-LLAMA_DIR="${LLAMA_DIR:-$HOME/llama}"
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
+LLAMA_DIR="${LLAMA_DIR:-$REPO/../llama}"     # next to the repo; the brain looks here first
 MODEL_URL="https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF/resolve/main/qwen2.5-coder-1.5b-instruct-q6_k.gguf"
 
 # 1. llama.cpp source. github.com was not reachable from the build machine, so the source is
@@ -21,7 +21,8 @@ fi
 # 2. sandbox tool
 command -v bwrap >/dev/null || (apt-get update && apt-get install -y bubblewrap)
 
-# 3. the model (about 1.5 GB). Needs huggingface.co to be reachable.
+# 3. the model (1.46 GB). Needs huggingface.co and its download server us.aws.cdn.hf.co to be reachable.
+#    sha256 9b05dce8089197c866b9f76e1db45de8617cda98d9d06059958cb8ad32c56dfa
 mkdir -p "$REPO/models"
 if ! ls "$REPO"/models/*.gguf >/dev/null 2>&1; then
   curl -fL --retry 3 -o "$REPO/models/$(basename "$MODEL_URL").part" "$MODEL_URL"
