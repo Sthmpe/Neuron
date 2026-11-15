@@ -82,5 +82,5 @@ test_built_in_tools_are_discovered (tests.test_tools.RegistryTests.test_built_in
 test_input_checking (tests.test_tools.RegistryTests.test_input_checking) ... ok
 test_new_kinds_of_tool_plug_in_without_touching_the_engine (tests.test_tools.RegistryTests.test_new_kinds_of_tool_plug_in_without_touching_the_engine) ... ok
 test_unknown_tool (tests.test_tools.RegistryTests.test_unknown_tool) ... ok
-Ran 84 tests in 23.269s
+Ran 84 tests in 23.393s
 OK

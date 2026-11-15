@@ -3,7 +3,7 @@
 | Step | What | State |
 |---|---|---|
 | 1 | Task engine: plan, checkpoint, survive network loss and restarts, permissions, proof | **Done.** Demo passes. |
-| 2 | Local brain: local model, tool interface, reasoning loop, `answer` + `fix_code`, sandbox, benchmark | **Code and tests done. The model is NOT downloaded and the benchmark has NOT been run** — see "Step 2" below. |
+| 2 | Local brain: local model, tool interface, reasoning loop, `answer` + `fix_code`, sandbox, benchmark | **Done.** Real model runs offline. Benchmark: **5 of 10** bugs fixed. |
 
 All 84 automated tests pass (21 from step 1, 63 new). Python 3 standard library only, SQLite for
 storage, no paid services.
@@ -124,52 +124,79 @@ python3 -m neuron.host.cli report <task_id>
 
 # Step 2 — a local brain that works with no internet
 
-## The honest status first
+## Results first
 
-| Part | State |
-|---|---|
-| 1. llama.cpp on this machine (CPU only) | **Built and runs** (`llama-server`, version 0.5.0-dev, commit 0c1e570, AVX2/AVX-512). |
-| 1. The model | **NOT downloaded. Blocked.** See below. Nothing was substituted for it. |
-| 2. Tool interface + registry | Done, tested. |
-| 3. Reasoning loop (plan, review, revise, fall back, never claim success without proof) | Done. Tested with a scripted stand-in for the model. **Never yet run against the real model.** |
-| 4. `answer` and `fix_code` tools | Done. `fix_code` tested with the real sandbox and real test runs, but with a scripted stand-in for the model. |
-| 5. Isolation | Done, tested with real break-out attempts. |
-| 6. Benchmark | The 10 buggy projects and the runner exist and are tested. **The benchmark has not been run. There are no results.** |
-| 7. Results (model, score, speed, memory, what the model could not do) | **None yet.** Nothing in this README is a model result. |
+Benchmark run on 15 Nov 2026, with the network cut off, never re-run or tuned. Raw data:
+[`benchmark/results.json`](benchmark/results.json), table: [`benchmark/results.md`](benchmark/results.md),
+full per-task reports: [`benchmark/reports.txt`](benchmark/reports.txt).
 
-### What is blocked, exactly
+- **Model:** Qwen2.5-Coder-1.5B-Instruct, file `qwen2.5-coder-1.5b-instruct-q6_k.gguf` (1.46 GB,
+  sha256 `9b05dce8…56dfa`, Apache-2.0), run by llama.cpp `llama-server` 0.5.0-dev (commit 0c1e570), CPU only.
+- **Score: 5 of 10 projects fixed.** Every "fixed" was confirmed by an independent test run; the brain
+  never claimed a fix that the independent run rejected, and no test file was changed.
+- **Speed:** 12–14 tokens/second when generating, about 110 tokens/second when reading a prompt
+  (4 CPU threads, Intel Xeon 2.1 GHz). Whole benchmark: 17 minutes. Per project: 42 s to 286 s.
+- **Memory:** model server 1.69 GB right after loading, **1.84 GB at its peak**; brain 31 MB; sandboxed
+  tests 9 MB. Peak for everything together: about **1.88 GB**.
+- **Network:** the run happened inside an empty network namespace (loopback only); a connection to the
+  internet was attempted first and failed, as required.
 
-The model file lives on `huggingface.co`. This machine's network rules refuse that host (the
-network proxy answers "connection rejected / 403"). Asking the owner to allow it failed twice because
-the Claude mobile app version in use could not display the approval prompt. Until that host is allowed,
-there is no model, so no real planning, no real answers, no real fixes and no benchmark numbers.
+| Project | Fixed | Attempts | Time (s) | What happened |
+|---|---|---|---|---|
+| 01 shopping_cart | yes | 1 | 42 | right first time |
+| 02 text_stats | **no** | 3 | 86 | 1 reply unchanged, 2 wrong fixes |
+| 03 binary_search | **no** | 3 | 286 | all 3 "fixes" made the code loop forever; the sandbox's time limit stopped each |
+| 04 bank_transfer | **no** | 3 | 114 | 2 replies unchanged, 1 wrong fix |
+| 05 date_utils | yes | 2 | 71 | 1 reply unchanged, then right |
+| 06 matrix | yes | 1 | 47 | right first time |
+| 07 lru_cache | yes | 3 | 104 | 2 wrong fixes, then right using the test output |
+| 08 csv_parser | **no** | 3 | 111 | 2 replies unchanged, 1 tried to edit the tests (refused) |
+| 09 todo_app | **no** | 3 | 94 | all 3 replies unchanged |
+| 10 intervals | yes | 2 | 64 | 1 reply unchanged, then right |
 
-To unblock: allow these hosts for the cloud environment (named "korra"), then run
-`scripts/setup_local_model.sh` and `python3 -m benchmark.run_benchmark`:
+The "peak RAM" column in `results.md` is a running peak for the server process (the kernel counter
+cannot be reset below current use), so later rows repeat the highest value seen so far.
 
-- `huggingface.co`
-- `cas-bridge.xethub.hf.co` and `cdn-lfs-us-1.hf.co` (Hugging Face's download servers; if the download
-  is redirected to a different server, that one must be allowed too)
+### What the model could not do
 
-### Which model, and why (chosen, not yet tested)
+- **It often returned the file unchanged.** 10 of the 24 attempts were an exact copy of the buggy file.
+  The brain detects this and counts it as a failed attempt, but it burned most of the retries —
+  project 09 lost all three this way.
+- **It did not find bugs that need reasoning about behaviour.** The off-by-one loop (03), the
+  order-of-operations bug across two files (04), the shared default argument (09) and the dropped
+  empty field (08) were all missed. What it fixed were mostly bugs visible on one line.
+- **It made things worse on 03**: three different changes, all infinite loops.
+- **Once it tried to edit the test file instead of the code** (08). That was refused.
+- **It needed the retry loop:** only 2 of the 5 fixes were right first time.
+- **Its reviews were shallow.** After each step the model always answered "continue"; it never proposed
+  a different approach after a failure. The revise path is tested, but only with a scripted stand-in.
 
-**Qwen2.5-Coder-1.5B-Instruct**, GGUF file `qwen2.5-coder-1.5b-instruct-q6_k.gguf` (about 1.5 GB) from
-the official `Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF` repository. Apache-2.0 licence.
+Fair reading: a 1.5-billion-parameter model on a CPU fixes simple, local bugs slowly and misses
+anything subtle. It is a working floor, not a capable coding assistant.
 
-How it was chosen (checked on 14 Nov 2026): a web search for small code models that fit in about
-2 GB found no newer code-specialised model in that size class. The alternatives looked at:
+### The model: how it was chosen and what changed
+
+Chosen on 14 Nov 2026 after a web search for small code models that fit in about 2 GB; no newer
+code-specialised model in that size class turned up. Alternatives considered:
 
 - *Qwen2.5-Coder-3B* — stronger, but about 2.5 GB in memory at 4-bit and a non-commercial licence.
 - *Qwen3.5-2B* — newer and general-purpose; no published evidence found that it beats the code model on code.
 - *Yi-Coder-1.5B* — similar size, older, less widely tested.
 - *Phi mini (3.8B)* and larger — do not fit.
 
-The expected memory use (about 1.8 GB with an 8k context) is an estimate. It has **not been measured**.
-If the measured figure is well over 2 GB the smaller `q4_k_m` file (about 1.1 GB) is the fallback.
+Only this one model was downloaded and tried, so there is no measured comparison between models.
 
-llama.cpp itself: `github.com` downloads were also refused, so the source was taken from the
-`llama-cpp-python` 0.3.36 package on PyPI, which bundles the complete llama.cpp source tree, and
-built with cmake (CPU only). The exact commands are in `scripts/setup_local_model.sh`.
+**Memory surprise.** My estimate was 1.8 GB. The first real measurement was **2.7 GB**: with
+llama.cpp's default loading mode, this CPU's fast path (AMX) keeps a second, repacked copy of the
+weights next to the memory-mapped file. Loading without memory-mapping (`--load-mode none`) holds one
+copy: 1.7 GB, same speed. The prompt cache is also switched off (`--cache-ram 0`) so memory cannot
+grow over time. Both settings are what the benchmark used.
+
+**Getting the software.** `huggingface.co` and `github.com` were refused by this machine's network
+rules at first. The model was downloaded after the owner allowed `huggingface.co` and its download
+server `us.aws.cdn.hf.co`. llama.cpp's source was taken from the `llama-cpp-python` 0.3.36 package on
+PyPI, which bundles the complete llama.cpp tree, and built with cmake (CPU only). The exact commands
+are in `scripts/setup_local_model.sh`.
 
 ## 2. Tool interface (`neuron/brain/tools/`)
 
@@ -255,7 +282,7 @@ sandbox refuses to run anything rather than run code unprotected.
   cgroup v1 the memory limit falls back to a weaker address-space limit and the process limit is not enforced.
 - It needs root or working user namespaces to start at all.
 
-## 6. Benchmark (`benchmark/`) — built, NOT run
+## 6. Benchmark (`benchmark/`)
 
 Ten small Python projects, each with one real bug and tests that fail because of it:
 
@@ -272,8 +299,9 @@ Ten small Python projects, each with one real bug and tests that fail because of
 | 09 | todo_app (2 files) | shared mutable default argument |
 | 10 | intervals | merging can shrink an interval |
 
-The projects and bugs were fixed **before** any model was available and will not be changed to suit
-the results. A test checks that all ten fail as shipped and pass with their reference fix
+The projects and bugs were written **before** the model was available and were not changed
+afterwards. The benchmark was run once. Before it, the real model was tried on one throwaway project
+that is not part of the benchmark, only to check the plumbing; no prompt was changed as a result. A test checks that all ten fail as shipped and pass with their reference fix
 (`benchmark/solutions/`, which the model never sees).
 
 The runner (`python3 -m benchmark.run_benchmark`):
@@ -287,9 +315,7 @@ The runner (`python3 -m benchmark.run_benchmark`):
 
 ## 7. Results
 
-**None.** Model: not downloaded. Solved out of 10: not measured. Speed: not measured. Memory: not
-measured. What the model could not do: unknown. This section will be filled in from
-`benchmark/results.json` after the benchmark has actually run.
+See "Results first" at the top of this step: 5 of 10, 12–14 tokens/second, 1.88 GB peak.
 
 ## Tests for step 2 (63 new, all pass)
 
@@ -305,16 +331,17 @@ measured. What the model could not do: unknown. This section will be filled in f
   independent check works.
 
 **Important limit of these tests:** wherever a model is needed, the tests use a scripted stand-in
-(`tests/fakes.py`) that replies with prepared text. That proves the logic *around* the model. It proves
-nothing about how well the real model plans, answers or fixes code.
+(`tests/fakes.py`) that replies with prepared text. That proves the logic *around* the model. How well
+the real model does is shown only by the benchmark above.
 
-## How to run step 2 (once the model is available)
+## How to run step 2
 
 ```
 scripts/setup_local_model.sh                 # build llama.cpp, install bubblewrap, download the model
 python3 -m benchmark.run_benchmark           # the offline benchmark
 
-~/llama/build/bin/llama-server -m models/<model>.gguf --port 8080 -c 8192 &
+../llama/build/bin/llama-server -m models/qwen2.5-coder-1.5b-instruct-q6_k.gguf --port 8080 -c 8192 \
+    -np 1 --load-mode none --cache-ram 0 &
 python3 -m neuron.brain.server --port 8765 --data data --llama-url http://127.0.0.1:8080
 python3 -m neuron.host.cli send "Fix the failing tests in /path/to/project" --watch
 python3 -m neuron.host.cli send "What is a mutex?" --watch
@@ -322,11 +349,15 @@ python3 -m neuron.host.cli send "What is a mutex?" --watch
 
 ## What is not done yet (step 2)
 
-- **The model is not downloaded, and nothing involving the real model has been run** — planning,
-  reviewing, answering, fixing, the benchmark, memory and speed.
-- The prompts and the reply format for `fix_code` are untried on the real model and may need changes.
+- **Half the benchmark is unsolved**, and the main cause (the model handing back an unchanged file)
+  has not been worked on. Any change to prompts must be judged on new projects, not these ten.
+- **The model never revised a plan on its own.** Plan revision and "try another approach" work in
+  tests with a scripted stand-in, but the real model has not been seen to use them.
+- **`answer` was only smoke-tested** (one question). Answer quality has not been measured.
+- Only one model and one quantisation were tried. No comparison with other models.
 - `fix_code` only handles Python, changes one file per attempt, and rewrites the whole file — so it
-  is limited to small files.
+  is limited to small files. The benchmark projects are all under 60 lines.
 - The model planner only knows two tools (`answer`, `fix_code`) plus whatever is plugged in.
 - No image, audio, messaging or app tools exist yet — only the interface they will plug into.
 - The brain does not start or supervise `llama-server` by itself outside the benchmark.
+- Speed and memory were measured on a 4-thread cloud server CPU, not on NEURON hardware.
