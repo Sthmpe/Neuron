@@ -168,8 +168,10 @@ cannot be reset below current use), so later rows repeat the highest value seen 
 - **It made things worse on 03**: three different changes, all infinite loops.
 - **Once it tried to edit the test file instead of the code** (08). That was refused.
 - **It needed the retry loop:** only 2 of the 5 fixes were right first time.
-- **Its reviews were shallow.** After each step the model always answered "continue"; it never proposed
-  a different approach after a failure. The revise path is tested, but only with a scripted stand-in.
+- **Its reviews did not help.** After the 5 successes it correctly said "done". After the 5 failures it
+  asked 4 times to revise the plan — but each time by running the same step again, which the engine
+  refuses as "not a different approach" (it would also have exceeded the 3-attempt limit). The fifth
+  review was not usable JSON. It never proposed a genuinely different approach.
 
 Fair reading: a 1.5-billion-parameter model on a CPU fixes simple, local bugs slowly and misses
 anything subtle. It is a working floor, not a capable coding assistant.
@@ -351,8 +353,9 @@ python3 -m neuron.host.cli send "What is a mutex?" --watch
 
 - **Half the benchmark is unsolved**, and the main cause (the model handing back an unchanged file)
   has not been worked on. Any change to prompts must be judged on new projects, not these ten.
-- **The model never revised a plan on its own.** Plan revision and "try another approach" work in
-  tests with a scripted stand-in, but the real model has not been seen to use them.
+- **The model never produced a useful plan revision.** It asked to revise 4 times, always by repeating
+  the failed step, which is refused. A real "try another approach" has only been seen in tests with a
+  scripted stand-in.
 - **`answer` was only smoke-tested** (one question). Answer quality has not been measured.
 - Only one model and one quantisation were tried. No comparison with other models.
 - `fix_code` only handles Python, changes one file per attempt, and rewrites the whole file — so it
