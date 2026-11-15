@@ -1,0 +1,158 @@
+NEURON REPORT - task 5c548f49
+Goal: Fix the failing tests in /home/user/neuron/benchmark/run/scratch/01_shopping_cart
+Status: done
+Verdict: COMPLETED. 1 of 1 finished steps were independently checked.
+Planner: llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf
+Steps: 1 total | 1 done | 0 failed | 0 rejected by host | 0 blocked | 0 not finished
+Duplicate check: steps completed more than once = none; outside actions = 0; duplicates blocked by idempotency key = 0
+
+Proof for each step:
+  1. [done    ] [offline ] The task requires fixing failing tests in a Python project, which can be done using the fix_code tool. The project path 
+       06:11:52  Fixed cart.py: tests pass in the sandbox after attempt 1 of 3
+       proof: project=/home/user/neuron/benchmark/run/scratch/01_shopping_cart; test_command=python3 -m unittest discover; attempts_used=1; work_folder=/home/user/neuron/benchmark/run/artifacts/5c548f49/fix_code_step1; llm_seconds=22.79; peak_sandbox_mem_mb=8.9; changed_file=cart.py; written_back_to_project=True; sha256_before=aeb434de56a2db5a38d532648e50b86f5fa2607eb334797f453f14a09a4fb05e; sha256_after=dadba0f230e473e8d132adf7c3c434a3955a4023fe48b8626dca8a160574f59a
+       checked: YES - tests run twice in the sandbox on fresh copies: exit code 0 both times
+       attempt 1: changed cart.py -> tests PASSED
+
+NEURON REPORT - task 7ce16afb
+Goal: Fix the failing tests in /home/user/neuron/benchmark/run/scratch/02_text_stats
+Status: failed
+Verdict: NOT SOLVED. What was tried: step 1 (fix_code): FAILED: could not make the tests pass in 3 attempts
+Planner: llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf
+Steps: 1 total | 0 done | 1 failed | 0 rejected by host | 0 blocked | 0 not finished
+Duplicate check: steps completed more than once = none; outside actions = 0; duplicates blocked by idempotency key = 0
+
+Proof for each step:
+  1. [failed  ] [offline ] The task requires fixing failing tests in a Python project. The fix_code tool is designed to read the code, change one s
+       06:13:09  FAILED: could not make the tests pass in 3 attempts
+       proof: project=/home/user/neuron/benchmark/run/scratch/02_text_stats; test_command=python3 -m unittest discover; attempts_used=3; work_folder=/home/user/neuron/benchmark/run/artifacts/7ce16afb/fix_code_step1; llm_seconds=57.2; peak_sandbox_mem_mb=8.9
+       attempt 1: rejected before testing: the proposed file is identical to the original (no change)
+       attempt 2: changed textstats.py -> tests still failing (exit code 1)
+       attempt 3: changed textstats.py -> tests still failing (exit code 1)
+
+NEURON REPORT - task 8ab6185d
+Goal: Fix the failing tests in /home/user/neuron/benchmark/run/scratch/03_binary_search
+Status: failed
+Verdict: NOT SOLVED. What was tried: step 1 (fix_code): FAILED: could not make the tests pass in 3 attempts
+Planner: llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf
+Steps: 1 total | 0 done | 1 failed | 0 rejected by host | 0 blocked | 0 not finished
+Duplicate check: steps completed more than once = none; outside actions = 0; duplicates blocked by idempotency key = 0
+
+Proof for each step:
+  1. [failed  ] [offline ] The task requires fixing failing tests in a Python project, which can be done using the `fix_code` tool. The project pat
+       06:17:51  FAILED: could not make the tests pass in 3 attempts
+       proof: project=/home/user/neuron/benchmark/run/scratch/03_binary_search; test_command=python3 -m unittest discover; attempts_used=3; work_folder=/home/user/neuron/benchmark/run/artifacts/8ab6185d/fix_code_step1; llm_seconds=73.53; peak_sandbox_mem_mb=9.1
+       attempt 1: changed search.py -> tests timed out
+       attempt 2: changed search.py -> tests timed out
+       attempt 3: changed search.py -> tests timed out
+
+NEURON REPORT - task c5305abe
+Goal: Fix the failing tests in /home/user/neuron/benchmark/run/scratch/04_bank_transfer
+Status: failed
+Verdict: NOT SOLVED. What was tried: step 1 (fix_code): FAILED: could not make the tests pass in 3 attempts
+Planner: llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf
+Steps: 1 total | 0 done | 1 failed | 0 rejected by host | 0 blocked | 0 not finished
+Duplicate check: steps completed more than once = none; outside actions = 0; duplicates blocked by idempotency key = 0
+
+Proof for each step:
+  1. [failed  ] [offline ] The task requires fixing failing tests in a Python project. The fix_code tool is designed to do this by running the test
+       06:19:22  FAILED: could not make the tests pass in 3 attempts
+       proof: project=/home/user/neuron/benchmark/run/scratch/04_bank_transfer; test_command=python3 -m unittest discover; attempts_used=3; work_folder=/home/user/neuron/benchmark/run/artifacts/c5305abe/fix_code_step1; llm_seconds=57.25; peak_sandbox_mem_mb=8.9
+       attempt 1: rejected before testing: the proposed file is identical to the original (no change)
+       attempt 2: rejected before testing: the proposed file is identical to the original (no change)
+       attempt 3: changed bank.py -> tests still failing (exit code 1)
+
+NEURON REPORT - task e144bb26
+Goal: Fix the failing tests in /home/user/neuron/benchmark/run/scratch/05_date_utils
+Status: done
+Verdict: COMPLETED. 1 of 1 finished steps were independently checked.
+Planner: llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf
+Steps: 1 total | 1 done | 0 failed | 0 rejected by host | 0 blocked | 0 not finished
+Duplicate check: steps completed more than once = none; outside actions = 0; duplicates blocked by idempotency key = 0
+
+Proof for each step:
+  1. [done    ] [offline ] The task requires fixing failing tests in a Python project. The fix_code tool is used to run the tests in an isolated sa
+       06:21:10  Fixed dateutils.py: tests pass in the sandbox after attempt 2 of 3
+       proof: project=/home/user/neuron/benchmark/run/scratch/05_date_utils; test_command=python3 -m unittest discover; attempts_used=2; work_folder=/home/user/neuron/benchmark/run/artifacts/e144bb26/fix_code_step1; llm_seconds=52.91; peak_sandbox_mem_mb=8.9; changed_file=dateutils.py; written_back_to_project=True; sha256_before=81e2b6b7d5ac9b9dc543e8ef821dafc6e47b925acc63df15bd4a2de029949651; sha256_after=451436a20455b4a1b7a8effb5f3f57e134f8a48d492b2df1bf5378188f5cfab3
+       checked: YES - tests run twice in the sandbox on fresh copies: exit code 0 both times
+       attempt 1: rejected before testing: the proposed file is identical to the original (no change)
+       attempt 2: changed dateutils.py -> tests PASSED
+
+NEURON REPORT - task b9424e31
+Goal: Fix the failing tests in /home/user/neuron/benchmark/run/scratch/06_matrix
+Status: done
+Verdict: COMPLETED. 1 of 1 finished steps were independently checked.
+Planner: llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf
+Steps: 1 total | 1 done | 0 failed | 0 rejected by host | 0 blocked | 0 not finished
+Duplicate check: steps completed more than once = none; outside actions = 0; duplicates blocked by idempotency key = 0
+
+Proof for each step:
+  1. [done    ] [offline ] The task requires fixing failing tests in a Python project. The fix_code tool is used to identify and fix bugs in the co
+       06:21:57  Fixed matrix.py: tests pass in the sandbox after attempt 1 of 3
+       proof: project=/home/user/neuron/benchmark/run/scratch/06_matrix; test_command=python3 -m unittest discover; attempts_used=1; work_folder=/home/user/neuron/benchmark/run/artifacts/b9424e31/fix_code_step1; llm_seconds=24.78; peak_sandbox_mem_mb=8.9; changed_file=matrix.py; written_back_to_project=True; sha256_before=cb870f6674708bf138468888c42769ffd39e88aa4f2f8ba2072b995dc26dac47; sha256_after=5240a2fd1a114cd6c947bba8e4d5030cbdac15afebb9b259eecf5d8ab9bbec56
+       checked: YES - tests run twice in the sandbox on fresh copies: exit code 0 both times
+       attempt 1: changed matrix.py -> tests PASSED
+
+NEURON REPORT - task cf994f2a
+Goal: Fix the failing tests in /home/user/neuron/benchmark/run/scratch/07_lru_cache
+Status: done
+Verdict: COMPLETED. 1 of 1 finished steps were independently checked.
+Planner: llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf
+Steps: 1 total | 1 done | 0 failed | 0 rejected by host | 0 blocked | 0 not finished
+Duplicate check: steps completed more than once = none; outside actions = 0; duplicates blocked by idempotency key = 0
+
+Proof for each step:
+  1. [done    ] [offline ] The task requires fixing failing tests in a Python project. The fix_code tool is designed to read the code, change one s
+       06:23:40  Fixed lru.py: tests pass in the sandbox after attempt 3 of 3
+       proof: project=/home/user/neuron/benchmark/run/scratch/07_lru_cache; test_command=python3 -m unittest discover; attempts_used=3; work_folder=/home/user/neuron/benchmark/run/artifacts/cf994f2a/fix_code_step1; llm_seconds=83.7; peak_sandbox_mem_mb=8.9; changed_file=lru.py; written_back_to_project=True; sha256_before=afb7618784126d5503bc16c3512f5d0710d0476eb471cd2f01f5adfcf74e89e1; sha256_after=d8cc8d98626741efa219601c1c1d555176d8a313e36d38e362da57a7614ac7b8
+       checked: YES - tests run twice in the sandbox on fresh copies: exit code 0 both times
+       attempt 1: changed lru.py -> tests still failing (exit code 1)
+       attempt 2: changed lru.py -> tests still failing (exit code 1)
+       attempt 3: changed lru.py -> tests PASSED
+
+NEURON REPORT - task 846252ef
+Goal: Fix the failing tests in /home/user/neuron/benchmark/run/scratch/08_csv_parser
+Status: failed
+Verdict: NOT SOLVED. What was tried: step 1 (fix_code): FAILED: could not make the tests pass in 3 attempts
+Planner: llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf
+Steps: 1 total | 0 done | 1 failed | 0 rejected by host | 0 blocked | 0 not finished
+Duplicate check: steps completed more than once = none; outside actions = 0; duplicates blocked by idempotency key = 0
+
+Proof for each step:
+  1. [failed  ] [offline ] The task requires fixing failing tests in a Python project. The fix_code tool is used to identify and fix issues in the 
+       06:25:23  FAILED: could not make the tests pass in 3 attempts
+       proof: project=/home/user/neuron/benchmark/run/scratch/08_csv_parser; test_command=python3 -m unittest discover; attempts_used=3; work_folder=/home/user/neuron/benchmark/run/artifacts/846252ef/fix_code_step1; llm_seconds=82.1; peak_sandbox_mem_mb=8.9
+       attempt 1: rejected before testing: the proposed file is identical to the original (no change)
+       attempt 2: rejected before testing: the reply names 'tests/test_csvlite.py', which is not an editable source file
+       attempt 3: rejected before testing: the proposed file is identical to the original (no change)
+
+NEURON REPORT - task eef8ca35
+Goal: Fix the failing tests in /home/user/neuron/benchmark/run/scratch/09_todo_app
+Status: failed
+Verdict: NOT SOLVED. What was tried: step 1 (fix_code): FAILED: could not make the tests pass in 3 attempts
+Planner: llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf
+Steps: 1 total | 0 done | 1 failed | 0 rejected by host | 0 blocked | 0 not finished
+Duplicate check: steps completed more than once = none; outside actions = 0; duplicates blocked by idempotency key = 0
+
+Proof for each step:
+  1. [failed  ] [offline ] The task requires fixing failing tests in a Python project. The fix_code tool is used to identify and correct the issues
+       06:26:51  FAILED: could not make the tests pass in 3 attempts
+       proof: project=/home/user/neuron/benchmark/run/scratch/09_todo_app; test_command=python3 -m unittest discover; attempts_used=3; work_folder=/home/user/neuron/benchmark/run/artifacts/eef8ca35/fix_code_step1; llm_seconds=57.22; peak_sandbox_mem_mb=8.9
+       attempt 1: rejected before testing: the proposed file is identical to the original (no change)
+       attempt 2: rejected before testing: the proposed file is identical to the original (no change)
+       attempt 3: rejected before testing: the proposed file is identical to the original (no change)
+
+NEURON REPORT - task f84478f8
+Goal: Fix the failing tests in /home/user/neuron/benchmark/run/scratch/10_intervals
+Status: done
+Verdict: COMPLETED. 1 of 1 finished steps were independently checked.
+Planner: llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf
+Steps: 1 total | 1 done | 0 failed | 0 rejected by host | 0 blocked | 0 not finished
+Duplicate check: steps completed more than once = none; outside actions = 0; duplicates blocked by idempotency key = 0
+
+Proof for each step:
+  1. [done    ] [offline ] The task requires fixing failing tests in a Python project, which can be done using the fix_code tool. The project path 
+       06:28:09  Fixed intervals.py: tests pass in the sandbox after attempt 2 of 3
+       proof: project=/home/user/neuron/benchmark/run/scratch/10_intervals; test_command=python3 -m unittest discover; attempts_used=2; work_folder=/home/user/neuron/benchmark/run/artifacts/f84478f8/fix_code_step1; llm_seconds=43.31; peak_sandbox_mem_mb=8.9; changed_file=intervals.py; written_back_to_project=True; sha256_before=081b00a7b8166b73539ba4737cd03858f1ca0435ea3ac94d86e141105f392348; sha256_after=4d2daa86c56b8978b3008ec4f5425de41f2c42afc9442202f48c5aa9b451462d
+       checked: YES - tests run twice in the sandbox on fresh copies: exit code 0 both times
+       attempt 1: rejected before testing: the proposed file is identical to the original (no change)
+       attempt 2: changed intervals.py -> tests PASSED

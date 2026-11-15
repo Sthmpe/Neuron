@@ -1,0 +1,328 @@
+{
+ "date": "2026-11-15 06:11:16",
+ "model": {
+  "file": "qwen2.5-coder-1.5b-instruct-q6_k.gguf",
+  "size_mb": 1396,
+  "sha256": "9b05dce8089197c866b9f76e1db45de8617cda98d9d06059958cb8ad32c56dfa",
+  "reported_name": "qwen2.5-coder-1.5b-instruct-q6_k.gguf",
+  "load_seconds": 4.6,
+  "idle_rss_mb": 1692,
+  "context_tokens": 8192,
+  "threads": 4
+ },
+ "llama_cpp": "version: 0.5.0-dev (build 1, commit 0c1e570)",
+ "machine": {
+  "cpus": 4,
+  "cpu": "x86_64",
+  "ram_mb": 16088
+ },
+ "network": {
+  "method": "new empty network namespace (loopback only)",
+  "internet_reachable": false,
+  "probe_error": "[Errno 101] Network is unreachable",
+  "interfaces": [
+   "lo"
+  ]
+ },
+ "sandbox": {
+  "engine": "bubblewrap (Linux namespaces)",
+  "network": "none (empty network namespace)",
+  "filesystem": "workspace read-write; /usr read-only; private /tmp; nothing else exists",
+  "user": "nobody (uid 65534) in a user namespace, all capabilities dropped, no-new-privileges",
+  "processes": "own PID namespace",
+  "time_limit_s": 60,
+  "memory_limit_mb": 512,
+  "memory_limit_by": "memory cgroup",
+  "process_limit": 64,
+  "seccomp_filter": true
+ },
+ "projects": [
+  {
+   "project": "01_shopping_cart",
+   "solved": true,
+   "brain_claimed_success": true,
+   "independent_test_run_passed": true,
+   "tests_untouched": true,
+   "attempts": 1,
+   "seconds": 42.4,
+   "llm_seconds_in_fix": 22.8,
+   "tokens_generated_in_fix": 207,
+   "tokens_per_second": 9.1,
+   "peak_ram_mb": {
+    "model_server": 1757,
+    "sandbox_tests": 8.9,
+    "brain_process": 30,
+    "total": 1796
+   },
+   "planner": "llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf",
+   "plan_revisions": 0,
+   "task_status": "done",
+   "timed_out": false,
+   "changed_file": "cart.py",
+   "what_happened": [
+    "changed cart.py: tests passed"
+   ],
+   "task_id": "5c548f49"
+  },
+  {
+   "project": "02_text_stats",
+   "solved": false,
+   "brain_claimed_success": false,
+   "independent_test_run_passed": false,
+   "tests_untouched": true,
+   "attempts": 3,
+   "seconds": 85.5,
+   "llm_seconds_in_fix": 57.2,
+   "tokens_generated_in_fix": 549,
+   "tokens_per_second": 9.6,
+   "peak_ram_mb": {
+    "model_server": 1771,
+    "sandbox_tests": 8.9,
+    "brain_process": 30,
+    "total": 1810
+   },
+   "planner": "llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf",
+   "plan_revisions": 0,
+   "task_status": "failed",
+   "timed_out": false,
+   "changed_file": null,
+   "what_happened": [
+    "rejected: the proposed file is identical to the original (no change)",
+    "changed textstats.py: tests still failing",
+    "changed textstats.py: tests still failing"
+   ],
+   "task_id": "7ce16afb"
+  },
+  {
+   "project": "03_binary_search",
+   "solved": false,
+   "brain_claimed_success": false,
+   "independent_test_run_passed": false,
+   "tests_untouched": true,
+   "attempts": 3,
+   "seconds": 286.3,
+   "llm_seconds_in_fix": 73.5,
+   "tokens_generated_in_fix": 666,
+   "tokens_per_second": 9.1,
+   "peak_ram_mb": {
+    "model_server": 1781,
+    "sandbox_tests": 9.1,
+    "brain_process": 31,
+    "total": 1821
+   },
+   "planner": "llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf",
+   "plan_revisions": 0,
+   "task_status": "failed",
+   "timed_out": false,
+   "changed_file": null,
+   "what_happened": [
+    "changed search.py: timed out",
+    "changed search.py: timed out",
+    "changed search.py: timed out"
+   ],
+   "task_id": "8ab6185d"
+  },
+  {
+   "project": "04_bank_transfer",
+   "solved": false,
+   "brain_claimed_success": false,
+   "independent_test_run_passed": false,
+   "tests_untouched": true,
+   "attempts": 3,
+   "seconds": 114.1,
+   "llm_seconds_in_fix": 57.2,
+   "tokens_generated_in_fix": 585,
+   "tokens_per_second": 10.2,
+   "peak_ram_mb": {
+    "model_server": 1838,
+    "sandbox_tests": 8.9,
+    "brain_process": 31,
+    "total": 1878
+   },
+   "planner": "llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf",
+   "plan_revisions": 0,
+   "task_status": "failed",
+   "timed_out": false,
+   "changed_file": null,
+   "what_happened": [
+    "rejected: the proposed file is identical to the original (no change)",
+    "rejected: the proposed file is identical to the original (no change)",
+    "changed bank.py: tests still failing"
+   ],
+   "task_id": "c5305abe"
+  },
+  {
+   "project": "05_date_utils",
+   "solved": true,
+   "brain_claimed_success": true,
+   "independent_test_run_passed": true,
+   "tests_untouched": true,
+   "attempts": 2,
+   "seconds": 71.4,
+   "llm_seconds_in_fix": 52.9,
+   "tokens_generated_in_fix": 524,
+   "tokens_per_second": 9.9,
+   "peak_ram_mb": {
+    "model_server": 1838,
+    "sandbox_tests": 8.9,
+    "brain_process": 31,
+    "total": 1878
+   },
+   "planner": "llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf",
+   "plan_revisions": 0,
+   "task_status": "done",
+   "timed_out": false,
+   "changed_file": "dateutils.py",
+   "what_happened": [
+    "rejected: the proposed file is identical to the original (no change)",
+    "changed dateutils.py: tests passed"
+   ],
+   "task_id": "e144bb26"
+  },
+  {
+   "project": "06_matrix",
+   "solved": true,
+   "brain_claimed_success": true,
+   "independent_test_run_passed": true,
+   "tests_untouched": true,
+   "attempts": 1,
+   "seconds": 46.8,
+   "llm_seconds_in_fix": 24.8,
+   "tokens_generated_in_fix": 219,
+   "tokens_per_second": 8.8,
+   "peak_ram_mb": {
+    "model_server": 1838,
+    "sandbox_tests": 8.9,
+    "brain_process": 31,
+    "total": 1878
+   },
+   "planner": "llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf",
+   "plan_revisions": 0,
+   "task_status": "done",
+   "timed_out": false,
+   "changed_file": "matrix.py",
+   "what_happened": [
+    "changed matrix.py: tests passed"
+   ],
+   "task_id": "b9424e31"
+  },
+  {
+   "project": "07_lru_cache",
+   "solved": true,
+   "brain_claimed_success": true,
+   "independent_test_run_passed": true,
+   "tests_untouched": true,
+   "attempts": 3,
+   "seconds": 103.6,
+   "llm_seconds_in_fix": 83.7,
+   "tokens_generated_in_fix": 783,
+   "tokens_per_second": 9.4,
+   "peak_ram_mb": {
+    "model_server": 1838,
+    "sandbox_tests": 8.9,
+    "brain_process": 31,
+    "total": 1878
+   },
+   "planner": "llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf",
+   "plan_revisions": 0,
+   "task_status": "done",
+   "timed_out": false,
+   "changed_file": "lru.py",
+   "what_happened": [
+    "changed lru.py: tests still failing",
+    "changed lru.py: tests still failing",
+    "changed lru.py: tests passed"
+   ],
+   "task_id": "cf994f2a"
+  },
+  {
+   "project": "08_csv_parser",
+   "solved": false,
+   "brain_claimed_success": false,
+   "independent_test_run_passed": false,
+   "tests_untouched": true,
+   "attempts": 3,
+   "seconds": 111.0,
+   "llm_seconds_in_fix": 82.1,
+   "tokens_generated_in_fix": 862,
+   "tokens_per_second": 10.5,
+   "peak_ram_mb": {
+    "model_server": 1838,
+    "sandbox_tests": 8.9,
+    "brain_process": 31,
+    "total": 1878
+   },
+   "planner": "llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf",
+   "plan_revisions": 0,
+   "task_status": "failed",
+   "timed_out": false,
+   "changed_file": null,
+   "what_happened": [
+    "rejected: the proposed file is identical to the original (no change)",
+    "rejected: the reply names 'tests/test_csvlite.py', which is not an editable source file",
+    "rejected: the proposed file is identical to the original (no change)"
+   ],
+   "task_id": "846252ef"
+  },
+  {
+   "project": "09_todo_app",
+   "solved": false,
+   "brain_claimed_success": false,
+   "independent_test_run_passed": false,
+   "tests_untouched": true,
+   "attempts": 3,
+   "seconds": 93.6,
+   "llm_seconds_in_fix": 57.2,
+   "tokens_generated_in_fix": 567,
+   "tokens_per_second": 9.9,
+   "peak_ram_mb": {
+    "model_server": 1838,
+    "sandbox_tests": 8.9,
+    "brain_process": 31,
+    "total": 1878
+   },
+   "planner": "llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf",
+   "plan_revisions": 0,
+   "task_status": "failed",
+   "timed_out": false,
+   "changed_file": null,
+   "what_happened": [
+    "rejected: the proposed file is identical to the original (no change)",
+    "rejected: the proposed file is identical to the original (no change)",
+    "rejected: the proposed file is identical to the original (no change)"
+   ],
+   "task_id": "eef8ca35"
+  },
+  {
+   "project": "10_intervals",
+   "solved": true,
+   "brain_claimed_success": true,
+   "independent_test_run_passed": true,
+   "tests_untouched": true,
+   "attempts": 2,
+   "seconds": 64.2,
+   "llm_seconds_in_fix": 43.3,
+   "tokens_generated_in_fix": 424,
+   "tokens_per_second": 9.8,
+   "peak_ram_mb": {
+    "model_server": 1838,
+    "sandbox_tests": 8.9,
+    "brain_process": 31,
+    "total": 1878
+   },
+   "planner": "llama.cpp:qwen2.5-coder-1.5b-instruct-q6_k.gguf",
+   "plan_revisions": 0,
+   "task_status": "done",
+   "timed_out": false,
+   "changed_file": "intervals.py",
+   "what_happened": [
+    "rejected: the proposed file is identical to the original (no change)",
+    "changed intervals.py: tests passed"
+   ],
+   "task_id": "f84478f8"
+  }
+ ],
+ "solved": 5,
+ "total_seconds": 1018.9,
+ "peak_model_server_rss_mb": 1838
+}
