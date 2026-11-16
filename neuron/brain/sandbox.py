@@ -25,8 +25,10 @@ import os
 import resource
 import shutil
 import signal
+import socket
 import subprocess
 import tempfile
+import threading
 import time
 import uuid
 from dataclasses import dataclass
@@ -211,13 +213,11 @@ class Sandbox:
             "seccomp_filter": self.has_seccomp,
         }
 
-    def run(self, argv, workspace, timeout=None):
+    def _bwrap(self, workspace, extra=()):
         if not self.bwrap:
             raise SandboxUnavailable("bubblewrap (bwrap) is not installed; refusing to run code unsandboxed")
-        timeout = timeout or self.timeout
         workspace = str(Path(workspace).resolve())
-        mem_bytes = self.mem_mb * 1024 * 1024
-        cmd = [self.bwrap, "--unshare-all", "--unshare-user", "--uid", "65534", "--gid", "65534",
+        return [self.bwrap, "--unshare-all", "--unshare-user", "--uid", "65534", "--gid", "65534",
                "--die-with-parent", "--new-session", "--cap-drop", "ALL", "--hostname", "sandbox",
                "--ro-bind", "/usr", "/usr", "--symlink", "usr/lib", "/lib", "--symlink", "usr/lib64", "/lib64",
                "--symlink", "usr/bin", "/bin", "--proc", "/proc", "--dev", "/dev",
@@ -225,7 +225,12 @@ class Sandbox:
                "--bind", workspace, "/workspace", "--chdir", "/workspace",
                "--clearenv", "--setenv", "PATH", "/usr/local/bin:/usr/bin", "--setenv", "HOME", "/workspace",
                "--setenv", "LANG", "C.UTF-8", "--setenv", "PYTHONDONTWRITEBYTECODE", "1",
-               "--setenv", "PYTHONHASHSEED", "0"]
+               "--setenv", "PYTHONHASHSEED", "0"] + list(extra)
+
+    def run(self, argv, workspace, timeout=None):
+        timeout = timeout or self.timeout
+        mem_bytes = self.mem_mb * 1024 * 1024
+        cmd = self._bwrap(workspace)
         pass_fds = ()
         sfd = _seccomp_filter_fd()
         if sfd is not None:
@@ -267,3 +272,128 @@ class Sandbox:
         if len(data) > self.max_output_bytes:
             text += "\n[output truncated]"
         return SandboxResult(code, text, timed_out, oom, time.time() - start, peak)
+
+    def start(self, argv, workspace, port=8000):
+        """Start a long-running program (a web app) in the sandbox and make its port reachable
+        from this machine WITHOUT giving the sandbox any network: connections travel over a
+        Unix socket in a shared folder. Returns a SandboxedServer; call .stop() when done."""
+        sockdir = tempfile.mkdtemp(prefix="nrn-")
+        relay = str(Path(__file__).resolve().with_name("sandbox_relay.py"))
+        cmd = self._bwrap(workspace, ["--bind", sockdir, "/run/neuron", "--ro-bind", relay, "/neuron_relay.py",
+                                      "--setenv", "PYTHONUNBUFFERED", "1"])
+        pass_fds = ()
+        sfd = _seccomp_filter_fd()
+        if sfd is not None:
+            cmd += ["--seccomp", str(sfd)]
+            pass_fds = (sfd,)
+        cmd += ["--", "python3", "/neuron_relay.py", "/run/neuron/app.sock", str(port), "--"] + list(argv)
+        mem_bytes = self.mem_mb * 1024 * 1024
+        cg = _Cgroup(mem_bytes, self.max_procs)
+
+        def preexec():
+            cg.enter()
+            resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+            fs = self.max_file_mb * 1024 * 1024
+            resource.setrlimit(resource.RLIMIT_FSIZE, (fs, fs))
+
+        out = tempfile.TemporaryFile()
+        try:
+            proc = subprocess.Popen(cmd, stdin=subprocess.DEVNULL, stdout=out, stderr=subprocess.STDOUT,
+                                    preexec_fn=preexec, pass_fds=pass_fds, cwd="/")
+        finally:
+            if sfd is not None:
+                os.close(sfd)
+        return SandboxedServer(proc, cg, sockdir, out, self.max_output_bytes)
+
+
+class SandboxedServer:
+    def __init__(self, proc, cg, sockdir, out, max_output):
+        self.proc, self.cg, self.sockdir, self.out, self.max_output = proc, cg, sockdir, out, max_output
+        self.sock_path = os.path.join(sockdir, "app.sock")
+        self._listener = socket.socket()
+        self._listener.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self._listener.bind(("127.0.0.1", 0))
+        self._listener.listen(64)
+        self.port = self._listener.getsockname()[1]
+        self.url = f"http://127.0.0.1:{self.port}"
+        self._closed = False
+        threading.Thread(target=self._accept, daemon=True).start()
+
+    def _accept(self):
+        while not self._closed:
+            try:
+                conn, _ = self._listener.accept()
+            except OSError:
+                return
+            try:
+                up = socket.socket(socket.AF_UNIX)
+                up.connect(self.sock_path)
+            except OSError:
+                conn.close()
+                continue
+            for a, b in ((conn, up), (up, conn)):
+                threading.Thread(target=self._pump, args=(a, b), daemon=True).start()
+
+    @staticmethod
+    def _pump(a, b):
+        try:
+            while True:
+                data = a.recv(65536)
+                if not data:
+                    break
+                b.sendall(data)
+        except OSError:
+            pass
+        finally:
+            for s in (a, b):
+                try:
+                    s.shutdown(socket.SHUT_RDWR)
+                except OSError:
+                    pass
+                s.close()
+
+    def alive(self):
+        return self.proc.poll() is None
+
+    def wait_ready(self, path="/", timeout=15):
+        """True once the app answers HTTP. False if it died or never answered."""
+        import urllib.error
+        import urllib.request
+        opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+        end = time.time() + timeout
+        while time.time() < end and self.alive():
+            if os.path.exists(self.sock_path):
+                try:
+                    opener.open(self.url + path, timeout=3).read()
+                    return True
+                except urllib.error.HTTPError:
+                    return True
+                except OSError:
+                    pass
+            time.sleep(0.1)
+        return False
+
+    def output(self):
+        self.out.flush()
+        self.out.seek(0)
+        return self.out.read(self.max_output).decode("utf-8", "replace")
+
+    def peak_mem_bytes(self):
+        return self.cg.peak()
+
+    def stop(self):
+        if self._closed:
+            return self.output()
+        self._closed = True
+        try:
+            self._listener.close()
+        except OSError:
+            pass
+        if self.proc.poll() is None:
+            self.proc.kill()
+        self.proc.wait()
+        text = self.output()
+        self.cg.close()
+        self.out.close()
+        shutil.rmtree(self.sockdir, ignore_errors=True)
+        return text
