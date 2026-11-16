@@ -99,17 +99,19 @@ class TrialRun:
 
     def run_checks(self, checks):
         """Returns (passed, failure text)."""
-        url = self.start()
-        if not url:
-            return False, "The app did not start:\n" + self.log[-1500:]
         try:
             for check in checks:
+                self.stop()
+                for old in self.dir.glob("data.db*"):       # every check starts from an empty database
+                    old.unlink()
+                url = self.start()
+                if not url:
+                    return False, "The app did not start:\n" + self.log[-1500:]
                 ok, why = CheckRunner(url, restart=self.start).run(check)
                 if not ok:
                     self.stop()
                     errors = "\n".join(l for l in self.log.splitlines()[-25:])
                     return False, f"Check '{check['name']}' failed: {why}" + (f"\nApp error output:\n{errors}" if "Traceback" in errors else "")
-                url = self.server.url if self.server else self.start()
         finally:
             self.stop()
         return True, ""

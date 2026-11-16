@@ -1,0 +1,22 @@
+{
+ "name": "b1_bakery_landing",
+ "kind": "site",
+ "request": "Please make a landing page for my bakery, Sunrise Bakery, in Ibadan. It should have a big welcome headline with the bakery's name, show the three things we sell - fresh bread, birthday cakes and meat pies - with a short line about each, show our opening hours (Monday to Saturday, 7am to 7pm), and have a form where people can leave their email address to hear about new offers. After they send it, thank them. Keep the emails so I don't lose them. It must look good on a phone.",
+ "site": {
+  "name": "Sunrise Bakery",
+  "must_show": [
+   "fresh bread",
+   "birthday cakes?",
+   "meat pies?",
+   "7\\s*am",
+   "monday"
+  ],
+  "form": {
+   "Email": "chidi.okeke@example.com"
+  },
+  "thanks": "thank",
+  "stored": [
+   "chidi.okeke@example.com"
+  ]
+ }
+}

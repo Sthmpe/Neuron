@@ -1,0 +1,82 @@
+{
+ "name": "b2_shop_app",
+ "kind": "app",
+ "request": "I run a small shop and want an app to keep track of my customers and my stock. I should have to log in first - my username is owner and my password is sunrise42. After logging in I want a dashboard that shows how many customers I have, how many products I have, and how many products are low on stock (fewer than 5 left). I need a Customers page where I can add a customer (name, phone and email) and search customers by name. I need a Products page where I can add a product (name, price and quantity) and search products by name. Everything must be saved in a database so nothing is lost if the app restarts, and it must work well on a phone.",
+ "app": {
+  "login": {
+   "username": "owner",
+   "password": "sunrise42"
+  },
+  "entities": [
+   {
+    "link": "customers",
+    "records": [
+     {
+      "Name": "Ada Obi",
+      "Phone": "0803 123 4567",
+      "Email": "ada@example.com"
+     },
+     {
+      "Name": "Bola Adeyemi",
+      "Phone": "0805 987 6543",
+      "Email": "bola@example.com"
+     },
+     {
+      "Name": "Chuka Nwosu",
+      "Phone": "0701 222 3333",
+      "Email": "chuka@example.com"
+     }
+    ],
+    "search": {
+     "term": "Bola",
+     "hit": "Bola Adeyemi",
+     "miss": "Ada Obi"
+    }
+   },
+   {
+    "link": "products",
+    "records": [
+     {
+      "Name": "Rice 5kg",
+      "Price": "8500",
+      "Quantity": "3"
+     },
+     {
+      "Name": "Palm Oil 1L",
+      "Price": "2400",
+      "Quantity": "40"
+     },
+     {
+      "Name": "Sugar 1kg",
+      "Price": "1900",
+      "Quantity": "2"
+     },
+     {
+      "Name": "Tin Tomato",
+      "Price": "650",
+      "Quantity": "12"
+     }
+    ],
+    "search": {
+     "term": "Sugar",
+     "hit": "Sugar 1kg",
+     "miss": "Palm Oil 1L"
+    }
+   }
+  ],
+  "dashboard": [
+   {
+    "label": "customers",
+    "value": 3
+   },
+   {
+    "label": "products",
+    "value": 4
+   },
+   {
+    "label": "low",
+    "value": 2
+   }
+  ]
+ }
+}

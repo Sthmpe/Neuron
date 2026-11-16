@@ -1,0 +1,70 @@
+{
+ "name": "d2_class_app",
+ "kind": "app",
+ "request": "I teach evening classes and need an app to keep track of my students and courses. I should have to log in first - my username is teacher and my password is chalk77. After logging in I want a dashboard that shows how many students I have, how many courses I have, and how many students are under 18. I need a Students page where I can add a student (name, email and age) and search students by name. I need a Courses page where I can add a course (title and fee) and search courses by title. Everything must be saved in a database so nothing is lost if the app restarts, and it must work well on a phone.",
+ "app": {
+  "login": {
+   "username": "teacher",
+   "password": "chalk77"
+  },
+  "entities": [
+   {
+    "link": "students",
+    "records": [
+     {
+      "Name": "Tunde Okafor",
+      "Email": "tunde@example.com",
+      "Age": "16"
+     },
+     {
+      "Name": "Amaka Eze",
+      "Email": "amaka@example.com",
+      "Age": "25"
+     },
+     {
+      "Name": "Bisi Lawal",
+      "Email": "bisi@example.com",
+      "Age": "17"
+     }
+    ],
+    "search": {
+     "term": "Amaka",
+     "hit": "Amaka Eze",
+     "miss": "Tunde Okafor"
+    }
+   },
+   {
+    "link": "courses",
+    "records": [
+     {
+      "Title": "Bookkeeping Basics",
+      "Fee": "15000"
+     },
+     {
+      "Title": "Spoken French",
+      "Fee": "12000"
+     }
+    ],
+    "search": {
+     "term": "French",
+     "hit": "Spoken French",
+     "miss": "Bookkeeping Basics"
+    }
+   }
+  ],
+  "dashboard": [
+   {
+    "label": "students",
+    "value": 3
+   },
+   {
+    "label": "courses",
+    "value": 2
+   },
+   {
+    "label": "under 18",
+    "value": 2
+   }
+  ]
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "name": "d1_tutor_site",
+ "kind": "site",
+ "request": "Make a one-page website for my tutoring service, BrightPath Tutors. I want a big headline with the name, the three subjects we teach - Maths, Physics and English - with a short line about each, our price (5,000 naira per lesson), and a form where parents can leave their name and phone number so I can call them back. After they send it, thank them. Keep what they send so I don't lose it. It has to look good on a phone.",
+ "site": {
+  "name": "BrightPath Tutors",
+  "must_show": [
+   "maths",
+   "physics",
+   "english",
+   "5,?000"
+  ],
+  "form": {
+   "Name": "Ngozi Bello",
+   "Phone": "0803 555 0101"
+  },
+  "thanks": "thank",
+  "stored": [
+   "Ngozi Bello"
+  ]
+ }
+}
