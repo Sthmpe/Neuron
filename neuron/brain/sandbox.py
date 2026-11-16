@@ -45,6 +45,17 @@ DENIED_SYSCALLS = [
 CLONE_NS_FLAGS = [0x00020000, 0x02000000, 0x04000000, 0x08000000, 0x10000000, 0x20000000, 0x40000000]
 
 
+def _own_cgroup(controller):
+    try:
+        for line in open("/proc/self/cgroup"):
+            _, ctrls, path = line.strip().split(":", 2)
+            if controller in ctrls.split(","):
+                return CGROUP_ROOT / controller / path.lstrip("/")
+    except OSError:
+        pass
+    return CGROUP_ROOT / controller
+
+
 class SandboxUnavailable(Exception):
     pass
 
@@ -114,7 +125,8 @@ class _Cgroup:
         self.dirs = {}
         name = "neuron-sbx-" + uuid.uuid4().hex[:12]
         try:
-            m = CGROUP_ROOT / "memory" / name
+            # nested inside whatever memory cgroup we are in, so a RAM tier also counts the sandbox
+            m = _own_cgroup("memory") / name
             m.mkdir()
             (m / "memory.limit_in_bytes").write_text(str(mem_bytes))
             try:
@@ -125,7 +137,7 @@ class _Cgroup:
         except OSError:
             pass
         try:
-            p = CGROUP_ROOT / "pids" / name
+            p = _own_cgroup("pids") / name
             p.mkdir()
             (p / "pids.max").write_text(str(max_procs))
             self.dirs["pids"] = p

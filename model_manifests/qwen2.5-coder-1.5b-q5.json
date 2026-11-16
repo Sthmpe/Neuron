@@ -1,0 +1,11 @@
+{
+ "id": "qwen2.5-coder-1.5b-q5",
+ "file": "qwen2.5-coder-1.5b-instruct-q5_k_m.gguf",
+ "sha256": null,
+ "source": "https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF/resolve/main/qwen2.5-coder-1.5b-instruct-q5_k_m.gguf",
+ "licence": "apache-2.0",
+ "params_billion": 1.5,
+ "context_tokens": 8192,
+ "server_args": [],
+ "request_extra": {}
+}

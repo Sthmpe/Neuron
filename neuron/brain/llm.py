@@ -31,6 +31,7 @@ class LlamaClient:
         self.url, self.timeout = url.rstrip("/"), timeout
         self._opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
         self._model = None
+        self.extra_body = {}      # per-model request settings from the model's manifest
         self.calls, self.total_seconds, self.total_completion_tokens = 0, 0.0, 0
 
     def _req(self, path, body=None, timeout=None):
@@ -62,6 +63,7 @@ class LlamaClient:
     def chat(self, messages, max_tokens=1024, temperature=0.2, json_schema=None):
         body = {"messages": messages, "max_tokens": max_tokens, "temperature": temperature,
                 "cache_prompt": True}
+        body.update(self.extra_body)
         if json_schema is not None:
             body["response_format"] = {"type": "json_object", "schema": json_schema}
         start = time.time()

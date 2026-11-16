@@ -14,18 +14,19 @@ DEFAULT_MODEL_DIR = Path(os.environ.get("NEURON_MODEL_DIR", str(Path(__file__).r
 
 
 def find_model():
-    """The model file to use: $NEURON_MODEL, or the first .gguf in the models folder."""
+    """The model file to use: $NEURON_MODEL, or the first .gguf in the models folder (or its store)."""
     if os.environ.get("NEURON_MODEL"):
         return Path(os.environ["NEURON_MODEL"])
-    found = sorted(DEFAULT_MODEL_DIR.glob("*.gguf"))
+    found = sorted(DEFAULT_MODEL_DIR.glob("*.gguf")) or sorted((DEFAULT_MODEL_DIR / "store").glob("*.gguf"))
     return found[0] if found else None
 
 
 class LlamaServer:
-    def __init__(self, model, binary=DEFAULT_BIN, port=8080, ctx=8192, threads=None, log=None):
+    def __init__(self, model, binary=DEFAULT_BIN, port=8080, ctx=8192, threads=None, log=None, extra_args=()):
         self.model, self.binary, self.port, self.ctx = Path(model), binary, port, ctx
         self.threads = threads or os.cpu_count() or 2
         self.log, self.proc = log, None
+        self.extra_args = list(extra_args)      # per-model settings from the model's manifest
         self.url = f"http://127.0.0.1:{port}"
 
     def start(self, wait=180):
@@ -40,7 +41,7 @@ class LlamaServer:
              # load-mode none: read the model into memory once. With the default (mmap) this CPU's
              # AMX code path keeps a second, repacked copy: 2.7 GB resident instead of 1.7 GB.
              # cache-ram 0: no growing prompt cache, so memory stays bounded.
-             "--load-mode", "none", "--cache-ram", "0"],
+             "--load-mode", "none", "--cache-ram", "0"] + self.extra_args,
             stdout=out, stderr=subprocess.STDOUT)
         client = LlamaClient(self.url)
         end = time.time() + wait

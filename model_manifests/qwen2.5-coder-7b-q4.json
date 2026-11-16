@@ -1,0 +1,11 @@
+{
+ "id": "qwen2.5-coder-7b-q4",
+ "file": "qwen2.5-coder-7b-instruct-q4_k_m.gguf",
+ "sha256": null,
+ "source": "https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF/resolve/main/qwen2.5-coder-7b-instruct-q4_k_m.gguf",
+ "licence": "apache-2.0",
+ "params_billion": 7,
+ "context_tokens": 8192,
+ "server_args": [],
+ "request_extra": {}
+}
