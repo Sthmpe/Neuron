@@ -1,0 +1,219 @@
+{
+ "rows": [
+  {
+   "task": "01_shopping_cart",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 9.913217782974243,
+    "tokens": 115
+   },
+   "what_happened": [
+    "Cart.total: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 12.0,
+   "peak_mb": 1432
+  },
+  {
+   "task": "02_text_stats",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 33.88563251495361,
+    "tokens": 386
+   },
+   "what_happened": [
+    "words: the rewritten function is identical to the original (no change)",
+    "words: tests still fail: [...]\n/tests/test_textstats.py\", line 15, in test_tabs_and_new",
+    "words: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 34.1,
+   "peak_mb": 1436
+  },
+  {
+   "task": "03_binary_search",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 44.470245361328125,
+    "tokens": 543
+   },
+   "what_happened": [
+    "index_of: the rewritten function is identical to the original (no change)",
+    "index_of: the rewritten function is identical to the original (no change)",
+    "index_of: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 44.6,
+   "peak_mb": 1433
+  },
+  {
+   "task": "04_bank_transfer",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 12.303340196609497,
+    "tokens": 149
+   },
+   "what_happened": [
+    "Bank.transfer: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 12.6,
+   "peak_mb": 1440
+  },
+  {
+   "task": "05_date_utils",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 12.825881719589233,
+    "tokens": 131
+   },
+   "what_happened": [
+    "is_leap_year: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 13.1,
+   "peak_mb": 1438
+  },
+  {
+   "task": "06_matrix",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 18.0391685962677,
+    "tokens": 257
+   },
+   "what_happened": [
+    "multiply: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 18.3,
+   "peak_mb": 1434
+  },
+  {
+   "task": "07_lru_cache",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 32.208985805511475,
+    "tokens": 328
+   },
+   "what_happened": [
+    "LRUCache._touch: tests still fail: [...]\n===================\nFAIL: test_overwrite_refreshes (test",
+    "LRUCache._touch: tests still fail: [...]\n===================\nFAIL: test_overwrite_refreshes (test",
+    "LRUCache._touch: tests still fail: [...]\n---------------------\nTraceback (most recent call last):"
+   ],
+   "tests_untouched": true,
+   "seconds": 32.6,
+   "peak_mb": 1457
+  },
+  {
+   "task": "08_csv_parser",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 67.94864916801453,
+    "tokens": 933
+   },
+   "what_happened": [
+    "parse_line: tests still fail: [...]\ns\n    self.assertEqual(rows[0], {\"name\": \"Ada\", \"city\": ",
+    "parse_line: tests still fail: [...]\ns\n    self.assertEqual(rows[0], {\"name\": \"Ada\", \"city\": ",
+    "parse_line: tests still fail: [...]\nce/tests/test_csvlite.py\", line 14, in test_escaped_quot"
+   ],
+   "tests_untouched": true,
+   "seconds": 68.4,
+   "peak_mb": 1464
+  },
+  {
+   "task": "09_todo_app",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 36.48818874359131,
+    "tokens": 367
+   },
+   "what_happened": [
+    "Task.add_tag: the rewritten function is identical to the original (no change)",
+    "Task.add_tag: tests still fail: [...]\npace/tests/test_todo.py\", line 18, in test_tags_are_norm",
+    "Task.__init__: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 36.7,
+   "peak_mb": 1459
+  },
+  {
+   "task": "10_intervals",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 38.24237561225891,
+    "tokens": 387
+   },
+   "what_happened": [
+    "covers: tests still fail: [...]\nests.test_total_length)\n--------------------------------",
+    "total_length: tests still fail: [...]\nests.test_total_length)\n--------------------------------",
+    "total_length: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 38.5,
+   "peak_mb": 1464
+  }
+ ],
+ "set": "dev",
+ "tier": "2gb",
+ "tier_limit_mb": 2048,
+ "condition": "full",
+ "models": {
+  "planner": "qwen2.5-coder-1.5b-q4",
+  "reviewer": "qwen2.5-coder-1.5b-q4",
+  "builder": "qwen2.5-coder-1.5b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-16 22:05:54",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

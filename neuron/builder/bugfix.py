@@ -14,12 +14,13 @@ import difflib
 import json
 import re
 import shutil
+import textwrap
 import time
 from pathlib import Path
 
 from ..brain.llm import LLMUnavailable
 from ..brain.tools.fix_code import default_test_command, is_test_file, tail, tests_passed
-from . import pmap, prompts
+from . import localize, pmap, prompts
 from .build import Meter, extract_code
 from .state import ProjectState
 
@@ -39,6 +40,7 @@ def failing_tests(output):
 
 def pick_function(reply_code, name):
     """From the builder's reply, the source of the function called `name` (bare name)."""
+    reply_code = textwrap.dedent(reply_code)        # a method is often sent back still indented
     try:
         tree = ast.parse(reply_code)
     except SyntaxError:
@@ -50,6 +52,34 @@ def pick_function(reply_code, name):
     lines = reply_code.splitlines()
     start = min([node.lineno] + [d.lineno for d in node.decorator_list]) - 1
     return "\n".join(lines[start: node.end_lineno])
+
+
+def apply_edit(file_text, function_source, reply):
+    """Apply an OLD/NEW edit (two code blocks) inside the function. Returns the new file text or None."""
+    blocks = re.findall(r"```[a-zA-Z0-9]*[ \t]*\n(.*?)```", reply, re.S)
+    if len(blocks) < 2:
+        return None
+    old = [l.strip() for l in blocks[0].strip("\n").splitlines() if l.strip()]
+    new = textwrap.dedent(blocks[1]).strip("\n").splitlines()
+    if not old or [l.strip() for l in new if l.strip()] == old:
+        return None
+    fn_lines = function_source.splitlines()
+    for i in range(len(fn_lines)):
+        j, k = i, 0
+        while j < len(fn_lines) and k < len(old):
+            if not fn_lines[j].strip():
+                j += 1
+                continue
+            if fn_lines[j].strip() != old[k]:
+                break
+            j, k = j + 1, k + 1
+        if k == len(old):
+            first = fn_lines[i]
+            indent = first[: len(first) - len(first.lstrip())]
+            changed = fn_lines[:i] + [(indent + l if l.strip() else l) for l in new] + fn_lines[j:]
+            new_fn = "\n".join(changed)
+            return file_text.replace(function_source, new_fn, 1) if function_source in file_text else None
+    return None
 
 
 def fix_project(project, runner, sandbox, log=print, test_command=None, write_back=True, max_seconds=None):
@@ -113,8 +143,20 @@ def fix_project(project, runner, sandbox, log=print, test_command=None, write_ba
         used = [k for k, (f, q) in candidates.items() if q.split(".")[-1] in (test_block + output)]
         whole = "\n\n".join(f"# {candidates[k][0]}\n{pmap.function_source(sources[candidates[k][0]], candidates[k][1])}"
                             for k in (used or list(candidates))[:12])[:SOURCE_BUDGET]
+    # ---- where to look: which functions do the FAILING tests run? (no model involved) ----
+    by_place = {v: k for k, v in candidates.items()}
+    saved = next((d for d in state.lines("decisions.jsonl") if d["kind"] == "localisation"), None)
+    if saved is None:
+        ranked = localize.rank_functions(localize.suspicious(project, sandbox, work, cmd), m) if default_cmd else []
+        ranked = [(by_place[(f, q)], score) for f, q, score in ranked if (f, q) in by_place][:5]
+        state.decide("fix", "localisation", json.dumps(ranked))
+    else:
+        ranked = [tuple(x) for x in json.loads(saved["text"])]
+    choices = [k for k, _ in ranked] or sorted(candidates)
+    hint = ("\n\nRunning the tests one by one shows which functions the FAILING tests use most "
+            "(most suspicious first): " + ", ".join(f"{k} ({score:.2f})" for k, score in ranked)) if ranked else ""
     schema = {"type": "object", "required": ["function", "problem", "fix"],
-              "properties": {"function": {"type": "string", "enum": sorted(candidates)},
+              "properties": {"function": {"type": "string", "enum": choices},
                              "problem": {"type": "string"}, "fix": {"type": "string"}}}
     winner = None
     while len(task["attempts"]) < MAX_ATTEMPTS and winner is None:
@@ -125,10 +167,13 @@ def fix_project(project, runner, sandbox, log=print, test_command=None, write_ba
         history = ""
         for a in task["attempts"]:
             history += f"\nAttempt {a['n']}: changed `{a.get('function')}` because: {a.get('problem', '')}. Result: {a.get('failure', '')[:300]}"
+        # narrow at first (the most suspicious functions), wider on later attempts
+        offered = (choices[: {1: 2, 2: 3}.get(n, 5)] if ranked else choices)
+        schema["properties"]["function"]["enum"] = offered
         try:
             # ---- review: diagnose -------------------------------------------------
             user = (f"Failing test output:\n```\n{tail(output, 1800)}\n```\n\nThe failing tests:\n```python\n{test_block}\n```\n\n"
-                    f"Source code:\n```python\n{whole}\n```\n\nFunctions you can choose: {', '.join(sorted(candidates))}"
+                    f"Source code:\n```python\n{whole}\n```{hint}\n\nFunctions you can choose: {', '.join(offered)}"
                     + (f"\n\nEarlier attempts that did NOT fix it (choose differently or fix differently):{history}" if history else ""))
             reply = meter.chat(runner.client("reviewer"), [{"role": "system", "content": prompts.DIAGNOSE_SYSTEM},
                                                            {"role": "user", "content": user}],
@@ -137,29 +182,38 @@ def fix_project(project, runner, sandbox, log=print, test_command=None, write_ba
                 d = json.loads(reply.text[reply.text.index("{"): reply.text.rindex("}") + 1])
             except ValueError:
                 d = {}
-            key = d.get("function") if d.get("function") in candidates else sorted(candidates)[0]
+            key = d.get("function") if d.get("function") in offered else offered[0]
             rel, qual = candidates[key]
             attempt.update(function=key, problem=str(d.get("problem", ""))[:400], fix=str(d.get("fix", ""))[:400])
             state.decide("fix", "diagnosis", f"attempt {n}: {key}: {attempt['problem']} -> {attempt['fix']}")
             # ---- build: rewrite that one function ----------------------------------
             old = pmap.function_source(sources[rel], qual)
+            edit_mode = n == 2      # second try: ask for a small OLD/NEW edit, which cannot come back unchanged
             user = (f"The bug: {attempt['problem']}\nThe fix to make: {attempt['fix']}\n\n"
                     f"A failing test:\n```python\n{test_block[:1200]}\n```\n\n"
-                    f"The function to rewrite (from {rel}):\n```python\n{old}\n```\n"
+                    f"The function to rewrite (from {rel}):\n```python\n{textwrap.dedent(old)}\n```\n"
                     + ("\nYour previous rewrite was identical to the original or did not work. Make a real change.\n"
-                       if task["attempts"] else "") + f"\nReply with the complete corrected function `{qual.split('.')[-1]}` only.")
-            reply = meter.chat(runner.client("builder"), [{"role": "system", "content": prompts.FIX_SYSTEM},
+                       if task["attempts"] else "")
+                    + (prompts.EDIT_FORMAT if edit_mode else f"\nReply with the complete corrected function `{qual.split('.')[-1]}` only."))
+            reply = meter.chat(runner.client("builder"), [{"role": "system", "content": prompts.EDIT_SYSTEM if edit_mode else prompts.FIX_SYSTEM},
                                                           {"role": "user", "content": user}],
                                max_tokens=900, temperature=0.1 if n == 1 else 0.6)
         except LLMUnavailable as e:
             attempt["failure"] = f"the local model could not be used: {e}"
             state.add_attempt("fix", attempt)
             break
-        code = extract_code(reply.text)
-        new_fn = pick_function(code, qual.split(".")[-1]) if code else None
-        new_text = pmap.replace_function(sources[rel], qual, new_fn) if new_fn else None
+        if edit_mode:
+            new_text = apply_edit(sources[rel], old, reply.text)
+            if new_text is None:
+                attempt["failure"] = "the reply was not a usable OLD/NEW edit of that function"
+        else:
+            code = extract_code(reply.text)
+            new_fn = pick_function(code, qual.split(".")[-1]) if code else None
+            new_text = pmap.replace_function(sources[rel], qual, new_fn) if new_fn else None
+            if new_text is None:
+                attempt["failure"] = "the reply did not contain the function"
         if new_text is None:
-            attempt["failure"] = "the reply did not contain the function"
+            pass
         else:
             try:
                 compile(new_text, rel, "exec")

@@ -136,3 +136,17 @@ DIAGNOSE_SYSTEM = ("You are a careful Python reviewer. The project's tests fail 
 FIX_SYSTEM = ("You are a careful Python programmer. Rewrite ONE function to fix the bug described. Change as little as "
               "possible and keep its name and arguments. Reply with one ```python block containing only the complete "
               "corrected function.")
+
+EDIT_SYSTEM = ("You are a careful Python programmer. Fix the bug described by changing as few lines as possible. "
+               "Reply with exactly two code blocks: first the line(s) to replace, copied exactly from the function; "
+               "then the corrected line(s).")
+EDIT_FORMAT = """
+Reply in exactly this format:
+OLD:
+```python
+<the faulty line or lines, copied exactly from the function above>
+```
+NEW:
+```python
+<the corrected line or lines>
+```"""
