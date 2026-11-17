@@ -1,0 +1,5 @@
+# Python libraries NEURON uses (everything else is the Python standard library)
+openpyxl==3.1.5
+python-docx==1.2.0
+python-pptx==1.0.2
+pypdf==6.17.0

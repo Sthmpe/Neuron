@@ -30,6 +30,9 @@ def main(argv=None):
         return 0
     if cfg.get("model_dir"):
         os.environ["NEURON_MODEL_DIR"] = cfg["model_dir"]
+    if cfg.get("llama_bin") and Path(cfg["llama_bin"]).exists():
+        os.environ["NEURON_LLAMA_BIN"] = cfg["llama_bin"]
+    (home / "logs").mkdir(parents=True, exist_ok=True)
     from ..agent.capability import default_registry
     from ..brain.models import ModelManager, ModelRunner
     from ..brain.sandbox import Sandbox
