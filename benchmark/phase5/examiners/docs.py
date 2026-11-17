@@ -99,7 +99,7 @@ def excel(path, csv_path, region_col="region"):
         ok_share = any(abs(n - share) < 0.0005 or abs(n - share * 100) < 0.05 for n in nums)
         checks.append({"id": f"{region.lower()}_totals_correct", "pass": ok_units and ok_rev, "detail": f"want {units} units, {rev:.2f}; row {row}"})
         checks.append({"id": f"{region.lower()}_share_correct", "pass": ok_share, "detail": f"want {share:.4f}"})
-    total_row = next((r for r in grid if any(isinstance(c, str) and c.strip().lower().startswith("total") for c in r)), None)
+    total_row = next((r for r in grid if r and isinstance(r[0], str) and r[0].strip().lower().startswith("total")), None)
     checks.append({"id": "total_row_correct", "pass": bool(total_row) and any(isinstance(c, (int, float)) and abs(c - total_rev) < 0.01 for c in total_row),
                    "detail": f"want {total_rev:.2f}; row {total_row}"})
     shutil.rmtree(out, ignore_errors=True)
@@ -215,6 +215,6 @@ def excel_simple(path, csv_path, group_col, value_col):
     for g, v in truth.items():
         row = next((r for r in grid if any(isinstance(c, str) and c.strip().lower() == g.lower() for c in r)), [])
         checks.append({"id": f"{g.lower()}_total", "pass": any(isinstance(c, (int, float)) and abs(c - v) < 0.01 for c in row), "detail": f"want {v}"})
-    tot = next((r for r in grid if any(isinstance(c, str) and c.lower().startswith("total") for c in r)), [])
+    tot = next((r for r in grid if r and isinstance(r[0], str) and r[0].strip().lower().startswith("total")), [])
     checks.append({"id": "total_row", "pass": any(isinstance(c, (int, float)) and abs(c - sum(truth.values())) < 0.01 for c in tot), "detail": str(tot)})
     return _result(checks)

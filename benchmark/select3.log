@@ -51,3 +51,9 @@ installed qwen3.5-9b-q4
 8gb-full-sel-gemma-4-e4b-q4 08_csv_parser: SOLVED | attempts 1 | 74.9s | peak 5655 MB
 8gb-full-sel-gemma-4-e4b-q4 09_todo_app: SOLVED | attempts 1 | 45.3s | peak 5648 MB
 8gb-full-sel-gemma-4-e4b-q4 10_intervals: SOLVED | attempts 1 | 52.3s | peak 5655 MB
+8gb-full-sel-gemma-4-e4b-q4 d1_tutor_site: SOLVED | 12/12 checks | 312.7s | peak 5721 MB
+8gb-full-sel-gemma-4-e4b-q4 d2_class_app: SOLVED | 19/19 checks | 234.5s | peak 5736 MB
+8gb-full-sel-gemma-4-e4b-q4: solved 12/12; mean score 1.00
+8gb-full-sel-granite-4.1-8b-q4 01_shopping_cart: SOLVED | attempts 1 | 80.2s | peak 6655 MB
+8gb-full-sel-granite-4.1-8b-q4 02_text_stats: SOLVED | attempts 1 | 45.7s | peak 6665 MB
+8gb-full-sel-granite-4.1-8b-q4 03_binary_search: SOLVED | attempts 1 | 78.3s | peak 6663 MB

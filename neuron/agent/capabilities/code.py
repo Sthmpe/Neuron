@@ -1,0 +1,226 @@
+"""Code work in any installed language: fix a bug so the project's tests pass, document every function
+without changing behaviour, write a new program from a description. The project's own tests (or the
+compiler and example runs) decide success; the model's opinion never does."""
+import ast
+import json
+import re
+import shutil
+from pathlib import Path
+
+from ...builder.bugfix import apply_edit, fix_project
+from ...builder.build import extract_code
+from ...kit_next.copy import clean
+from ..capability import Capability, Outcome, Verdict
+from ..context import clip, files
+from .workspace import detect_test_command, run_project_tests
+
+C_LIKE = {".cpp", ".cc", ".c", ".h", ".hpp", ".go", ".rs", ".java", ".js", ".ts", ".dart", ".kt"}
+FUNC = {
+    ".go": re.compile(r"^func\s+(?:\([^)]*\)\s*)?([A-Za-z_]\w*)\s*\("),
+    ".rs": re.compile(r"^\s*(?:pub\s+)?fn\s+([A-Za-z_]\w*)"),
+    "default": re.compile(r"^[\w:<>\*&\s,~]*?\b((?:[A-Za-z_]\w*::)*[A-Za-z_~]\w*)\s*\([^;{]*\)\s*(?:const)?\s*(?:noexcept)?\s*(?:->\s*[\w:<>]+)?\s*\{?\s*$"),
+}
+KEYWORDS = {"if", "for", "while", "switch", "return", "catch", "sizeof", "else", "do"}
+
+
+def functions_in(path, text):
+    """[(name, first line, last line)] for brace languages, found by a header pattern and brace matching."""
+    pat = FUNC.get(Path(path).suffix, FUNC["default"])
+    lines, out = text.splitlines(), []
+    i = 0
+    while i < len(lines):
+        m = pat.match(lines[i])
+        name = m.group(1) if m else None
+        if name and name.split("::")[-1] not in KEYWORDS and not lines[i].strip().startswith(("//", "#", "*")):
+            depth, j, opened = 0, i, False
+            while j < len(lines):
+                depth += lines[j].count("{") - lines[j].count("}")
+                opened = opened or "{" in lines[j]
+                if opened and depth <= 0:
+                    break
+                if not opened and j > i + 2:
+                    break
+                j += 1
+            if opened:
+                out.append((name, i + 1, j + 1))
+                i = j
+        i += 1
+    return out
+
+
+class FixBug(Capability):
+    name = "fix_bug"
+    purpose = "Find the faulty code in a project (any installed language), change it, and run the project's tests"
+    permissions = ("read_workspace", "write_workspace", "run_code", "use_model")
+    resources = {"ram_mb": 300, "uses_model": True}
+    verification = "the project's own test command passes in the sandbox"
+    domains = ("code",)
+    strategies = ("look at more functions", "rewrite the whole suspect function")
+
+    def run(self, job, params):
+        ws = job.workspace
+        cmd = detect_test_command(ws)
+        if cmd is None:
+            return Outcome(False, "no test command found, so a fix could not be proven", evidence={"no_retry": True})
+        if cmd[0] == "python3":                               # the proven step-3 loop for Python
+            r = fix_project(ws, job.runner, job.sandbox, log=lambda *_: None)
+            return Outcome(bool(r.get("claimed")), f"python fix loop: {'fixed' if r.get('claimed') else 'not fixed'} in {r.get('attempts')} attempts",
+                           {"history": r.get("history")}, [r["file"]] if r.get("file") else [], made_by="model")
+        return self._fix_other(job, params, cmd)
+
+    def _fix_other(self, job, params, cmd):
+        ws = job.workspace
+        passed, res = run_project_tests(job)
+        if passed:
+            return Outcome(True, "the tests already pass", {"already": True})
+        output = res.output[-4000:]
+        srcs = [f for f in files(ws) if Path(f).suffix in C_LIKE and not re.search(r"(^|/)tests?/|_test\.|test_", f)]
+        tests = [f for f in files(ws) if Path(f).suffix in C_LIKE and f not in srcs]
+        idents = set(re.findall(r"[A-Za-z_]\w{2,}", output))
+        for t in tests:                                     # names on the failing test lines
+            text = (ws / t).read_text(errors="replace").splitlines()
+            for ln in re.findall(rf"{re.escape(Path(t).name)}:(\d+)|line (\d+)", output):
+                n = int(ln[0] or ln[1])
+                if 0 < n <= len(text):
+                    idents |= set(re.findall(r"[A-Za-z_]\w{2,}", text[n - 1]))
+        cands = []
+        for f in srcs:
+            text = (ws / f).read_text(errors="replace")
+            for name, a, b in functions_in(f, text):
+                body = "\n".join(text.splitlines()[a - 1:b])
+                short = name.split("::")[-1]
+                score = (5 if short in idents else 0) + sum(1 for i in idents if re.search(rf"\b{re.escape(i)}\b", body)) * 0.2
+                cands.append((score, f, name, a, b, body))
+        cands.sort(key=lambda c: -c[0])
+        wide = params.get("strategy") == "look at more functions"
+        top = cands[: 8 if wide else 5]
+        if not top:
+            return Outcome(False, "no functions found in the source files")
+        keys = [f"{c[1]}::{c[2]}" for c in top]
+        ctx = "\n\n".join(f"// {c[1]} lines {c[3]}-{c[4]}\n{clip(c[5], 1500)}" for c in top)
+        tried = params.get("feedback", "")
+        diag = job.ask_json("reviewer", "You find the one bug that makes the tests fail. The tests are correct.",
+                            f"Test output:\n{clip(output, 2500)}\n\nCandidate functions:\n{ctx}\n\n" + (f"Earlier attempt failed: {clip(tried, 800)}\n" if tried else "")
+                            + "Which function has the bug, what is wrong, and what is the fix?",
+                            {"type": "object", "required": ["function", "problem", "fix"],
+                             "properties": {"function": {"type": "string", "enum": keys}, "problem": {"type": "string"}, "fix": {"type": "string"}}},
+                            max_tokens=300)
+        if not diag:
+            return Outcome(False, "no diagnosis from the model")
+        pick = top[keys.index(diag["function"])] if diag["function"] in keys else top[0]
+        _, f, name, a, b, body = pick
+        job.state.decide("fix", "diagnosis", f"{f}::{name}: {diag['problem']} -> {diag['fix']}")
+        full = (ws / f).read_text()
+        if params.get("strategy") == "rewrite the whole suspect function":
+            reply = job.ask_text("builder", "You fix one function. Reply with one code block containing only the complete corrected function.",
+                                 f"Bug: {diag['problem']}\nFix: {diag['fix']}\n\n```\n{body}\n```", max_tokens=1200)
+            new_fn = extract_code(reply)
+            new = full.replace(body, new_fn.rstrip("\n")) if new_fn and body in full else None
+        else:
+            reply = job.ask_text("builder", "You fix a bug by changing as few lines as possible. Reply with two code blocks: the exact old line(s), then the new line(s).",
+                                 f"Bug: {diag['problem']}\nFix: {diag['fix']}\n\nFunction:\n```\n{body}\n```\n\nOLD:\n```\n<line(s) copied exactly>\n```\nNEW:\n```\n<corrected line(s)>\n```",
+                                 max_tokens=500)
+            new = apply_edit(full, body, reply)
+        if not new or new == full:
+            return Outcome(False, f"the change to {name} could not be applied or changed nothing")
+        backup = full
+        (ws / f).write_text(new)
+        passed, res = run_project_tests(job)
+        if not passed:
+            (ws / f).write_text(backup)                       # never leave a failed change behind
+            return Outcome(False, f"changed {f}::{name} but the tests still fail: {clip(res.output, 600)}")
+        return Outcome(True, f"fixed {f}::{name}: {diag['problem']}", {"file": f, "function": name}, [f], made_by="model")
+
+    def verify(self, job, params, outcome):
+        passed, res = run_project_tests(job)
+        return Verdict(bool(passed), [{"id": "project_tests_pass", "pass": bool(passed), "detail": (res.output if res else "")[-500:]}],
+                       "project test command in the sandbox")
+
+
+def _strip_docs(src):
+    tree = ast.parse(src)
+    for n in ast.walk(tree):
+        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Module)) and n.body:
+            f = n.body[0]
+            if isinstance(f, ast.Expr) and isinstance(getattr(f, "value", None), ast.Constant) and isinstance(f.value.value, str):
+                n.body = n.body[1:] or [ast.Pass()]
+    return ast.dump(tree)
+
+
+class DocumentFunctions(Capability):
+    name = "document_functions"
+    purpose = "Write a docstring for every undocumented Python function, one at a time, without changing behaviour"
+    permissions = ("read_workspace", "write_workspace", "use_model")
+    resources = {"ram_mb": 100, "uses_model": True}
+    verification = "the code with docstrings removed is identical to the original; every function has a docstring"
+    domains = ("code",)
+
+    def _is_test(self, rel):
+        return rel.parts[0] in ("tests", "test") or rel.name.startswith("test_")
+
+    def run(self, job, params):
+        ws = job.workspace
+        orig = job.state.dir / "original"
+        if not orig.exists():                              # snapshot once, so a resumed job compares with the real original
+            for f in files(ws, {".py"}):
+                (orig / f).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy(ws / f, orig / f)
+        done_file = job.state.dir / "documented.json"
+        done = json.loads(done_file.read_text()) if done_file.exists() else []
+        wrote, skipped = 0, []
+        for rel in files(ws, {".py"}):
+            if self._is_test(Path(rel)):
+                continue
+            path = ws / rel
+            while True:
+                src = path.read_text()
+                tree = ast.parse(src)
+                todo = next((n for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and not ast.get_docstring(n)
+                             and f"{rel}:{n.lineno}:{n.name}" not in skipped), None)
+                if todo is None:
+                    break
+                key = f"{rel}:{todo.name}"
+                body0 = todo.body[0]
+                if body0.lineno == todo.lineno:            # 'def f(): return x' on one line: leave it, report it
+                    skipped.append(f"{rel}:{todo.lineno}:{todo.name}")
+                    continue
+                fn_src = ast.get_source_segment(src, todo) or todo.name
+                text = job.ask_text("builder", "You write short, accurate Python docstrings: what the function does, its inputs, what it returns. "
+                                    "1 to 3 sentences of plain text. No quotes, no code, no em dashes.",
+                                    f"File {rel}:\n```python\n{clip(fn_src, 2500)}\n```\nDocstring for {todo.name}:", max_tokens=160, temperature=0.2)
+                text = clean(re.sub(r'"""|\'\'\'|```.*', "", text)).strip().replace("\\", "\\\\")
+                if len(text.split()) < 5:
+                    text = f"{todo.name.replace('_', ' ').capitalize()}: see the code below for its inputs and result."
+                lines = src.splitlines()
+                indent = " " * body0.col_offset
+                lines.insert(body0.lineno - 1 - (len(getattr(body0, "decorator_list", [])) if hasattr(body0, "decorator_list") else 0),
+                             f'{indent}"""{text}"""')
+                new = "\n".join(lines) + "\n"
+                try:
+                    ast.parse(new)
+                except SyntaxError:
+                    skipped.append(f"{rel}:{todo.lineno}:{todo.name}")
+                    continue
+                path.write_text(new)                       # saved at once: a killed job keeps this function's docstring
+                done.append(key)
+                done_file.write_text(json.dumps(done))
+                wrote += 1
+        return Outcome(True, f"wrote {wrote} docstrings this session ({len(done)} in total)" + (f"; skipped {skipped}" if skipped else ""),
+                       {"written": wrote, "total": len(done), "skipped": skipped}, sorted({d.split(':')[0] for d in done}), made_by="model")
+
+    def verify(self, job, params, outcome):
+        ws, orig = job.workspace, job.state.dir / "original"
+        changed, missing = [], []
+        for rel in files(orig, {".py"}):
+            if self._is_test(Path(rel)):
+                continue
+            new = (ws / rel).read_text()
+            if _strip_docs((orig / rel).read_text()) != _strip_docs(new):
+                changed.append(rel)
+            missing += [f"{rel}:{n.name}" for n in ast.walk(ast.parse(new)) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and not ast.get_docstring(n)]
+        checks = [{"id": "behaviour_code_unchanged", "pass": not changed, "detail": changed[:5]},
+                  {"id": "every_function_documented", "pass": not missing, "detail": missing[:5]}]
+        return Verdict(not changed and not missing, checks, "AST comparison with the original")
+
+
+CAPABILITIES = [FixBug(), DocumentFunctions()]

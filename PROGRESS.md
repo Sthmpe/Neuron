@@ -16,15 +16,23 @@ session, or a new model, to continue. Update this file after every meaningful st
 | 0 | Finish current work, rules unchanged: model selection, held-out scoring (bugs, builds, workspaces), design system + 20-request proof, README with real numbers | **in progress**: selection nearly done; held-out queued to start automatically |
 | 1 | `VISION.md` | done |
 | 2 | Freeze one reasoning model per tier (file, checksum, settings). No new model searches until the owner asks. Specialist models allowed. Measure total system RAM with headroom | after phase 0 |
-| 3 | Better intelligence with the same models: model-independent state + context slices, shared loop (understand, investigate, plan, execute, observe, verify, revise, continue), strategy change on failure, sequential roles, domain verification. Nothing hardcoded around templates or benchmark tasks | not started |
-| 4 | Tool registry: purpose, inputs, outputs, internet, permissions, resources, verification. Deterministic code where no model is needed. Missing tools reported honestly | not started (step-2 registry exists) |
-| 5 | New evaluation, tasks locked before tuning: unseen business app (kill halfway, resume); a Flutter or C++ project; multi-module workspace bugs incl. a compiled language; Excel, Word, PowerPoint, PDF tasks with independent file checks; a task longer than one context window. Report completion, time, peak RAM, model calls, human help, recovery, model vs template share | not started |
+| 3 | Better intelligence with the same models: model-independent state + context slices, shared loop (understand, investigate, plan, execute, observe, verify, revise, continue), strategy change on failure, sequential roles, domain verification. Nothing hardcoded around templates or benchmark tasks | **first version built** in `neuron/agent/` (loop, state, context, router, rework, strategies); tested with a scripted model; not yet run with real models |
+| 4 | Tool registry: purpose, inputs, outputs, internet, permissions, resources, verification. Deterministic code where no model is needed. Missing tools reported honestly | **first version built**: 20 capabilities (sheets, Word, PowerPoint, PDF research, answers, workspace, multi-language bug fixing, docstrings, new programs, web apps); `python3 -m neuron.agent --capabilities` |
+| 5 | **Tasks LOCKED** (`benchmark/phase5/LOCKED.md`, 12 locked + 7 dev tasks, checkers validated, 1 amendment recorded). New evaluation, tasks locked before tuning: unseen business app (kill halfway, resume); a Flutter or C++ project; multi-module workspace bugs incl. a compiled language; Excel, Word, PowerPoint, PDF tasks with independent file checks; a task longer than one context window. Report completion, time, peak RAM, model calls, human help, recovery, model vs template share | not started |
 | 6 | Owner release: installer (detect RAM, pick model, verify downloads, start; Linux first, Windows/Mac only when tested), phone web UI on local Wi-Fi with secure pairing (chat, tasks, uploads, progress, approvals, previews, downloads, resume, model and memory status), works offline, `TESTING.md` | not started |
 | 7 | Optional online boost interface (never blocks the release); hardware bottleneck log for the future device; README with every number, failure and limit | not started |
 
 The owner's acceptance test for the next milestone: open NEURON on the phone, describe a complicated task
 in ordinary language, and watch it work through it on its own computer, offline, delivering real files
 and evidence.
+
+## Honesty notes for phase 5 (recorded as they happened)
+
+- While writing the agent I sanity-checked the Word and PowerPoint request parsers on wording close to two locked
+  tasks, and smoke-tested the C++/Go function finder on locked workspace files. Nothing was changed as a result
+  (the parsers already handled them). From now on only dev tasks and dev workspaces are used for tuning.
+- Lock amendment 1: an Excel checker bug (a header named "Total" mistaken for the totals row) was found by a dev
+  test and fixed before any locked task ran; recorded in `benchmark/phase5/LOCKED.md`.
 
 ## Known constraints right now
 

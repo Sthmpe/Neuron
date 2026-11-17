@@ -191,6 +191,263 @@
    "tests_untouched": true,
    "seconds": 52.3,
    "peak_mb": 5655
+  },
+  {
+   "task": "d1_tutor_site",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 311.2,
+   "builder": {
+    "ok": true,
+    "stage": "done",
+    "error": "",
+    "design": null,
+    "tasks": {
+     "schema": {
+      "status": "done",
+      "attempts": 1
+     },
+     "home": {
+      "status": "done",
+      "attempts": 2
+     }
+    },
+    "llm": {
+     "calls": 6,
+     "seconds": 302.3922212123871,
+     "tokens": 1191
+    },
+    "model_loads": 1,
+    "seconds": 310.7
+   },
+   "peak_mb_build": 5721,
+   "examiner": [
+    {
+     "id": "page_opens",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "id": "headline_has_the_name",
+     "pass": true,
+     "detail": "headlines: Welcome | BrightPath Tutors | Subjects we teach | Pricing | Request a call back"
+    },
+    {
+     "id": "shows_maths",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_physics",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_english",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_5_000",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "looks_right_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "form_can_be_sent_and_thanks_shown",
+     "pass": true,
+     "detail": "no thank-you message after sending"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "page_opens_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "what_was_sent_is_kept_on_disk",
+     "pass": true,
+     "detail": "not found on disk: "
+    }
+   ],
+   "passed": 12,
+   "total": 12,
+   "score": 1.0,
+   "solved": true,
+   "screenshots": [
+    "home-desktop.png",
+    "home-phone.png",
+    "after-form-desktop.png"
+   ],
+   "examine_seconds": 1.5,
+   "peak_mb_examine": 166,
+   "seconds": 312.7,
+   "peak_mb": 5721
+  },
+  {
+   "task": "d2_class_app",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 230.1,
+   "builder": {
+    "ok": true,
+    "stage": "done",
+    "error": "",
+    "design": null,
+    "tasks": {
+     "schema": {
+      "status": "done",
+      "attempts": 1
+     },
+     "students": {
+      "status": "done",
+      "attempts": 1
+     },
+     "courses": {
+      "status": "done",
+      "attempts": 1
+     },
+     "dashboard": {
+      "status": "done",
+      "attempts": 1
+     }
+    },
+    "llm": {
+     "calls": 5,
+     "seconds": 219.5030162334442,
+     "tokens": 1156
+    },
+    "model_loads": 1,
+    "seconds": 229.1
+   },
+   "peak_mb_build": 5736,
+   "examiner": [
+    {
+     "id": "app_opens",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "id": "login_is_required",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "wrong_password_is_rejected",
+     "pass": true,
+     "detail": "got in with a wrong password"
+    },
+    {
+     "id": "login_works",
+     "pass": true,
+     "detail": "still on the login form"
+    },
+    {
+     "id": "dashboard_shows_the_requested_numbers",
+     "pass": true,
+     "detail": "no sign of: "
+    },
+    {
+     "id": "students_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:40947/students"
+    },
+    {
+     "id": "students_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "students_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "courses_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:40947/courses"
+    },
+    {
+     "id": "courses_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "courses_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "dashboard_counts_are_right",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "works_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "login_still_works_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "records_survive_a_restart",
+     "pass": true,
+     "detail": "gone after restart: "
+    },
+    {
+     "id": "dashboard_right_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "logout_works",
+     "pass": true,
+     "detail": "records page still open after logging out"
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "passed": 19,
+   "total": 19,
+   "score": 1.0,
+   "solved": true,
+   "screenshots": [
+    "login-desktop.png",
+    "students-desktop.png",
+    "courses-desktop.png",
+    "dashboard-desktop.png",
+    "dashboard-phone.png",
+    "students-phone.png",
+    "courses-phone.png"
+   ],
+   "examine_seconds": 4.4,
+   "peak_mb_examine": 240,
+   "seconds": 234.5,
+   "peak_mb": 5736
   }
  ],
  "set": "dev",

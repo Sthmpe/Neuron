@@ -1,0 +1,74 @@
+{
+ "rows": [
+  {
+   "task": "01_shopping_cart",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 56.895766735076904,
+    "tokens": 148
+   },
+   "what_happened": [
+    "Cart.total: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 80.2,
+   "peak_mb": 6655
+  },
+  {
+   "task": "02_text_stats",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 45.29320001602173,
+    "tokens": 108
+   },
+   "what_happened": [
+    "words: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 45.7,
+   "peak_mb": 6665
+  },
+  {
+   "task": "03_binary_search",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 77.99278855323792,
+    "tokens": 222
+   },
+   "what_happened": [
+    "index_of: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 78.3,
+   "peak_mb": 6663
+  }
+ ],
+ "set": "dev",
+ "tier": "8gb",
+ "tier_limit_mb": 8192,
+ "condition": "full",
+ "models": {
+  "planner": "granite-4.1-8b-q4",
+  "reviewer": "granite-4.1-8b-q4",
+  "builder": "granite-4.1-8b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-17 14:43:00",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}
