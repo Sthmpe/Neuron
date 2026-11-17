@@ -22,3 +22,18 @@
 4gb-full-sel-qwen2.5-coder-3b-q4 09_todo_app: SOLVED | attempts 2 | 51.1s | peak 2483 MB
 4gb-full-sel-qwen2.5-coder-3b-q4 10_intervals: SOLVED | attempts 1 | 26.0s | peak 2491 MB
 4gb-full-sel-qwen2.5-coder-3b-q4 d1_tutor_site: SOLVED | 12/12 checks | 145.7s | peak 2518 MB
+4gb-full-sel-qwen2.5-coder-3b-q4 d2_class_app: SOLVED | 19/19 checks | 136.2s | peak 2538 MB
+4gb-full-sel-qwen2.5-coder-3b-q4: solved 9/12; mean score 0.75
+4gb-full-sel-qwen3.5-4b-q4 01_shopping_cart: SOLVED | attempts 1 | 146.2s | peak 3855 MB
+4gb-full-sel-qwen3.5-4b-q4 02_text_stats: SOLVED | attempts 1 | 38.8s | peak 3948 MB
+4gb-full-sel-qwen3.5-4b-q4 03_binary_search: SOLVED | attempts 2 | 226.1s | peak 3899 MB
+4gb-full-sel-qwen3.5-4b-q4 04_bank_transfer: SOLVED | attempts 2 | 117.2s | peak 3899 MB
+4gb-full-sel-qwen3.5-4b-q4 05_date_utils: SOLVED | attempts 1 | 49.2s | peak 3899 MB
+4gb-full-sel-qwen3.5-4b-q4 06_matrix: SOLVED | attempts 1 | 46.0s | peak 3899 MB
+4gb-full-sel-qwen3.5-4b-q4 07_lru_cache: SOLVED | attempts 1 | 36.4s | peak 3899 MB
+4gb-full-sel-qwen3.5-4b-q4 08_csv_parser: SOLVED | attempts 1 | 65.7s | peak 3900 MB
+4gb-full-sel-qwen3.5-4b-q4 09_todo_app: SOLVED | attempts 1 | 43.2s | peak 3900 MB
+4gb-full-sel-qwen3.5-4b-q4 10_intervals: SOLVED | attempts 1 | 53.5s | peak 3900 MB
+4gb-full-sel-qwen3.5-4b-q4 d1_tutor_site: SOLVED | 12/12 checks | 201.4s | peak 3994 MB
+4gb-full-sel-qwen3.5-4b-q4 d2_class_app: SOLVED | 19/19 checks | 191.4s | peak 3913 MB
+4gb-full-sel-qwen3.5-4b-q4: solved 12/12; mean score 1.00

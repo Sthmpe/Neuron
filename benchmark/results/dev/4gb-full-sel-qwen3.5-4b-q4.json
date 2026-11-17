@@ -1,0 +1,470 @@
+{
+ "rows": [
+  {
+   "task": "01_shopping_cart",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 34.64286780357361,
+    "tokens": 137
+   },
+   "what_happened": [
+    "Cart.total: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 146.2,
+   "peak_mb": 3855
+  },
+  {
+   "task": "02_text_stats",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 38.4801287651062,
+    "tokens": 171
+   },
+   "what_happened": [
+    "words: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 38.8,
+   "peak_mb": 3948
+  },
+  {
+   "task": "03_binary_search",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 2,
+   "llm": {
+    "calls": 4,
+    "seconds": 225.65552592277527,
+    "tokens": 1279
+   },
+   "what_happened": [
+    "index_of: tests still fail: [...]\n)\n------------------------------------------------------",
+    "index_of: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 226.1,
+   "peak_mb": 3899
+  },
+  {
+   "task": "04_bank_transfer",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 2,
+   "llm": {
+    "calls": 4,
+    "seconds": 116.82466673851013,
+    "tokens": 563
+   },
+   "what_happened": [
+    "Account.withdraw: the rewritten function is identical to the original (no change)",
+    "Bank.transfer: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 117.2,
+   "peak_mb": 3899
+  },
+  {
+   "task": "05_date_utils",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 48.85940098762512,
+    "tokens": 196
+   },
+   "what_happened": [
+    "is_leap_year: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 49.2,
+   "peak_mb": 3899
+  },
+  {
+   "task": "06_matrix",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 45.64436221122742,
+    "tokens": 233
+   },
+   "what_happened": [
+    "multiply: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 46.0,
+   "peak_mb": 3899
+  },
+  {
+   "task": "07_lru_cache",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 36.055684089660645,
+    "tokens": 149
+   },
+   "what_happened": [
+    "LRUCache.get: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 36.4,
+   "peak_mb": 3899
+  },
+  {
+   "task": "08_csv_parser",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 65.32834911346436,
+    "tokens": 312
+   },
+   "what_happened": [
+    "parse_line: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 65.7,
+   "peak_mb": 3900
+  },
+  {
+   "task": "09_todo_app",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 42.76065135002136,
+    "tokens": 175
+   },
+   "what_happened": [
+    "Task.__init__: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 43.2,
+   "peak_mb": 3900
+  },
+  {
+   "task": "10_intervals",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 53.11035895347595,
+    "tokens": 235
+   },
+   "what_happened": [
+    "merge: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 53.5,
+   "peak_mb": 3900
+  },
+  {
+   "task": "d1_tutor_site",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 199.1,
+   "builder": {
+    "ok": true,
+    "stage": "done",
+    "error": "",
+    "design": null,
+    "tasks": {
+     "schema": {
+      "status": "done",
+      "attempts": 1
+     },
+     "inquiries": {
+      "status": "done",
+      "attempts": 1
+     },
+     "home": {
+      "status": "done",
+      "attempts": 1
+     }
+    },
+    "llm": {
+     "calls": 5,
+     "seconds": 191.97988176345825,
+     "tokens": 924
+    },
+    "model_loads": 1,
+    "seconds": 198.3
+   },
+   "peak_mb_build": 3994,
+   "examiner": [
+    {
+     "id": "page_opens",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "id": "headline_has_the_name",
+     "pass": true,
+     "detail": "headlines: Welcome | BrightPath Tutors | Subjects | Pricing | Contact | Request a callback"
+    },
+    {
+     "id": "shows_maths",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_physics",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_english",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_5_000",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "looks_right_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "form_can_be_sent_and_thanks_shown",
+     "pass": true,
+     "detail": "no thank-you message after sending"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "page_opens_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "what_was_sent_is_kept_on_disk",
+     "pass": true,
+     "detail": "not found on disk: "
+    }
+   ],
+   "passed": 12,
+   "total": 12,
+   "score": 1.0,
+   "solved": true,
+   "screenshots": [
+    "home-desktop.png",
+    "home-phone.png",
+    "after-form-desktop.png"
+   ],
+   "examine_seconds": 2.3,
+   "peak_mb_examine": 169,
+   "seconds": 201.4,
+   "peak_mb": 3994
+  },
+  {
+   "task": "d2_class_app",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 187.1,
+   "builder": {
+    "ok": true,
+    "stage": "done",
+    "error": "",
+    "design": null,
+    "tasks": {
+     "schema": {
+      "status": "done",
+      "attempts": 1
+     },
+     "students": {
+      "status": "done",
+      "attempts": 1
+     },
+     "courses": {
+      "status": "done",
+      "attempts": 1
+     },
+     "dashboard": {
+      "status": "done",
+      "attempts": 1
+     }
+    },
+    "llm": {
+     "calls": 5,
+     "seconds": 179.15047240257263,
+     "tokens": 950
+    },
+    "model_loads": 1,
+    "seconds": 186.6
+   },
+   "peak_mb_build": 3913,
+   "examiner": [
+    {
+     "id": "app_opens",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "id": "login_is_required",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "wrong_password_is_rejected",
+     "pass": true,
+     "detail": "got in with a wrong password"
+    },
+    {
+     "id": "login_works",
+     "pass": true,
+     "detail": "still on the login form"
+    },
+    {
+     "id": "dashboard_shows_the_requested_numbers",
+     "pass": true,
+     "detail": "no sign of: "
+    },
+    {
+     "id": "students_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:36613/students"
+    },
+    {
+     "id": "students_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "students_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "courses_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:36613/courses"
+    },
+    {
+     "id": "courses_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "courses_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "dashboard_counts_are_right",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "works_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "login_still_works_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "records_survive_a_restart",
+     "pass": true,
+     "detail": "gone after restart: "
+    },
+    {
+     "id": "dashboard_right_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "logout_works",
+     "pass": true,
+     "detail": "records page still open after logging out"
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "passed": 19,
+   "total": 19,
+   "score": 1.0,
+   "solved": true,
+   "screenshots": [
+    "login-desktop.png",
+    "students-desktop.png",
+    "courses-desktop.png",
+    "dashboard-desktop.png",
+    "dashboard-phone.png",
+    "students-phone.png",
+    "courses-phone.png"
+   ],
+   "examine_seconds": 4.3,
+   "peak_mb_examine": 245,
+   "seconds": 191.4,
+   "peak_mb": 3913
+  }
+ ],
+ "set": "dev",
+ "tier": "4gb",
+ "tier_limit_mb": 4096,
+ "condition": "full",
+ "models": {
+  "planner": "qwen3.5-4b-q4",
+  "reviewer": "qwen3.5-4b-q4",
+  "builder": "qwen3.5-4b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-17 12:20:34",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}
