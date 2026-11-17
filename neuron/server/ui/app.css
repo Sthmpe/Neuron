@@ -41,3 +41,4 @@ padding:16px 18px;text-decoration:none;color:var(--ink)}.item .t{font-weight:600
 .stat span{color:var(--muted);font-size:.82rem}.code{font-size:2rem;letter-spacing:.4em;text-align:center;font-family:Manrope;font-weight:800}
 .note{color:var(--soft);font-size:.85rem}.err{background:var(--bad-bg);color:var(--bad);border-radius:var(--r-sm);padding:12px 14px;margin-top:10px}
 @media(min-width:700px){.stats{grid-template-columns:repeat(4,1fr)}h1{font-size:2rem}}
+.answer{white-space:pre-wrap;font-size:1rem;line-height:1.55}

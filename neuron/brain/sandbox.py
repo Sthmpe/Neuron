@@ -280,7 +280,9 @@ class Sandbox:
     def start(self, argv, workspace, port=8000):
         """Start a long-running program (a web app) in the sandbox and make its port reachable
         from this machine WITHOUT giving the sandbox any network: connections travel over a
-        Unix socket in a shared folder. Returns a SandboxedServer; call .stop() when done."""
+        Unix socket in a shared folder. Returns a SandboxedServer; call .stop() when done.
+        Call it from a thread that lives as long as the app should: --die-with-parent ends the
+        app when the starting THREAD ends, not only the process."""
         sockdir = tempfile.mkdtemp(prefix="nrn-")
         relay = str(Path(__file__).resolve().with_name("sandbox_relay.py"))
         cmd = self._bwrap(workspace, ["--bind", sockdir, "/run/neuron", "--ro-bind", relay, "/neuron_relay.py",

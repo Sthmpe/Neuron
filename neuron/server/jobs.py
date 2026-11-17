@@ -166,7 +166,15 @@ class JobManager:
                 "approvals": [a for a in st.approvals() if a["status"] == "pending"] if st.exists() else [],
                 "evidence": [{"task": e["task"], "passed": e["passed"], "how": e["how"],
                               "checks": [{"id": c["id"], "pass": c["pass"], "detail": str(c["detail"])[:160]} for c in e["checks"][:12]]} for e in evidence],
-                "outputs": self.outputs(jid)}
+                "outputs": self.outputs(jid), "answer": self._answer(jid)}
+
+    def _answer(self, jid):
+        """A written answer (questions, document questions) is shown on the phone directly, like a chat reply."""
+        for name in ("answer.md", "answers.md"):
+            f = self._path(jid) / "workspace" / name
+            if f.exists():
+                return f.read_text(errors="replace")[:8000]
+        return ""
 
     def events(self, jid, after=0):
         st = JobState(self._path(jid) / "workspace")

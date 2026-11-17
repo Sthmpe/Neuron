@@ -7,6 +7,7 @@ import http.client
 import json
 import mimetypes
 import os
+import queue
 import re
 import secrets
 import threading
@@ -29,11 +30,33 @@ class Previews:
 
     def __init__(self, host, sandbox_factory):
         self.host, self.sandbox_factory, self.running = host, sandbox_factory, {}
+        self._jobs = queue.Queue()
+        threading.Thread(target=self._launcher, daemon=True).start()
+
+    def _launcher(self):
+        # The sandbox kills the app when the THREAD that started it ends (bubblewrap --die-with-parent uses
+        # the parent-death signal, which follows the thread). Request threads end at once, so every preview
+        # is started from this one long-lived thread.
+        while True:
+            fn, box = self._jobs.get()
+            try:
+                box["result"] = fn()
+            except Exception as e:      # noqa: BLE001
+                box["error"] = e
+            box["done"].set()
+
+    def _start(self, app_dir):
+        box = {"done": threading.Event()}
+        self._jobs.put((lambda: self.sandbox_factory().start(["python3", "app.py"], app_dir), box))
+        box["done"].wait()
+        if "error" in box:
+            raise box["error"]
+        return box["result"]
 
     def open(self, jid, app_dir):
         if jid in self.running:
             return self.running[jid]["url"]
-        srv = self.sandbox_factory().start(["python3", "app.py"], app_dir)
+        srv = self._start(app_dir)
         if not srv.wait_ready("/"):
             srv.stop()
             return None
@@ -54,7 +77,10 @@ class Previews:
                 n = int(self.headers.get("Content-Length") or 0)
                 body = self.rfile.read(n) if n else None
                 c = http.client.HTTPConnection("127.0.0.1", upstream.port, timeout=30)
-                hdrs = {k: v for k, v in self.headers.items() if k.lower() not in ("host", "connection")}
+                hdrs = {k: v for k, v in self.headers.items() if k.lower() not in ("host", "connection", "cookie")}
+                own = "; ".join(f"{k}={v}" for k, v in cookies.items() if k not in ("neuron_token", "neuron_preview"))
+                if own:                                  # the app never sees NEURON's own login or preview keys
+                    hdrs["Cookie"] = own
                 c.request(self.command, re.sub(r"[?&]neuron_preview=[^&]*", "", self.path) or "/", body, hdrs)
                 r = c.getresponse()
                 data = r.read()

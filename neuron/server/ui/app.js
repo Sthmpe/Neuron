@@ -75,6 +75,7 @@ async function jobView(id) {
       ${j.approvals.length ? `<section class="card"><h2>Needs your OK</h2>${j.approvals.map(a => `<p>${esc(a.action)} (step ${esc(a.task)})</p>
         <div class="row"><button class="btn primary small" data-ok="${esc(a.task)}|${esc(a.action)}">Approve</button>
         <button class="btn danger small" data-no="${esc(a.task)}|${esc(a.action)}">Reject</button></div>`).join('')}</section>` : ''}
+      ${j.answer ? `<section class="card"><h2>Answer</h2><div class="answer">${esc(j.answer)}</div></section>` : ''}
       <section class="card"><h2>Steps</h2><div class="steps">${j.plan.map(t => `<div class="step"><span class="dot ${t.status}">${STEP[t.status] || ''}</span>
         <div><div class="t">${esc(t.title)}</div>${t.summary ? `<div class="s">${esc(t.summary)}</div>` : ''}
         <div class="m">${t.verification ? 'Checked by: ' + esc(t.verification) : ''}${t.made_by ? ' · made by: ' + esc(t.made_by) : ''}${t.tries > 1 ? ' · tries: ' + t.tries : ''}</div>

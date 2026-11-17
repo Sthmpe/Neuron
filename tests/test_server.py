@@ -176,7 +176,39 @@ class ServerTests(unittest.TestCase):
         c.base = base2
         d = wait_for(c, jid, ("done",))
         self.assertIn("answer.md", [o["path"] for o in d["outputs"]])
+        self.assertIn("scatters blue light", d["answer"])            # shown on the phone directly
 
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PreviewTests(unittest.TestCase):
+    def test_preview_needs_its_token_and_hides_neuron_cookies(self):
+        home = Path(tempfile.mkdtemp(prefix="neuron-home-"))
+        httpd, base = start(home, [])
+        self.addCleanup(httpd.shutdown)
+        self.addCleanup(httpd.neuron["previews"].close_all)
+        c = Client(base)
+        c.call("POST", "/api/pair", {"code": httpd.neuron["pairing"].new_code()})
+        s, d = c.call("POST", "/api/jobs", {"goal": "preview test"})
+        jid = d["id"]
+        app = home / "jobs" / jid / "workspace" / "app"
+        app.mkdir(parents=True)
+        (app / "app.py").write_text(
+            "import http.server, os\n"
+            "class H(http.server.BaseHTTPRequestHandler):\n"
+            "    def do_GET(self):\n"
+            "        b = ('cookies:' + (self.headers.get('Cookie') or '')).encode()\n"
+            "        self.send_response(200); self.send_header('Content-Length', str(len(b))); self.end_headers(); self.wfile.write(b)\n"
+            "http.server.HTTPServer(('0.0.0.0', int(os.environ.get('PORT', 8000))), H).serve_forever()\n")
+        s, r = c.call("POST", f"/api/jobs/{jid}/preview")
+        self.assertEqual(s, 200, r)
+        port, query = r["url"][1:].split("/", 1)
+        p = Client(f"http://127.0.0.1:{port}")
+        self.assertEqual(p.call("GET", "/")[0], 403)                       # no token, no app
+        p.cookie = c.cookie                                                 # the phone's NEURON cookie is sent too
+        s, body = p.call("GET", "/" + query)
+        self.assertEqual(s, 200)
+        self.assertNotIn(b"neuron_token", body)
+        self.assertNotIn(b"neuron_preview", body)
