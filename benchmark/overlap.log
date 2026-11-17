@@ -2,3 +2,6 @@
 15:26 freeze_models.py and deleting five model files (a few seconds of disk work)
 15:27 installer --plan (under 1 s)
 15:30 ran tests.test_relations (light, ~1 s CPU)
+15:34 worktree builder tests (sandboxed small apps, ~1 min, nice 19)
+15:34 worktree builder tests again (~1 min, nice 19)
+15:38 worktree tests: agent, online boost, server (~1 min, nice 19, includes LibreOffice)
