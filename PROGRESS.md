@@ -49,6 +49,27 @@ granite-4.1-8b's 10_intervals overlapped my installer test, so its time is infla
 After the freeze the five non-frozen model files were deleted to free disk (re-download by file name with
 `scripts/download_models.sh <file>`; their checksums stay in `models/store/SHA256SUMS`).
 
+## Work waiting on the held-out runs (branch `dev-next`, worktree `../neuron-next`)
+
+Built beside the running evaluation so it measures the code it started with. Merge into `dev` once
+`benchmark/heldout.log` ends with HELDOUT-DONE and the whole suite passes there:
+- builder: linked records and rules wired in (planner example: tool hire), template fallback with
+  made_by counts, design system on by default (`NEURON_DESIGN=0` / `NEURON_TEMPLATES=0` turn them off),
+  harness `--system step3|current` (default step3 reproduces the step-3 evaluations)
+- `benchmark/phase5/run.py` (phase-5 runner, dry-run on all dev tasks), agent usage totals across sessions,
+  `--report`, web-app step counts builder model calls and model vs template files
+- README rewritten (steps 1 and 2 moved to `docs/HISTORY.md`)
+Then, in order: full suite, merge, fast-forward main; design proof (20 requests); held-out builds rerun with
+`--system current` labelled as a rerun; phase-5 dev runs, then the locked runs per tier; README numbers.
+
+## Events
+
+- 2026-11-17 about 20:22: the machine restarted while the held-out run was on 2gb-base b3_shop_app_resumed.
+  Partial results (22 tasks) were committed; the run was resumed at 20:23 (the harness skips recorded tasks
+  and rebuilds the interrupted task from a clean folder). Noted in `benchmark/heldout.log`.
+- 2026-11-17: `.gitignore` entry `models/` was hiding `benchmark/workspaces/**/shopkeeper/models`, so a fresh
+  clone could not run the shopkeeper workspace. Fixed (`/models/`), files committed, contents unchanged, lock intact.
+
 ## Honesty notes for phase 6 (recorded as they happened)
 
 - One full test-suite run (of five that day) had 1 failing test; the name was not captured. It ran at low priority while
