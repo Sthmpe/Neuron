@@ -1,1 +1,46 @@
 installed qwen3.5-9b-q4
+8gb-full-sel-qwen3.5-9b-q4 01_shopping_cart: SOLVED | attempts 1 | 88.6s | peak 6185 MB
+8gb-full-sel-qwen3.5-9b-q4: solved 12/12; mean score 1.00
+{
+ "model": "gemma-4-e2b-q4",
+ "rss_mb": 3405,
+ "load_seconds": 4.2,
+ "tokens_per_second": 12.9,
+ "sample": "```python\ndef find_larger_number(num1, num2):\n  \"\"\"\n  Returns the larger of two given numbers.\n\n  Args:\n    num1: The first number.\n    num2: The second number.\n\n  Returns:\n    The larger of num1 and "
+}
+{
+ "model": "gemma-4-e4b-q4",
+ "rss_mb": 5491,
+ "load_seconds": 9.1,
+ "tokens_per_second": 6.7,
+ "sample": "```python\ndef get_larger_number(num1, num2):\n  \"\"\"\n  Returns the larger of two given numbers.\n  \"\"\"\n  if num1 > num2:\n    return num1\n  else:\n    return num2\n\n# Example usage:\nprint(get_larger_number("
+}
+4gb-full-sel-gemma-4-e2b-q4 01_shopping_cart: SOLVED | attempts 1 | 30.4s | peak 3507 MB
+4gb-full-sel-gemma-4-e2b-q4 02_text_stats: SOLVED | attempts 1 | 24.3s | peak 3515 MB
+4gb-full-sel-gemma-4-e2b-q4 03_binary_search: SOLVED | attempts 1 | 32.2s | peak 3509 MB
+4gb-full-sel-gemma-4-e2b-q4 04_bank_transfer: not solved | attempts 3 | 176.9s | peak 3550 MB
+4gb-full-sel-gemma-4-e2b-q4 05_date_utils: not solved | attempts 3 | 148.1s | peak 3551 MB
+4gb-full-sel-gemma-4-e2b-q4 06_matrix: SOLVED | attempts 1 | 30.4s | peak 3553 MB
+4gb-full-sel-gemma-4-e2b-q4 07_lru_cache: SOLVED | attempts 3 | 130.4s | peak 3557 MB
+4gb-full-sel-gemma-4-e2b-q4 08_csv_parser: SOLVED | attempts 1 | 83.3s | peak 3559 MB
+4gb-full-sel-gemma-4-e2b-q4 09_todo_app: not solved | attempts 3 | 193.2s | peak 3563 MB
+4gb-full-sel-gemma-4-e2b-q4 10_intervals: not solved | attempts 3 | 142.5s | peak 3563 MB
+4gb-full-sel-gemma-4-e2b-q4 d1_tutor_site: not solved | 3/12 checks | 95.4s | peak 3607 MB
+4gb-full-sel-gemma-4-e2b-q4 d2_class_app: SOLVED | 19/19 checks | 164.4s | peak 3620 MB
+4gb-full-sel-gemma-4-e2b-q4: solved 7/12; mean score 0.60
+4gb-full-sel-granite-4.1-3b-q4 01_shopping_cart: SOLVED | attempts 1 | 43.5s | peak 3004 MB
+4gb-full-sel-granite-4.1-3b-q4 02_text_stats: SOLVED | attempts 1 | 36.6s | peak 3009 MB
+4gb-full-sel-granite-4.1-3b-q4 03_binary_search: SOLVED | attempts 1 | 52.6s | peak 3006 MB
+4gb-full-sel-granite-4.1-3b-q4 04_bank_transfer: SOLVED | attempts 2 | 73.8s | peak 3013 MB
+4gb-full-sel-granite-4.1-3b-q4 05_date_utils: SOLVED | attempts 1 | 37.9s | peak 3010 MB
+4gb-full-sel-granite-4.1-3b-q4 06_matrix: not solved | attempts 3 | 112.7s | peak 3006 MB
+4gb-full-sel-granite-4.1-3b-q4 07_lru_cache: SOLVED | attempts 2 | 86.6s | peak 3019 MB
+4gb-full-sel-granite-4.1-3b-q4 08_csv_parser: SOLVED | attempts 2 | 105.4s | peak 3072 MB
+4gb-full-sel-granite-4.1-3b-q4 09_todo_app: SOLVED | attempts 1 | 43.6s | peak 3071 MB
+4gb-full-sel-granite-4.1-3b-q4 10_intervals: not solved | attempts 3 | 125.6s | peak 3073 MB
+4gb-full-sel-granite-4.1-3b-q4 d1_tutor_site: SOLVED | 12/12 checks | 122.3s | peak 3041 MB
+4gb-full-sel-granite-4.1-3b-q4 d2_class_app: SOLVED | 19/19 checks | 175.2s | peak 3060 MB
+4gb-full-sel-granite-4.1-3b-q4: solved 10/12; mean score 0.83
+8gb-full-sel-gemma-4-e4b-q4 01_shopping_cart: SOLVED | attempts 1 | 49.4s | peak 5605 MB
+8gb-full-sel-gemma-4-e4b-q4 02_text_stats: SOLVED | attempts 1 | 38.8s | peak 5599 MB
+8gb-full-sel-gemma-4-e4b-q4 03_binary_search: SOLVED | attempts 1 | 55.4s | peak 5605 MB

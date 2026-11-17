@@ -430,6 +430,25 @@
    "peak_mb_examine": 243,
    "seconds": 377.8,
    "peak_mb": 6291
+  },
+  {
+   "task": "01_shopping_cart",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 78.61822819709778,
+    "tokens": 199
+   },
+   "what_happened": [
+    "Cart.total: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 88.6,
+   "peak_mb": 6185
   }
  ],
  "set": "dev",

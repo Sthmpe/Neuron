@@ -1,0 +1,74 @@
+{
+ "rows": [
+  {
+   "task": "01_shopping_cart",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 41.190190076828,
+    "tokens": 162
+   },
+   "what_happened": [
+    "Cart.total: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 49.4,
+   "peak_mb": 5605
+  },
+  {
+   "task": "02_text_stats",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 38.33728647232056,
+    "tokens": 164
+   },
+   "what_happened": [
+    "words: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 38.8,
+   "peak_mb": 5599
+  },
+  {
+   "task": "03_binary_search",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 54.98372197151184,
+    "tokens": 259
+   },
+   "what_happened": [
+    "index_of: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 55.4,
+   "peak_mb": 5605
+  }
+ ],
+ "set": "dev",
+ "tier": "8gb",
+ "tier_limit_mb": 8192,
+ "condition": "full",
+ "models": {
+  "planner": "gemma-4-e4b-q4",
+  "reviewer": "gemma-4-e4b-q4",
+  "builder": "gemma-4-e4b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-17 14:23:55",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}
