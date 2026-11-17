@@ -1,0 +1,4 @@
+# Work I ran on this machine while a benchmark was measuring (so readers can judge timing effects)
+15:26 freeze_models.py and deleting five model files (a few seconds of disk work)
+15:27 installer --plan (under 1 s)
+15:30 ran tests.test_relations (light, ~1 s CPU)

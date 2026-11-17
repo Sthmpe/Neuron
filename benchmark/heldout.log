@@ -1,0 +1,9 @@
+2gb-base h01_readings: SOLVED | attempts 1 | 11.2s | peak 1433 MB
+2gb-base h02_truncate: not solved | attempts 3 | 33.7s | peak 1434 MB
+2gb-base h03_rpn: not solved | attempts 3 | 40.8s | peak 1438 MB
+2gb-base h04_roman: not solved | attempts 3 | 67.1s | peak 1440 MB
+2gb-base h05_priority: not solved | attempts 3 | 39.5s | peak 1442 MB
+2gb-base h06_wrap: not solved | attempts 3 | 29.7s | peak 1434 MB
+2gb-base h07_warehouse: not solved | attempts 3 | 39.3s | peak 1435 MB
+2gb-base h08_paging: not solved | attempts 3 | 30.2s | peak 1434 MB
+2gb-base h09_grades: SOLVED | attempts 3 | 38.7s | peak 1438 MB

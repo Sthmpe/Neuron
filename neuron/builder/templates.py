@@ -4,6 +4,7 @@ Used as the last resort in the builder (after the model has failed a task 3 time
 finish no matter which model is installed. Every file written this way is recorded in project state and
 counted in results, so it is always clear how much of an app the model wrote and how much came from here.
 """
+from . import relations
 from .spec import INPUT_TYPE, SQL_TYPE
 
 
@@ -32,6 +33,8 @@ def entity_py(spec, e):
     marks = ", ".join("?" for _ in e["fields"])
     vals = ", ".join(f'req.form.get({f["name"]!r}, "")' for f in e["fields"])
     row = ", ".join(f'r[{f["name"]!r}]' for f in e["fields"])
+    before, after = relations.template_post(spec, e)
+    fields = ", ".join(relations.ui_field_code(spec, f, INPUT_TYPE.get(f["type"], "text")) for f in e["fields"])
     return f'''from kit.web import redirect
 from kit import ui
 
@@ -40,13 +43,13 @@ def register(app):
     @app.route("/{e["name"]}", methods=["GET", "POST"]{login})
     def {e["name"]}(req):
         if req.method == "POST":
-            app.db.execute("INSERT INTO {e["name"]}({cols}) VALUES({marks})", [{vals}])
-            return redirect("/{e["name"]}")
+{before}            app.db.execute("INSERT INTO {e["name"]}({cols}) VALUES({marks})", [{vals}])
+{after}            return redirect("/{e["name"]}")
         q = req.query.get("q", "")
         found = app.db.query("SELECT * FROM {e["name"]} WHERE {e["search_field"]} LIKE ? ORDER BY id DESC", ["%" + q + "%"])
         rows = [[{row}] for r in found]
         return app.page(req, {e["label"]!r}, ui.search("/{e["name"]}", q), ui.table({[f["label"] for f in e["fields"]]!r}, rows),
-                        ui.card("Add", ui.form("/{e["name"]}", {_fields(e["fields"])}, submit="Add")))
+                        ui.card("Add", ui.form("/{e["name"]}", {fields}, submit="Add")))
 '''
 
 
