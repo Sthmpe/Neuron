@@ -137,6 +137,25 @@
    "tests_untouched": true,
    "seconds": 79.5,
    "peak_mb": 5208
+  },
+  {
+   "task": "08_csv_parser",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 83.66227459907532,
+    "tokens": 265
+   },
+   "what_happened": [
+    "parse_line: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 84.1,
+   "peak_mb": 5207
   }
  ],
  "set": "dev",

@@ -44,3 +44,4 @@
 8gb-full-sel-qwen2.5-coder-7b-q4 05_date_utils: SOLVED | attempts 1 | 52.8s | peak 5206 MB
 8gb-full-sel-qwen2.5-coder-7b-q4 06_matrix: SOLVED | attempts 1 | 55.2s | peak 5213 MB
 8gb-full-sel-qwen2.5-coder-7b-q4 07_lru_cache: SOLVED | attempts 2 | 79.5s | peak 5208 MB
+8gb-full-sel-qwen2.5-coder-7b-q4 08_csv_parser: SOLVED | attempts 1 | 84.1s | peak 5207 MB
