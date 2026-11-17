@@ -101,7 +101,8 @@ a{color:var(--color-link);text-decoration-thickness:1px;text-underline-offset:3p
 .menu a:hover{color:var(--color-ink);background:var(--color-surface-2)}.menu a.active{color:var(--color-ink);background:var(--color-surface-2)}
 .nav-toggle{display:grid;place-items:center;width:44px;height:44px;border-radius:var(--radius-sm);cursor:pointer;order:2;color:var(--color-ink);user-select:none}
 .nav-toggle:hover{background:var(--color-surface-2)}#nav-toggle:checked~.menu{display:flex}
-.account{display:flex;align-items:center;gap:6px;order:1}.who{color:var(--color-ink-muted);font-size:var(--fs-sm)}
+.account{display:flex;align-items:center;gap:6px;order:1}.who{display:none;color:var(--color-ink-muted);font-size:var(--fs-sm)}
+@media(min-width:760px){.who{display:inline}}
 @media(min-width:760px){.menu{display:flex;flex-basis:auto;flex-direction:row;padding:0;order:0;margin-left:auto}
  .menu a{padding:10px 14px}.nav-toggle{display:none}.brand{margin-right:24px}.account{order:1;margin-left:8px}}
 
@@ -238,7 +239,7 @@ input:focus,select:focus,textarea:focus{outline:none;background:var(--color-surf
 .card{background:var(--color-surface);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:clamp(20px,3vw,32px);margin-bottom:calc(var(--space)*3)}
 .card h3{font-size:var(--fs-lg);margin-bottom:calc(var(--space)*2)}.grid>.card{margin-bottom:0}
 .grid{display:grid;gap:calc(var(--space)*3);grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
-.stats{display:grid;gap:calc(var(--space)*2);grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));margin-bottom:calc(var(--space)*4)}
+.stats{display:grid;gap:calc(var(--space)*2);grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));margin-bottom:calc(var(--space)*4)}
 .stat{background:var(--color-surface);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:calc(var(--space)*3)}
 .stat:first-child{background:var(--color-strong);color:var(--color-on-strong)}
 .stat:first-child .stat-label,.stat:first-child .stat-hint{color:var(--color-on-strong-muted)}.stat:first-child .stat-value{color:var(--color-on-strong)}

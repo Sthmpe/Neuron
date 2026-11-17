@@ -99,6 +99,46 @@
    "tests_untouched": true,
    "seconds": 25.3,
    "peak_mb": 2487
+  },
+  {
+   "task": "06_matrix",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 29.532598733901978,
+    "tokens": 205
+   },
+   "what_happened": [
+    "multiply: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 30.0,
+   "peak_mb": 2484
+  },
+  {
+   "task": "07_lru_cache",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 60.46347665786743,
+    "tokens": 316
+   },
+   "what_happened": [
+    "LRUCache.get: tests still fail: [...]\n-----------------------\nTraceback (most recent call last",
+    "LRUCache.get: tests still fail: [...]\n: test_reading_keeps_an_entry_alive (tests.test_lru.LRUT",
+    "LRUCache.get: tests still fail: [...]\n: test_reading_keeps_an_entry_alive (tests.test_lru.LRUT"
+   ],
+   "tests_untouched": true,
+   "seconds": 60.9,
+   "peak_mb": 2488
   }
  ],
  "set": "dev",

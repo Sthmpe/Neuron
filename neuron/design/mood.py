@@ -152,6 +152,10 @@ MOODS = {
         "form": ["split", "panel"], "nav": ["bar", "floating"], "rhythm": ["alternate", "flow"],
     },
 }
+WEAK = {"dashboard", "class", "classes", "course", "courses", "lesson", "lessons", "students", "learning", "care", "app", "apps", "digital",
+        "product", "tool", "tools", "platform", "club", "party", "parties", "green", "eco", "event", "events", "design",
+        "designer", "art", "wine", "data", "tech", "technology", "building", "moving", "delivery", "music", "dance", "plant",
+        "plants", "flowers", "health", "cooking", "cook", "tea", "bar", "firm", "property", "estate", "children", "child"}
 APP_WORDS = "dashboard stock inventory customers records orders invoices staff students patients bookings members"
 
 
@@ -165,7 +169,8 @@ def detect(request):
             scores[name] = hits
     if not scores:
         return "modern", "Nothing in the request names the kind of business, so the design aims for " + MOODS["modern"]["feel"] + "."
-    best = max(scores, key=lambda k: (len(scores[k]), -list(MOODS).index(k)))
+    weight = lambda hits: sum(1 if w in WEAK else 3 for w in hits)     # the specific trade counts more than generic words
+    best = max(scores, key=lambda k: (weight(scores[k]), -list(MOODS).index(k)))
     words = ", ".join(f'"{w}"' for w in scores[best][:3])
     return best, (f"The request mentions {words}: this is {MOODS[best]['for']}, so the design should give "
                   f"{MOODS[best]['feel']}.")

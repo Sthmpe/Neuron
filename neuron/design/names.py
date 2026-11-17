@@ -21,7 +21,7 @@ NAMED = {
     "purple": "#6d3fb8", "violet": "#7b4fd1", "lavender": "#a99bd8", "lilac": "#b9a2d8", "plum": "#6a2c5a",
     "magenta": "#c2187a", "fuchsia": "#c026a3", "slate": "#4a5768", "steel": "#58708a", "graphite": "#3b3f45",
 }
-NAMED.update({"sage green": "#8fa98a", "olive green": "#6b7a2e", "bottle green": "#1f5a3d", "hunter green": "#2d5a3d",
+NAMED.update({"moss green": "#5a6e3a", "royal blue": "#2747c4", "sage green": "#8fa98a", "olive green": "#6b7a2e", "bottle green": "#1f5a3d", "hunter green": "#2d5a3d",
               "burnt orange": "#cc5500", "dusty pink": "#d4a5a5", "dusty rose": "#c9898f", "rose gold": "#c9908a",
               "champagne": "#e9d8b4", "off white": "#f6f3ec", "off-white": "#f6f3ec", "brick": "#a8442a",
               "ochre": "#c7882b", "honey": "#e0a340", "espresso": "#4b2e22", "denim": "#3b5f8a", "petrol": "#1d5c69",
@@ -53,6 +53,19 @@ def _joined(text, a, b):
     return len(between) <= 4 and all(w in JOINERS for w in between)
 
 
+def _in_a_name(original, start, end):
+    """True when a capitalised colour word sits next to another capitalised word mid-sentence."""
+    word = original[start:end]
+    if not word[:1].isupper():
+        return False
+    before = original[:start].rstrip()
+    after = original[end:].lstrip()
+    sentence_start = not before or before[-1] in ".!?:\n"
+    next_cap = bool(re.match(r"[A-Z][a-z]", after))
+    prev_cap = bool(re.search(r"\b[A-Z][a-z]+$", before)) and not sentence_start
+    return next_cap or prev_cap
+
+
 def find_colours(request):
     """Colours the owner asked for, in the order they appear. Plain colour words always count. Words that
     are also foods or materials ('lemon cake', 'olive oil', 'gold jewellery') count only when the request
@@ -68,13 +81,17 @@ def find_colours(request):
             if any(a <= m.start() < b for a, b in taken):
                 continue
             taken.append((m.start(), m.end()))
+            if _in_a_name(request, m.start(), m.end()):
+                continue          # "Golden Crust", "Green Acres": part of a business name, not a colour request
             hits.append({"start": m.start(), "end": m.end(), "word": name, "hex": NAMED[name],
                          "sure": name not in AMBIGUOUS})
     hits.sort(key=lambda h: h["start"])
     keep = []
     for i, h in enumerate(hits):
         if not h["sure"]:
-            window = text[max(0, h["start"] - 50): h["end"] + 50]
+            lo = max(text.rfind(".", 0, h["start"]), text.rfind("!", 0, h["start"]), text.rfind("?", 0, h["start"])) + 1
+            hi = min([i for i in (text.find(".", h["end"]), text.find("!", h["end"]), text.find("?", h["end"])) if i >= 0] or [len(text)])
+            window = text[max(lo, h["start"] - 30): min(hi, h["end"] + 30)]      # colour talk must be in the same sentence
             near = any(o is not h and _joined(text, h, o) for o in hits)
             if not (COLOUR_TALK.search(window) or near):
                 continue

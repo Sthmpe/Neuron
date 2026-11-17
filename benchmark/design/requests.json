@@ -1,0 +1,82 @@
+[
+ {
+  "name": "law_firm",
+  "request": "Make a landing page for my law firm, Okafor and Partners, in Abuja. Use navy and gold. Show our three practice areas: property law, business contracts and family law, with a short line about each. Say that the first consultation is free. Add a form where people leave their name, email and phone to book a consultation."
+ },
+ {
+  "name": "bakery",
+  "request": "I need a website for my bakery, Golden Crust, in Enugu. Show what we bake: sourdough bread, celebration cakes and small chops, with a line about each. Show our opening hours, Tuesday to Sunday 8am to 6pm. Add a form for people to leave their name and phone to order a cake."
+ },
+ {
+  "name": "payments_app",
+  "request": "Build a landing page for Kobo Pay, our payments app for market traders. Show three benefits: instant transfers, no monthly fees and daily sales reports. Say it works on any smartphone. Add a form where traders leave their name and phone number to join the waiting list."
+ },
+ {
+  "name": "yoga",
+  "request": "A calm website for my yoga studio, Still Water Yoga. I like sage green. Show our classes: morning flow, gentle yoga and breathwork, with one line each. Say we are on Allen Avenue in Ikeja. Add a form to book a first class with name and email."
+ },
+ {
+  "name": "boxing_gym",
+  "request": "Make a bold page for Iron Fist Boxing Gym. Our colours are black with bright orange. Show what we offer: beginner classes, personal training and open sparring. Say a day pass costs 3,000 naira. Add a form to book a free trial with name and phone."
+ },
+ {
+  "name": "bridal",
+  "request": "A website for my bridal boutique, Adaeze Bridal. Show our services: custom gowns, alterations and accessories, with a short line each. Say fittings are by appointment only. Add a form to book a fitting with name, email and date."
+ },
+ {
+  "name": "kids_party",
+  "request": "Make a fun page for Happy Hops, my kids party planning business. Show our party packages: bouncy castle, face painting and magic show. Say we cover all of Lagos Island. Add a form for parents to leave their name and phone to plan a party."
+ },
+ {
+  "name": "farm_shop",
+  "request": "A website for Green Acres Organic Farm. Use moss green and terracotta colours. Show what we grow: vegetables, free range eggs and fresh herbs, one line each. Say we deliver every Saturday. Add a form to join our weekly box list with name and email."
+ },
+ {
+  "name": "plumber",
+  "request": "I need a page for my plumbing company, FlowFix Plumbing in Port Harcourt. Show our services: leak repairs, bathroom fitting and water heaters, with a line about each. Say we offer same day call outs. Add a form to request a visit with name, phone and address."
+ },
+ {
+  "name": "tutoring",
+  "request": "Make a page for Bright Minds Tutoring. Use royal blue and yellow. Show the subjects we teach: maths, chemistry and English, one line each. Say lessons cost 6,000 naira per hour. Add a form for parents to request a call back with name and phone."
+ },
+ {
+  "name": "dentist",
+  "request": "A website for SmileCare Dental Clinic. Show our treatments: check-ups, teeth whitening and braces, with a line each. Show our opening hours, Monday to Friday 9am to 5pm. Add a form to book an appointment with name, phone and date."
+ },
+ {
+  "name": "coffee",
+  "request": "A landing page for Highland Roasters, our coffee roastery. Brand colour #6f4e37 with cream. Show our coffees: single origin beans, house espresso blend and cold brew, one line each. Say we ship across Nigeria. Add a form to subscribe to our newsletter with email."
+ },
+ {
+  "name": "photographer",
+  "request": "Make a portfolio landing page for Tobi Lens Photography. Show what I shoot: weddings, portraits and events, with one line each. Say I am based in Ibadan and travel anywhere. Add a form to ask about a date with name, email and date."
+ },
+ {
+  "name": "accountant",
+  "request": "A website for Clearbook Accountants. Use dark green. Show our services: bookkeeping, tax returns and payroll, with a line each. Say we work with small businesses across Kano. Add a form to book a free review with name, email and phone."
+ },
+ {
+  "name": "florist",
+  "request": "A landing page for Petal and Stem, my florist shop. I want dusty pink and olive green. Show what we make: wedding flowers, birthday bouquets and plants for the office, one line each. Say we deliver the same day in Abuja. Add a form to order flowers with name and phone."
+ },
+ {
+  "name": "garage_app",
+  "request": "I run a car repair garage and want an app to track jobs. I log in first, my username is mechanic and my password is spanner9. I need a Jobs page where I add a job with customer name, car model and price, and search jobs by customer name. I want a dashboard showing how many jobs I have and how many jobs cost less than 20000."
+ },
+ {
+  "name": "music_school",
+  "request": "A website for Rhythm House Music School. Show the instruments we teach: piano, guitar and drums, with a short line each. Say classes run on weekday evenings and Saturday mornings. Add a form to book a trial lesson with name, email and phone."
+ },
+ {
+  "name": "guesthouse",
+  "request": "Make a landing page for Palm Court Guesthouse in Calabar. Colours: burgundy and champagne. Show our rooms: standard room, deluxe room and family suite, one line each. Say breakfast is included. Add a form to ask about availability with name, email and date."
+ },
+ {
+  "name": "software_agency",
+  "request": "A landing page for Codeline Studio, we build websites and mobile apps for businesses. Show our services: website design, mobile apps and online shops, with a line each. Say we reply within one working day. Add a form to start a project with name, email and phone."
+ },
+ {
+  "name": "salon_app",
+  "request": "I own a hair salon and need an app to keep client records. Colour: plum. I log in first with username stylist and password comb2024. I need a Clients page where I add a client with name, phone and favourite style, and search by name. Show a dashboard with how many clients I have."
+ }
+]
