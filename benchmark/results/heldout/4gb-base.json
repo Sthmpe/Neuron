@@ -56,6 +56,772 @@
    "tests_untouched": true,
    "seconds": 38.3,
    "peak_mb": 3860
+  },
+  {
+   "task": "h04_roman",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 181.5,
+    "tokens": 986
+   },
+   "what_happened": [
+    "tests still failing",
+    "tests still failing",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 182.0,
+   "peak_mb": 3859
+  },
+  {
+   "task": "h05_priority",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 38.1,
+    "tokens": 212
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 38.4,
+   "peak_mb": 3866
+  },
+  {
+   "task": "h06_wrap",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 30.7,
+    "tokens": 165
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 31.0,
+   "peak_mb": 3867
+  },
+  {
+   "task": "h07_warehouse",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 38.8,
+    "tokens": 211
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 39.0,
+   "peak_mb": 3866
+  },
+  {
+   "task": "h08_paging",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 31.4,
+    "tokens": 172
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 31.7,
+   "peak_mb": 3859
+  },
+  {
+   "task": "h09_grades",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 39.0,
+    "tokens": 209
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 39.3,
+   "peak_mb": 3862
+  },
+  {
+   "task": "h10_clock",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 43.9,
+    "tokens": 245
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 44.2,
+   "peak_mb": 3866
+  },
+  {
+   "task": "h11_flatten",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 37.6,
+    "tokens": 183
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 37.9,
+   "peak_mb": 3864
+  },
+  {
+   "task": "h12_dedupe",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 44.6,
+    "tokens": 235
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 44.9,
+   "peak_mb": 3860
+  },
+  {
+   "task": "h13_caesar",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 27.4,
+    "tokens": 139
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 27.7,
+   "peak_mb": 3860
+  },
+  {
+   "task": "h14_calendar",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 35.3,
+    "tokens": 187
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 35.7,
+   "peak_mb": 3867
+  },
+  {
+   "task": "h15_settings",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 38.1,
+    "tokens": 206
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 38.4,
+   "peak_mb": 3864
+  },
+  {
+   "task": "h16_bill",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 37.9,
+    "tokens": 196
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 38.2,
+   "peak_mb": 3867
+  },
+  {
+   "task": "h17_chain",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 43.8,
+    "tokens": 249
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 44.1,
+   "peak_mb": 3862
+  },
+  {
+   "task": "h18_tokens",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 40.0,
+    "tokens": 209
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 40.3,
+   "peak_mb": 3863
+  },
+  {
+   "task": "h19_buckets",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 43.9,
+    "tokens": 204
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 44.1,
+   "peak_mb": 3860
+  },
+  {
+   "task": "h20_access",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 41.2,
+    "tokens": 189
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 41.5,
+   "peak_mb": 3861
+  },
+  {
+   "task": "b1_bakery_landing",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 197.6,
+   "builder": {
+    "ok": false,
+    "stage": "done",
+    "error": "pages/home.py is not valid Python: '(' was never closed (line 8).",
+    "rounds": [
+     {
+      "n": 1,
+      "files": [
+       "pages/home.py",
+       "schema.py"
+      ],
+      "ok": false,
+      "problem": "pages/home.py is not valid Python: '(' was never closed (line 8)."
+     },
+     {
+      "n": 2,
+      "files": [
+       "pages/home.py",
+       "schema.py"
+      ],
+      "ok": false,
+      "problem": "pages/home.py is not valid Python: '(' was never closed (line 8)."
+     },
+     {
+      "n": 3,
+      "files": [
+       "pages/home.py",
+       "schema.py"
+      ],
+      "ok": false,
+      "problem": "pages/home.py is not valid Python: '(' was never closed (line 8)."
+     }
+    ],
+    "llm": {
+     "calls": 3,
+     "seconds": 191.0586597919464,
+     "tokens": 1143
+    },
+    "model_loads": 1,
+    "seconds": 196.8
+   },
+   "peak_mb_build": 3924,
+   "examiner": [
+    {
+     "id": "page_opens",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "headline_has_the_name",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "shows_fresh_bread",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "shows_birthday_cakes_",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "shows_meat_pies_",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "shows_7_s_am",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "shows_monday",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "looks_right_on_a_phone",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "form_can_be_sent_and_thanks_shown",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "page_opens_after_restart",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "what_was_sent_is_kept_on_disk",
+     "pass": false,
+     "detail": "not found on disk: chidi.okeke@example.com"
+    }
+   ],
+   "passed": 0,
+   "total": 13,
+   "score": 0.0,
+   "solved": false,
+   "screenshots": [],
+   "examine_seconds": 0.5,
+   "peak_mb_examine": 5,
+   "seconds": 198.1,
+   "peak_mb": 3924
+  },
+  {
+   "task": "b2_shop_app",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 424.7,
+   "builder": {
+    "ok": false,
+    "stage": "done",
+    "error": "Check 'home page opens' failed: step 1 (GET /): expected HTTP [200], got 404. ",
+    "rounds": [
+     {
+      "n": 1,
+      "files": [
+       "pages/customers.py",
+       "pages/dashboard.py",
+       "pages/products.py",
+       "schema.py"
+      ],
+      "ok": false,
+      "problem": "Check 'home page opens' failed: step 1 (GET /): expected HTTP [200], got 404. "
+     },
+     {
+      "n": 2,
+      "files": [
+       "pages/customers.py",
+       "pages/dashboard.py",
+       "pages/products.py",
+       "schema.py"
+      ],
+      "ok": false,
+      "problem": "Check 'home page opens' failed: step 1 (GET /): expected HTTP [200], got 404. "
+     },
+     {
+      "n": 3,
+      "files": [
+       "pages/customers.py",
+       "pages/dashboard.py",
+       "pages/products.py",
+       "schema.py"
+      ],
+      "ok": false,
+      "problem": "Check 'home page opens' failed: step 1 (GET /): expected HTTP [200], got 404. "
+     }
+    ],
+    "llm": {
+     "calls": 3,
+     "seconds": 418.23428773880005,
+     "tokens": 2589
+    },
+    "model_loads": 1,
+    "seconds": 424.2
+   },
+   "peak_mb_build": 3996,
+   "examiner": [
+    {
+     "id": "app_opens",
+     "pass": true,
+     "detail": "404"
+    },
+    {
+     "id": "login_is_required",
+     "pass": true,
+     "detail": "the records page opened without logging in"
+    },
+    {
+     "id": "wrong_password_is_rejected",
+     "pass": false,
+     "detail": "locator.fill: Timeout 30000ms exceeded."
+    },
+    {
+     "id": "login_works",
+     "pass": false,
+     "detail": "locator.fill: Timeout 30000ms exceeded."
+    },
+    {
+     "id": "dashboard_shows_the_requested_numbers",
+     "pass": false,
+     "detail": "no sign of: low"
+    },
+    {
+     "id": "customers_page_opens",
+     "pass": false,
+     "detail": "http://127.0.0.1:32803/login"
+    },
+    {
+     "id": "customers_can_be_added",
+     "pass": false,
+     "detail": "no field for \"Phone\""
+    },
+    {
+     "id": "customers_search_works",
+     "pass": false,
+     "detail": "no search box"
+    },
+    {
+     "id": "products_page_opens",
+     "pass": false,
+     "detail": "http://127.0.0.1:32803/login"
+    },
+    {
+     "id": "products_can_be_added",
+     "pass": false,
+     "detail": "no field for \"Price\""
+    },
+    {
+     "id": "products_search_works",
+     "pass": false,
+     "detail": "no search box"
+    },
+    {
+     "id": "dashboard_counts_are_right",
+     "pass": false,
+     "detail": "customers should be 3; products should be 4; low should be 2"
+    },
+    {
+     "id": "works_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "login_still_works_after_restart",
+     "pass": false,
+     "detail": "locator.fill: Timeout 30000ms exceeded."
+    },
+    {
+     "id": "records_survive_a_restart",
+     "pass": false,
+     "detail": "gone after restart: Ada Obi, Bola Adeyemi, Chuka Nwosu, Rice 5kg, Palm Oil 1L, Sugar 1kg, Tin Tomato"
+    },
+    {
+     "id": "dashboard_right_after_restart",
+     "pass": false,
+     "detail": "customers should be 3; products should be 4; low should be 2"
+    },
+    {
+     "id": "logout_works",
+     "pass": false,
+     "detail": "no log out control"
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "passed": 5,
+   "total": 19,
+   "score": 0.263,
+   "solved": false,
+   "screenshots": [
+    "login-desktop.png",
+    "customers-desktop.png",
+    "products-desktop.png",
+    "dashboard-desktop.png",
+    "dashboard-phone.png",
+    "customers-phone.png",
+    "products-phone.png"
+   ],
+   "examine_seconds": 93.1,
+   "peak_mb_examine": 175,
+   "seconds": 517.7,
+   "peak_mb": 3996
+  },
+  {
+   "task": "b3_shop_app_resumed",
+   "type": "build",
+   "sessions": 2,
+   "killed": true,
+   "killed_after_seconds": 75.0,
+   "state_at_kill": {},
+   "build_seconds": 217.1,
+   "builder": {
+    "ok": true,
+    "stage": "done",
+    "error": "",
+    "rounds": [
+     {
+      "n": 1,
+      "files": [
+       "pages/customers.py",
+       "pages/dashboard.py",
+       "pages/products.py",
+       "schema.py"
+      ],
+      "ok": true,
+      "problem": ""
+     }
+    ],
+    "llm": {
+     "calls": 1,
+     "seconds": 135.69588828086853,
+     "tokens": 842
+    },
+    "model_loads": 1,
+    "seconds": 140.7
+   },
+   "peak_mb_build": 3837,
+   "examiner": [
+    {
+     "id": "app_opens",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "id": "login_is_required",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "wrong_password_is_rejected",
+     "pass": true,
+     "detail": "got in with a wrong password"
+    },
+    {
+     "id": "login_works",
+     "pass": true,
+     "detail": "still on the login form"
+    },
+    {
+     "id": "dashboard_shows_the_requested_numbers",
+     "pass": true,
+     "detail": "no sign of: "
+    },
+    {
+     "id": "customers_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:40407/customers"
+    },
+    {
+     "id": "customers_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "customers_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "products_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:40407/products"
+    },
+    {
+     "id": "products_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "products_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "dashboard_counts_are_right",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "works_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "login_still_works_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "records_survive_a_restart",
+     "pass": true,
+     "detail": "gone after restart: "
+    },
+    {
+     "id": "dashboard_right_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "logout_works",
+     "pass": true,
+     "detail": "records page still open after logging out"
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "passed": 19,
+   "total": 19,
+   "score": 1.0,
+   "solved": true,
+   "screenshots": [
+    "login-desktop.png",
+    "customers-desktop.png",
+    "products-desktop.png",
+    "dashboard-desktop.png",
+    "dashboard-phone.png",
+    "customers-phone.png",
+    "products-phone.png"
+   ],
+   "examine_seconds": 4.8,
+   "peak_mb_examine": 257,
+   "seconds": 221.9,
+   "peak_mb": 3837
   }
  ],
  "set": "heldout",

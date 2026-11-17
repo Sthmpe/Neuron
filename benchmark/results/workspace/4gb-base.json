@@ -1,0 +1,118 @@
+{
+ "rows": [
+  {
+   "task": "w01_vat_rounding",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 91.3,
+    "tokens": 244
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 97.2,
+   "peak_mb": 3815
+  },
+  {
+   "task": "w02_order_rollback",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 137.6,
+    "tokens": 517
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 138.0,
+   "peak_mb": 3813
+  },
+  {
+   "task": "w03_due_date_weekend",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 166.7,
+    "tokens": 558
+   },
+   "what_happened": [
+    "rejected: the proposed file is identical to the original (no change)",
+    "rejected: the proposed file is identical to the original (no change)",
+    "rejected: the proposed file is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 166.8,
+   "peak_mb": 3911
+  },
+  {
+   "task": "w04_cancelled_spelling",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 220.4,
+    "tokens": 867
+   },
+   "what_happened": [
+    "rejected: the proposed file is identical to the original (no change)",
+    "rejected: the proposed file is identical to the original (no change)",
+    "rejected: the proposed file is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 220.5,
+   "peak_mb": 3920
+  },
+  {
+   "task": "w05_search_case",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 474.1,
+    "tokens": 2500
+   },
+   "what_happened": [
+    "tests still failing",
+    "rejected: the reply names 'shopkeeper/storage/repository.py', which is not an ed",
+    "rejected: the reply names 'shopkeeper/storage/repository.py', which is not an ed"
+   ],
+   "tests_untouched": true,
+   "seconds": 474.4,
+   "peak_mb": 3913
+  }
+ ],
+ "set": "workspace",
+ "tier": "4gb",
+ "tier_limit_mb": 4096,
+ "condition": "base",
+ "models": {
+  "planner": "qwen3.5-4b-q4",
+  "reviewer": "qwen3.5-4b-q4",
+  "builder": "qwen3.5-4b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-17 22:52:57",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}
