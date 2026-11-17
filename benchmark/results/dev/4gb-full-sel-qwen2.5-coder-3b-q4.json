@@ -1,0 +1,117 @@
+{
+ "rows": [
+  {
+   "task": "01_shopping_cart",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 20.10567545890808,
+    "tokens": 135
+   },
+   "what_happened": [
+    "Cart.total: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 101.6,
+   "peak_mb": 2481
+  },
+  {
+   "task": "02_text_stats",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 67.70435380935669,
+    "tokens": 354
+   },
+   "what_happened": [
+    "words: tests still fail: [...]\ntgreen\\nblue\"), [\"red\", \"green\", \"blue\"])\n    ~~~~~~~~~~",
+    "words: tests still fail: [...]\ntgreen\\nblue\"), [\"red\", \"green\", \"blue\"])\n    ~~~~~~~~~~",
+    "words: tests still fail: [...]\ns.TextStatsTests.test_simple_sentence)\n-----------------"
+   ],
+   "tests_untouched": true,
+   "seconds": 68.3,
+   "peak_mb": 2485
+  },
+  {
+   "task": "03_binary_search",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 91.90448451042175,
+    "tokens": 503
+   },
+   "what_happened": [
+    "index_of: tests still fail: [...]\n====\nFAIL: test_single_element (tests.test_search.Search",
+    "index_of: the reply was not a usable OLD/NEW edit of that function",
+    "index_of: tests still fail: [...]\n---------------------------------------------\nTraceback "
+   ],
+   "tests_untouched": true,
+   "seconds": 92.3,
+   "peak_mb": 2482
+  },
+  {
+   "task": "04_bank_transfer",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 2,
+   "llm": {
+    "calls": 4,
+    "seconds": 59.30565881729126,
+    "tokens": 292
+   },
+   "what_happened": [
+    "Account.withdraw: the rewritten function is identical to the original (no change)",
+    "Bank.transfer: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 59.8,
+   "peak_mb": 2484
+  },
+  {
+   "task": "05_date_utils",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 24.900906085968018,
+    "tokens": 136
+   },
+   "what_happened": [
+    "is_leap_year: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 25.3,
+   "peak_mb": 2487
+  }
+ ],
+ "set": "dev",
+ "tier": "4gb",
+ "tier_limit_mb": 4096,
+ "condition": "full",
+ "models": {
+  "planner": "qwen2.5-coder-3b-q4",
+  "reviewer": "qwen2.5-coder-3b-q4",
+  "builder": "qwen2.5-coder-3b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-17 12:05:33",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

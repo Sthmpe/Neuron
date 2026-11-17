@@ -1,0 +1,248 @@
+{
+ "version": 1,
+ "seed": 7,
+ "app_name": "Studio",
+ "kind": "site",
+ "mood": "modern",
+ "feel": "a clean, modern and confident first impression",
+ "palette": {
+  "source": "mood",
+  "name": "Ink and coral",
+  "user_colours": [],
+  "roles": {
+   "dominant": "#22304a",
+   "support": "#22304a",
+   "accent": "#e5533d"
+  }
+ },
+ "tokens": {
+  "color-bg": "#f8fafe",
+  "color-surface": "#ffffff",
+  "color-surface-2": "#eef3fa",
+  "color-surface-3": "#e2e8f3",
+  "color-ink": "#161b23",
+  "color-ink-muted": "#51555e",
+  "color-ink-soft": "#767a82",
+  "color-strong": "#22304a",
+  "color-on-strong": "#ffffff",
+  "color-on-strong-muted": "#cad1df",
+  "color-heading": "#22304a",
+  "color-action": "#d3422d",
+  "color-on-action": "#ffffff",
+  "color-action-hover": "#be2c18",
+  "color-link": "#c3311e",
+  "color-accent-soft": "#ffe4df",
+  "color-accent-ink": "#c5331f",
+  "color-support-soft": "#e1e8f6",
+  "color-support-ink": "#22304a",
+  "color-focus": "#c3311e",
+  "color-success-bg": "#e7f5ec",
+  "color-success-ink": "#1f7a4d",
+  "color-error-bg": "#fdecec",
+  "color-error-ink": "#b42318",
+  "color-shadow-color": "#1b222e",
+  "font-heading": "'Manrope', system-ui, sans-serif",
+  "font-body": "'Inter', system-ui, sans-serif",
+  "heading-weight": "700",
+  "heading-tracking": "-0.02em",
+  "body-size": "17px",
+  "ratio": "1.25",
+  "radius-sm": "6px",
+  "radius": "12px",
+  "radius-lg": "18px",
+  "radius-button": "10px",
+  "shadow-sm": "0 1px 3px #1b222e0a, 0 6px 16px #1b222e0d",
+  "shadow": "0 4px 12px #1b222e0d, 0 18px 40px #1b222e14",
+  "shadow-lg": "0 8px 24px #1b222e10, 0 40px 80px #1b222e1c",
+  "space": "8.4px",
+  "section-space": "101px",
+  "label-case": "none",
+  "label-tracking": "0.01em"
+ },
+ "fonts": [
+  "inter",
+  "manrope"
+ ],
+ "variants": {
+  "hero": "card",
+  "features": "tiles",
+  "fact": "callout",
+  "form": "split",
+  "nav": "bar",
+  "rhythm": "flow"
+ },
+ "fingerprint": [
+  "modern",
+  "Ink and coral",
+  "manrope",
+  "card",
+  "tiles",
+  "split",
+  "bar",
+  "flow"
+ ],
+ "contrast": [
+  {
+   "text": "ink",
+   "on": "bg",
+   "ratio": 16.54,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "ink",
+   "on": "surface",
+   "ratio": 17.28,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "ink",
+   "on": "surface-2",
+   "ratio": 15.5,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "ink",
+   "on": "surface-3",
+   "ratio": 14.05,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "ink-muted",
+   "on": "bg",
+   "ratio": 7.15,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "ink-muted",
+   "on": "surface",
+   "ratio": 7.47,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "ink-muted",
+   "on": "surface-2",
+   "ratio": 6.7,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "ink-muted",
+   "on": "surface-3",
+   "ratio": 6.07,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "heading",
+   "on": "bg",
+   "ratio": 12.64,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "heading",
+   "on": "surface",
+   "ratio": 13.21,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "heading",
+   "on": "surface-2",
+   "ratio": 11.85,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "on-strong",
+   "on": "strong",
+   "ratio": 13.21,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "on-strong-muted",
+   "on": "strong",
+   "ratio": 8.62,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "on-action",
+   "on": "action",
+   "ratio": 4.58,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "on-action",
+   "on": "action-hover",
+   "ratio": 5.89,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "link",
+   "on": "bg",
+   "ratio": 5.32,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "link",
+   "on": "surface",
+   "ratio": 5.56,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "link",
+   "on": "surface-2",
+   "ratio": 4.99,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "accent-ink",
+   "on": "accent-soft",
+   "ratio": 4.5,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "support-ink",
+   "on": "support-soft",
+   "ratio": 10.74,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "success-ink",
+   "on": "success-bg",
+   "ratio": 4.73,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "error-ink",
+   "on": "error-bg",
+   "ratio": 5.76,
+   "needs": 4.5,
+   "ok": true
+  },
+  {
+   "text": "ink-soft",
+   "on": "surface",
+   "ratio": 4.31,
+   "needs": 3.0,
+   "ok": true
+  }
+ ],
+ "reason": "The mood was set to modern. No colours were named, so the palette 'Ink and coral' was picked at random from 4 palettes that suit this mood. Headings use Manrope and text uses Inter, a pairing chosen for a clean. Corners are softly rounded and depth comes from soft shadows and background tone, not lines. The page opens with a card hero, shows the main points as tiles, and puts the form in a split layout. Every text and background pair passes the contrast check (lowest ratio 4.5:1)."
+}

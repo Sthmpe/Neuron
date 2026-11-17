@@ -1,0 +1,481 @@
+{
+ "rows": [
+  {
+   "task": "01_shopping_cart",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 33.15349864959717,
+    "tokens": 725
+   },
+   "what_happened": [
+    "Cart.total: tests still fail: [...]\ntest_total_with_discount (tests.test_cart.CartTests.test",
+    "Cart.total: tests still fail: [...]\nithout_discount (tests.test_cart.CartTests.test_total_wi",
+    "Cart.total: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 61.4,
+   "peak_mb": 1592
+  },
+  {
+   "task": "02_text_stats",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 49.95582962036133,
+    "tokens": 1084
+   },
+   "what_happened": [
+    "words: the rewritten function is identical to the original (no change)",
+    "words: tests still fail: [...]\n\", \"green\", \"blue\"])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^",
+    "words: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 50.2,
+   "peak_mb": 1590
+  },
+  {
+   "task": "03_binary_search",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 41.9628381729126,
+    "tokens": 1075
+   },
+   "what_happened": [
+    "index_of: the rewritten function is identical to the original (no change)",
+    "index_of: tests still fail: [...]\n==============\nFAIL: test_single_element (tests.test_sea",
+    "index_of: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 42.3,
+   "peak_mb": 1587
+  },
+  {
+   "task": "04_bank_transfer",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 31.894521474838257,
+    "tokens": 687
+   },
+   "what_happened": [
+    "Account.withdraw: tests still fail: [...]\nnever_created (tests.test_bank.BankTests.test_money_is_n",
+    "Account.withdraw: the reply was not a usable OLD/NEW edit of that function",
+    "Account.withdraw: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 32.2,
+   "peak_mb": 1588
+  },
+  {
+   "task": "05_date_utils",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 33.12763738632202,
+    "tokens": 595
+   },
+   "what_happened": [
+    "days_in_month: the rewritten function is identical to the original (no change)",
+    "days_in_month: the reply was not a usable OLD/NEW edit of that function",
+    "days_in_month: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 33.4,
+   "peak_mb": 1596
+  },
+  {
+   "task": "06_matrix",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 39.36688184738159,
+    "tokens": 920
+   },
+   "what_happened": [
+    "multiply: tests still fail: [...]\ncall last):\n  File \"/workspace/tests/test_matrix.py\", li",
+    "multiply: tests still fail: [...]\n    ~~~~~~~~~~~~~~~^^^^^^\n  File \"/workspace/matrix.py\",",
+    "multiply: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 39.9,
+   "peak_mb": 1626
+  },
+  {
+   "task": "07_lru_cache",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 23.53179669380188,
+    "tokens": 485
+   },
+   "what_happened": [
+    "LRUCache.get: the rewritten function is identical to the original (no change)",
+    "LRUCache.get: tests still fail: [...]\n: test_reading_keeps_an_entry_alive (tests.test_lru.LRUT",
+    "LRUCache.get: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 23.8,
+   "peak_mb": 1625
+  },
+  {
+   "task": "08_csv_parser",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 35.32339930534363,
+    "tokens": 825
+   },
+   "what_happened": [
+    "parse: the rewritten function is identical to the original (no change)",
+    "parse: the reply was not a usable OLD/NEW edit of that function",
+    "parse: tests still fail: [...]\ns\n    self.assertEqual(rows[0], {\"name\": \"Ada\", \"city\": "
+   ],
+   "tests_untouched": true,
+   "seconds": 35.6,
+   "peak_mb": 1635
+  },
+  {
+   "task": "09_todo_app",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 44.53798031806946,
+    "tokens": 1066
+   },
+   "what_happened": [
+    "Task.add_tag: the rewritten function is identical to the original (no change)",
+    "Task.add_tag: the reply was not a usable OLD/NEW edit of that function",
+    "Task.add_tag: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 44.7,
+   "peak_mb": 1634
+  },
+  {
+   "task": "10_intervals",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 45.08363127708435,
+    "tokens": 1009
+   },
+   "what_happened": [
+    "total_length: the rewritten function is identical to the original (no change)",
+    "merge: tests still fail: [...]\nests.test_total_length)\n--------------------------------",
+    "merge: tests still fail: [...]\nests.test_total_length)\n--------------------------------"
+   ],
+   "tests_untouched": true,
+   "seconds": 45.5,
+   "peak_mb": 1634
+  },
+  {
+   "task": "d1_tutor_site",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 100.0,
+   "builder": {
+    "ok": false,
+    "stage": "done",
+    "error": "not all tasks are done",
+    "tasks": {
+     "schema": {
+      "status": "done",
+      "attempts": 2
+     },
+     "home": {
+      "status": "failed",
+      "attempts": 3
+     }
+    },
+    "llm": {
+     "calls": 8,
+     "seconds": 97.33913207054138,
+     "tokens": 2575
+    },
+    "model_loads": 1,
+    "seconds": 99.6
+   },
+   "peak_mb_build": 1469,
+   "examiner": [
+    {
+     "id": "page_opens",
+     "pass": false,
+     "detail": "404"
+    },
+    {
+     "id": "headline_has_the_name",
+     "pass": false,
+     "detail": "headlines: Not found"
+    },
+    {
+     "id": "shows_maths",
+     "pass": false,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_physics",
+     "pass": false,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_english",
+     "pass": false,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_5_000",
+     "pass": false,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "looks_right_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "form_can_be_sent_and_thanks_shown",
+     "pass": false,
+     "detail": "no field for \"Name\""
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "page_opens_after_restart",
+     "pass": false,
+     "detail": ""
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "what_was_sent_is_kept_on_disk",
+     "pass": false,
+     "detail": "not found on disk: Ngozi Bello"
+    }
+   ],
+   "passed": 3,
+   "total": 12,
+   "score": 0.25,
+   "solved": false,
+   "screenshots": [
+    "home-desktop.png",
+    "home-phone.png"
+   ],
+   "examine_seconds": 1.4,
+   "peak_mb_examine": 137,
+   "seconds": 101.4,
+   "peak_mb": 1469
+  },
+  {
+   "task": "d2_class_app",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 131.1,
+   "builder": {
+    "ok": false,
+    "stage": "done",
+    "error": "not all tasks are done",
+    "tasks": {
+     "schema": {
+      "status": "done",
+      "attempts": 2
+     },
+     "students": {
+      "status": "failed",
+      "attempts": 3
+     },
+     "courses": {
+      "status": "failed",
+      "attempts": 3
+     },
+     "dashboard": {
+      "status": "failed",
+      "attempts": 3
+     }
+    },
+    "llm": {
+     "calls": 15,
+     "seconds": 126.98597359657288,
+     "tokens": 3190
+    },
+    "model_loads": 1,
+    "seconds": 130.5
+   },
+   "peak_mb_build": 1541,
+   "examiner": [
+    {
+     "id": "app_opens",
+     "pass": true,
+     "detail": "404"
+    },
+    {
+     "id": "login_is_required",
+     "pass": false,
+     "detail": "the records page opened without logging in"
+    },
+    {
+     "id": "wrong_password_is_rejected",
+     "pass": false,
+     "detail": "locator.fill: Timeout 30000ms exceeded."
+    },
+    {
+     "id": "login_works",
+     "pass": false,
+     "detail": "locator.fill: Timeout 30000ms exceeded."
+    },
+    {
+     "id": "dashboard_shows_the_requested_numbers",
+     "pass": false,
+     "detail": "no sign of: under 18"
+    },
+    {
+     "id": "students_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:43509/students"
+    },
+    {
+     "id": "students_can_be_added",
+     "pass": false,
+     "detail": "no field for \"Name\""
+    },
+    {
+     "id": "students_search_works",
+     "pass": false,
+     "detail": "no search box"
+    },
+    {
+     "id": "courses_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:43509/courses"
+    },
+    {
+     "id": "courses_can_be_added",
+     "pass": false,
+     "detail": "no field for \"Title\""
+    },
+    {
+     "id": "courses_search_works",
+     "pass": false,
+     "detail": "no search box"
+    },
+    {
+     "id": "dashboard_counts_are_right",
+     "pass": false,
+     "detail": "students should be 3; courses should be 2; under 18 should be 2"
+    },
+    {
+     "id": "works_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "login_still_works_after_restart",
+     "pass": false,
+     "detail": "locator.fill: Timeout 30000ms exceeded."
+    },
+    {
+     "id": "records_survive_a_restart",
+     "pass": false,
+     "detail": "gone after restart: Tunde Okafor, Amaka Eze, Bisi Lawal, Bookkeeping Basics, Spoken French"
+    },
+    {
+     "id": "dashboard_right_after_restart",
+     "pass": false,
+     "detail": "students should be 3; courses should be 2; under 18 should be 2"
+    },
+    {
+     "id": "logout_works",
+     "pass": false,
+     "detail": "no log out control"
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "passed": 6,
+   "total": 19,
+   "score": 0.316,
+   "solved": false,
+   "screenshots": [
+    "login-desktop.png",
+    "students-desktop.png",
+    "courses-desktop.png",
+    "dashboard-desktop.png",
+    "dashboard-phone.png",
+    "students-phone.png",
+    "courses-phone.png"
+   ],
+   "examine_seconds": 93.7,
+   "peak_mb_examine": 176,
+   "seconds": 224.8,
+   "peak_mb": 1541
+  }
+ ],
+ "set": "dev",
+ "tier": "2gb",
+ "tier_limit_mb": 2048,
+ "condition": "full",
+ "models": {
+  "planner": "qwen3.5-0.8b-q8",
+  "reviewer": "qwen3.5-0.8b-q8",
+  "builder": "qwen3.5-0.8b-q8"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-17 11:53:16",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}
