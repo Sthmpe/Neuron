@@ -44,3 +44,10 @@ installed qwen3.5-9b-q4
 8gb-full-sel-gemma-4-e4b-q4 01_shopping_cart: SOLVED | attempts 1 | 49.4s | peak 5605 MB
 8gb-full-sel-gemma-4-e4b-q4 02_text_stats: SOLVED | attempts 1 | 38.8s | peak 5599 MB
 8gb-full-sel-gemma-4-e4b-q4 03_binary_search: SOLVED | attempts 1 | 55.4s | peak 5605 MB
+8gb-full-sel-gemma-4-e4b-q4 04_bank_transfer: SOLVED | attempts 3 | 145.7s | peak 5648 MB
+8gb-full-sel-gemma-4-e4b-q4 05_date_utils: SOLVED | attempts 1 | 43.6s | peak 5654 MB
+8gb-full-sel-gemma-4-e4b-q4 06_matrix: SOLVED | attempts 1 | 45.1s | peak 5655 MB
+8gb-full-sel-gemma-4-e4b-q4 07_lru_cache: SOLVED | attempts 1 | 45.4s | peak 5647 MB
+8gb-full-sel-gemma-4-e4b-q4 08_csv_parser: SOLVED | attempts 1 | 74.9s | peak 5655 MB
+8gb-full-sel-gemma-4-e4b-q4 09_todo_app: SOLVED | attempts 1 | 45.3s | peak 5648 MB
+8gb-full-sel-gemma-4-e4b-q4 10_intervals: SOLVED | attempts 1 | 52.3s | peak 5655 MB

@@ -1,0 +1,152 @@
+[
+ {
+  "id": "L01_pdf_research",
+  "kind": "pdf_qa",
+  "inputs": [
+   "sources/riverside_water_report_2025.pdf",
+   "sources/greenline_bus_policy_2026.pdf"
+  ],
+  "request": "Answer these questions using only the two attached PDF documents. For every answer give the document name and page number you took it from.",
+  "questions": [
+   {
+    "q": "How many residents does the Riverside Water Board supply?",
+    "expect": [
+     "412,000"
+    ],
+    "doc": "riverside",
+    "page": 1
+   },
+   {
+    "q": "On how many days in 2025 did peak demand exceed treatment capacity?",
+    "expect": [
+     "11"
+    ],
+    "doc": "riverside",
+    "page": 2
+   },
+   {
+    "q": "Which district uses the most water per day, and how much?",
+    "expect": [
+     "Northbank",
+     "29"
+    ],
+    "doc": "riverside",
+    "page": 2
+   },
+   {
+    "q": "What share of water was non-revenue water after the repairs?",
+    "expect": [
+     "31"
+    ],
+    "doc": "riverside",
+    "page": 3
+   },
+   {
+    "q": "What was the operating surplus in 2025 (revenue minus operating costs)?",
+    "expect": [
+     "3.7"
+    ],
+    "doc": "riverside",
+    "page": 4
+   },
+   {
+    "q": "How much does a 30-day Greenline pass cost?",
+    "expect": [
+     "52"
+    ],
+    "doc": "greenline",
+    "page": 2
+   },
+   {
+    "q": "How much does a student pay for a single Greenline journey?",
+    "expect": [
+     "0.90"
+    ],
+    "doc": "greenline",
+    "page": 2
+   },
+   {
+    "q": "Within how many working days must an accessibility complaint be answered?",
+    "expect": [
+     "10"
+    ],
+    "doc": "greenline",
+    "page": 3
+   }
+  ]
+ },
+ {
+  "id": "L02_excel_summary",
+  "kind": "excel",
+  "inputs": [
+   "sources/sales_2025.csv"
+  ],
+  "request": "Make an Excel workbook called sales_summary.xlsx from the attached sales_2025.csv. Put all the rows on a sheet called Data. On a sheet called Summary, show one row per region with total units and total revenue (units times unit price), then a Total row, and each region's share of total revenue as a percentage. The Summary numbers must be formulas that use the Data sheet, not typed-in values, so they update if the data changes."
+ },
+ {
+  "id": "L03_word_proposal",
+  "kind": "word",
+  "inputs": [],
+  "request": "Write a project proposal as a Word document called proposal.docx for 'Bright Roofs', a plan to put solar panels on 40 school roofs in Kaduna. Use these headings in this order: Summary, The problem, Our plan, Budget, Timeline. The Budget section must have a table with the columns Item and Cost (USD) and these rows: Solar panels 180000, Inverters and batteries 95000, Installation 60000, Training for school staff 15000, then a Total row. Keep it between 400 and 900 words."
+ },
+ {
+  "id": "L04_pptx_pitch",
+  "kind": "pptx",
+  "inputs": [],
+  "request": "Create a 6-slide PowerPoint presentation called pitch.pptx for investors in 'FarmLink', an app that connects small farmers in Ghana directly to restaurants. Slides: 1 title slide with the name and a one-line tagline, 2 The problem, 3 Our solution, 4 Market size, 5 Business model, 6 The ask: we are raising 400,000 dollars. Keep each slide short: at most 5 bullet points."
+ },
+ {
+  "id": "L05_cpp_budget_cli",
+  "kind": "cpp_build",
+  "inputs": [],
+  "request": "Write a C++17 command-line program called budget. It reads a CSV file of transactions given as its first argument. Each line is date,category,amount (amount is a number with up to 2 decimals; the first line is a header). It prints one line per category in alphabetical order: '<category>: <total>' with the total to 2 decimals, then a last line 'TOTAL: <grand total>'. If a second argument is given, it is a budget CSV with lines category,limit (with a header line); then after the totals print 'OVER: <category> by <amount>' for every category whose total is above its limit, in alphabetical order. If the file cannot be opened, print 'error: cannot open <path>' to stderr and exit with code 1. Put the sources in src/ and include a Makefile whose default target builds ./budget."
+ },
+ {
+  "id": "L06_cpp_bug_stock",
+  "kind": "workspace_bug",
+  "lang": "cpp",
+  "workspace": "cpp_inventory",
+  "bug": 0
+ },
+ {
+  "id": "L07_cpp_bug_discount",
+  "kind": "workspace_bug",
+  "lang": "cpp",
+  "workspace": "cpp_inventory",
+  "bug": 1
+ },
+ {
+  "id": "L08_cpp_bug_parse",
+  "kind": "workspace_bug",
+  "lang": "cpp",
+  "workspace": "cpp_inventory",
+  "bug": 2
+ },
+ {
+  "id": "L09_go_bug_rate",
+  "kind": "workspace_bug",
+  "lang": "go",
+  "workspace": "go_ledger",
+  "bug": 0
+ },
+ {
+  "id": "L10_go_bug_round",
+  "kind": "workspace_bug",
+  "lang": "go",
+  "workspace": "go_ledger",
+  "bug": 1
+ },
+ {
+  "id": "L11_business_app",
+  "kind": "web_app",
+  "kill_and_resume": true,
+  "request": "Build a web app for my shop 'Mama Ngozi Provisions'. I log in first: username ngozi, password provisions7. I need Products (name, price, stock), Customers (name, phone) and Orders. To make an order I choose a customer, a product and a quantity; saving the order must reduce that product's stock by the quantity, and an order bigger than the stock must be refused with a clear message. Show orders with customer, product, quantity and total price. I want a dashboard with total revenue from all orders, the number of orders, and how many products have fewer than 5 in stock. I need search on the products page. Everything must be saved in a database and work on my phone. Include automated tests for the stock rules."
+ },
+ {
+  "id": "L12_long_docstrings",
+  "kind": "long_task",
+  "kill_and_resume": true,
+  "workspace": "../workspaces/shopkeeper",
+  "request": "Add a clear docstring to every function and method in this project's source code (not the tests) that does not already have one, explaining what it does, its inputs and what it returns. Do not change any code behaviour: every existing test must still pass."
+ }
+]

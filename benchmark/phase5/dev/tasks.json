@@ -1,0 +1,65 @@
+[
+ {
+  "id": "D01_pdf_library",
+  "kind": "pdf_qa",
+  "inputs": [
+   "sources/dev_library_rules.pdf"
+  ],
+  "request": "Answer from the attached PDF with page numbers.",
+  "questions": [
+   {
+    "q": "How many items may a member borrow at once?",
+    "expect": [
+     "8"
+    ],
+    "doc": "dev_library",
+    "page": 1
+   },
+   {
+    "q": "What is the most a late item can cost?",
+    "expect": [
+     "5"
+    ],
+    "doc": "dev_library",
+    "page": 2
+   }
+  ]
+ },
+ {
+  "id": "D02_excel_expenses",
+  "kind": "excel",
+  "inputs": [
+   "sources/dev_expenses.csv"
+  ],
+  "request": "Make expenses.xlsx: rows on a sheet Data; a sheet Summary with the total per category and a Total row, using formulas."
+ },
+ {
+  "id": "D03_word_memo",
+  "kind": "word",
+  "inputs": [],
+  "request": "Write memo.docx to staff about the new office hours (8am to 4pm from 1 May) with headings Change, Reason, Questions. 120 to 300 words."
+ },
+ {
+  "id": "D04_pptx_short",
+  "kind": "pptx",
+  "inputs": [],
+  "request": "Make a 3-slide deck called intro.pptx introducing our bakery Golden Crust: title, what we bake, how to order."
+ },
+ {
+  "id": "D05_cpp_wordcount",
+  "kind": "cpp_build",
+  "inputs": [],
+  "request": "Write a C++17 program wc2 that reads a text file given as the first argument and prints 'lines: N', 'words: N' and 'longest: <longest word>' (first one if tied). Sources in src/, Makefile builds ./wc2."
+ },
+ {
+  "id": "D06_app_classes",
+  "kind": "web_app",
+  "reuse": "../builds/dev/d2_class_app.json"
+ },
+ {
+  "id": "D07_long_docstrings",
+  "kind": "long_task",
+  "workspace": "../workspaces/clinic",
+  "request": "Add a clear docstring to every function and method in the source code (not the tests) that does not already have one. Do not change behaviour; tests must pass."
+ }
+]

@@ -184,7 +184,10 @@ class _Cgroup:
 
 
 class Sandbox:
-    def __init__(self, timeout=60, mem_mb=512, max_procs=64, max_file_mb=32, max_output_bytes=200_000):
+    def __init__(self, timeout=60, mem_mb=512, max_procs=64, max_file_mb=32, max_output_bytes=200_000, toolchains=False):
+        """toolchains=True also mounts installed compilers read-only (g++/clang via /etc/alternatives, Go, Rust,
+        Node, Java) so compiled-language projects can be built and tested. Off by default: same as before."""
+        self.toolchains = toolchains
         self.timeout, self.mem_mb, self.max_procs = timeout, mem_mb, max_procs
         self.max_file_mb, self.max_output_bytes = max_file_mb, max_output_bytes
         self.bwrap = shutil.which("bwrap")
@@ -217,6 +220,7 @@ class Sandbox:
         if not self.bwrap:
             raise SandboxUnavailable("bubblewrap (bwrap) is not installed; refusing to run code unsandboxed")
         workspace = str(Path(workspace).resolve())
+        tc = self._toolchain_args() if self.toolchains else []
         return [self.bwrap, "--unshare-all", "--unshare-user", "--uid", "65534", "--gid", "65534",
                "--die-with-parent", "--new-session", "--cap-drop", "ALL", "--hostname", "sandbox",
                "--ro-bind", "/usr", "/usr", "--symlink", "usr/lib", "/lib", "--symlink", "usr/lib64", "/lib64",
@@ -225,7 +229,7 @@ class Sandbox:
                "--bind", workspace, "/workspace", "--chdir", "/workspace",
                "--clearenv", "--setenv", "PATH", "/usr/local/bin:/usr/bin", "--setenv", "HOME", "/workspace",
                "--setenv", "LANG", "C.UTF-8", "--setenv", "PYTHONDONTWRITEBYTECODE", "1",
-               "--setenv", "PYTHONHASHSEED", "0"] + list(extra)
+               "--setenv", "PYTHONHASHSEED", "0"] + tc + list(extra)
 
     def run(self, argv, workspace, timeout=None):
         timeout = timeout or self.timeout
@@ -397,3 +401,20 @@ class SandboxedServer:
         self.out.close()
         shutil.rmtree(self.sockdir, ignore_errors=True)
         return text
+
+
+TOOLCHAIN_DIRS = ["/etc/alternatives", "/usr/local/go", "/opt/node22", "/root/.cargo", "/root/.rustup"]
+TOOLCHAIN_PATH = "/usr/local/go/bin:/opt/node22/bin:/root/.cargo/bin:/usr/local/bin:/usr/bin"
+
+
+def _toolchain_args(self):
+    args = []
+    for d in TOOLCHAIN_DIRS:
+        if os.path.isdir(d) and not d.startswith("/usr/"):
+            args += ["--ro-bind", d, d]
+    return args + ["--setenv", "PATH", TOOLCHAIN_PATH, "--setenv", "GOTOOLCHAIN", "local", "--setenv", "GOFLAGS", "-mod=mod",
+                   "--setenv", "CARGO_HOME", "/workspace/.cargo", "--setenv", "RUSTUP_HOME", "/root/.rustup",
+                   "--setenv", "GOCACHE", "/workspace/.cache/go", "--setenv", "GOPATH", "/workspace/.gopath"]
+
+
+Sandbox._toolchain_args = _toolchain_args

@@ -1,0 +1,91 @@
+// Browser examiner for L11 (Mama Ngozi Provisions). Uses the app like a person; never reads its code.
+//   node shop_app.js <base url> <phase 1|2> <out dir>
+const { chromium } = require('/opt/node-tools/node_modules/playwright');
+const fs = require('fs');
+const [base, phase, outDir] = process.argv.slice(2);
+const LOGIN = { username: 'ngozi', password: 'provisions7' };
+const checks = [], errors = [];
+const rx = (s) => new RegExp(s, 'i');
+const check = (id, pass, detail = '') => checks.push({ id, pass: !!pass, detail: String(detail).slice(0, 300) });
+async function attempt(id, fn) { try { const r = await fn(); check(id, r === undefined ? true : (r.pass ?? r), r && r.detail); } catch (e) { check(id, false, e.message.split('\n')[0]); } }
+const text = async (p) => (await p.locator('body').innerText()).replace(/ /g, ' ');
+const hasPw = async (p) => (await p.locator('input[type=password]:visible').count()) > 0;
+async function field(p, label) {
+  for (const loc of [p.getByLabel(rx(label)), p.locator(`input[name*="${label}" i], select[name*="${label}" i], textarea[name*="${label}" i]`), p.getByPlaceholder(rx(label))]) {
+    const n = await loc.count(); for (let i = 0; i < n; i++) if (await loc.nth(i).isVisible()) return loc.nth(i);
+  }
+  return null;
+}
+async function fill(p, record) {
+  let last = null;
+  for (const [label, value] of Object.entries(record)) {
+    let f = await field(p, label);
+    if (!f) { const add = p.getByRole('link', { name: /add|new|create/i }).first(); if (await add.count()) { await add.click(); await p.waitForLoadState(); f = await field(p, label); } }
+    if (!f) throw new Error(`no field for ${label}`);
+    const tag = await f.evaluate(e => e.tagName);
+    if (tag === 'SELECT') {
+      const opts = await f.locator('option').allInnerTexts(); const pick = opts.find(o => o.toLowerCase().includes(String(value).toLowerCase()));
+      if (!pick) throw new Error(`no option ${value} in ${label}`); await f.selectOption({ label: pick });
+    } else await f.fill(String(value));
+    last = f;
+  }
+  const form = last.locator('xpath=ancestor::form[1]');
+  const btn = form.locator('button[type=submit], input[type=submit], button:not([type])').first();
+  if (await btn.count()) await btn.click(); else await last.press('Enter');
+  await p.waitForLoadState();
+}
+async function login(p) {
+  await p.goto(base + '/'); if (!(await hasPw(p))) { const l = p.getByRole('link', { name: /log ?in/i }).first(); if (await l.count()) { await l.click(); await p.waitForLoadState(); } }
+  const u = (await field(p, 'user')) || (await field(p, 'name')); await u.fill(LOGIN.username);
+  await p.locator('input[type=password]').first().fill(LOGIN.password); await p.locator('input[type=password]').first().press('Enter'); await p.waitForLoadState();
+}
+async function open(p, word) {
+  await p.goto(base + '/');
+  const a = p.getByRole('link', { name: rx(word) }).first();
+  if (await a.count() && await a.isVisible()) await a.click();
+  else { const t = p.locator('label.nav-toggle, button[aria-label*=menu i]').first(); if (await t.count() && await t.isVisible()) await t.click();
+         if (await a.count() && await a.isVisible()) await a.click(); else await p.goto(base + '/' + word.toLowerCase()); }
+  await p.waitForLoadState();
+}
+const near = (t, label, value) => new RegExp(`${label}[^0-9]{0,40}${value}(?![0-9])`, 'i').test(t.replace(/,/g, '')) || new RegExp(`(?<![0-9])${value}[^0-9]{0,30}${label}`, 'i').test(t.replace(/,/g, ''));
+(async () => {
+  fs.mkdirSync(outDir, { recursive: true });
+  const b = await chromium.launch(); const ctx = await b.newContext({ viewport: { width: 1280, height: 800 } }); const p = await ctx.newPage();
+  p.on('response', r => { if (r.status() >= 500) errors.push(`${r.status()} ${r.url().replace(base, '')}`); });
+  try {
+    if (phase === '1') {
+      await attempt('login_required', async () => { await p.goto(base + '/'); if (await hasPw(p)) return true; await p.goto(base + '/products'); return { pass: await hasPw(p), detail: 'products opened without login' }; });
+      await attempt('wrong_password_rejected', async () => { await p.goto(base + '/login'); const u = (await field(p, 'user')) || (await field(p, 'name')); await u.fill('ngozi'); await p.locator('input[type=password]').first().fill('nope'); await p.locator('input[type=password]').first().press('Enter'); await p.waitForLoadState(); await p.goto(base + '/products'); return await hasPw(p); });
+      await attempt('login_works', async () => { await login(p); await p.goto(base + '/'); return !(await hasPw(p)); });
+      await attempt('add_products', async () => {
+        for (const r of [{ Name: 'Garri 2kg', Price: '1500', Stock: '20' }, { Name: 'Indomie carton', Price: '9000', Stock: '6' }, { Name: 'Milk tin', Price: '800', Stock: '3' }]) { await open(p, 'Products'); await fill(p, r); }
+        await open(p, 'Products'); const t = await text(p); return { pass: ['Garri 2kg', 'Indomie carton', 'Milk tin'].every(n => t.includes(n)), detail: t.slice(0, 200) };
+      });
+      await attempt('product_search', async () => { await open(p, 'Products'); let box = p.getByRole('searchbox').first(); if (!(await box.count())) box = p.locator('input[name=q], input[name*=search i]').first();
+        await box.fill('Garri'); await box.press('Enter'); await p.waitForLoadState(); const t = await text(p); return { pass: t.includes('Garri 2kg') && !t.includes('Indomie carton') }; });
+      await attempt('add_customers', async () => { for (const r of [{ Name: 'Emeka Obi', Phone: '0803 000 1111' }, { Name: 'Funke Ade', Phone: '0805 222 3333' }]) { await open(p, 'Customers'); await fill(p, r); }
+        await open(p, 'Customers'); const t = await text(p); return t.includes('Emeka Obi') && t.includes('Funke Ade'); });
+      await attempt('order_reduces_stock', async () => { await open(p, 'Orders'); await fill(p, { Customer: 'Emeka', Product: 'Garri', Quantity: '4' });
+        await open(p, 'Products'); const t = await text(p); return { pass: /Garri 2kg[\s\S]{0,80}\b16\b/.test(t), detail: 'Garri stock should be 16' }; });
+      await attempt('second_order', async () => { await open(p, 'Orders'); await fill(p, { Customer: 'Funke', Product: 'Indomie', Quantity: '2' });
+        await open(p, 'Products'); return /Indomie carton[\s\S]{0,80}\b4\b/.test(await text(p)); });
+      await attempt('oversized_order_refused', async () => { await open(p, 'Orders'); await fill(p, { Customer: 'Emeka', Product: 'Milk', Quantity: '9' });
+        const t = await text(p); const msg = /not enough|insufficient|only \d+|out of stock|exceeds|refused|cannot/i.test(t);
+        await open(p, 'Products'); const still = /Milk tin[\s\S]{0,80}\b3\b/.test(await text(p)); return { pass: msg && still, detail: `message shown: ${msg}, stock kept at 3: ${still}` }; });
+      await attempt('orders_list_shows_totals', async () => { await open(p, 'Orders'); const t = (await text(p)).replace(/,/g, '');
+        return { pass: t.includes('Emeka Obi') && t.includes('Funke Ade') && /\b6000\b/.test(t) && /\b18000\b/.test(t), detail: 'needs 6000 and 18000' }; });
+      await attempt('dashboard_numbers', async () => { await p.goto(base + '/'); const t = await text(p);
+        return { pass: near(t, 'revenue', '24000') && near(t, 'orders', '2') && near(t, '(low|fewer|below)', '2'), detail: t.slice(0, 300) }; });
+      await attempt('works_on_a_phone', async () => { await p.setViewportSize({ width: 375, height: 740 }); const bad = [];
+        for (const w of ['', 'Products', 'Orders']) { if (w) await open(p, w); else await p.goto(base + '/'); await p.screenshot({ path: `${outDir}/${w || 'dashboard'}-phone.png`, fullPage: true });
+          if (await p.evaluate(() => document.documentElement.scrollWidth - innerWidth) > 2) bad.push(w || 'dashboard'); }
+        await p.setViewportSize({ width: 1280, height: 800 }); return { pass: !bad.length, detail: bad.join(', ') }; });
+      for (const w of ['', 'Products', 'Orders']) { if (w) await open(p, w); else await p.goto(base + '/'); await p.screenshot({ path: `${outDir}/${w || 'dashboard'}-desktop.png`, fullPage: true }); }
+    } else {
+      await attempt('data_survives_restart', async () => { await login(p); await open(p, 'Products'); const t = await text(p);
+        await open(p, 'Orders'); const o = await text(p); return { pass: /Garri 2kg[\s\S]{0,80}\b16\b/.test(t) && o.includes('Funke Ade') }; });
+    }
+  } catch (e) { check('examiner_finished', false, e.message); }
+  check(phase === '1' ? 'no_server_errors' : 'no_server_errors_after_restart', errors.length === 0, errors.slice(0, 3).join('; '));
+  await b.close(); console.log(JSON.stringify({ checks }));
+})();

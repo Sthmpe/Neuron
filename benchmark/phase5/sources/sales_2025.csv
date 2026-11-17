@@ -1,0 +1,61 @@
+date,region,product,units,unit_price
+2025-01-01,North,Solar lamp,17,35.0
+2025-01-08,South,Solar lamp,24,35.0
+2025-01-15,South,Water filter,25,22.5
+2025-01-22,North,Water filter,3,22.5
+2025-01-01,East,Cookstove,21,48.0
+2025-02-08,West,Water filter,10,22.5
+2025-02-15,West,Cookstove,33,48.0
+2025-02-22,South,Solar lamp,22,35.0
+2025-02-01,South,Cookstove,18,48.0
+2025-02-08,South,Cookstove,40,48.0
+2025-03-15,South,Cookstove,37,48.0
+2025-03-22,South,Solar lamp,7,35.0
+2025-03-01,North,Cookstove,8,48.0
+2025-03-08,South,Solar lamp,35,35.0
+2025-03-15,North,Solar lamp,39,35.0
+2025-04-22,South,Water filter,22,22.5
+2025-04-01,North,Water filter,7,22.5
+2025-04-08,South,Cookstove,25,48.0
+2025-04-15,East,Cookstove,12,48.0
+2025-04-22,West,Water filter,27,22.5
+2025-05-01,South,Solar lamp,28,35.0
+2025-05-08,East,Cookstove,34,48.0
+2025-05-15,East,Solar lamp,38,35.0
+2025-05-22,North,Cookstove,27,48.0
+2025-05-01,South,Water filter,30,22.5
+2025-06-08,West,Water filter,31,22.5
+2025-06-15,North,Cookstove,17,48.0
+2025-06-22,East,Water filter,14,22.5
+2025-06-01,South,Cookstove,40,48.0
+2025-06-08,East,Solar lamp,14,35.0
+2025-07-15,North,Water filter,24,22.5
+2025-07-22,North,Cookstove,15,48.0
+2025-07-01,West,Water filter,25,22.5
+2025-07-08,North,Water filter,29,22.5
+2025-07-15,South,Water filter,16,22.5
+2025-08-22,West,Water filter,8,22.5
+2025-08-01,South,Water filter,12,22.5
+2025-08-08,North,Solar lamp,33,35.0
+2025-08-15,West,Water filter,31,22.5
+2025-08-22,East,Water filter,5,22.5
+2025-09-01,East,Solar lamp,28,35.0
+2025-09-08,South,Cookstove,10,48.0
+2025-09-15,North,Solar lamp,4,35.0
+2025-09-22,East,Solar lamp,32,35.0
+2025-09-01,North,Water filter,29,22.5
+2025-10-08,South,Water filter,29,22.5
+2025-10-15,West,Water filter,27,22.5
+2025-10-22,West,Cookstove,30,48.0
+2025-10-01,South,Solar lamp,38,35.0
+2025-10-08,North,Cookstove,10,48.0
+2025-11-15,East,Solar lamp,39,35.0
+2025-11-22,East,Solar lamp,13,35.0
+2025-11-01,East,Cookstove,39,48.0
+2025-11-08,South,Cookstove,24,48.0
+2025-11-15,North,Cookstove,4,48.0
+2025-12-22,West,Water filter,29,22.5
+2025-12-01,West,Solar lamp,8,35.0
+2025-12-08,South,Cookstove,34,48.0
+2025-12-15,South,Water filter,15,22.5
+2025-12-22,East,Water filter,6,22.5
