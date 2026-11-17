@@ -108,3 +108,14 @@ commit screenshots, rerun held-out builds with the design system, README section
   from the spec with deterministic templates (the reference builder, promoted from tests into the
   system). Report in every result how many files the model wrote and how many came from templates.
 - Workspace benchmark (10 whole-codebase bug tasks) is part of the held-out queue.
+
+## Harness problems found during selection (2026-11-17) and what was done
+
+1. Qwen3.5-9B, task 01: the model server did not become ready within 180 s on its first cold load
+   (5 GB file read inside the 8 GB tier). Harness fault, not a model result. Wait raised to 600 s; only
+   that task re-run, as rule 2 allows.
+2. My round-two script deleted the "8 GB round-one loser" using scores that still contained that harness
+   fault, so it wrongly deleted Qwen3.5-9B. It was re-downloaded. No model file is deleted any more until
+   all results are final.
+3. Gemma 4 returned empty replies: its thinking mode used the whole reply budget. Fixed in its manifest
+   ("--reasoning off", as for Qwen3.5); its selection run was stopped before any score was recorded.

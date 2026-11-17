@@ -29,7 +29,7 @@ class LlamaServer:
         self.extra_args = list(extra_args)      # per-model settings from the model's manifest
         self.url = f"http://127.0.0.1:{port}"
 
-    def start(self, wait=180):
+    def start(self, wait=600):     # a big model's first load from a cold disk can take several minutes
         if not Path(self.binary).exists():
             raise FileNotFoundError(f"llama-server not found at {self.binary}")
         if not self.model.exists():

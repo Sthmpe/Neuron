@@ -1,0 +1,41 @@
+removed qwen3.5-9b-q4
+removed round-one 8 GB loser qwen3.5-9b-q4
+installed gemma-4-e2b-q4
+{
+ "model": "gemma-4-e2b-q4",
+ "rss_mb": 3405,
+ "load_seconds": 6.7,
+ "tokens_per_second": 12.7,
+ "sample": ""
+}
+installed gemma-4-e4b-q4
+{
+ "model": "gemma-4-e4b-q4",
+ "rss_mb": 5491,
+ "load_seconds": 8.4,
+ "tokens_per_second": 6.6,
+ "sample": ""
+}
+installed granite-4.1-3b-q4
+{
+ "model": "granite-4.1-3b-q4",
+ "rss_mb": 2949,
+ "load_seconds": 4.8,
+ "tokens_per_second": 8.9,
+ "sample": "```python\ndef larger_of_two(a, b):\n    return a if a > b else b\n```\n\n**Explanation:** This function takes two numbers as input and returns the larger of the two using a simple conditional (ternary) op"
+}
+installed granite-4.1-8b-q4
+{
+ "model": "granite-4.1-8b-q4",
+ "rss_mb": 6562,
+ "load_seconds": 10.0,
+ "tokens_per_second": 4.0,
+ "sample": "Here's a Python function that returns the larger of two numbers:\n\n```python\ndef larger_of_two(a, b):\n    return a if a > b else b\n```\n\n**Explanation in one sentence:** The function `larger_of_two` com"
+}
+qwen2.5-coder-1.5b-q4       1.04 GB file  needs   1384 MB (measured)  fits: 2gb 4gb 8gb
+granite-4.1-3b-q4           1.96 GB file  needs   2949 MB (measured)  fits: 4gb 8gb
+qwen3.5-4b-q4               2.55 GB file  needs   3656 MB (measured)  fits: 4gb 8gb
+gemma-4-e2b-q4              2.89 GB file  needs   3405 MB (measured)  fits: 4gb 8gb
+qwen2.5-coder-7b-q4         4.36 GB file  needs   5077 MB (measured)  fits: 8gb
+gemma-4-e4b-q4              4.64 GB file  needs   5491 MB (measured)  fits: 8gb
+granite-4.1-8b-q4           4.98 GB file  needs   6562 MB (measured)  fits: 8gb

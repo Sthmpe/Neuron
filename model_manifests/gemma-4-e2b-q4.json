@@ -6,6 +6,9 @@
  "licence": "apache-2.0",
  "params_billion": 2,
  "context_tokens": 8192,
- "server_args": [],
+ "server_args": [
+  "--reasoning",
+  "off"
+ ],
  "request_extra": {}
 }
