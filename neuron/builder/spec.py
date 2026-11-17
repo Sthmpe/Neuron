@@ -63,6 +63,15 @@ def label(name):
     return str(name).replace("_", " ").strip().capitalize()
 
 
+def _clean_copy(text):
+    """No em dashes and no stock phrases in anything the planner wrote (only with the design system on)."""
+    import os
+    if os.environ.get("NEURON_DESIGN") != "1":
+        return text
+    from ..kit_next.copy import clean
+    return clean(text)
+
+
 def normalise(spec):
     """Clean the planner's spec. Returns (spec, list of problems)."""
     problems = []
@@ -140,6 +149,17 @@ def normalise(spec):
             problems.append("an app needs at least one entity (a kind of record to keep)")
         if s["login_required"] and not (s["username"] and s["password"]):
             problems.append("login_required is true but username or password is empty - copy both exactly from the request")
+    def scrub(node):
+        if isinstance(node, dict):
+            for k, v in node.items():
+                if isinstance(v, str) and k in ("app_name", "headline", "subheadline", "title", "text", "button", "thanks", "label"):
+                    node[k] = _clean_copy(v)
+                else:
+                    scrub(v)
+        elif isinstance(node, list):
+            for v in node:
+                scrub(v)
+    scrub(s)
     if s["kind"] == "site" and not s["home"]["headline"]:
         problems.append("a site needs home.headline")
     return s, problems

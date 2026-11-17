@@ -18,3 +18,6 @@
 4gb-full-sel-qwen2.5-coder-3b-q4 05_date_utils: SOLVED | attempts 1 | 25.3s | peak 2487 MB
 4gb-full-sel-qwen2.5-coder-3b-q4 06_matrix: SOLVED | attempts 1 | 30.0s | peak 2484 MB
 4gb-full-sel-qwen2.5-coder-3b-q4 07_lru_cache: not solved | attempts 3 | 60.9s | peak 2488 MB
+4gb-full-sel-qwen2.5-coder-3b-q4 08_csv_parser: SOLVED | attempts 3 | 103.5s | peak 2483 MB
+4gb-full-sel-qwen2.5-coder-3b-q4 09_todo_app: SOLVED | attempts 2 | 51.1s | peak 2483 MB
+4gb-full-sel-qwen2.5-coder-3b-q4 10_intervals: SOLVED | attempts 1 | 26.0s | peak 2491 MB

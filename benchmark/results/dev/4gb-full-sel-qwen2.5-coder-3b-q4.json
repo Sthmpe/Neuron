@@ -139,6 +139,66 @@
    "tests_untouched": true,
    "seconds": 60.9,
    "peak_mb": 2488
+  },
+  {
+   "task": "08_csv_parser",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 103.00461173057556,
+    "tokens": 639
+   },
+   "what_happened": [
+    "parse_line: tests still fail: [...]\ns\n    self.assertEqual(rows[0], {\"name\": \"Ada\", \"city\": ",
+    "parse_line: tests still fail: [...]\ns\n    self.assertEqual(rows[0], {\"name\": \"Ada\", \"city\": ",
+    "parse_line: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 103.5,
+   "peak_mb": 2483
+  },
+  {
+   "task": "09_todo_app",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 2,
+   "llm": {
+    "calls": 4,
+    "seconds": 50.64312815666199,
+    "tokens": 269
+   },
+   "what_happened": [
+    "Task.add_tag: tests still fail: [...]\nt):\n  File \"/workspace/tests/test_todo.py\", line 18, in ",
+    "Task.__init__: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 51.1,
+   "peak_mb": 2483
+  },
+  {
+   "task": "10_intervals",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 25.661588430404663,
+    "tokens": 173
+   },
+   "what_happened": [
+    "merge: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 26.0,
+   "peak_mb": 2491
   }
  ],
  "set": "dev",

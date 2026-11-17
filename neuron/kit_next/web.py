@@ -161,7 +161,7 @@ class App:
                       flat(parse_qs(body.decode("utf-8", "replace"), keep_blank_values=True)), cookies)
         session = self.db.one("SELECT username FROM kit_sessions WHERE token=?", [cookies.get("session", "")])
         req.user = session["username"] if session else None
-        if path == "/static/theme.css":
+        if path in ("/static/theme.css", "/static/neuron.css"):     # neuron.css: the name older checks look for
             return Response(_theme.css(_theme.load()), content_type="text/css; charset=utf-8")
         if path.startswith("/static/"):
             f = (STATIC / path[len("/static/"):]).resolve()
