@@ -39,22 +39,34 @@ F. README with every measured number and an honest account.
 
 | Tier | Candidate A | Candidate B |
 |---|---|---|
-| 2 GB | Qwen2.5-Coder-1.5B q4_k_m (1.04 GB) | Qwen3.5-2B Q4_K_M (1.19 GB) |
+| 2 GB | Qwen2.5-Coder-1.5B q4_k_m (1.04 GB) | Qwen3.5-0.8B Q8_0 (0.76 GB) - Qwen3.5-2B was planned but measured 1892 MB, so the model manager refuses it for 2 GB |
 | 4 GB | Qwen2.5-Coder-3B q4_k_m (1.96 GB, non-commercial licence) | Qwen3.5-4B Q4_K_M (2.55 GB) |
 | 8 GB | Qwen2.5-Coder-7B q4_k_m (4.36 GB) | Qwen3.5-9B Q4_K_M (5.29 GB) |
+
+## Model choice rule (written before any selection result)
+
+Per tier, both candidates run the full dev set (10 bugs + 2 builds) in the FULL condition inside the tier.
+Score = bugs solved + build checks passed / checks total (so each item counts 1). Highest score wins;
+a tie goes to the lower total time. The winner is activated with the model manager and used for both
+held-out conditions.
 
 ## Step list and status
 
 - [x] 0. Plan, PROGRESS.md, start model downloads
-- [ ] 1. Tier memory limits (cgroup) + sandbox nested inside the tier
-- [ ] 2. Model manager (install / swap / rollback / fit check) + one-model-at-a-time runner
-- [ ] 3. App kit + design system (components, CSS) for built apps; sandboxed dev server
-- [ ] 4. Project state on disk (A)
-- [ ] 5. Builder loop (B) for bug fixing and for builds
-- [ ] 6. Benchmark tasks: 2 dev builds, 20 held-out bugs, 3 held-out builds, browser examiners
-- [ ] 7. Dev-set tuning and model choice per tier
+- [x] 1. Tier memory limits (cgroup) + sandbox nested inside the tier
+- [x] 2. Model manager (install / swap / rollback / fit check) + one-model-at-a-time runner
+- [x] 3. App kit + design system (components, CSS) for built apps; sandboxed dev server
+- [x] 4. Project state on disk (A)
+- [x] 5. Builder loop (B) for bug fixing and for builds
+- [x] 6. Benchmark tasks: 2 dev builds, 20 held-out bugs, 3 held-out builds, browser examiners
+- [x] 7a. Dev-set tuning (FROZEN at the commit after this line)
+- [ ] 7b. Model choice per tier on the dev set (FULL condition)
 - [ ] 8. Freeze, then held-out scoring: 3 tiers × BASE/FULL
 - [ ] 9. README
 
 ## Log
 - 2026-11-16: plan written, six candidate downloads started (`models/download.log`).
+- 2026-11-17: dev tuning done and frozen. Fixes found on dev: indented methods, fault localisation
+  (trace which functions failing tests run), OLD/NEW edit on attempt 2, planner site example, mandatory
+  login fields, comma repair, one-line-per-section home page, reviewer claims checked against the page,
+  guide left out of retries. Last dev run, 2 GB, qwen2.5-coder-1.5b-q4: 8/12 (bugs 6/10, builds 2/2).

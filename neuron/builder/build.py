@@ -6,6 +6,7 @@ FULL  : plan (planner role) -> spec -> tasks -> for each task: build (builder ro
 BASE  : the same model and kit without A and B: one prompt, whole app at once, no state, no tasks,
         no acceptance checks. It only gets "did the app start?" as feedback, up to 3 rounds.
 """
+import ast
 import json
 import re
 import shutil
@@ -43,9 +44,51 @@ def prepare_project(project, app_name="App"):
     (project / "app.py").write_text(APP_PY.format(name=app_name))
 
 
-def extract_code(text):
+def extract_code(text, must_define=None):
+    """The code block from a reply. With must_define, prefer the block that defines that function
+    (small models sometimes echo the guide back in an extra block)."""
     blocks = re.findall(r"```[a-zA-Z0-9]*[ \t]*\n(.*?)```", text, re.S)
-    return (blocks[0].rstrip() + "\n") if blocks else None
+    if not blocks:
+        return None
+    if must_define:
+        good = [b for b in blocks if f"def {must_define}(" in b]
+        blocks = good or blocks
+    return blocks[0].rstrip() + "\n"
+
+
+def repair_syntax(code, rounds=6):
+    """Mechanical repair of the commonest small-model slip: a missing comma between arguments that
+    sit on separate lines. Only applied when Python itself says a comma is probably missing, and a
+    candidate repair is kept only if it makes the error go away or move further down.
+    Returns (code, list of repairs)."""
+    repairs = []
+
+    def err(c):
+        try:
+            compile(c, "x", "exec")
+            return None
+        except SyntaxError as e:
+            return e
+
+    for _ in range(rounds):
+        e = err(code)
+        if e is None or "forgot a comma" not in (e.msg or ""):
+            return code, repairs
+        lines = code.splitlines()
+        fixed = False
+        for i in range(max(0, (e.lineno or 1) - 2), min(len(lines), (e.end_lineno or e.lineno or 1))):
+            if not lines[i].strip() or lines[i].rstrip().endswith((",", "(", "[", "{")):
+                continue
+            trial = lines[:i] + [lines[i].rstrip() + ","] + lines[i + 1:]
+            t = "\n".join(trial) + "\n"
+            e2 = err(t)
+            if e2 is None or (e2.lineno or 0) > (e.lineno or 0):
+                code, fixed = t, True
+                repairs.append(f"added a missing comma at the end of line {i + 1}")
+                break
+        if not fixed:
+            return code, repairs
+    return code, repairs
 
 
 def extract_files(text):
@@ -143,7 +186,9 @@ def plan(request, client, meter):
 
 def _builder_prompt(state, task):
     s = state.slice_for(task)
-    parts = [prompts.KIT_GUIDE, "", "# Example of a similar file", "```python", prompts.EXAMPLES[task["example"]].rstrip(), "```"]
+    # on a retry the guide is left out: small models tend to copy it back instead of writing the file
+    parts = ([] if s.get("last_failure") else [prompts.KIT_GUIDE, ""]) + \
+        ["# Example of a similar file", "```python", prompts.EXAMPLES[task["example"]].rstrip(), "```"]
     if s["interfaces"]:
         parts += ["", "# Files that already exist in this project", s["interfaces"]]
     parts += ["", f"# Your task: {task['file']}", s["contract"]]
@@ -188,11 +233,17 @@ def build_full(project, request, runner, sandbox, log=print, max_seconds=None):
             reply = meter.chat(runner.client("builder"), [{"role": "system", "content": prompts.BUILDER_SYSTEM},
                                                           {"role": "user", "content": _builder_prompt(state, task)}],
                                max_tokens=1400, temperature=0.1 if n == 1 else 0.5)
-            code = extract_code(reply.text)
+            code = extract_code(reply.text, task["must_define"])
             failure = None
             if code is None:
                 failure = "The reply had no complete ```python block."
+            elif f"def {task['must_define']}(" not in code and "kit.web" in code and "app.db.execute(sql" in code:
+                failure, code = "The reply repeated the kit guide instead of writing the file.", None
             else:
+                code, repairs = repair_syntax(code)
+                if repairs:
+                    attempt["repairs"] = repairs
+                    state.decide(task["id"], "repair", "; ".join(repairs))
                 attempt["code"] = code
                 try:
                     compile(code, task["file"], "exec")
@@ -259,7 +310,27 @@ def _content_review(state, code, client, meter):
     except (LLMUnavailable, ValueError):
         return []
     missing = [str(m) for m in data.get("missing") or [] if str(m).strip()]
-    return [] if data.get("ok") else missing[:5]
+    if data.get("ok") or not missing:
+        return []
+    # A reviewer's claim is checked, not trusted: an item counts as missing only if most of its
+    # words really are absent from the text the page shows (the string literals in the code).
+    try:
+        shown = " ".join(n.value for n in ast.walk(ast.parse(code)) if isinstance(n, ast.Constant) and isinstance(n.value, str)).lower()
+    except SyntaxError:
+        return missing[:5]
+    really = []
+    for item in missing:
+        words = [w for w in re.findall(r"[a-z0-9]+", item.lower()) if len(w) > 3 and w not in STOP_WORDS]
+        if words and sum(w in shown for w in words) < len(words) / 2:
+            really.append(item)
+    if len(really) < len(missing):
+        state.decide("review", "reviewer_overruled", f"reviewer said missing: {missing}; the page shows most of: "
+                     f"{[m for m in missing if m not in really]}")
+    return really[:5]
+
+
+STOP_WORDS = {"with", "that", "this", "about", "each", "they", "their", "page", "short", "line", "show", "shows",
+              "have", "from", "your", "what", "where", "when", "should", "would", "will", "must", "also", "make"}
 
 
 def build_base(project, request, runner, sandbox, log=print, max_seconds=None):

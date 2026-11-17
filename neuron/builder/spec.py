@@ -249,7 +249,8 @@ def expand(spec):
     if spec["kind"] == "site":
         h = spec["home"]
         lines = ["Write pages/home.py. It must define register(app). Routes:", '@app.route("/")',
-                 'Return app.page(req, title, ...) built from these parts, in this order:',
+                 "Inside the function, start with parts = [] and add each part on its own line with parts.append(...),",
+                 'in this order, then return app.page(req, "Welcome", *parts). The parts:',
                  f'- ui.hero("{h["headline"]}", "{h["subheadline"]}"' +
                  (f', "{spec["forms"][0]["button"]}", "#{spec["forms"][0]["name"]}")' if spec["forms"] else ")")]
         must_show = [h["headline"]]

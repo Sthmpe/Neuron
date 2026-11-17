@@ -1,0 +1,120 @@
+{
+ "rows": [
+  {
+   "task": "d1_tutor_site",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 98.0,
+   "builder": {
+    "ok": false,
+    "stage": "done",
+    "error": "not all tasks are done",
+    "tasks": {
+     "schema": {
+      "status": "done",
+      "attempts": 1
+     },
+     "home": {
+      "status": "failed",
+      "attempts": 3
+     }
+    },
+    "llm": {
+     "calls": 7,
+     "seconds": 95.19204115867615,
+     "tokens": 1280
+    },
+    "model_loads": 1,
+    "seconds": 97.5
+   },
+   "peak_mb_build": 1448,
+   "examiner": [
+    {
+     "id": "page_opens",
+     "pass": false,
+     "detail": "404"
+    },
+    {
+     "id": "headline_has_the_name",
+     "pass": false,
+     "detail": "headlines: Not found"
+    },
+    {
+     "id": "shows_maths",
+     "pass": false,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_physics",
+     "pass": false,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_english",
+     "pass": false,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_5_000",
+     "pass": false,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "looks_right_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "form_can_be_sent_and_thanks_shown",
+     "pass": false,
+     "detail": "no field for \"Name\""
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "page_opens_after_restart",
+     "pass": false,
+     "detail": ""
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "what_was_sent_is_kept_on_disk",
+     "pass": false,
+     "detail": "not found on disk: Ngozi Bello"
+    }
+   ],
+   "passed": 3,
+   "total": 12,
+   "score": 0.25,
+   "solved": false,
+   "screenshots": [
+    "home-desktop.png",
+    "home-phone.png"
+   ],
+   "examine_seconds": 1.4,
+   "peak_mb_examine": 158,
+   "seconds": 99.4,
+   "peak_mb": 1448
+  }
+ ],
+ "set": "dev",
+ "tier": "2gb",
+ "tier_limit_mb": 2048,
+ "condition": "full",
+ "models": {
+  "planner": "qwen2.5-coder-1.5b-q4",
+  "reviewer": "qwen2.5-coder-1.5b-q4",
+  "builder": "qwen2.5-coder-1.5b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-17 11:36:26",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

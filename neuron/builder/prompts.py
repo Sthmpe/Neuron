@@ -71,14 +71,14 @@ from kit import ui
 def register(app):
     @app.route("/")
     def home(req):
-        return app.page(req, "Welcome",
-                        ui.hero("Green Thumb Garden Care", "We keep your garden tidy all year.", "Get a quote", "#quotes"),
-                        ui.section("What we do", ui.grid(ui.card("Mowing", ui.text("Weekly lawn cuts.")),
-                                                         ui.card("Pruning", ui.text("Hedges and trees.")))),
-                        ui.section("Where we work", ui.text("All of the east side.")),
-                        ui.section("Ask for a quote", ui.form("/quotes", ui.field("Name", "name", type="text"),
-                                                              ui.field("Phone", "phone", type="tel"), submit="Send"),
-                                   id="quotes"))
+        parts = []
+        parts.append(ui.hero("Green Thumb Garden Care", "We keep your garden tidy all year.", "Get a quote", "#quotes"))
+        parts.append(ui.section("What we do", ui.grid(ui.card("Mowing", ui.text("Weekly lawn cuts.")),
+                                                      ui.card("Pruning", ui.text("Hedges and trees.")))))
+        parts.append(ui.section("Where we work", ui.text("All of the east side.")))
+        parts.append(ui.section("Ask for a quote", ui.form("/quotes", ui.field("Name", "name", type="text"),
+                                                           ui.field("Phone", "phone", type="tel"), submit="Send"), id="quotes"))
+        return app.page(req, "Welcome", *parts)
 
     @app.route("/quotes", methods=["POST"])
     def quotes(req):
