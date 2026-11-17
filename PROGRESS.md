@@ -70,3 +70,22 @@ held-out conditions.
   (trace which functions failing tests run), OLD/NEW edit on attempt 2, planner site example, mandatory
   login fields, comma repair, one-line-per-section home page, reviewer claims checked against the page,
   guide left out of retries. Last dev run, 2 GB, qwen2.5-coder-1.5b-q4: 8/12 (bugs 6/10, builds 2/2).
+
+## Queued task: design taste (requested 2026-11-17, after step 3)
+
+Goal: any site NEURON builds should look like a good human designer made it; two sites never the same
+template. Taste lives in the kit and rule-based code; the model only writes words.
+
+Built so far (all in new folders so the running step-3 benchmark is not affected):
+- `neuron/design/`: OKLCH colour engine (tints, shades, neutrals, lightness-only contrast fixes, button
+  pairs), colour words (`names.py`), 11 moods with palettes / font pairings / shape / depth / rhythm /
+  layout preferences (`mood.py`), the design engine with plain-English reasons and a no-repeat history
+  (`engine.py`), browser designer checks (`check.js`, `check.py` with token fixes).
+- `neuron/kit_next/`: token-only kit (16 bundled font families, 162 icons, copy rules: no em dashes,
+  no stock phrases), layout variants: hero x5, features x5, fact x3, form x3, nav x3, rhythm x3.
+- `neuron/builder/design_step.py` + switch `NEURON_DESIGN=1` in build.py (OFF by default until step 3
+  scoring is finished; then: flip the default, rename kit -> kit_v1 and kit_next -> kit).
+- `benchmark/design/requests.json` (20 requests, 11 name colours) and `run_design.py` (proof runner).
+
+Next for design: after step-3 held-out scoring -> swap kit, run the 20-request proof (2 GB tier model),
+commit screenshots, rerun held-out builds with the design system, README section.
