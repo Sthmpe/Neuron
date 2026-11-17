@@ -27,7 +27,7 @@ function pairView() {
   <p class="lead">Type the 6-digit code shown on the NEURON computer. You only do this once.</p>
   <input id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" class="code" aria-label="Pairing code" placeholder="000000">
   <div class="row"><button class="btn primary" id="pair">Pair this phone</button></div><div id="msg"></div>
-  <p class="note">The code is printed when NEURON starts. Ask for a new one on that computer with: python3 -m neuron.server code</p></section>`;
+  <p class="note">The code is printed when NEURON starts. Ask for a new one on that computer with: ~/.neuron/start.sh code</p></section>`;
   $('#pair').onclick = async () => {
     try { await api('/api/pair', { method: 'POST', json: { code: $('#code').value, name: navigator.userAgent.includes('Mobile') ? 'phone' : 'browser' } });
       location.hash = '#/'; } catch (e) { $('#msg').innerHTML = `<div class="err">${esc(e.message)}</div>`; }

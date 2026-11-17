@@ -52,7 +52,8 @@ def main(argv=None):
     code = httpd.neuron["pairing"].new_code()
     addrs = sysinfo.lan_addresses() or ["<this computer's address>"]
     print(f"NEURON is running. On your phone (same Wi-Fi) open: " + ", ".join(f"http://{ip}:{port}" for ip in addrs))
-    print(f"Pairing code: {code}  (valid 10 minutes; new code: python3 -m neuron.server code)", flush=True)
+    again = f"{home}/start.sh code" if (home / "start.sh").exists() else "python3 -m neuron.server code"
+    print(f"Pairing code: {code}  (valid 10 minutes; new code: {again})", flush=True)
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

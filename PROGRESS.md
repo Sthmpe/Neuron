@@ -19,7 +19,7 @@ session, or a new model, to continue. Update this file after every meaningful st
 | 3 | Better intelligence with the same models: model-independent state + context slices, shared loop (understand, investigate, plan, execute, observe, verify, revise, continue), strategy change on failure, sequential roles, domain verification. Nothing hardcoded around templates or benchmark tasks | **first version built** in `neuron/agent/` (loop, state, context, router, rework, strategies); tested with a scripted model; not yet run with real models |
 | 4 | Tool registry: purpose, inputs, outputs, internet, permissions, resources, verification. Deterministic code where no model is needed. Missing tools reported honestly | **first version built**: 20 capabilities (sheets, Word, PowerPoint, PDF research, answers, workspace, multi-language bug fixing, docstrings, new programs, web apps); `python3 -m neuron.agent --capabilities` |
 | 5 | **Tasks LOCKED** (`benchmark/phase5/LOCKED.md`, 12 locked + 7 dev tasks, checkers validated, 1 amendment recorded). New evaluation, tasks locked before tuning: unseen business app (kill halfway, resume); a Flutter or C++ project; multi-module workspace bugs incl. a compiled language; Excel, Word, PowerPoint, PDF tasks with independent file checks; a task longer than one context window. Report completion, time, peak RAM, model calls, human help, recovery, model vs template share | not started |
-| 6 | Owner release: installer (detect RAM, pick model, verify downloads, start; Linux first, Windows/Mac only when tested), phone web UI on local Wi-Fi with secure pairing (chat, tasks, uploads, progress, approvals, previews, downloads, resume, model and memory status), works offline, `TESTING.md` | not started |
+| 6 | Owner release: installer (detect RAM, pick model, verify downloads, start; Linux first, Windows/Mac only when tested), phone web UI on local Wi-Fi with secure pairing (chat, tasks, uploads, progress, approvals, previews, downloads, resume, model and memory status), works offline, `TESTING.md` | **first version built and tested in the cloud container**: `neuron/server/` (pairing, jobs, phone page), `scripts/install.sh` + `neuron/install.py`, `TESTING.md`, screenshots in `docs/screens/phone/`. Not yet: frozen model list (phase 2), real home PC, real phone, HTTPS, Windows/Mac |
 | 7 | Optional online boost interface (never blocks the release); hardware bottleneck log for the future device; README with every number, failure and limit | not started |
 
 The owner's acceptance test for the next milestone: open NEURON on the phone, describe a complicated task
@@ -33,6 +33,20 @@ and evidence.
   (the parsers already handled them). From now on only dev tasks and dev workspaces are used for tuning.
 - Lock amendment 1: an Excel checker bug (a header named "Total" mistaken for the totals row) was found by a dev
   test and fixed before any locked task ran; recorded in `benchmark/phase5/LOCKED.md`.
+
+## Honesty notes for phase 6 (recorded as they happened)
+
+- One full test-suite run (of five that day) had 1 failing test; the name was not captured. It ran at low priority while
+  the 8B selection benchmark used every processor core. The next four full runs all passed. Every suite run now keeps
+  its log, so if it happens again the test is named here.
+- The installer self-test was run here (about 15:08 to 15:17) while granite-4.1-8b was doing selection task
+  10_intervals, so that task's time (393 s) is inflated and the installer's speed reading (0.5 tokens per second) is
+  meaningless. Granite cannot win its tier either way (it missed 07_lru_cache; the 8 GB leader has 12 of 12). Rule
+  from now on: no model runs of mine while a benchmark is measuring.
+- The phone page talks plain HTTP on the local network. Pairing protects access, but someone on the same Wi-Fi could
+  read traffic. Stated in `TESTING.md`; HTTPS is a to-do.
+- The installer was tested end to end only in this cloud container (Ubuntu 24.04) with a provisional model list
+  for the 2 GB tier, because the real frozen list waits for the selection to finish.
 
 ## Known constraints right now
 

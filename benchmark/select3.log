@@ -64,3 +64,4 @@ installed qwen3.5-9b-q4
 8gb-full-sel-granite-4.1-8b-q4 08_csv_parser: SOLVED | attempts 1 | 197.2s | peak 6662 MB
 8gb-full-sel-granite-4.1-8b-q4 09_todo_app: SOLVED | attempts 1 | 112.7s | peak 6669 MB
 8gb-full-sel-granite-4.1-8b-q4 10_intervals: SOLVED | attempts 3 | 393.4s | peak 6664 MB
+8gb-full-sel-granite-4.1-8b-q4 d1_tutor_site: SOLVED | 12/12 checks | 610.0s | peak 6736 MB

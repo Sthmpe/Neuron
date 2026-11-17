@@ -83,5 +83,5 @@ EOS
   systemctl --user daemon-reload
   echo "Start on login: systemctl --user enable --now neuron"
 fi
-echo "Start any time: $NEURON_HOME/start.sh   New pairing code: $PY -m neuron.server code"
+echo "Start any time: $NEURON_HOME/start.sh   New pairing code (while it runs): $NEURON_HOME/start.sh code"
 if [ "$START" = 1 ]; then say "Starting NEURON"; exec "$NEURON_HOME/start.sh"; fi
