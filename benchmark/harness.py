@@ -34,8 +34,10 @@ from neuron.brain.tools import ToolFailure                                      
 from neuron.brain.tools.fix_code import FixCodeTool, default_test_command, tests_passed  # noqa: E402
 from neuron.builder.bugfix import fix_project                                   # noqa: E402
 
-BUG_DIRS = {"dev": ROOT / "benchmark" / "projects", "heldout": ROOT / "benchmark" / "heldout" / "bugs"}
-BUILD_DIRS = {"dev": ROOT / "benchmark" / "builds" / "dev", "heldout": ROOT / "benchmark" / "builds" / "heldout"}
+BUG_DIRS = {"dev": ROOT / "benchmark" / "projects", "heldout": ROOT / "benchmark" / "heldout" / "bugs",
+            "workspace": ROOT / "benchmark" / "workspaces" / "tasks"}      # held-out too: whole codebases, one bug each
+BUILD_DIRS = {"dev": ROOT / "benchmark" / "builds" / "dev", "heldout": ROOT / "benchmark" / "builds" / "heldout",
+              "workspace": ROOT / "benchmark" / "builds" / "none"}
 BUG_SECONDS = 15 * 60
 BUILD_SECONDS = 45 * 60
 MB = 2 ** 20
@@ -171,7 +173,7 @@ def run_build(task_file, scratch, condition, models, tier_name, sandbox, tier, s
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("--set", required=True, choices=["dev", "heldout"])
+    ap.add_argument("--set", required=True, choices=["dev", "heldout", "workspace"])
     ap.add_argument("--tier", required=True)
     ap.add_argument("--condition", required=True, choices=["base", "full"])
     ap.add_argument("--model")

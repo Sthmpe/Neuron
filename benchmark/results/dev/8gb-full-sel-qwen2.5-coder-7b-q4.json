@@ -156,6 +156,46 @@
    "tests_untouched": true,
    "seconds": 84.1,
    "peak_mb": 5207
+  },
+  {
+   "task": "09_todo_app",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 65.23136138916016,
+    "tokens": 132
+   },
+   "what_happened": [
+    "Task.__init__: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 65.8,
+   "peak_mb": 5215
+  },
+  {
+   "task": "10_intervals",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 182.71975994110107,
+    "tokens": 374
+   },
+   "what_happened": [
+    "total_length: tests still fail: [...]\nsts.test_total_length)\n---------------------------------",
+    "covers: tests still fail: [...]\nests.test_total_length)\n--------------------------------",
+    "merge: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 183.9,
+   "peak_mb": 5215
   }
  ],
  "set": "dev",
