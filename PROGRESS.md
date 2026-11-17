@@ -79,8 +79,8 @@ Then, in order: full suite, merge, fast-forward main; design proof (20 requests)
   10_intervals, so that task's time (393 s) is inflated and the installer's speed reading (0.5 tokens per second) is
   meaningless. Granite cannot win its tier either way (it missed 07_lru_cache; the 8 GB leader has 12 of 12). Rule
   from now on: no model runs of mine while a benchmark is measuring.
-- The phone page talks plain HTTP on the local network. Pairing protects access, but someone on the same Wi-Fi could
-  read traffic. Stated in `TESTING.md`; HTTPS is a to-do.
+- The phone page talks plain HTTP by default. Optional HTTPS added later the same day (`start.sh --https`, a
+  certificate made on the computer, fingerprint printed for the owner to compare; tested in the phone-size browser).
 - The installer was tested end to end only in this cloud container (Ubuntu 24.04) with a provisional model list
   for the 2 GB tier, because the real frozen list waits for the selection to finish.
 

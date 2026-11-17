@@ -239,3 +239,47 @@ class FollowUpTests(unittest.TestCase):
         old = json.loads((home / "jobs" / first / "meta.json").read_text())
         self.assertEqual(old["status"], "done")                                # the earlier job is untouched
         self.assertEqual(c.call("POST", "/api/jobs/nope-123/followup", {"text": "x"})[0], 404)
+
+
+class HttpsTests(unittest.TestCase):
+    def test_https_page_pairing_and_secure_cookie(self):
+        import ssl
+        from neuron.server import tls
+        home = Path(tempfile.mkdtemp(prefix="neuron-home-"))
+        cert, key = tls.ensure_cert(home, addresses=[])
+        self.assertEqual(oct(key.stat().st_mode & 0o777), "0o600")
+        self.assertEqual(len(tls.fingerprint(cert).split(":")), 32)
+        self.assertEqual(tls.ensure_cert(home), (cert, key))                       # made once, then reused
+        httpd = serve(home, "127.0.0.1", 0, lambda: Runner([]), lambda: Sandbox(timeout=60, mem_mb=512), default_registry(),
+                      log=lambda *_: None, tls=tls.context(cert, key))
+        threading.Thread(target=httpd.serve_forever, daemon=True).start()
+        self.addCleanup(httpd.shutdown)
+        port = httpd.server_address[1]
+        c = Client(f"https://localhost:{port}")
+        c.opener = urllib.request.build_opener(urllib.request.ProxyHandler({}),
+                                               urllib.request.HTTPSHandler(context=ssl.create_default_context(cafile=str(cert))))
+        s, d = c.call("POST", "/api/pair", {"code": httpd.neuron["pairing"].new_code()})
+        self.assertEqual(s, 200)
+        self.assertEqual(c.call("GET", "/api/jobs")[0], 200)
+        raw = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+        with self.assertRaises(Exception):                                         # plain HTTP to the HTTPS port gets nothing
+            raw.open(f"http://127.0.0.1:{port}/api/me", timeout=5).read()
+        untrusting = urllib.request.build_opener(urllib.request.ProxyHandler({}), urllib.request.HTTPSHandler(context=ssl.create_default_context()))
+        with self.assertRaises(urllib.error.URLError):                             # an unknown certificate is not silently trusted
+            untrusting.open(f"https://localhost:{port}/api/me", timeout=5)
+        self.assertEqual(c.call("GET", "/api/me")[1]["paired"], True)              # the server keeps serving after bad clients
+
+    def test_secure_flag_on_cookie(self):
+        import ssl
+        import http.client
+        from neuron.server import tls
+        home = Path(tempfile.mkdtemp(prefix="neuron-home-"))
+        cert, key = tls.ensure_cert(home, addresses=[])
+        httpd = serve(home, "127.0.0.1", 0, lambda: Runner([]), lambda: Sandbox(timeout=60, mem_mb=512), default_registry(),
+                      log=lambda *_: None, tls=tls.context(cert, key))
+        threading.Thread(target=httpd.serve_forever, daemon=True).start()
+        self.addCleanup(httpd.shutdown)
+        conn = http.client.HTTPSConnection("localhost", httpd.server_address[1], context=ssl.create_default_context(cafile=str(cert)), timeout=10)
+        conn.request("POST", "/api/pair", json.dumps({"code": httpd.neuron["pairing"].new_code()}), {"Content-Type": "application/json"})
+        r = conn.getresponse()
+        self.assertIn("Secure", r.getheader("Set-Cookie"))

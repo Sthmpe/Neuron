@@ -1,6 +1,7 @@
 // Phone journey through the NEURON web page: pair, give a goal with a file, watch it finish, download.
 const { chromium } = require('playwright');
 const [base, code, csv, shots] = process.argv.slice(2);
+const https = base.startsWith('https');
 const out = { steps: [], problems: [] };
 const note = (s) => out.steps.push(s);
 const problem = (s) => out.problems.push(s);
@@ -26,7 +27,9 @@ async function audit(page, name) {
 
 (async () => {
   const browser = await chromium.launch();
-  const page = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true });
+  // over HTTPS the test accepts NEURON's own certificate, as the owner does after checking its fingerprint
+  const page = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true,
+    ignoreHTTPSErrors: https });
   try {
     await page.goto(base + '/');
     await page.waitForSelector('#code');
