@@ -21,3 +21,11 @@
 2gb-base b1_bakery_landing: not solved | 0/13 checks | 134.4s | peak 1449 MB
 2gb-base b2_shop_app: not solved | 5/19 checks | 303.5s | peak 1467 MB
 -- machine restarted about 20:22 while b3_shop_app_resumed was running; held-out resumed at 20:23, b3 rerun from a clean folder --
+2gb-base b3_shop_app_resumed: not solved | 5/19 checks | 328.4s | peak 1461 MB
+2gb-base: solved 5/23; mean score 0.24
+2gb-base w01_vat_rounding: not solved | attempts 3 | 107.4s | peak 1443 MB
+2gb-base w02_order_rollback: not solved | attempts 3 | 155.8s | peak 1443 MB
+2gb-base w03_due_date_weekend: not solved | attempts 3 | 124.9s | peak 1444 MB
+2gb-base w04_cancelled_spelling: not solved | attempts 3 | 95.4s | peak 1441 MB
+2gb-base w05_search_case: not solved | attempts 3 | 141.0s | peak 1447 MB
+-- machine restarted again about 20:40 (the session had gone idle) after 2gb-base w05; resumed at 21:46; the interrupted task reruns from a clean copy --
