@@ -146,6 +146,8 @@ class JobManager:
         attachments = [str(p) for p in sorted((ws / "inputs").glob("*"))] if (ws / "inputs").exists() else []
         if self.runner is None:
             self.runner = self.runner_factory()
+        if hasattr(self.runner, "boost"):
+            self.runner.boost.new_job()
         job = Job(ws, self.runner, self.sandbox_factory(), registry=self.registry, log=lambda msg: self.log(f"[{jid}] {msg}"))
         self.current_job = job
         rep = Agent(job).run(m["goal"], attachments)

@@ -42,11 +42,18 @@ def main(argv=None):
 
     def models_status():
         try:
-            return {"tier": tier, "builder": mgr.active(tier, "builder")}
+            return {"tier": tier, "builder": mgr.active(tier, "builder"), "online_boost": boost.status()}
         except Exception as e:      # noqa: BLE001
             return {"tier": tier, "problem": str(e)}
 
-    httpd = serve(home, host, port, lambda: ModelRunner(mgr, tier, log_dir=home / "logs"),
+    from ..online.boost import BoostedRunner, OnlineBoost
+    boost = OnlineBoost.from_home(home, online_check=sysinfo.online, log=lambda m: print(m, flush=True))
+
+    def make_runner():
+        local = ModelRunner(mgr, tier, log_dir=home / "logs")
+        return BoostedRunner(local, boost) if boost.configured() else local
+
+    httpd = serve(home, host, port, make_runner,
                   lambda: Sandbox(timeout=120, mem_mb=1024, toolchains=True), default_registry(), models_status,
                   log=lambda m: print(m, flush=True))
     code = httpd.neuron["pairing"].new_code()

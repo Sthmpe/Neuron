@@ -45,12 +45,13 @@ class Job:
         self.runner, self.sandbox, self.log = runner, sandbox, log
         self.registry = registry or default_registry()
         self.design = design
-        self.calls, self.model_seconds, self.tokens = 0, 0.0, 0
+        self.calls, self.model_seconds, self.tokens, self.online_calls = 0, 0.0, 0, 0
 
     # ---- model access (roles share one loaded model unless configured otherwise) -------------------
     def chat(self, role, messages, **kw):
         reply = self.runner.client(role).chat(messages, **kw)
         self.calls += 1
+        self.online_calls += str(reply.model).startswith("online:")
         self.model_seconds += reply.seconds
         self.tokens += reply.completion_tokens
         return reply
@@ -237,7 +238,7 @@ class Agent:
         files = sorted({f for t in done for f in t.get("files", [])})
         rep = {"verdict": verdict, "kind": self.s.goal().get("kind"), "tasks": {t["id"]: t["status"] for t in plan},
                "failed": {t["id"]: t.get("summary", "") for t in failed}, "files": files, "made_by": made,
-               "model_calls": self.job.calls, "model_seconds": round(self.job.model_seconds, 1), "tokens": self.job.tokens,
+               "model_calls": self.job.calls, "online_calls": self.job.online_calls, "model_seconds": round(self.job.model_seconds, 1), "tokens": self.job.tokens,
                "seconds": round(seconds, 1), "pending": [t["id"] for t in plan if t["status"] in ("pending", "waiting_approval")],
                "waiting_approval": [t["id"] for t in plan if t["status"] == "waiting_approval"]}
         self.s.set_progress(state="finished" if not rep["pending"] else "paused", verdict=verdict)

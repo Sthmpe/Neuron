@@ -106,6 +106,7 @@ async function statusView() {
     <div class="stat"><b>${esc(s.loaded_model || 'none')}</b><span>Model in memory</span></div>
     <div class="stat"><b>${s.load?.load_1min ?? '?'}</b><span>CPU load (${s.load?.cpus || '?'} cores)</span></div></div>
     <h2 style="margin-top:18px">Model</h2><p class="note">${s.models?.problem ? esc(s.models.problem) : 'Memory tier ' + esc(s.models?.tier || '?') + ', model ' + esc(s.models?.builder || 'not chosen yet')}</p>
+    <p class="note">Online boost: ${s.models?.online_boost?.on ? 'on, ' + esc(s.models.online_boost.provider) + ' for ' + esc((s.models.online_boost.roles || []).join(' and ')) + ' when the internet is up' : 'off (NEURON works fully on this computer)'}</p>
     <p class="note">Working on: ${esc(s.current_job || 'nothing')} · waiting: ${s.queue.length}</p></section>`;
 }
 
