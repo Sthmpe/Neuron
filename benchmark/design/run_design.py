@@ -104,7 +104,7 @@ def main():
                 trial = TrialRun(project, sandbox, work / (name + "__shot"))
                 url = trial.start()
                 if url:
-                    findings = check.run(url, paths_for(spec), login_for(spec))
+                    findings = check.run(url, paths_for(spec), login_for(spec), design=d)
                     row["checks"] = check.summary(findings)
                     row["failed_checks"] = [f for f in findings if f["severity"] == "fail"][:15]
                     (OUT / "screens").mkdir(parents=True, exist_ok=True)

@@ -2,6 +2,51 @@
 // what a designer would notice. Arg: JSON {url, paths, login:[user,pass]|null, shots: prefix|null}
 // Prints JSON {findings:[{rule, severity, width, path, detail}], pages:n}
 const { chromium } = require('/opt/node-tools/node_modules/playwright');
+const zlib = require('zlib');
+
+// Minimal PNG decoder (8-bit RGB/RGBA, not interlaced), so the checker can look at the rendered pixels.
+function decodePNG(buf) {
+  let pos = 8, w = 0, h = 0, ct = 0; const idat = [];
+  while (pos < buf.length) {
+    const len = buf.readUInt32BE(pos); const type = buf.toString('ascii', pos + 4, pos + 8);
+    const data = buf.subarray(pos + 8, pos + 8 + len);
+    if (type === 'IHDR') { w = data.readUInt32BE(0); h = data.readUInt32BE(4); ct = data[9]; }
+    else if (type === 'IDAT') idat.push(data); else if (type === 'IEND') break;
+    pos += 12 + len;
+  }
+  const bpp = ct === 6 ? 4 : 3; const raw = zlib.inflateSync(Buffer.concat(idat));
+  const stride = w * bpp; const out = Buffer.alloc(h * stride); let prev = Buffer.alloc(stride);
+  for (let y = 0; y < h; y++) {
+    const f = raw[y * (stride + 1)]; const line = raw.subarray(y * (stride + 1) + 1, (y + 1) * (stride + 1)); const cur = out.subarray(y * stride, (y + 1) * stride);
+    for (let i = 0; i < stride; i++) {
+      const a = i >= bpp ? cur[i - bpp] : 0, b = prev[i], c = i >= bpp ? prev[i - bpp] : 0; let v = line[i];
+      if (f === 1) v += a; else if (f === 2) v += b; else if (f === 3) v += (a + b) >> 1;
+      else if (f === 4) { const p = a + b - c, pa = Math.abs(p - a), pb = Math.abs(p - b), pc = Math.abs(p - c); v += (pa <= pb && pa <= pc) ? a : (pb <= pc ? b : c); }
+      cur[i] = v & 255;
+    }
+    prev = cur;
+  }
+  return { w, h, bpp, data: out };
+}
+const hex2rgb = (h) => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+
+// What share of the page each colour role covers, and how much of the page is calm empty space.
+function lookAt(png, roles) {
+  const { w, h, bpp, data } = png; const counts = {}; let total = 0, blankRows = 0;
+  const near = (r, g, b, c) => Math.abs(r - c[0]) + Math.abs(g - c[1]) + Math.abs(b - c[2]) < 30;
+  for (let y = 0; y < h; y += 2) {
+    let first = null, uniform = true;
+    for (let x = 0; x < w; x += 2) {
+      const i = (y * w + x) * bpp; const r = data[i], g = data[i + 1], b = data[i + 2];
+      if (first === null) first = [r, g, b]; else if (Math.abs(r - first[0]) + Math.abs(g - first[1]) + Math.abs(b - first[2]) > 12) uniform = false;
+      total++;
+      for (const [name, c] of Object.entries(roles)) if (near(r, g, b, c)) { counts[name] = (counts[name] || 0) + 1; break; }
+    }
+    if (uniform) blankRows++;
+  }
+  const share = {}; for (const k of Object.keys(roles)) share[k] = Math.round(1000 * (counts[k] || 0) / total) / 10;
+  return { share, calm: Math.round(1000 * blankRows / Math.ceil(h / 2)) / 10 };
+}
 const a = JSON.parse(process.argv[2]);
 const WIDTHS = [[390, 844, 'phone'], [768, 1024, 'tablet'], [1280, 800, 'desktop']];
 
@@ -106,6 +151,18 @@ const PROBE = () => {
   // 10. em dashes anywhere in the visible text
   const t = document.body.innerText;
   if (/[—―]/.test(t)) add('em_dash', 'fail', 'the page shows an em dash');
+  // 12. one clear focal point per screen: within each screen-height slice, the biggest text should be one thing
+  if (W >= 1200) {
+    const heads = [...document.querySelectorAll('main h1, main h2, main .fact-text, main .stat-value')].filter(visible)
+      .map(e => ({ e, fs: parseFloat(getComputedStyle(e).fontSize), top: e.getBoundingClientRect().top + scrollY }));
+    for (let y0 = 0; y0 < document.documentElement.scrollHeight; y0 += innerHeight) {
+      const inside = heads.filter(x => x.top >= y0 && x.top < y0 + innerHeight);
+      if (!inside.length) continue;
+      const max = Math.max(...inside.map(x => x.fs));
+      const top = inside.filter(x => Math.abs(x.fs - max) < 1 && !x.e.classList.contains('stat-value'));
+      if (top.length > 1) add('focal_point', 'warn', `${top.length} equally big headings compete in one screen: ${top.map(x => name(x.e)).join(', ')}`);
+    }
+  }
   // 11. alignment: left edges of the main reading blocks on wide screens
   if (W >= 1200) {
     const edges = new Set(blocks.filter(b => ['H1', 'H2', 'P'].includes(b.tagName) && getComputedStyle(b).textAlign !== 'center')
@@ -128,6 +185,14 @@ const PROBE = () => {
         await p.goto(a.url + path); await p.waitForLoadState('networkidle'); await p.evaluate(() => document.fonts.ready);
         for (const f of await p.evaluate(PROBE)) findings.push({ ...f, width: label, path });
         if (a.shots) await p.screenshot({ path: `${a.shots}-${path.replace(/\W/g, '') || 'home'}-${label}.png`, fullPage: true });
+        if (a.roles && label === 'desktop') {        // look at the rendered pixels
+          const look = lookAt(decodePNG(await p.screenshot({ fullPage: true })), Object.fromEntries(Object.entries(a.roles).map(([k, v]) => [k, hex2rgb(v)])));
+          findings.push({ rule: 'colour_share', severity: 'info', width: label, path, detail: JSON.stringify(look) });
+          if ((look.share.action || 0) > 12) findings.push({ rule: 'accent_overuse', severity: 'fail', width: label, path, detail: `the action colour covers ${look.share.action}% of the page; it should stay small` });
+          const tones = (look.share.bg || 0) + (look.share.surface || 0) + (look.share.tone2 || 0);
+          if (tones < 45) findings.push({ rule: 'no_dominant_tone', severity: 'warn', width: label, path, detail: `the main page tones cover only ${tones}%` });
+          if (look.calm < 18) findings.push({ rule: 'crowding', severity: 'warn', width: label, path, detail: `only ${look.calm}% of the page height is calm empty space` });
+        }
       } catch (e) { findings.push({ rule: 'page_error', severity: 'fail', width: label, path, detail: e.message.split('\n')[0] }); }
     }
     await ctx.close();

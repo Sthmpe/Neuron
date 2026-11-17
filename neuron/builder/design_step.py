@@ -57,7 +57,7 @@ def review(project, spec, sandbox, state=None, rounds=2, shots_dir=None, log=pri
             shots = (Path(shots_dir) / f"r{n}") if shots_dir else None
             if shots:
                 shots.parent.mkdir(parents=True, exist_ok=True)
-            findings = check.run(url, paths_for(spec), login_for(spec), shots=shots)
+            findings = check.run(url, paths_for(spec), login_for(spec), shots=shots, design=design)
         finally:
             trial.stop()
         summ = check.summary(findings)

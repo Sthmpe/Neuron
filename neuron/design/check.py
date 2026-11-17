@@ -10,9 +10,16 @@ SCRIPT = Path(__file__).resolve().parent / "check.js"
 TOKEN_FIXABLE = {"contrast", "crowding", "hierarchy", "overflow"}
 
 
-def run(url, paths=("/",), login=None, shots=None, timeout=300):
+def roles_of(design):
+    t = design["tokens"]
+    return {"action": t["color-action"], "strong": t["color-strong"], "bg": t["color-bg"], "surface": t["color-surface"],
+            "tone2": t["color-surface-2"]}
+
+
+def run(url, paths=("/",), login=None, shots=None, timeout=300, design=None):
     env = {k: v for k, v in os.environ.items() if "proxy" not in k.lower()}
-    arg = json.dumps({"url": url, "paths": list(paths), "login": login, "shots": str(shots) if shots else None})
+    arg = json.dumps({"url": url, "paths": list(paths), "login": login, "shots": str(shots) if shots else None,
+                      "roles": roles_of(design) if design else None})
     try:
         p = subprocess.run(["node", str(SCRIPT), arg], capture_output=True, text=True, timeout=timeout, env=env)
         return json.loads(p.stdout.strip().splitlines()[-1])["findings"]
@@ -22,10 +29,15 @@ def run(url, paths=("/",), login=None, shots=None, timeout=300):
 
 def summary(findings):
     fails = [f for f in findings if f["severity"] == "fail"]
+    shares = [json.loads(f["detail"]) for f in findings if f["rule"] == "colour_share"]
     by = {}
     for f in fails:
         by[f["rule"]] = by.get(f["rule"], 0) + 1
-    return {"fails": len(fails), "warnings": len(findings) - len(fails), "by_rule": by}
+    warns = [f for f in findings if f["severity"] == "warn"]
+    out = {"fails": len(fails), "warnings": len(warns), "by_rule": by}
+    if shares:
+        out["colour_share"] = shares[0]
+    return out
 
 
 def fix(design, findings):

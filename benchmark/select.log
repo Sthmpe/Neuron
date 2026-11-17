@@ -21,3 +21,4 @@
 4gb-full-sel-qwen2.5-coder-3b-q4 08_csv_parser: SOLVED | attempts 3 | 103.5s | peak 2483 MB
 4gb-full-sel-qwen2.5-coder-3b-q4 09_todo_app: SOLVED | attempts 2 | 51.1s | peak 2483 MB
 4gb-full-sel-qwen2.5-coder-3b-q4 10_intervals: SOLVED | attempts 1 | 26.0s | peak 2491 MB
+4gb-full-sel-qwen2.5-coder-3b-q4 d1_tutor_site: SOLVED | 12/12 checks | 145.7s | peak 2518 MB
