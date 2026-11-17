@@ -103,6 +103,9 @@ class Agent:
             if max_seconds and time.time() - t0 > max_seconds:
                 s.set_progress(state="stopped", reason="time limit")
                 break
+            if getattr(job, "stop_requested", False):
+                s.set_progress(state="stopped", reason="stopped by the owner")
+                break
             task = s.ready_task()
             if task is None:
                 break
@@ -136,6 +139,19 @@ class Agent:
         if cap.missing():
             s.update_task(tid, status="failed", summary="not installed: " + ", ".join(cap.missing()))
             return
+        if "send_message" in cap.permissions or getattr(cap, "sensitive", False):     # the owner decides, not NEURON
+            answer = next((a for a in s.approvals() if a["task"] == tid and a["action"] == cap.name), None)
+            if answer is None:
+                s.ask_approval(tid, cap.name)
+                s.update_task(tid, status="waiting_approval", summary=f"waiting for the owner to approve: {task['title']}")
+                s.set_progress(state="waiting_approval", task=tid)
+                return
+            if answer["status"] == "pending":
+                s.update_task(tid, status="waiting_approval")
+                return
+            if answer["status"] == "rejected":
+                s.update_task(tid, status="skipped", summary="the owner rejected this action")
+                return
         if cap.needs_internet and not getattr(job, "online", False):
             s.update_task(tid, status="pending", summary="waiting for the internet")
             s.set_progress(state="waiting_network", task=tid)
@@ -222,7 +238,8 @@ class Agent:
         rep = {"verdict": verdict, "kind": self.s.goal().get("kind"), "tasks": {t["id"]: t["status"] for t in plan},
                "failed": {t["id"]: t.get("summary", "") for t in failed}, "files": files, "made_by": made,
                "model_calls": self.job.calls, "model_seconds": round(self.job.model_seconds, 1), "tokens": self.job.tokens,
-               "seconds": round(seconds, 1), "pending": [t["id"] for t in plan if t["status"] == "pending"]}
+               "seconds": round(seconds, 1), "pending": [t["id"] for t in plan if t["status"] in ("pending", "waiting_approval")],
+               "waiting_approval": [t["id"] for t in plan if t["status"] == "waiting_approval"]}
         self.s.set_progress(state="finished" if not rep["pending"] else "paused", verdict=verdict)
         (self.s.dir / "report.json").write_text(json.dumps(rep, indent=1))
         return rep

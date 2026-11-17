@@ -56,6 +56,124 @@
    "tests_untouched": true,
    "seconds": 78.3,
    "peak_mb": 6663
+  },
+  {
+   "task": "04_bank_transfer",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 262.48206663131714,
+    "tokens": 566
+   },
+   "what_happened": [
+    "Account.withdraw: tests still fail: [...]\nnever_created (tests.test_bank.BankTests.test_money_is_n",
+    "Bank.transfer: tests still fail: [...]\nt_transfer_is_logged\n    self.assertEqual(self.bank.log,",
+    "Bank.transfer: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 263.1,
+   "peak_mb": 6664
+  },
+  {
+   "task": "05_date_utils",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 75.64694023132324,
+    "tokens": 174
+   },
+   "what_happened": [
+    "is_leap_year: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 76.0,
+   "peak_mb": 6665
+  },
+  {
+   "task": "06_matrix",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 71.31887650489807,
+    "tokens": 192
+   },
+   "what_happened": [
+    "multiply: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 71.8,
+   "peak_mb": 6668
+  },
+  {
+   "task": "07_lru_cache",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 243.07751202583313,
+    "tokens": 579
+   },
+   "what_happened": [
+    "LRUCache.keys: tests still fail: [...]\n: test_reading_keeps_an_entry_alive (tests.test_lru.LRUT",
+    "LRUCache.__init__: the reply was not a usable OLD/NEW edit of that function",
+    "LRUCache._touch: tests still fail: [...]\n: test_reading_keeps_an_entry_alive (tests.test_lru.LRUT"
+   ],
+   "tests_untouched": true,
+   "seconds": 243.4,
+   "peak_mb": 6667
+  },
+  {
+   "task": "08_csv_parser",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 196.85877442359924,
+    "tokens": 391
+   },
+   "what_happened": [
+    "parse_line: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 197.2,
+   "peak_mb": 6662
+  },
+  {
+   "task": "09_todo_app",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 112.30304837226868,
+    "tokens": 162
+   },
+   "what_happened": [
+    "Task.__init__: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 112.7,
+   "peak_mb": 6669
   }
  ],
  "set": "dev",

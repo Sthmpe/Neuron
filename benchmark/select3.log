@@ -57,3 +57,9 @@ installed qwen3.5-9b-q4
 8gb-full-sel-granite-4.1-8b-q4 01_shopping_cart: SOLVED | attempts 1 | 80.2s | peak 6655 MB
 8gb-full-sel-granite-4.1-8b-q4 02_text_stats: SOLVED | attempts 1 | 45.7s | peak 6665 MB
 8gb-full-sel-granite-4.1-8b-q4 03_binary_search: SOLVED | attempts 1 | 78.3s | peak 6663 MB
+8gb-full-sel-granite-4.1-8b-q4 04_bank_transfer: SOLVED | attempts 3 | 263.1s | peak 6664 MB
+8gb-full-sel-granite-4.1-8b-q4 05_date_utils: SOLVED | attempts 1 | 76.0s | peak 6665 MB
+8gb-full-sel-granite-4.1-8b-q4 06_matrix: SOLVED | attempts 1 | 71.8s | peak 6668 MB
+8gb-full-sel-granite-4.1-8b-q4 07_lru_cache: not solved | attempts 3 | 243.4s | peak 6667 MB
+8gb-full-sel-granite-4.1-8b-q4 08_csv_parser: SOLVED | attempts 1 | 197.2s | peak 6662 MB
+8gb-full-sel-granite-4.1-8b-q4 09_todo_app: SOLVED | attempts 1 | 112.7s | peak 6669 MB
