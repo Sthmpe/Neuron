@@ -64,9 +64,9 @@ def label(name):
 
 
 def _clean_copy(text):
-    """No em dashes and no stock phrases in anything the planner wrote (only with the design system on)."""
+    """No em dashes and no stock phrases in anything the planner wrote (unless the design system is switched off)."""
     import os
-    if os.environ.get("NEURON_DESIGN") != "1":
+    if os.environ.get("NEURON_DESIGN", "1") == "0":
         return text
     from ..kit_next.copy import clean
     return clean(text)
@@ -149,6 +149,9 @@ def normalise(spec):
             problems.append("an app needs at least one entity (a kind of record to keep)")
         if s["login_required"] and not (s["username"] and s["password"]):
             problems.append("login_required is true but username or password is empty - copy both exactly from the request")
+    from . import relations
+    relations.apply(spec, s, problems)
+
     def scrub(node):
         if isinstance(node, dict):
             for k, v in node.items():
@@ -170,12 +173,24 @@ def _table_sql(name, fs):
     return f"{name}(id INTEGER PRIMARY KEY, {cols})"
 
 
-def _ui_fields(fs):
-    return ", ".join(f'ui.field("{f["label"]}", "{f["name"]}", type="{INPUT_TYPE[f["type"]]}")' for f in fs)
+def _ui_fields(fs, spec=None):
+    from . import relations
+    return ", ".join(relations.ui_field_code(spec, f, INPUT_TYPE.get(f["type"], "text")) for f in fs)
+
+
+def _ordered(entities):
+    """Entities that others link to come first, so their pages exist when the linking page is checked."""
+    out, left = [], list(entities)
+    while left:
+        ready = [e for e in left if all(f.get("to") in {o["name"] for o in out} for f in e["fields"] if f["type"] == "link")]
+        nxt = ready[0] if ready else left[0]
+        out.append(nxt)
+        left.remove(nxt)
+    return out
 
 
 def _sample(fs, n):
-    return {f["name"]: SAMPLES[f["type"]][n] for f in fs}
+    return {f["name"]: SAMPLES["text" if f["type"] == "link" else f["type"]][n] for f in fs}
 
 
 def expand(spec):
@@ -213,28 +228,32 @@ def expand(spec):
                                           else [{"get": "/static/neuron.css"}])}])
 
     # ---- one page per entity ---------------------------------------------
-    for e in spec["entities"]:
+    from . import relations
+    for e in _ordered(spec["entities"]):
         n, fs, sf = e["name"], e["fields"], e["search_field"]
         cols = ", ".join(f["name"] for f in fs)
-        a, b = _sample(fs, 0), _sample(fs, 1)
+        a, b = relations.sample(spec, e, 0), relations.sample(spec, e, 1)
         contract = "\n".join([
             f"Write pages/{n}.py. It must define register(app), which adds ONE route:",
             f'@app.route("/{n}", methods=["GET", "POST"]{flag})',
             f"- POST: insert a row into table {n} (columns: {cols}) from req.form, then return redirect(\"/{n}\").",
             f'- GET: q = req.query.get("q", ""). Select rows from {n} where {sf} LIKE "%q%", newest first (ORDER BY id DESC).',
             f'  Return app.page(req, "{e["label"]}", ui.search("/{n}", q), ui.table([{", ".join(repr(f["label"]) for f in fs)}], rows),',
-            f'  ui.card("Add {e["label"].lower()}", ui.form("/{n}", {_ui_fields(fs)}, submit="Add")))',
+            f'  ui.card("Add {e["label"].lower()}", ui.form("/{n}", {_ui_fields(fs, spec)}, submit="Add")))',
             "  where rows is a list of lists with one value per column, in that order.",
-        ])
-        steps = ([{"get": f"/{n}", "expect_redirect": "/login"}] if login else []) + auth + [
+        ] + relations.contract_lines(spec, e))
+        steps = ([{"get": f"/{n}", "expect_redirect": "/login"}] if login else []) + auth + relations.setup_steps(spec, e) + [
             {"get": f"/{n}", "expect_text": [e["label"]] + [f["label"] for f in fs]},
             {"post": f"/{n}", "form": a}, {"post": f"/{n}", "form": b},
             {"get": f"/{n}", "expect_text": [a[sf], b[sf]]},
             {"get": f"/{n}?q={a[sf].split()[0]}", "expect_text": [a[sf]], "expect_no_text": [b[sf]]},
             {"restart": True}, {"get": f"/{n}", "expect_text": [a[sf], b[sf]]}]
-        add({"id": n, "title": f"{e['label']} page: list, search, add", "file": f"pages/{n}.py", "must_define": "register",
-             "contract": contract, "needs": ["schema.py"], "example": "entity"},
-            [{"name": f"{n}: add, list, search, survive restart", "steps": steps}])
+        linked = relations.links_of(e) or relations.rule_for(spec, n)
+        rule_checks = relations.rule_checks(spec, auth, on_add=n)
+        add({"id": n, "title": f"{e['label']} page: list, search, add" + (" (with its rule)" if relations.rule_for(spec, n) else ""),
+             "file": f"pages/{n}.py", "must_define": "register", "contract": contract,
+             "needs": ["schema.py"] + [f"pages/{f['to']}.py" for f in relations.links_of(e)], "example": "entity_link" if linked else "entity"},
+            [{"name": f"{n}: add, list, search, survive restart", "steps": steps}] + rule_checks)
 
     # ---- dashboard --------------------------------------------------------
     if spec["kind"] == "app" and spec["dashboard"]:
@@ -251,8 +270,12 @@ def expand(spec):
                 expect.append([d["label"], None, d])
         lines.append('Return app.page(req, "Dashboard", ui.stats(...)).')
         steps = ([{"get": "/", "expect_redirect": "/login"}] if login else []) + auth
-        for e in spec["entities"]:
-            rows = [_sample(e["fields"], 0), _sample(e["fields"], 1)]
+        for e in _ordered(spec["entities"]):
+            rows = [relations.sample(spec, e, 0), relations.sample(spec, e, 1)]
+            rule = relations.rule_for(spec, e["name"])
+            if rule:
+                for r in rows:
+                    r[rule["amount_field"]] = "1"          # small amounts, so no rule refuses these sample records
             for d in spec["dashboard"]:
                 if d["kind"] == "count_below" and d["entity"] == e["name"]:
                     rows[0][d["field"]] = str(int(d["below"]) - 1)

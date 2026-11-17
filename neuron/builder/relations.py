@@ -120,7 +120,7 @@ def contract_lines(spec, e):
         lines += [
             f'- POST, BEFORE inserting: key = req.form.get("{r["link_field"]}", ""); amount = float(req.form.get("{r["amount_field"]}") or 0)',
             f'  target = app.db.one("SELECT {r["target_field"]} FROM {r["target"]} WHERE {r["target_key"]} = ?", [key])',
-            f'  if target is None: return app.page(req, "{e["label"]}", ui.alert("Choose a {r["target"].replace("_", " ")} that exists.", "error"), ui.button("Back", "/{e["name"]}"))',
+            f'  if target is None: return app.page(req, "{e["label"]}", ui.alert("Choose one of the {r["target"].replace("_", " ")} listed.", "error"), ui.button("Back", "/{e["name"]}"))',
             f'  new = (target["{r["target_field"]}"] or 0) {sign} amount',
         ]
         if r["block_if_negative"]:
@@ -140,7 +140,7 @@ def template_post(spec, e, indent="            "):
            f'amount = float(req.form.get("{r["amount_field"]}") or 0)',
            f'target = app.db.one("SELECT {r["target_field"]} FROM {r["target"]} WHERE {r["target_key"]} = ?", [key])',
            "if target is None:",
-           f'    return app.page(req, "{e["label"]}", ui.alert("Choose a {r["target"].replace("_", " ")} that exists.", "error"), {back})',
+           f'    return app.page(req, "{e["label"]}", ui.alert("Choose one of the {r["target"].replace("_", " ")} listed.", "error"), {back})',
            f'new = (target["{r["target_field"]}"] or 0) {sign} amount']
     if r["block_if_negative"]:
         pre += ["if new < 0:",
@@ -149,12 +149,27 @@ def template_post(spec, e, indent="            "):
     return "\n".join(indent + x for x in pre) + "\n", "\n".join(indent + x for x in post) + "\n"
 
 
+LINK_KEYS = ["Brass Lamp", "Cedar Chair"]   # names for records others link to: different from the usual samples,
+                                           # so a drop-down of them never looks like a search result
+
+
+def _is_target(spec, name):
+    return any(f.get("to") == name for e in spec["entities"] for f in links_of(e))
+
+
+def _key_value(target, n):
+    kind = next(x["type"] for x in target["fields"] if x["name"] == target["search_field"])
+    return LINK_KEYS[n] if kind == "text" else SAMPLES[kind][n]
+
+
 def sample(spec, e, n):
-    """Sample form values for entity e: link fields point at the n-th sample record of their target."""
+    """Sample form values for entity e. Records others link to get their own key names; link fields point at
+    the n-th of those."""
     row = {f["name"]: SAMPLES["text" if f["type"] == "link" else f["type"]][n] for f in e["fields"]}
+    if _is_target(spec, e["name"]):
+        row[e["search_field"]] = _key_value(e, n)
     for f in links_of(e):
-        target = next(x for x in spec["entities"] if x["name"] == f["to"])
-        row[f["name"]] = SAMPLES[next(x["type"] for x in target["fields"] if x["name"] == target["search_field"])][n]
+        row[f["name"]] = _key_value(next(x for x in spec["entities"] if x["name"] == f["to"]), n)
     return row
 
 
@@ -172,10 +187,13 @@ def setup_steps(spec, e):
     return steps
 
 
-def rule_checks(spec, auth):
-    """One acceptance check per rule: the linked number really changes, and refusal works."""
+def rule_checks(spec, auth, on_add=None):
+    """One acceptance check per rule (only the rule for `on_add` if given): the linked number really changes,
+    and refusal works."""
     checks = []
     for r in spec.get("rules", []):
+        if on_add and r["on_add"] != on_add:
+            continue
         target = next(x for x in spec["entities"] if x["name"] == r["target"])
         on = next(x for x in spec["entities"] if x["name"] == r["on_add"])
         key = sample(spec, target, 0)[r["target_key"]]

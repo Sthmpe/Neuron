@@ -181,7 +181,12 @@ def main(argv=None):
     ap.add_argument("--kind", default="all", choices=["bugs", "builds", "all"])
     ap.add_argument("--only")
     ap.add_argument("--tag", default="")
+    ap.add_argument("--system", choices=["step3", "current"], default="step3",
+                    help="step3 reproduces the step-3 evaluations (plain kit, no template fallback); current = design "
+                         "system and template fallback on, as NEURON now runs by default")
     a = ap.parse_args(argv)
+    for var in ("NEURON_DESIGN", "NEURON_TEMPLATES"):                  # the builder process inherits these
+        os.environ[var] = "1" if a.system == "current" else "0"
     manager = ModelManager()
     roles = ("planner", "reviewer", "builder")
     models = {r: a.model for r in roles} if a.model else dict(x.split("=") for x in a.models.split(",")) if a.models \
@@ -201,7 +206,7 @@ def main(argv=None):
     tier = Tier(a.tier).enter()
     sandbox = Sandbox(timeout=60, mem_mb=256)
     runner = ModelRunner(manager, a.tier, overrides=models, log_dir=scratch)
-    results.update(set=a.set, tier=a.tier, tier_limit_mb=round(tier.limit / MB), condition=a.condition, models=models,
+    results.update(set=a.set, tier=a.tier, tier_limit_mb=round(tier.limit / MB), condition=a.condition, models=models, system=a.system,
                    network=net["method"], started=results.get("started") or time.strftime("%Y-%m-%d %H:%M:%S"))
     only = set(a.only.split(",")) if a.only else None
     done = {r["task"] for r in results["rows"]}

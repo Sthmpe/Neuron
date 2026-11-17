@@ -27,9 +27,7 @@ RAW = {"app_name": "Corner Shop", "kind": "app", "login_required": False, "usern
 
 
 def spec_of(raw):
-    s, problems = normalise(raw)
-    relations.apply(raw, s, problems)
-    return s, problems
+    return normalise(raw)            # normalise applies links and rules itself
 
 
 def free_port():
@@ -144,3 +142,64 @@ class RelationsTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Scripted:
+    def __init__(self, llm):
+        self.llm, self.loads = llm, 1
+
+    def client(self, role):
+        return self.llm
+
+    def model_for(self, role):
+        return "scripted"
+
+
+def shop_model(write_pages):
+    """Planner gives the corner-shop spec; the builder either writes correct pages or answers uselessly."""
+    import json
+    import re
+    from tests.fakes import ScriptedLLM
+    s, _ = spec_of(RAW)
+    files = templates.reference_files(s)
+
+    def reply(messages):
+        if messages[0]["content"].startswith("You turn a plain-language request"):
+            return json.dumps(RAW)
+        m = re.search(r"# Your task: (\S+)", messages[-1]["content"])
+        if m and write_pages:
+            return "```python\n" + files[m.group(1)] + "```"
+        return "Sorry, I am not sure how to write that."
+    return ScriptedLLM([reply] * 80)
+
+
+@unittest.skipUnless(__import__("neuron.brain.sandbox", fromlist=["Sandbox"]).Sandbox().available(), "needs bubblewrap")
+class BuildWithRules(unittest.TestCase):
+    REQUEST = ("Shop app: products with name, stock and price; sales with the product, quantity and customer. "
+               "A sale lowers the product's stock and is refused if there is not enough.")
+
+    def build(self, write_pages, templates_allowed):
+        from neuron.brain.sandbox import Sandbox
+        from neuron.builder.build import build_full
+        project = Path(tempfile.mkdtemp(prefix="shop-")) / "app"
+        return build_full(project, self.REQUEST, Scripted(shop_model(write_pages)), Sandbox(timeout=60, mem_mb=256),
+                          log=lambda *_: None, design=False, templates_allowed=templates_allowed), project
+
+    def test_model_written_shop_passes_rule_checks(self):
+        summary, project = self.build(True, True)
+        self.assertTrue(summary["ok"], summary)
+        self.assertEqual(summary["made_by"], {"model": 3, "template": 0})
+        self.assertEqual(list(summary["tasks"]), ["schema", "product", "sale"])     # product before the sale that links to it
+
+    def test_templates_finish_when_the_model_cannot_and_say_so(self):
+        summary, project = self.build(False, True)
+        self.assertTrue(summary["ok"], summary)
+        self.assertEqual(summary["made_by"], {"model": 0, "template": 3})
+        decisions = (project / ".neuron" / "decisions.jsonl").read_text() if (project / ".neuron" / "decisions.jsonl").exists() else \
+            "".join(p.read_text() for p in project.rglob("decisions*.jsonl"))
+        self.assertIn("fixed template", decisions)
+
+    def test_without_templates_a_failing_model_fails_honestly(self):
+        summary, _ = self.build(False, False)
+        self.assertFalse(summary["ok"])
+        self.assertEqual(summary["made_by"], {"model": 0, "template": 0})

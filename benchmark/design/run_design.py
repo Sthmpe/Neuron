@@ -62,8 +62,8 @@ def main():
     ap.add_argument("--model")
     ap.add_argument("--only")
     a = ap.parse_args()
-    if os.environ.get("NEURON_DESIGN") != "1":
-        sys.exit("set NEURON_DESIGN=1")
+    if os.environ.get("NEURON_DESIGN", "1") == "0":
+        sys.exit("the design system is switched off (NEURON_DESIGN=0)")
     manager = ModelManager()
     model = a.model or manager.active(a.tier, "builder")
     requests = json.loads((OUT / "requests.json").read_text())

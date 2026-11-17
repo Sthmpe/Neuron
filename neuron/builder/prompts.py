@@ -8,6 +8,7 @@ from kit import ui
 app.db.execute(sql, [params])      change data (CREATE TABLE, INSERT, UPDATE, DELETE)
 app.db.query(sql, [params])        read rows -> list of dicts, e.g. row["name"]
 app.db.value(sql, [params])        read one value, e.g. a COUNT(*)
+app.db.one(sql, [params])          read one row -> dict, or None if there is none
 app.add_user(username, password)   create the first user
 app.enable_login()                 adds /login and /logout
 app.nav = [("Label", "/path")]     the menu
@@ -22,6 +23,7 @@ ui.grid(card, card, ...)   ui.card(title, part, ...)   ui.text("words")   ui.ale
 ui.button("words", "/path")   ui.stats(ui.stat("Label", value), ...)
 ui.table(["Header", ...], rows)        rows = list of lists
 ui.form("/path", field, ..., submit="Save")   ui.field("Label", "name", type="text")
+ui.select("Label", "name", ["choice", ...])   a drop-down
 ui.search("/path", q)
 Never write raw HTML or CSS. Always use ? placeholders in SQL.'''
 
@@ -52,6 +54,37 @@ def register(app):
                         ui.card("Add book", ui.form("/books", ui.field("Title", "title", type="text"),
                                                     ui.field("Author", "author", type="text"),
                                                     ui.field("Pages", "pages", type="number"), submit="Add")))
+''',
+    "entity_link": '''# pages/hires.py  (a hire names a tool; adding one lowers the tool's in_store, refused below zero)
+from kit.web import redirect
+from kit import ui
+
+
+def register(app):
+    @app.route("/hires", methods=["GET", "POST"], login=True)
+    def hires(req):
+        if req.method == "POST":
+            key = req.form.get("tool", "")
+            amount = float(req.form.get("quantity") or 0)
+            target = app.db.one("SELECT in_store FROM tools WHERE name = ?", [key])
+            if target is None:
+                return app.page(req, "Hires", ui.alert("Choose one of the tools listed.", "error"), ui.button("Back", "/hires"))
+            new = (target["in_store"] or 0) - amount
+            if new < 0:
+                return app.page(req, "Hires", ui.alert("Not enough in store: only " + format(target["in_store"] or 0, "g") + " left.", "error"),
+                                ui.button("Back", "/hires"))
+            app.db.execute("INSERT INTO hires(tool, quantity, customer) VALUES(?, ?, ?)",
+                           [key, req.form.get("quantity", ""), req.form.get("customer", "")])
+            app.db.execute("UPDATE tools SET in_store = ? WHERE name = ?", [new, key])
+            return redirect("/hires")
+        q = req.query.get("q", "")
+        found = app.db.query("SELECT * FROM hires WHERE customer LIKE ? ORDER BY id DESC", ["%" + q + "%"])
+        rows = [[h["tool"], h["quantity"], h["customer"]] for h in found]
+        tools = [t["name"] for t in app.db.query("SELECT name FROM tools ORDER BY name")]
+        return app.page(req, "Hires", ui.search("/hires", q), ui.table(["Tool", "Quantity", "Customer"], rows),
+                        ui.card("Add hire", ui.form("/hires", ui.select("Tool", "tool", tools),
+                                                    ui.field("Quantity", "quantity", type="number"),
+                                                    ui.field("Customer", "customer", type="text"), submit="Add")))
 ''',
     "dashboard": '''# pages/dashboard.py
 from kit import ui
@@ -98,6 +131,11 @@ Rules:
   (text, email, phone, number, date), and the field people search by. One dashboard item per number the owner
   wants to see: kind "count" for "how many", kind "count_below" with field and below for "how many have less
   than N". Copy the username and password exactly from the request. Leave home sections and forms empty.
+- When one kind of record names another (a hire names a tool), give it a field of type "link" with "to" set to
+  the other entity's name. When adding a record must change a number on the record it names (stock goes down,
+  a balance goes up), add a rule: on_add (the entity being added), link_field, target_field (the number that
+  changes), amount_field (the number in the added record), change "subtract" or "add", and block_if_negative
+  true if the owner wants it refused when not enough is left. Add no rules that were not asked for.
 - Labels must use the owner's own words: if they ask "how many students are under 18", the label is "Under 18".
 - Do not invent sections, forms or features that were not asked for.'''
 
@@ -126,6 +164,21 @@ PLANNER_EXAMPLE_SPEC = {
                                                {"name": "pages", "type": "number"}], "search_field": "title"}],
     "dashboard": [{"label": "Books", "entity": "books", "kind": "count"},
                   {"label": "Short books", "entity": "books", "kind": "count_below", "field": "pages", "below": 100}]}
+
+PLANNER_RULE_REQUEST = ("I hire out garden tools. App with login (user tools, password rake2024). Keep my tools with their "
+                        "name and how many are in store. Keep hires: which tool, how many, and the customer's name. When I add "
+                        "a hire, the number in store for that tool must go down, and the hire must be refused if not enough "
+                        "are in store. Search hires by customer.")
+PLANNER_RULE_SPEC = {
+    "app_name": "Tool Hire", "kind": "app", "login_required": True, "username": "tools", "password": "rake2024",
+    "home": {"headline": "", "subheadline": "", "sections": []}, "forms": [],
+    "entities": [{"name": "tools", "fields": [{"name": "name", "type": "text"}, {"name": "in_store", "type": "number"}],
+                  "search_field": "name"},
+                 {"name": "hires", "fields": [{"name": "tool", "type": "link", "to": "tools"}, {"name": "quantity", "type": "number"},
+                                              {"name": "customer", "type": "text"}], "search_field": "customer"}],
+    "dashboard": [],
+    "rules": [{"on_add": "hires", "link_field": "tool", "target_field": "in_store", "amount_field": "quantity",
+               "change": "subtract", "block_if_negative": True}]}
 
 BUILDER_SYSTEM = ("You write one small Python file for a web app built with the NEURON kit. Follow the contract exactly. "
                   "Use only the kit functions shown. Reply with one ```python block that contains the complete file, "
