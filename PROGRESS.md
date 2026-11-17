@@ -13,9 +13,9 @@ session, or a new model, to continue. Update this file after every meaningful st
 
 | Phase | What | Status |
 |---|---|---|
-| 0 | Finish current work, rules unchanged: model selection, held-out scoring (bugs, builds, workspaces), design system + 20-request proof, README with real numbers | **in progress**: selection nearly done; held-out queued to start automatically |
+| 0 | Finish current work, rules unchanged: model selection, held-out scoring (bugs, builds, workspaces), design system + 20-request proof, README with real numbers | **in progress**: selection DONE (2026-11-17 15:25); held-out scoring running since 15:25 (`benchmark/heldout.log`); design proof and README after it |
 | 1 | `VISION.md` | done |
-| 2 | Freeze one reasoning model per tier (file, checksum, settings). No new model searches until the owner asks. Specialist models allowed. Measure total system RAM with headroom | after phase 0 |
+| 2 | Freeze one reasoning model per tier (file, checksum, settings). No new model searches until the owner asks. Specialist models allowed. Measure total system RAM with headroom | **DONE 2026-11-17**: `model_manifests/frozen.json` (written by `benchmark/freeze_models.py` from `benchmark/results/selection.json`). 2 GB qwen2.5-coder-1.5b-q4, 4 GB qwen3.5-4b-q4, 8 GB gemma-4-e4b-q4. The installer reads only this file and keeps max(1 GB, 15%) of memory for the system |
 | 3 | Better intelligence with the same models: model-independent state + context slices, shared loop (understand, investigate, plan, execute, observe, verify, revise, continue), strategy change on failure, sequential roles, domain verification. Nothing hardcoded around templates or benchmark tasks | **first version built** in `neuron/agent/` (loop, state, context, router, rework, strategies); tested with a scripted model; not yet run with real models |
 | 4 | Tool registry: purpose, inputs, outputs, internet, permissions, resources, verification. Deterministic code where no model is needed. Missing tools reported honestly | **first version built**: 20 capabilities (sheets, Word, PowerPoint, PDF research, answers, workspace, multi-language bug fixing, docstrings, new programs, web apps); `python3 -m neuron.agent --capabilities` |
 | 5 | **Tasks LOCKED** (`benchmark/phase5/LOCKED.md`, 12 locked + 7 dev tasks, checkers validated, 1 amendment recorded). New evaluation, tasks locked before tuning: unseen business app (kill halfway, resume); a Flutter or C++ project; multi-module workspace bugs incl. a compiled language; Excel, Word, PowerPoint, PDF tasks with independent file checks; a task longer than one context window. Report completion, time, peak RAM, model calls, human help, recovery, model vs template share | not started |
@@ -34,6 +34,21 @@ and evidence.
 - Lock amendment 1: an Excel checker bug (a header named "Total" mistaken for the totals row) was found by a dev
   test and fixed before any locked task ran; recorded in `benchmark/phase5/LOCKED.md`.
 
+## Model selection result and freeze (2026-11-17)
+
+Rule written before any result: score = bugs solved + build checks passed/total; highest wins; tie -> lower total time.
+
+| Tier | Candidates (score of 12, total seconds) | Winner |
+|---|---|---|
+| 2 GB | qwen2.5-coder-1.5b-q4 8.0 (462 s); qwen3.5-0.8b-q8 2.57 (735 s) | qwen2.5-coder-1.5b-q4 |
+| 4 GB | qwen3.5-4b-q4 12.0 (1215 s); granite-4.1-3b-q4 10.0 (1016 s); qwen2.5-coder-3b-q4 9.0 (901 s); gemma-4-e2b-q4 7.25 (1252 s) | qwen3.5-4b-q4 |
+| 8 GB | gemma-4-e4b-q4 12.0 (1143 s); qwen3.5-9b-q4 12.0 (1779 s); qwen2.5-coder-7b-q4 11.0 (1522 s); granite-4.1-8b-q4 10.9 (2519 s) | gemma-4-e4b-q4 (tie on score, lower time) |
+
+Notes: qwen3.5-9b's 01_shopping_cart was rerun once after a harness load timeout (recorded in its result file).
+granite-4.1-8b's 10_intervals overlapped my installer test, so its time is inflated; it could not win either way.
+After the freeze the five non-frozen model files were deleted to free disk (re-download by file name with
+`scripts/download_models.sh <file>`; their checksums stay in `models/store/SHA256SUMS`).
+
 ## Honesty notes for phase 6 (recorded as they happened)
 
 - One full test-suite run (of five that day) had 1 failing test; the name was not captured. It ran at low priority while
@@ -50,9 +65,7 @@ and evidence.
 
 ## Known constraints right now
 
-- Disk allowance is nearly full (about 2 GB free) because of model files. After phase 2, every model
-  except the three frozen ones is deleted (they can be re-downloaded by name with
-  `scripts/download_models.sh <file>`). Flutter SDK and LibreOffice (needed for phase 5) need that space.
+- Disk: about 21 GB free after deleting the non-frozen models (2026-11-17). Only the three frozen models are kept.
 - Step 3 history below is kept as it was written.
 
 ---

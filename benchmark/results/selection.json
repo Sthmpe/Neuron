@@ -1,0 +1,137 @@
+{
+ "2gb": {
+  "candidates": [
+   {
+    "model": "qwen2.5-coder-1.5b-q4",
+    "score": 8.0,
+    "of": 12,
+    "seconds": 461.7,
+    "tasks_run": 12,
+    "bugs_solved": 6,
+    "builds": [
+     "12/12",
+     "19/19"
+    ]
+   },
+   {
+    "model": "qwen3.5-0.8b-q8",
+    "score": 2.566,
+    "of": 12,
+    "seconds": 735.2,
+    "tasks_run": 12,
+    "bugs_solved": 2,
+    "builds": [
+     "3/12",
+     "6/19"
+    ]
+   }
+  ],
+  "winner": "qwen2.5-coder-1.5b-q4"
+ },
+ "4gb": {
+  "candidates": [
+   {
+    "model": "qwen2.5-coder-3b-q4",
+    "score": 9.0,
+    "of": 12,
+    "seconds": 900.7,
+    "tasks_run": 12,
+    "bugs_solved": 7,
+    "builds": [
+     "12/12",
+     "19/19"
+    ]
+   },
+   {
+    "model": "qwen3.5-4b-q4",
+    "score": 12.0,
+    "of": 12,
+    "seconds": 1215.1,
+    "tasks_run": 12,
+    "bugs_solved": 10,
+    "builds": [
+     "12/12",
+     "19/19"
+    ]
+   },
+   {
+    "model": "gemma-4-e2b-q4",
+    "score": 7.25,
+    "of": 12,
+    "seconds": 1251.5,
+    "tasks_run": 12,
+    "bugs_solved": 6,
+    "builds": [
+     "3/12",
+     "19/19"
+    ]
+   },
+   {
+    "model": "granite-4.1-3b-q4",
+    "score": 10.0,
+    "of": 12,
+    "seconds": 1015.8,
+    "tasks_run": 12,
+    "bugs_solved": 8,
+    "builds": [
+     "12/12",
+     "19/19"
+    ]
+   }
+  ],
+  "winner": "qwen3.5-4b-q4"
+ },
+ "8gb": {
+  "candidates": [
+   {
+    "model": "qwen2.5-coder-7b-q4",
+    "score": 11.0,
+    "of": 12,
+    "seconds": 1521.8,
+    "tasks_run": 12,
+    "bugs_solved": 9,
+    "builds": [
+     "12/12",
+     "19/19"
+    ]
+   },
+   {
+    "model": "qwen3.5-9b-q4",
+    "score": 12.0,
+    "of": 12,
+    "seconds": 1778.5,
+    "tasks_run": 12,
+    "bugs_solved": 10,
+    "builds": [
+     "12/12",
+     "19/19"
+    ]
+   },
+   {
+    "model": "gemma-4-e4b-q4",
+    "score": 12.0,
+    "of": 12,
+    "seconds": 1143.1,
+    "tasks_run": 12,
+    "bugs_solved": 10,
+    "builds": [
+     "12/12",
+     "19/19"
+    ]
+   },
+   {
+    "model": "granite-4.1-8b-q4",
+    "score": 10.895,
+    "of": 12,
+    "seconds": 2519.2,
+    "tasks_run": 12,
+    "bugs_solved": 9,
+    "builds": [
+     "12/12",
+     "17/19"
+    ]
+   }
+  ],
+  "winner": "gemma-4-e4b-q4"
+ }
+}
