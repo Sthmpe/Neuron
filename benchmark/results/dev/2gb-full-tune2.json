@@ -202,6 +202,260 @@
    "tests_untouched": true,
    "seconds": 13.1,
    "peak_mb": 1513
+  },
+  {
+   "task": "d1_tutor_site",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 88.0,
+   "builder": {
+    "ok": false,
+    "stage": "done",
+    "error": "not all tasks are done",
+    "tasks": {
+     "schema": {
+      "status": "done",
+      "attempts": 1
+     },
+     "home": {
+      "status": "failed",
+      "attempts": 3
+     }
+    },
+    "llm": {
+     "calls": 7,
+     "seconds": 85.77299785614014,
+     "tokens": 1170
+    },
+    "model_loads": 1,
+    "seconds": 87.8
+   },
+   "peak_mb_build": 1534,
+   "examiner": [
+    {
+     "id": "page_opens",
+     "pass": false,
+     "detail": "404"
+    },
+    {
+     "id": "headline_has_the_name",
+     "pass": false,
+     "detail": "headlines: Not found"
+    },
+    {
+     "id": "shows_maths",
+     "pass": false,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_physics",
+     "pass": false,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_english",
+     "pass": false,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_5_000",
+     "pass": false,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "looks_right_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "form_can_be_sent_and_thanks_shown",
+     "pass": false,
+     "detail": "no field for \"Name\""
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "page_opens_after_restart",
+     "pass": false,
+     "detail": ""
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "what_was_sent_is_kept_on_disk",
+     "pass": false,
+     "detail": "not found on disk: Ngozi Bello"
+    }
+   ],
+   "passed": 3,
+   "total": 12,
+   "score": 0.25,
+   "solved": false,
+   "screenshots": [
+    "home-desktop.png",
+    "home-phone.png"
+   ],
+   "examine_seconds": 1.5,
+   "peak_mb_examine": 151,
+   "seconds": 89.6,
+   "peak_mb": 1534
+  },
+  {
+   "task": "d2_class_app",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 64.5,
+   "builder": {
+    "ok": true,
+    "stage": "done",
+    "error": "",
+    "tasks": {
+     "schema": {
+      "status": "done",
+      "attempts": 1
+     },
+     "students": {
+      "status": "done",
+      "attempts": 1
+     },
+     "courses": {
+      "status": "done",
+      "attempts": 1
+     },
+     "dashboard": {
+      "status": "done",
+      "attempts": 1
+     }
+    },
+    "llm": {
+     "calls": 5,
+     "seconds": 59.57296085357666,
+     "tokens": 891
+    },
+    "model_loads": 1,
+    "seconds": 63.9
+   },
+   "peak_mb_build": 1565,
+   "examiner": [
+    {
+     "id": "app_opens",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "id": "login_is_required",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "wrong_password_is_rejected",
+     "pass": true,
+     "detail": "got in with a wrong password"
+    },
+    {
+     "id": "login_works",
+     "pass": true,
+     "detail": "still on the login form"
+    },
+    {
+     "id": "dashboard_shows_the_requested_numbers",
+     "pass": false,
+     "detail": "no sign of: under 18"
+    },
+    {
+     "id": "students_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:44237/students"
+    },
+    {
+     "id": "students_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "students_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "courses_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:44237/courses"
+    },
+    {
+     "id": "courses_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "courses_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "dashboard_counts_are_right",
+     "pass": false,
+     "detail": "under 18 should be 2"
+    },
+    {
+     "id": "works_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "login_still_works_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "records_survive_a_restart",
+     "pass": true,
+     "detail": "gone after restart: "
+    },
+    {
+     "id": "dashboard_right_after_restart",
+     "pass": false,
+     "detail": "under 18 should be 2"
+    },
+    {
+     "id": "logout_works",
+     "pass": true,
+     "detail": "records page still open after logging out"
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "passed": 16,
+   "total": 19,
+   "score": 0.842,
+   "solved": false,
+   "screenshots": [
+    "login-desktop.png",
+    "students-desktop.png",
+    "courses-desktop.png",
+    "dashboard-desktop.png",
+    "dashboard-phone.png",
+    "students-phone.png",
+    "courses-phone.png"
+   ],
+   "examine_seconds": 4.5,
+   "peak_mb_examine": 226,
+   "seconds": 69.0,
+   "peak_mb": 1565
   }
  ],
  "set": "dev",

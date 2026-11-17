@@ -1,0 +1,245 @@
+{
+ "rows": [
+  {
+   "task": "d1_tutor_site",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 70.5,
+   "builder": {
+    "ok": true,
+    "stage": "done",
+    "error": "",
+    "tasks": {
+     "schema": {
+      "status": "done",
+      "attempts": 1
+     },
+     "home": {
+      "status": "done",
+      "attempts": 2
+     }
+    },
+    "llm": {
+     "calls": 6,
+     "seconds": 66.55269837379456,
+     "tokens": 860
+    },
+    "model_loads": 1,
+    "seconds": 69.9
+   },
+   "peak_mb_build": 1490,
+   "examiner": [
+    {
+     "id": "page_opens",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "id": "headline_has_the_name",
+     "pass": true,
+     "detail": "headlines: BrightPath Tutors | BrightPath Tutors | What we teach | Price | Ask for a quote"
+    },
+    {
+     "id": "shows_maths",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_physics",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_english",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_5_000",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "looks_right_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "form_can_be_sent_and_thanks_shown",
+     "pass": true,
+     "detail": "no thank-you message after sending"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "page_opens_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "what_was_sent_is_kept_on_disk",
+     "pass": true,
+     "detail": "not found on disk: "
+    }
+   ],
+   "passed": 12,
+   "total": 12,
+   "score": 1.0,
+   "solved": true,
+   "screenshots": [
+    "home-desktop.png",
+    "home-phone.png",
+    "after-form-desktop.png"
+   ],
+   "examine_seconds": 1.8,
+   "peak_mb_examine": 161,
+   "seconds": 72.3,
+   "peak_mb": 1490
+  },
+  {
+   "task": "d2_class_app",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 48.0,
+   "builder": {
+    "ok": false,
+    "stage": "plan",
+    "error": "login_required is true but username or password is missing",
+    "llm": {
+     "calls": 2,
+     "seconds": 45.79414963722229,
+     "tokens": 708
+    },
+    "resumed": false
+   },
+   "peak_mb_build": 1460,
+   "examiner": [
+    {
+     "id": "app_opens",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "login_is_required",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "wrong_password_is_rejected",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "login_works",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "dashboard_shows_the_requested_numbers",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "students_page_opens",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "students_can_be_added",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "students_search_works",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "courses_page_opens",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "courses_can_be_added",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "courses_search_works",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "dashboard_counts_are_right",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "works_on_a_phone",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "login_still_works_after_restart",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "records_survive_a_restart",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "dashboard_right_after_restart",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "logout_works",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    }
+   ],
+   "passed": 0,
+   "total": 19,
+   "score": 0.0,
+   "solved": false,
+   "screenshots": [],
+   "examine_seconds": 0.0,
+   "peak_mb_examine": 1,
+   "seconds": 48.0,
+   "peak_mb": 1460
+  }
+ ],
+ "set": "dev",
+ "tier": "2gb",
+ "tier_limit_mb": 2048,
+ "condition": "full",
+ "models": {
+  "planner": "qwen2.5-coder-1.5b-q4",
+  "reviewer": "qwen2.5-coder-1.5b-q4",
+  "builder": "qwen2.5-coder-1.5b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-16 22:21:30",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

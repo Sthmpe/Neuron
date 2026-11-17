@@ -118,13 +118,15 @@ class TrialRun:
 
 
 def plan(request, client, meter):
-    """Planner role: request -> validated spec (one repair round). Returns (spec, problems)."""
+    """Planner role: request -> validated spec (up to two repair rounds). Returns (spec, problems)."""
     messages = [{"role": "system", "content": prompts.PLANNER_SYSTEM},
                 {"role": "user", "content": "Request: " + prompts.PLANNER_EXAMPLE_REQUEST},
                 {"role": "assistant", "content": json.dumps(prompts.PLANNER_EXAMPLE_SPEC)},
+                {"role": "user", "content": "Request: " + prompts.PLANNER_SITE_REQUEST},
+                {"role": "assistant", "content": json.dumps(prompts.PLANNER_SITE_SPEC)},
                 {"role": "user", "content": "Request: " + request}]
     problems = ["no reply"]
-    for _ in range(2):
+    for _ in range(3):      # first try + two repair rounds
         reply = meter.chat(client, messages, max_tokens=1500, temperature=0.1, json_schema=SPEC_SCHEMA)
         try:
             raw = json.loads(reply.text[reply.text.index("{"): reply.text.rindex("}") + 1])

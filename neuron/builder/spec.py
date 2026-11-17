@@ -16,7 +16,7 @@ FIELD = {"type": "object", "required": ["name", "type"],
                         "type": {"type": "string", "enum": ["text", "email", "phone", "number", "date"]}}}
 SPEC_SCHEMA = {
     "type": "object",
-    "required": ["app_name", "kind", "login_required", "home", "forms", "entities", "dashboard"],
+    "required": ["app_name", "kind", "login_required", "username", "password", "home", "forms", "entities", "dashboard"],
     "properties": {
         "app_name": {"type": "string"},
         "kind": {"type": "string", "enum": ["site", "app"]},
@@ -139,7 +139,7 @@ def normalise(spec):
         if not s["entities"]:
             problems.append("an app needs at least one entity (a kind of record to keep)")
         if s["login_required"] and not (s["username"] and s["password"]):
-            problems.append("login_required is true but username or password is missing")
+            problems.append("login_required is true but username or password is empty - copy both exactly from the request")
     if s["kind"] == "site" and not s["home"]["headline"]:
         problems.append("a site needs home.headline")
     return s, problems
@@ -250,7 +250,8 @@ def expand(spec):
         h = spec["home"]
         lines = ["Write pages/home.py. It must define register(app). Routes:", '@app.route("/")',
                  'Return app.page(req, title, ...) built from these parts, in this order:',
-                 f'- ui.hero("{h["headline"]}", "{h["subheadline"]}"' + (', "<button text>", "#<form name>")' if spec["forms"] else ")")]
+                 f'- ui.hero("{h["headline"]}", "{h["subheadline"]}"' +
+                 (f', "{spec["forms"][0]["button"]}", "#{spec["forms"][0]["name"]}")' if spec["forms"] else ")")]
         must_show = [h["headline"]]
         for sec in h["sections"]:
             if sec["items"]:

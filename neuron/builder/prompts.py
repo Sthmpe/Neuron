@@ -98,7 +98,23 @@ Rules:
   (text, email, phone, number, date), and the field people search by. One dashboard item per number the owner
   wants to see: kind "count" for "how many", kind "count_below" with field and below for "how many have less
   than N". Copy the username and password exactly from the request. Leave home sections and forms empty.
-- Use the owner's own words for names and labels. Do not invent features that were not asked for.'''
+- Labels must use the owner's own words: if they ask "how many students are under 18", the label is "Under 18".
+- Do not invent sections, forms or features that were not asked for.'''
+
+PLANNER_SITE_REQUEST = ("I need a simple web page for my garden care business, Green Thumb Garden Care. Put the name in a big "
+                        "headline, show the two things we do - mowing and pruning - with a line about each, say that we work "
+                        "all over the east side, and add a form where people leave their name and phone to ask for a quote. "
+                        "Thank them afterwards.")
+PLANNER_SITE_SPEC = {
+    "app_name": "Green Thumb Garden Care", "kind": "site", "login_required": False, "username": "", "password": "",
+    "home": {"headline": "Green Thumb Garden Care", "subheadline": "We keep your garden tidy all year.", "sections": [
+        {"title": "What we do", "text": "", "items": [{"title": "Mowing", "text": "Weekly lawn cuts."},
+                                                      {"title": "Pruning", "text": "Hedges and trees."}]},
+        {"title": "Where we work", "text": "All over the east side.", "items": []}]},
+    "forms": [{"name": "quotes", "title": "Ask for a quote", "fields": [{"name": "name", "type": "text"},
+                                                                        {"name": "phone", "type": "phone"}],
+               "button": "Send", "thanks": "Thank you, we will call you back."}],
+    "entities": [], "dashboard": []}
 
 PLANNER_EXAMPLE_REQUEST = ("I run a small library. I want an app where I log in (user librarian, password quiet55) and keep a "
                            "list of books with title, author and number of pages. I want to search books by title and see "
