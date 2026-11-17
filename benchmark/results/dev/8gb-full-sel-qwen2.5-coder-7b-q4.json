@@ -1,0 +1,55 @@
+{
+ "rows": [
+  {
+   "task": "01_shopping_cart",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 48.86154890060425,
+    "tokens": 158
+   },
+   "what_happened": [
+    "Cart.total: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 186.9,
+   "peak_mb": 5206
+  },
+  {
+   "task": "02_text_stats",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 41.06427836418152,
+    "tokens": 127
+   },
+   "what_happened": [
+    "words: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 41.4,
+   "peak_mb": 5206
+  }
+ ],
+ "set": "dev",
+ "tier": "8gb",
+ "tier_limit_mb": 8192,
+ "condition": "full",
+ "models": {
+  "planner": "qwen2.5-coder-7b-q4",
+  "reviewer": "qwen2.5-coder-7b-q4",
+  "builder": "qwen2.5-coder-7b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-17 12:40:51",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

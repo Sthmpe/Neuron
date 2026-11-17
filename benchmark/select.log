@@ -37,3 +37,5 @@
 4gb-full-sel-qwen3.5-4b-q4 d1_tutor_site: SOLVED | 12/12 checks | 201.4s | peak 3994 MB
 4gb-full-sel-qwen3.5-4b-q4 d2_class_app: SOLVED | 19/19 checks | 191.4s | peak 3913 MB
 4gb-full-sel-qwen3.5-4b-q4: solved 12/12; mean score 1.00
+8gb-full-sel-qwen2.5-coder-7b-q4 01_shopping_cart: SOLVED | attempts 1 | 186.9s | peak 5206 MB
+8gb-full-sel-qwen2.5-coder-7b-q4 02_text_stats: SOLVED | attempts 1 | 41.4s | peak 5206 MB
