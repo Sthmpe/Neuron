@@ -96,7 +96,7 @@ One 1.5B model, single prompt per attempt, network off. Details in [`docs/HISTOR
 | Tools | `neuron/agent/capabilities/` | Spreadsheets (formulas checked by LibreOffice against an independent calculation), Word documents, PowerPoint decks (rendered to check), answers from documents (quotes must be on the cited page), bug fixing in Python, C++, Go and other languages, docstrings for whole projects, new programs, web apps |
 | App builder | `neuron/builder/` | Request, then a specification, then small file-sized tasks, each proven by HTTP checks on the running app; records that point at other records and rules that change them (a sale lowers stock, refused below zero); fixed templates take over a file the model fails three times, and every result says who wrote it |
 | Design system | `neuron/design/`, `neuron/kit_next/` | Mood and colour engine (OKLCH, contrast-checked), 16 bundled fonts, 162 icons, layout variants, a browser design checker, no em dashes and no stock phrases in generated text |
-| Phone page | `neuron/server/` | Light phone web page on the local network: pairing codes, goals with attachments, live steps and evidence, approvals, app previews, downloads, stop and resume, memory and model status |
+| Phone page | `neuron/server/` | Light phone web page on the local network: pairing codes, goals with attachments, follow-ups as a conversation, live steps and evidence, approvals, app previews, downloads, stop and resume, memory and model status, optional HTTPS |
 | Installer | `scripts/install.sh`, `neuron/install.py` | Detects memory, picks the frozen model, resumable download with checksum check, self-test, start |
 | Online boost | `neuron/online/` | Optional: chosen roles may use an online model when the owner turns it on; any problem falls back to the local model |
 
@@ -110,8 +110,8 @@ One 1.5B model, single prompt per attempt, network off. Details in [`docs/HISTOR
 - **The 4 GB tier is tight:** peak 3994 of 4096 MB.
 - **Web apps are simple data apps** (lists, forms, search, login, dashboard counts, linked records with one
   rule each). Links use the record's name, so two records with the same name are not told apart.
-- **Phone traffic is plain HTTP** on the local network. Pairing protects access, but someone on the same
-  Wi-Fi could read it. HTTPS is planned.
+- **Phone traffic is plain HTTP by default** on the local network. Pairing protects access; `start.sh --https`
+  encrypts it with a certificate made on your computer (the phone warns once; compare the printed fingerprint).
 - **Tested only in a cloud Linux container**, not yet on a home PC, a real phone, Windows or Mac.
 - One full test-suite run of five had one failing test whose name was not captured (it ran while a
   benchmark used every core); the next runs all passed. Logged in `PROGRESS.md`.
