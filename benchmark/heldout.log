@@ -7,3 +7,17 @@
 2gb-base h07_warehouse: not solved | attempts 3 | 39.3s | peak 1435 MB
 2gb-base h08_paging: not solved | attempts 3 | 30.2s | peak 1434 MB
 2gb-base h09_grades: SOLVED | attempts 3 | 38.7s | peak 1438 MB
+2gb-base h10_clock: not solved | attempts 3 | 38.5s | peak 1438 MB
+2gb-base h11_flatten: SOLVED | attempts 1 | 13.7s | peak 1436 MB
+2gb-base h12_dedupe: not solved | attempts 3 | 44.2s | peak 1442 MB
+2gb-base h13_caesar: not solved | attempts 3 | 28.8s | peak 1442 MB
+2gb-base h14_calendar: not solved | attempts 3 | 38.2s | peak 1434 MB
+2gb-base h15_settings: SOLVED | attempts 1 | 14.0s | peak 1442 MB
+2gb-base h16_bill: not solved | attempts 3 | 48.5s | peak 1440 MB
+2gb-base h17_chain: not solved | attempts 3 | 46.8s | peak 1436 MB
+2gb-base h18_tokens: not solved | attempts 3 | 33.6s | peak 1436 MB
+2gb-base h19_buckets: not solved | attempts 3 | 36.6s | peak 1436 MB
+2gb-base h20_access: SOLVED | attempts 1 | 14.8s | peak 1442 MB
+2gb-base b1_bakery_landing: not solved | 0/13 checks | 134.4s | peak 1449 MB
+2gb-base b2_shop_app: not solved | 5/19 checks | 303.5s | peak 1467 MB
+-- machine restarted about 20:22 while b3_shop_app_resumed was running; held-out resumed at 20:23, b3 rerun from a clean folder --

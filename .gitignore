@@ -6,4 +6,4 @@ demo/run_data/
 *.db-wal
 *.db-shm
 benchmark/run/
-models/
+/models/
