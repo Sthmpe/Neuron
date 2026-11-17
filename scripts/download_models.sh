@@ -13,6 +13,10 @@ FILES=(
   "unsloth/Qwen3.5-4B-GGUF Qwen3.5-4B-Q4_K_M.gguf"
   "Qwen/Qwen2.5-Coder-7B-Instruct-GGUF qwen2.5-coder-7b-instruct-q4_k_m.gguf"
   "unsloth/Qwen3.5-9B-GGUF Qwen3.5-9B-Q4_K_M.gguf"
+  "unsloth/gemma-4-E2B-it-GGUF gemma-4-E2B-it-Q4_K_M.gguf"
+  "unsloth/gemma-4-E4B-it-GGUF gemma-4-E4B-it-Q4_K_M.gguf"
+  "unsloth/granite-4.1-3b-GGUF granite-4.1-3b-Q4_K_M.gguf"
+  "unsloth/granite-4.1-8b-GGUF granite-4.1-8b-Q4_K_M.gguf"
 )
 for entry in "${FILES[@]}"; do
   set -- $entry; repo=$1; file=$2; url="https://huggingface.co/$repo/resolve/main/$file"

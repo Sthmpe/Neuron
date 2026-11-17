@@ -1,0 +1,11 @@
+{
+ "id": "gemma-4-e4b-q4",
+ "file": "gemma-4-E4B-it-Q4_K_M.gguf",
+ "sha256": null,
+ "source": "https://huggingface.co/unsloth/gemma-4-E4B-it-GGUF/resolve/main/gemma-4-E4B-it-Q4_K_M.gguf",
+ "licence": "apache-2.0",
+ "params_billion": 4,
+ "context_tokens": 8192,
+ "server_args": [],
+ "request_extra": {}
+}

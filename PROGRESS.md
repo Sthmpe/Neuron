@@ -43,6 +43,17 @@ F. README with every measured number and an honest account.
 | 4 GB | Qwen2.5-Coder-3B q4_k_m (1.96 GB, non-commercial licence) | Qwen3.5-4B Q4_K_M (2.55 GB) |
 | 8 GB | Qwen2.5-Coder-7B q4_k_m (4.36 GB) | Qwen3.5-9B Q4_K_M (5.29 GB) |
 
+## Owner's standing goal (2026-11-17)
+
+NEURON must build full apps and fix bugs in full workspaces no matter which model is installed. The model
+is swappable; the system around it (state, small tasks, kit, checks, repairs) has to carry the weight.
+
+## Extra candidates (added 2026-11-17 at the owner's request, before their results)
+
+Gemma 4 E2B and Granite 4.1 3B for 4 GB; Gemma 4 E4B and Granite 4.1 8B for 8 GB (all Apache-2.0).
+Same dev set, same rule. A model that does not fit its tier after measurement is refused and skipped.
+Not possible: Claude (no open weights), gpt-oss-20b (needs ~13 GB), Kimi (smallest open model 48B).
+
 ## Model choice rule (written before any selection result)
 
 Per tier, both candidates run the full dev set (10 bugs + 2 builds) in the FULL condition inside the tier.

@@ -37,6 +37,106 @@
    "tests_untouched": true,
    "seconds": 41.4,
    "peak_mb": 5206
+  },
+  {
+   "task": "03_binary_search",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 168.12948179244995,
+    "tokens": 510
+   },
+   "what_happened": [
+    "index_of: tests still fail: [...]\n=========================\nFAIL: test_missing (tests.test",
+    "index_of: tests still fail: [...]\n=========================\nFAIL: test_missing (tests.test",
+    "index_of: tests still fail: [...]\n=========================\nFAIL: test_missing (tests.test"
+   ],
+   "tests_untouched": true,
+   "seconds": 168.6,
+   "peak_mb": 5213
+  },
+  {
+   "task": "04_bank_transfer",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 154.6666615009308,
+    "tokens": 414
+   },
+   "what_happened": [
+    "Account.withdraw: the rewritten function is identical to the original (no change)",
+    "Bank.transfer: tests still fail: [...]\nnever_created (tests.test_bank.BankTests.test_money_is_n",
+    "Bank.transfer: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 155.1,
+   "peak_mb": 5210
+  },
+  {
+   "task": "05_date_utils",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 52.44238352775574,
+    "tokens": 125
+   },
+   "what_happened": [
+    "is_leap_year: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 52.8,
+   "peak_mb": 5206
+  },
+  {
+   "task": "06_matrix",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 54.88408374786377,
+    "tokens": 185
+   },
+   "what_happened": [
+    "multiply: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 55.2,
+   "peak_mb": 5213
+  },
+  {
+   "task": "07_lru_cache",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 2,
+   "llm": {
+    "calls": 4,
+    "seconds": 79.04205751419067,
+    "tokens": 179
+   },
+   "what_happened": [
+    "LRUCache.keys: tests still fail: [...]\n: test_reading_keeps_an_entry_alive (tests.test_lru.LRUT",
+    "LRUCache.get: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 79.5,
+   "peak_mb": 5208
   }
  ],
  "set": "dev",

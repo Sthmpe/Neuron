@@ -1,0 +1,11 @@
+{
+ "id": "granite-4.1-3b-q4",
+ "file": "granite-4.1-3b-Q4_K_M.gguf",
+ "sha256": null,
+ "source": "https://huggingface.co/unsloth/granite-4.1-3b-GGUF/resolve/main/granite-4.1-3b-Q4_K_M.gguf",
+ "licence": "apache-2.0",
+ "params_billion": 3,
+ "context_tokens": 8192,
+ "server_args": [],
+ "request_extra": {}
+}

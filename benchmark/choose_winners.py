@@ -9,8 +9,9 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from neuron.brain.models import ModelManager   # noqa: E402
 
-CANDIDATES = {"2gb": ["qwen2.5-coder-1.5b-q4", "qwen3.5-0.8b-q8"], "4gb": ["qwen2.5-coder-3b-q4", "qwen3.5-4b-q4"],
-              "8gb": ["qwen2.5-coder-7b-q4", "qwen3.5-9b-q4"]}
+CANDIDATES = {"2gb": ["qwen2.5-coder-1.5b-q4", "qwen3.5-0.8b-q8"],
+              "4gb": ["qwen2.5-coder-3b-q4", "qwen3.5-4b-q4", "gemma-4-e2b-q4", "granite-4.1-3b-q4"],
+              "8gb": ["qwen2.5-coder-7b-q4", "qwen3.5-9b-q4", "gemma-4-e4b-q4", "granite-4.1-8b-q4"]}
 
 
 def score(path):
@@ -32,7 +33,7 @@ def main():
                 continue
             s, t, n, bugs, builds = score(f)
             table.append({"model": m, "score": s, "of": 12, "seconds": t, "tasks_run": n, "bugs_solved": bugs, "builds": builds})
-        ok = [r for r in table if not r.get("missing") and r["tasks_run"] == 12]
+        ok = [r for r in table if not r.get("missing") and r["tasks_run"] == 12]   # a model that did not fit has no result
         winner = sorted(ok, key=lambda r: (-r["score"], r["seconds"]))[0]["model"] if ok else None
         if winner:
             mgr.activate(tier, winner)

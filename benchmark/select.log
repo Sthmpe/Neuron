@@ -39,3 +39,8 @@
 4gb-full-sel-qwen3.5-4b-q4: solved 12/12; mean score 1.00
 8gb-full-sel-qwen2.5-coder-7b-q4 01_shopping_cart: SOLVED | attempts 1 | 186.9s | peak 5206 MB
 8gb-full-sel-qwen2.5-coder-7b-q4 02_text_stats: SOLVED | attempts 1 | 41.4s | peak 5206 MB
+8gb-full-sel-qwen2.5-coder-7b-q4 03_binary_search: not solved | attempts 3 | 168.6s | peak 5213 MB
+8gb-full-sel-qwen2.5-coder-7b-q4 04_bank_transfer: SOLVED | attempts 3 | 155.1s | peak 5210 MB
+8gb-full-sel-qwen2.5-coder-7b-q4 05_date_utils: SOLVED | attempts 1 | 52.8s | peak 5206 MB
+8gb-full-sel-qwen2.5-coder-7b-q4 06_matrix: SOLVED | attempts 1 | 55.2s | peak 5213 MB
+8gb-full-sel-qwen2.5-coder-7b-q4 07_lru_cache: SOLVED | attempts 2 | 79.5s | peak 5208 MB
