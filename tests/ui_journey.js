@@ -60,6 +60,15 @@ async function audit(page, name) {
       note('download ' + (ok ? 'worked' : 'failed'));
       if (!ok) problem('download failed');
     }
+    await page.fill('#more', 'Also add the number of expenses per category.');
+    await page.click('#send');
+    await page.waitForSelector('.thread .said');
+    note('follow-up sent: earlier request shown in the conversation');
+    await page.waitForFunction(() => /Done and checked|Not done|Partly done/.test(document.querySelector('.card:not(.thread) .badge')?.textContent || ''), null, { timeout: 180000 });
+    note('follow-up finished: ' + (await page.textContent('.card:not(.thread) .badge')));
+    await audit(page, '3b-follow-up');
+    await page.click('.thread .said');
+    await page.waitForSelector('#more');
     const checks = await page.$$eval('.ck b.ok', els => els.length);
     note(`evidence checks shown as passed: ${checks}`);
     if (!checks) problem('no evidence shown');

@@ -211,6 +211,14 @@ def make_handler(state):
                     if not goal:
                         return self._send(400, {"error": "say what you want done"})
                     return self._send(201, {"id": jobs.create(goal)})
+                m = re.fullmatch(r"/api/jobs/([\w-]+)/followup", path)
+                if m:
+                    text = str(self._json().get("text", "")).strip()
+                    if not text:
+                        return self._send(400, {"error": "say what you want changed"})
+                    new = jobs.follow_up(m.group(1), text)
+                    jobs.start(new)
+                    return self._send(201, {"id": new})
                 m = re.fullmatch(r"/api/jobs/([\w-]+)/(upload|start|stop|approve|preview)", path)
                 if not m:
                     return self._send(404, {"error": "not found"})

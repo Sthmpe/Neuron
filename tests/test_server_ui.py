@@ -22,7 +22,7 @@ class PhoneJourney(unittest.TestCase):
     def test_phone_journey(self):
         home = Path(tempfile.mkdtemp(prefix="neuron-ui-"))
         plan = {"group_by": "category", "measures": [{"label": "Total", "op": "sum", "columns": ["amount"]}], "total_row": True, "share_of": ""}
-        httpd = serve(home, "127.0.0.1", 0, lambda: Runner([json.dumps(plan)]), lambda: Sandbox(timeout=60, mem_mb=512), default_registry(),
+        httpd = serve(home, "127.0.0.1", 0, lambda: Runner([json.dumps(plan), json.dumps(dict(plan, measures=plan["measures"] + [{"label": "Count", "op": "count", "columns": ["amount"]}]))]), lambda: Sandbox(timeout=60, mem_mb=512), default_registry(),
                       models_status=lambda: {"tier": "4gb", "builder": "scripted"}, log=lambda *_: None)
         threading.Thread(target=httpd.serve_forever, daemon=True).start()
         self.addCleanup(httpd.shutdown)

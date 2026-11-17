@@ -212,3 +212,30 @@ class PreviewTests(unittest.TestCase):
         self.assertEqual(s, 200)
         self.assertNotIn(b"neuron_token", body)
         self.assertNotIn(b"neuron_preview", body)
+
+
+class FollowUpTests(unittest.TestCase):
+    def test_follow_up_keeps_the_conversation_and_the_files(self):
+        home = Path(tempfile.mkdtemp(prefix="neuron-home-"))
+        httpd, base = start(home, ["The sky scatters blue light most.", "Sunsets look red because light travels further."])
+        self.addCleanup(httpd.shutdown)
+        c = Client(base)
+        c.call("POST", "/api/pair", {"code": httpd.neuron["pairing"].new_code()})
+        s, d = c.call("POST", "/api/jobs", {"goal": "Why is the sky blue?"})
+        first = d["id"]
+        c.call("POST", f"/api/jobs/{first}/start")
+        wait_for(c, first, ("done",))
+        self.assertEqual(c.call("POST", f"/api/jobs/{first}/followup", {"text": ""})[0], 400)
+        s, d = c.call("POST", f"/api/jobs/{first}/followup", {"text": "And why are sunsets red?"})
+        self.assertEqual(s, 201)
+        second = d["id"]
+        d = wait_for(c, second, ("done",))
+        self.assertEqual([t["id"] for t in d["thread"]], [first, second])
+        self.assertEqual(d["thread"][1]["said"], "And why are sunsets red?")
+        self.assertEqual(d["title"], "And why are sunsets red?")
+        meta = json.loads((home / "jobs" / second / "meta.json").read_text())
+        self.assertIn("Why is the sky blue?", meta["goal"])                   # the new job knows what came before
+        self.assertIn("sunsets look red", d["answer"].lower())
+        old = json.loads((home / "jobs" / first / "meta.json").read_text())
+        self.assertEqual(old["status"], "done")                                # the earlier job is untouched
+        self.assertEqual(c.call("POST", "/api/jobs/nope-123/followup", {"text": "x"})[0], 404)

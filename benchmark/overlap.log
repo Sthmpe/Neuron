@@ -6,3 +6,4 @@
 15:34 worktree builder tests again (~1 min, nice 19)
 15:38 worktree tests: agent, online boost, server (~1 min, nice 19, includes LibreOffice)
 20:24 worktree full test suite (~1.5 min, nice 19, browser + LibreOffice)
+20:28 server + phone browser tests (~20 s, nice 19)
