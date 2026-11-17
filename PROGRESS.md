@@ -1,6 +1,39 @@
-# NEURON — progress log (resume from here)
+# NEURON: progress log (resume from here)
 
-A new session must be able to continue from this file plus the repository. Update it after every step.
+**Read `VISION.md` first.** Then this file. Together with the repository they must be enough for a new
+session, or a new model, to continue. Update this file after every meaningful step.
+
+## Branches
+
+- `main`: tested, working. Only merged into when the whole test suite passes.
+- `dev`: all work in progress (created 2026-11-17). Frozen evaluations run from this working copy; new
+  code goes into new files until those runs finish, so the evaluations measure a fixed system.
+
+## Master plan (owner, 2026-11-17), in dependency order
+
+| Phase | What | Status |
+|---|---|---|
+| 0 | Finish current work, rules unchanged: model selection, held-out scoring (bugs, builds, workspaces), design system + 20-request proof, README with real numbers | **in progress**: selection nearly done; held-out queued to start automatically |
+| 1 | `VISION.md` | done |
+| 2 | Freeze one reasoning model per tier (file, checksum, settings). No new model searches until the owner asks. Specialist models allowed. Measure total system RAM with headroom | after phase 0 |
+| 3 | Better intelligence with the same models: model-independent state + context slices, shared loop (understand, investigate, plan, execute, observe, verify, revise, continue), strategy change on failure, sequential roles, domain verification. Nothing hardcoded around templates or benchmark tasks | not started |
+| 4 | Tool registry: purpose, inputs, outputs, internet, permissions, resources, verification. Deterministic code where no model is needed. Missing tools reported honestly | not started (step-2 registry exists) |
+| 5 | New evaluation, tasks locked before tuning: unseen business app (kill halfway, resume); a Flutter or C++ project; multi-module workspace bugs incl. a compiled language; Excel, Word, PowerPoint, PDF tasks with independent file checks; a task longer than one context window. Report completion, time, peak RAM, model calls, human help, recovery, model vs template share | not started |
+| 6 | Owner release: installer (detect RAM, pick model, verify downloads, start; Linux first, Windows/Mac only when tested), phone web UI on local Wi-Fi with secure pairing (chat, tasks, uploads, progress, approvals, previews, downloads, resume, model and memory status), works offline, `TESTING.md` | not started |
+| 7 | Optional online boost interface (never blocks the release); hardware bottleneck log for the future device; README with every number, failure and limit | not started |
+
+The owner's acceptance test for the next milestone: open NEURON on the phone, describe a complicated task
+in ordinary language, and watch it work through it on its own computer, offline, delivering real files
+and evidence.
+
+## Known constraints right now
+
+- Disk allowance is nearly full (about 2 GB free) because of model files. After phase 2, every model
+  except the three frozen ones is deleted (they can be re-downloaded by name with
+  `scripts/download_models.sh <file>`). Flutter SDK and LibreOffice (needed for phase 5) need that space.
+- Step 3 history below is kept as it was written.
+
+---
 
 ## Where things are
 
