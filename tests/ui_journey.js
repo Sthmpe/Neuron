@@ -1,6 +1,7 @@
 // Phone journey through the NEURON web page: pair, give a goal with a file, watch it finish, download.
 const { chromium } = require('playwright');
 const [base, code, csv, shots] = process.argv.slice(2);
+const https = base.startsWith('https');
 const out = { steps: [], problems: [] };
 const note = (s) => out.steps.push(s);
 const problem = (s) => out.problems.push(s);
@@ -26,7 +27,9 @@ async function audit(page, name) {
 
 (async () => {
   const browser = await chromium.launch();
-  const page = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true });
+  // over HTTPS the test accepts NEURON's own certificate, as the owner does after checking its fingerprint
+  const page = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true,
+    ignoreHTTPSErrors: https });
   try {
     await page.goto(base + '/');
     await page.waitForSelector('#code');
@@ -60,6 +63,15 @@ async function audit(page, name) {
       note('download ' + (ok ? 'worked' : 'failed'));
       if (!ok) problem('download failed');
     }
+    await page.fill('#more', 'Also add the number of expenses per category.');
+    await page.click('#send');
+    await page.waitForSelector('.thread .said');
+    note('follow-up sent: earlier request shown in the conversation');
+    await page.waitForFunction(() => /Done and checked|Not done|Partly done/.test(document.querySelector('.card:not(.thread) .badge')?.textContent || ''), null, { timeout: 180000 });
+    note('follow-up finished: ' + (await page.textContent('.card:not(.thread) .badge')));
+    await audit(page, '3b-follow-up');
+    await page.click('.thread .said');
+    await page.waitForSelector('#more');
     const checks = await page.$$eval('.ck b.ok', els => els.length);
     note(`evidence checks shown as passed: ${checks}`);
     if (!checks) problem('no evidence shown');

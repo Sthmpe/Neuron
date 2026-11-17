@@ -10,6 +10,7 @@ import os
 import queue
 import re
 import secrets
+import ssl
 import threading
 import time
 from http.cookies import SimpleCookie
@@ -25,11 +26,31 @@ FONTS = Path(__file__).resolve().parents[1] / "kit_next" / "static" / "fonts"
 MAX_UPLOAD = 200 * 1024 * 1024
 
 
+class TLSServer(ThreadingHTTPServer):
+    """HTTPS server whose TLS handshake happens in the request's own thread, so one slow client cannot hold up others."""
+
+    def __init__(self, addr, handler, ctx):
+        self.ctx = ctx
+        super().__init__(addr, handler)
+
+    def finish_request(self, request, client_address):
+        request.settimeout(30)
+        try:
+            request = self.ctx.wrap_socket(request, server_side=True)
+        except (ssl.SSLError, OSError):
+            return                                    # not TLS, or a failed handshake: drop it
+        super().finish_request(request, client_address)
+
+
+def make_server(addr, handler, tls=None):
+    return TLSServer(addr, handler, tls) if tls else ThreadingHTTPServer(addr, handler)
+
+
 class Previews:
     """Shows a built web app on its own port, behind a one-time token (its links expect to be at '/')."""
 
-    def __init__(self, host, sandbox_factory):
-        self.host, self.sandbox_factory, self.running = host, sandbox_factory, {}
+    def __init__(self, host, sandbox_factory, tls=None):
+        self.host, self.sandbox_factory, self.running, self.tls = host, sandbox_factory, {}, tls
         self._jobs = queue.Queue()
         threading.Thread(target=self._launcher, daemon=True).start()
 
@@ -60,7 +81,7 @@ class Previews:
         if not srv.wait_ready("/"):
             srv.stop()
             return None
-        token, upstream = secrets.token_urlsafe(16), srv
+        token, upstream, secure = secrets.token_urlsafe(16), srv, bool(self.tls)
 
         class Proxy(BaseHTTPRequestHandler):
             def log_message(self, *a):
@@ -73,7 +94,7 @@ class Previews:
                 if cookies.get("neuron_preview") != token:
                     if q.get("neuron_preview", [""])[0] != token:
                         self.send_response(403); self.end_headers(); self.wfile.write(b"Open the preview from NEURON."); return
-                    set_cookie = f"neuron_preview={token}; Path=/; HttpOnly; SameSite=Lax"
+                    set_cookie = f"neuron_preview={token}; Path=/; HttpOnly; SameSite=Lax" + ("; Secure" if secure else "")
                 n = int(self.headers.get("Content-Length") or 0)
                 body = self.rfile.read(n) if n else None
                 c = http.client.HTTPConnection("127.0.0.1", upstream.port, timeout=30)
@@ -95,7 +116,7 @@ class Previews:
                 self.wfile.write(data)
             do_GET = do_POST = _go
 
-        httpd = ThreadingHTTPServer((self.host, 0), Proxy)
+        httpd = make_server((self.host, 0), Proxy, self.tls)
         threading.Thread(target=httpd.serve_forever, daemon=True).start()
         self.running[jid] = {"server": srv, "httpd": httpd, "url": f":{httpd.server_address[1]}/?neuron_preview={token}"}
         return self.running[jid]["url"]
@@ -200,7 +221,8 @@ def make_handler(state):
                 token = pairing.pair(body.get("code", ""), body.get("name", "phone"))
                 if not token:
                     return self._send(403, {"error": "wrong or expired code"})
-                return self._send(200, {"paired": True}, headers={"Set-Cookie": f"neuron_token={token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=31536000"})
+                return self._send(200, {"paired": True}, headers={"Set-Cookie": f"neuron_token={token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=31536000"
+                                                                     + ("; Secure" if state.get("tls") else "")})
             if not self._device():
                 return self._send(401, {"error": "pair this device first"})
             if self.headers.get("X-Neuron") != "1":               # blocks forms posted from other websites
@@ -211,6 +233,14 @@ def make_handler(state):
                     if not goal:
                         return self._send(400, {"error": "say what you want done"})
                     return self._send(201, {"id": jobs.create(goal)})
+                m = re.fullmatch(r"/api/jobs/([\w-]+)/followup", path)
+                if m:
+                    text = str(self._json().get("text", "")).strip()
+                    if not text:
+                        return self._send(400, {"error": "say what you want changed"})
+                    new = jobs.follow_up(m.group(1), text)
+                    jobs.start(new)
+                    return self._send(201, {"id": new})
                 m = re.fullmatch(r"/api/jobs/([\w-]+)/(upload|start|stop|approve|preview)", path)
                 if not m:
                     return self._send(404, {"error": "not found"})
@@ -239,13 +269,14 @@ def make_handler(state):
     return H
 
 
-def serve(home, host, port, runner_factory, sandbox_factory, registry=None, models_status=lambda: {}, log=print):
+def serve(home, host, port, runner_factory, sandbox_factory, registry=None, models_status=lambda: {}, log=print, tls=None):
+    """tls: an ssl.SSLContext (see tls.py) to serve HTTPS; None serves plain HTTP."""
     from .jobs import JobManager
     home = Path(home)
     home.mkdir(parents=True, exist_ok=True)
     jobs = JobManager(home, runner_factory, sandbox_factory, registry, log=log)
     pairing = Pairing(home)
-    previews = Previews(host, sandbox_factory)
+    previews = Previews(host, sandbox_factory, tls)
     started = time.time()
 
     def status():
@@ -254,7 +285,7 @@ def serve(home, host, port, runner_factory, sandbox_factory, registry=None, mode
                 "models": models_status(), "loaded_model": getattr(r, "loaded", None) if r else None,
                 "current_job": jobs.current, "queue": list(jobs.queue)}
 
-    state = {"jobs": jobs, "pairing": pairing, "previews": previews, "status": status}
-    httpd = ThreadingHTTPServer((host, port), make_handler(state))
+    state = {"jobs": jobs, "pairing": pairing, "previews": previews, "status": status, "tls": tls}
+    httpd = make_server((host, port), make_handler(state), tls)
     httpd.neuron = state
     return httpd

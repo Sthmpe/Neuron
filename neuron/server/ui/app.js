@@ -66,8 +66,12 @@ async function jobView(id) {
     const ev = (await api(`/api/jobs/${id}/events?after=${after}`)).events; if (ev.length) { after = ev[ev.length - 1].seq; feed = feed.concat(ev).slice(-60); }
     const live = ['queued', 'running'].includes(j.status);
     const outs = (j.outputs || []).filter(o => !o.path.startsWith('app/') || o.path === 'app/app.py');
-    view.innerHTML = `<p><a href="#/">Back</a></p><section class="card"><span class="badge b-${j.status}">${LABEL[j.status] || j.status}</span>
-      <h1 style="margin-top:12px">${esc(j.title)}</h1><p class="lead">${esc(j.goal).slice(0, 600)}</p>
+    const earlier = (j.thread || []).filter(t => t.id !== j.id);
+    view.innerHTML = `<p><a href="#/">Back</a></p>
+      ${earlier.length ? `<section class="card thread"><h2>Earlier in this conversation</h2>${earlier.map(t => `<a class="said" href="#/job/${t.id}">
+        <span>${esc(t.said).slice(0, 160)}</span><span class="badge b-${t.status}">${LABEL[t.status] || t.status}</span></a>`).join('')}</section>` : ''}
+      <section class="card"><span class="badge b-${j.status}">${LABEL[j.status] || j.status}</span>
+      <h1 style="margin-top:12px">${esc(j.title)}</h1>${(j.request || j.goal) !== j.title ? `<p class="lead">${esc(j.request || j.goal).slice(0, 600)}</p>` : ''}
       ${j.kind ? `<p class="note">Understood as: ${esc(j.kind.replace('_', ' '))}</p>` : ''}
       <div class="row">${live ? `<button class="btn danger small" id="stop">Stop</button>` : ''}
       ${['paused', 'failed', 'partial'].includes(j.status) ? `<button class="btn small" id="resume">Resume</button>` : ''}
@@ -85,7 +89,14 @@ async function jobView(id) {
       ${j.evidence.length ? `<section class="card"><h2>Evidence</h2>${j.evidence.slice(-4).map(e => `<h3>${esc(e.task)}: ${e.passed ? 'passed' : 'failed'}</h3>
         <p class="note">${esc(e.how)}</p><div class="checks">${e.checks.map(c => `<div class="ck"><b class="${c.pass ? 'ok' : 'no'}">${c.pass ? '✓' : '✗'}</b>
         <span>${esc(c.id.replace(/_/g, ' '))}${c.detail ? ': ' + esc(c.detail) : ''}</span></div>`).join('')}</div>`).join('')}</section>` : ''}
+      ${!live && j.status !== 'draft' ? `<section class="card"><h2>Ask for a change or a next step</h2>
+        <textarea id="more" aria-label="Follow-up" placeholder="For example: add a column for VAT, or make it shorter"></textarea>
+        <div class="row"><button class="btn primary" id="send">Send</button></div><div id="msg2"></div></section>` : ''}
       <section class="card"><h2>What NEURON is doing</h2><div class="feed">${feed.slice().reverse().map(e => `<div>${esc(e.text)}</div>`).join('') || '<p class="note">Nothing yet</p>'}</div></section>`;
+    $('#send')?.addEventListener('click', async () => { const text = $('#more').value.trim(); if (!text) return;
+      $('#send').disabled = true;
+      try { const r = await api(`/api/jobs/${id}/followup`, { method: 'POST', json: { text } }); location.hash = `#/job/${r.id}`; }
+      catch (e) { $('#msg2').innerHTML = `<div class="err">${esc(e.message)}</div>`; $('#send').disabled = false; } });
     $('#stop')?.addEventListener('click', () => api(`/api/jobs/${id}/stop`, { method: 'POST' }).then(draw));
     $('#resume')?.addEventListener('click', () => api(`/api/jobs/${id}/start`, { method: 'POST' }).then(draw));
     $('#preview')?.addEventListener('click', async () => { const r = await api(`/api/jobs/${id}/preview`, { method: 'POST' });

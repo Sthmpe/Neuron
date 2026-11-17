@@ -73,6 +73,27 @@ class JobManager:
                                                   "created": time.time(), "updated": time.time(), "files": []}))
         return jid
 
+    def follow_up(self, jid, text):
+        """A follow-up in the same conversation: a new job that starts with the earlier job's files and knows
+        what was asked before. The earlier job is left as it was."""
+        try:
+            old = self.meta(jid)
+        except OSError:
+            raise KeyError(jid) from None
+        thread = self.conversation(jid)
+        before = "\n".join(f"- {j['goal'][:400]}" for j in thread)
+        goal = f"{text.strip()}\n\nEarlier requests in this conversation (their files are in this folder):\n{before}"
+        new = self.create(goal)
+        src, dst = self._path(jid) / "workspace", self._path(new) / "workspace"
+        shutil.copytree(src, dst, dirs_exist_ok=True, ignore=shutil.ignore_patterns(".neuron", "__pycache__", "data.db*"))
+        self._meta(new, title=short_title(text), parent=jid, thread=old.get("thread") or jid, request=text.strip())
+        return new
+
+    def conversation(self, jid):
+        """Every job in the same conversation as jid, oldest first."""
+        root = self.meta(jid).get("thread") or jid
+        return sorted((m for m in self.all() if m["id"] == root or m.get("thread") == root), key=lambda m: m["created"])
+
     def add_file(self, jid, name, data, max_bytes=200 * 1024 * 1024):
         name = Path(name).name
         if not name or len(data) > max_bytes:
@@ -168,7 +189,8 @@ class JobManager:
                 "approvals": [a for a in st.approvals() if a["status"] == "pending"] if st.exists() else [],
                 "evidence": [{"task": e["task"], "passed": e["passed"], "how": e["how"],
                               "checks": [{"id": c["id"], "pass": c["pass"], "detail": str(c["detail"])[:160]} for c in e["checks"][:12]]} for e in evidence],
-                "outputs": self.outputs(jid), "answer": self._answer(jid)}
+                "outputs": self.outputs(jid), "answer": self._answer(jid),
+                "thread": [{"id": t["id"], "said": t.get("request") or t["goal"], "status": t["status"]} for t in self.conversation(jid)]}
 
     def _answer(self, jid):
         """A written answer (questions, document questions) is shown on the phone directly, like a chat reply."""

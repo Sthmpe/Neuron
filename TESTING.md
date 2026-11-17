@@ -96,7 +96,8 @@ Tap the top-right label. You see: internet on or off, memory free, which model i
 ## Security, plainly
 
 - Only paired phones can use NEURON. Pairing codes expire after 10 minutes and work once. Phone keys are stored scrambled (hashed) on the computer.
-- The phone talks to the computer over **plain HTTP on your home Wi-Fi**. Someone else on the same Wi-Fi could read the traffic. Use it on a home network you trust. Encrypted connections (HTTPS) are planned.
+- By default the phone talks to the computer over **plain HTTP on your home Wi-Fi**. Someone else on the same Wi-Fi could read the traffic.
+- To encrypt it, start NEURON with `~/.neuron/start.sh --https`. NEURON makes its own certificate on your computer and prints its fingerprint. The phone will warn that it does not know the certificate: open the certificate details, check the SHA-256 fingerprint matches the printed one, then continue. After that the traffic is encrypted. (Pair again after switching, because the address starts with https.)
 - Code that NEURON writes or fixes runs inside a locked box with no internet and no access to your other files.
 - To remove all paired phones: delete `~/.neuron/devices.json` and restart NEURON.
 
@@ -114,6 +115,6 @@ Send the one-sentence error and the job id to the developer.
 |---|---|---|
 | Installer | Full run: packages, Python libraries, checksum check, model self-test, sandbox self-test | Ubuntu 24.04 in a cloud container (not yet on a home PC) |
 | Download resume and wrong-checksum refusal | Automatic test with a server that cuts the connection | same |
-| Pairing, security, jobs, uploads, downloads, approvals, restart | Automatic tests | same |
+| Pairing, security, jobs, uploads, downloads, approvals, follow-ups, previews, HTTPS, restart | Automatic tests | same |
 | Phone page | Automatic test in a real browser at phone size: pair, goal with a file, finished job, download, status | same (Chromium, not a real phone yet) |
 | Windows, Mac | Not tested | Not supported yet |
