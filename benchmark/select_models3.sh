@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Resume selection after two harness problems (see PROGRESS): Qwen3.5-9B first-load timeout, Gemma thinking mode.
 cd "$(dirname "$0")/.."
-scripts/download_models.sh > models/download3.log 2>&1
+scripts/download_models.sh Qwen3.5-9B-Q4_K_M.gguf > models/download3.log 2>&1
 python3 -m neuron.brain.models install model_manifests/qwen3.5-9b-q4.json
 python3 -m benchmark.harness --set dev --tier 8gb --condition full --model qwen3.5-9b-q4 --tag sel-qwen3.5-9b-q4 --only 01_shopping_cart
 for m in gemma-4-e2b-q4 gemma-4-e4b-q4; do python3 -m neuron.brain.models measure $m; done

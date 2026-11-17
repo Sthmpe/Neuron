@@ -18,8 +18,10 @@ FILES=(
   "unsloth/granite-4.1-3b-GGUF granite-4.1-3b-Q4_K_M.gguf"
   "unsloth/granite-4.1-8b-GGUF granite-4.1-8b-Q4_K_M.gguf"
 )
+ONLY=("$@")      # optional: only these file names (so deliberately removed models are not fetched again)
 for entry in "${FILES[@]}"; do
   set -- $entry; repo=$1; file=$2; url="https://huggingface.co/$repo/resolve/main/$file"
+  if [ ${#ONLY[@]} -gt 0 ] && [[ ! " ${ONLY[*]} " == *" $file "* ]]; then continue; fi
   if [ -f "$DEST/$file" ]; then echo "have $file"; continue; fi
   want=$(curl -sS -I -m 60 "$url" | tr -d '\r' | awk -F'"' 'tolower($0) ~ /^x-linked-etag/ {print $2}')
   echo "downloading $file (expected sha256 ${want:-unknown})"
