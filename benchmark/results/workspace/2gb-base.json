@@ -104,6 +104,111 @@
    "tests_untouched": true,
    "seconds": 141.0,
    "peak_mb": 1447
+  },
+  {
+   "task": "w06_lunch_slots",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 108.0,
+    "tokens": 909
+   },
+   "what_happened": [
+    "tests still failing",
+    "rejected: the proposed file is identical to the original (no change)",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 71.2,
+   "peak_mb": 1442
+  },
+  {
+   "task": "w07_cancelled_blocks",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 181.2,
+    "tokens": 1824
+   },
+   "what_happened": [
+    "tests still failing",
+    "tests still failing",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 181.7,
+   "peak_mb": 1443
+  },
+  {
+   "task": "w08_reminder_day",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 125.1,
+    "tokens": 1634
+   },
+   "what_happened": [
+    "tests still failing",
+    "tests still failing",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 125.6,
+   "peak_mb": 1446
+  },
+  {
+   "task": "w09_insurance_share",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 209.2,
+    "tokens": 1997
+   },
+   "what_happened": [
+    "tests still failing",
+    "tests still failing",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 209.6,
+   "peak_mb": 1447
+  },
+  {
+   "task": "w10_child_age",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 104.1,
+    "tokens": 462
+   },
+   "what_happened": [
+    "tests still failing",
+    "tests still failing",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 104.6,
+   "peak_mb": 1443
   }
  ],
  "set": "workspace",

@@ -1,0 +1,224 @@
+{
+ "rows": [
+  {
+   "task": "w01_vat_rounding",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 9.275501251220703,
+    "tokens": 144
+   },
+   "what_happened": [
+    "vat_for: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 12.0,
+   "peak_mb": 1432
+  },
+  {
+   "task": "w02_order_rollback",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 46.07271957397461,
+    "tokens": 716
+   },
+   "what_happened": [
+    "OrderService.place: tests still fail: [...]\ns.OrderTests.test_failed_order_changes_nothing)\n--------",
+    "Inventory.reserve: tests still fail: [...]\ns.OrderTests.test_failed_order_changes_nothing)\n--------",
+    "OrderService.place: tests still fail: [...]\ns.OrderTests.test_failed_order_changes_nothing)\n--------"
+   ],
+   "tests_untouched": true,
+   "seconds": 46.8,
+   "peak_mb": 1463
+  },
+  {
+   "task": "w03_due_date_weekend",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 34.936002016067505,
+    "tokens": 512
+   },
+   "what_happened": [
+    "add_days: tests still fail: [...]\ncall last):\n  File \"/workspace/tests/test_util.py\", line",
+    "add_days: tests still fail: [...]\n---------------------\nTraceback (most recent call last):",
+    "add_days: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 35.8,
+   "peak_mb": 1469
+  },
+  {
+   "task": "w04_cancelled_spelling",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 45.79821276664734,
+    "tokens": 711
+   },
+   "what_happened": [
+    "OrderService.cancel: tests still fail: [...]\nt call last):\n  File \"/workspace/tests/test_orders.py\", ",
+    "OrderService.cancel: tests still fail: [...]\ncancel_paid_order_restores_everything)\n-----------------",
+    "OrderService.cancel: tests still fail: [...]\ns.best_sellers(self.repo), [\"OIL1\", \"RICE5\"])\n    ~~~~~~"
+   ],
+   "tests_untouched": true,
+   "seconds": 46.5,
+   "peak_mb": 1470
+  },
+  {
+   "task": "w05_search_case",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 2,
+   "llm": {
+    "calls": 4,
+    "seconds": 21.726837873458862,
+    "tokens": 339
+   },
+   "what_happened": [
+    "Repository.search_products: the rewritten function is identical to the original (no change)",
+    "Repository.search_products: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 22.3,
+   "peak_mb": 1461
+  },
+  {
+   "task": "w06_lunch_slots",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 71.67709040641785,
+    "tokens": 639
+   },
+   "what_happened": [
+    "free_slots: the rewritten function is identical to the original (no change)",
+    "free_slots: tests still fail: [...]\n'08:00', '08:30', '09:00', '09:30', '10:30', '11:00', '1",
+    "free_slots: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 72.0,
+   "peak_mb": 1462
+  },
+  {
+   "task": "w07_cancelled_blocks",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 84.05618262290955,
+    "tokens": 899
+   },
+   "what_happened": [
+    "Book.book: tests still fail: [...]\nok(self.p[\"P2\"], self.d[\"D2\"], \"2026-12-02\", \"11:00\")\n  ",
+    "Book.for_doctor: the reply was not a usable OLD/NEW edit of that function",
+    "Book.book: tests still fail: [...]\n.py\", line 47, in test_reminders\n    self.book.book(self"
+   ],
+   "tests_untouched": true,
+   "seconds": 84.6,
+   "peak_mb": 1467
+  },
+  {
+   "task": "w08_reminder_day",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 64.40551328659058,
+    "tokens": 557
+   },
+   "what_happened": [
+    "reminders_for: the rewritten function is identical to the original (no change)",
+    "reminders_for: tests still fail: [...]\n------\nTraceback (most recent call last):\n  File \"/works",
+    "reminders_for: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 64.8,
+   "peak_mb": 1470
+  },
+  {
+   "task": "w09_insurance_share",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 63.06943607330322,
+    "tokens": 453
+   },
+   "what_happened": [
+    "visit_fee: the rewritten function is identical to the original (no change)",
+    "visit_fee: tests still fail: [...]\nng.FeeTests.test_insurance)\n----------------------------",
+    "visit_fee: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 63.5,
+   "peak_mb": 1471
+  },
+  {
+   "task": "w10_child_age",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 60.569387435913086,
+    "tokens": 487
+   },
+   "what_happened": [
+    "visit_fee: tests still fail: [...]\ning.FeeTests.test_insurance)\n---------------------------",
+    "visit_fee: tests still fail: [...]\ning.FeeTests.test_insurance)\n---------------------------",
+    "visit_fee: tests still fail: [...]\ning.FeeTests.test_insurance)\n---------------------------"
+   ],
+   "tests_untouched": true,
+   "seconds": 61.1,
+   "peak_mb": 1471
+  }
+ ],
+ "set": "workspace",
+ "tier": "2gb",
+ "tier_limit_mb": 2048,
+ "condition": "full",
+ "models": {
+  "planner": "qwen2.5-coder-1.5b-q4",
+  "reviewer": "qwen2.5-coder-1.5b-q4",
+  "builder": "qwen2.5-coder-1.5b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-17 22:12:15",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

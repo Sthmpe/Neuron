@@ -29,3 +29,48 @@
 2gb-base w04_cancelled_spelling: not solved | attempts 3 | 95.4s | peak 1441 MB
 2gb-base w05_search_case: not solved | attempts 3 | 141.0s | peak 1447 MB
 -- machine restarted again about 20:40 (the session had gone idle) after 2gb-base w05; resumed at 21:46; the interrupted task reruns from a clean copy --
+2gb-base: solved 5/23; mean score 0.24
+2gb-base w06_lunch_slots: not solved | attempts 3 | 71.2s | peak 1442 MB
+2gb-base w07_cancelled_blocks: not solved | attempts 3 | 181.7s | peak 1443 MB
+2gb-base w08_reminder_day: not solved | attempts 3 | 125.6s | peak 1446 MB
+2gb-base w09_insurance_share: not solved | attempts 3 | 209.6s | peak 1447 MB
+2gb-base w10_child_age: not solved | attempts 3 | 104.6s | peak 1443 MB
+2gb-base: solved 0/10; mean score 0.00
+2gb-full h01_readings: SOLVED | attempts 1 | 13.5s | peak 1423 MB
+2gb-full h02_truncate: not solved | attempts 3 | 45.0s | peak 1449 MB
+2gb-full h03_rpn: not solved | attempts 3 | 38.4s | peak 1452 MB
+2gb-full h04_roman: not solved | attempts 3 | 52.4s | peak 1466 MB
+2gb-full h05_priority: not solved | attempts 3 | 41.2s | peak 1462 MB
+2gb-full h06_wrap: not solved | attempts 3 | 38.8s | peak 1466 MB
+2gb-full h07_warehouse: SOLVED | attempts 1 | 11.7s | peak 1464 MB
+2gb-full h08_paging: SOLVED | attempts 2 | 24.1s | peak 1466 MB
+2gb-full h09_grades: not solved | attempts 3 | 36.3s | peak 1466 MB
+2gb-full h10_clock: not solved | attempts 3 | 43.3s | peak 1462 MB
+2gb-full h11_flatten: SOLVED | attempts 3 | 41.8s | peak 1466 MB
+2gb-full h12_dedupe: SOLVED | attempts 1 | 11.0s | peak 1465 MB
+2gb-full h13_caesar: not solved | attempts 3 | 26.1s | peak 1458 MB
+2gb-full h14_calendar: not solved | attempts 3 | 32.5s | peak 1461 MB
+2gb-full h15_settings: not solved | attempts 3 | 43.5s | peak 1467 MB
+2gb-full h16_bill: not solved | attempts 3 | 50.4s | peak 1459 MB
+2gb-full h17_chain: SOLVED | attempts 2 | 33.1s | peak 1467 MB
+2gb-full h18_tokens: not solved | attempts 3 | 31.6s | peak 1460 MB
+2gb-full h19_buckets: not solved | attempts 3 | 46.5s | peak 1466 MB
+2gb-full h20_access: SOLVED | attempts 1 | 12.7s | peak 1467 MB
+2gb-full b1_bakery_landing: SOLVED | 13/13 checks | 42.9s | peak 1490 MB
+2gb-full b2_shop_app: SOLVED | 19/19 checks | 74.1s | peak 1510 MB
+2gb-full b3_shop_app_resumed: SOLVED | 19/19 checks | 85.5s | peak 1492 MB
+2gb-full: solved 10/23; mean score 0.43
+2gb-full w01_vat_rounding: SOLVED | attempts 1 | 12.0s | peak 1432 MB
+2gb-full w02_order_rollback: not solved | attempts 3 | 46.8s | peak 1463 MB
+2gb-full w03_due_date_weekend: SOLVED | attempts 3 | 35.8s | peak 1469 MB
+2gb-full w04_cancelled_spelling: not solved | attempts 3 | 46.5s | peak 1470 MB
+2gb-full w05_search_case: SOLVED | attempts 2 | 22.3s | peak 1461 MB
+2gb-full w06_lunch_slots: not solved | attempts 3 | 72.0s | peak 1462 MB
+2gb-full w07_cancelled_blocks: not solved | attempts 3 | 84.6s | peak 1467 MB
+2gb-full w08_reminder_day: not solved | attempts 3 | 64.8s | peak 1470 MB
+2gb-full w09_insurance_share: not solved | attempts 3 | 63.5s | peak 1471 MB
+2gb-full w10_child_age: not solved | attempts 3 | 61.1s | peak 1471 MB
+2gb-full: solved 3/10; mean score 0.30
+4gb-base h01_readings: SOLVED | attempts 1 | 123.7s | peak 3807 MB
+4gb-base h02_truncate: SOLVED | attempts 1 | 30.7s | peak 3858 MB
+4gb-base h03_rpn: SOLVED | attempts 1 | 38.3s | peak 3860 MB

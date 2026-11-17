@@ -1,0 +1,74 @@
+{
+ "rows": [
+  {
+   "task": "h01_readings",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 25.5,
+    "tokens": 139
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 123.7,
+   "peak_mb": 3807
+  },
+  {
+   "task": "h02_truncate",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 30.5,
+    "tokens": 167
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 30.7,
+   "peak_mb": 3858
+  },
+  {
+   "task": "h03_rpn",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 38.1,
+    "tokens": 212
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 38.3,
+   "peak_mb": 3860
+  }
+ ],
+ "set": "heldout",
+ "tier": "4gb",
+ "tier_limit_mb": 4096,
+ "condition": "base",
+ "models": {
+  "planner": "qwen3.5-4b-q4",
+  "reviewer": "qwen3.5-4b-q4",
+  "builder": "qwen3.5-4b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-17 22:20:46",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}
