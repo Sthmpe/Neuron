@@ -100,3 +100,11 @@ Built so far (all in new folders so the running step-3 benchmark is not affected
 
 Next for design: after step-3 held-out scoring -> swap kit, run the 20-request proof (2 GB tier model),
 commit screenshots, rerun held-out builds with the design system, README section.
+
+## Planned after step-3 held-out scoring (so it does not change what is being measured)
+
+- Swap to the design kit by default (see design track).
+- "Full app no matter the model": when the builder model fails a build task 3 times, generate that file
+  from the spec with deterministic templates (the reference builder, promoted from tests into the
+  system). Report in every result how many files the model wrote and how many came from templates.
+- Workspace benchmark (10 whole-codebase bug tasks) is part of the held-out queue.

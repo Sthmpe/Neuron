@@ -133,6 +133,11 @@ class StylesheetAndCopyTests(unittest.TestCase):
         self.assertEqual(kcopy.clean("Open 7am–7pm"), "Open 7am–7pm")        # a range keeps its en dash
         self.assertEqual(kcopy.clean("Unlock seamless banking"), "Get simple banking")
 
+    def test_catalogue_fits_a_small_context_window(self):
+        text = (Path(__file__).resolve().parents[1] / "neuron" / "kit_next" / "CATALOGUE.md").read_text()
+        self.assertLess(len(text.split()), 400)          # roughly 600 tokens
+        self.assertFalse(kcopy.has_dash(text))
+
     def test_fonts_and_icons_are_bundled(self):
         root = Path(__file__).resolve().parents[1] / "neuron" / "kit_next" / "static"
         for f in engine.FONTS:
