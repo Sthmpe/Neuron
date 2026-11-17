@@ -129,6 +129,10 @@ class BoostedRunner:
     def loaded(self):
         return self.local.loaded
 
+    @property
+    def loads(self):
+        return getattr(self.local, "loads", 0)
+
     def model_for(self, role):
         local = self.local.model_for(role)
         return f"{local} (online boost: {self.boost.cfg['model']} when reachable)" if self.boost.wants(role) else local

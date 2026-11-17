@@ -16,7 +16,10 @@ class BuildWebApp(Capability):
         r = build_full(job.workspace / "app", job.state.goal()["request"], job.runner, Sandbox(timeout=60, mem_mb=256),
                        log=lambda m: job.log("    " + m), design=job.design)
         tasks = r.get("tasks", {})
-        made = "model" if not r.get("templates") else "model+template"
+        llm = r.get("llm") or {}
+        job.count(llm.get("calls", 0), llm.get("tokens", 0), llm.get("seconds", 0.0))   # the builder calls the model itself
+        m, t = (r.get("made_by") or {}).get("model", 0), (r.get("made_by") or {}).get("template", 0)
+        made = "template" if t and not m else f"model ({m} files) + template ({t} files)" if t else "model"
         return Outcome(bool(r.get("ok")), f"app {'passes' if r.get('ok') else 'fails'} its acceptance checks; tasks {tasks}",
                        {"builder": r}, ["app/"], made_by=made)
 

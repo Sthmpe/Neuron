@@ -24,6 +24,7 @@ def main(argv=None):
     ap.add_argument("--model", help="use this installed model for every role")
     ap.add_argument("--max-seconds", type=float)
     ap.add_argument("--capabilities", action="store_true")
+    ap.add_argument("--report", help="also write the final report to this JSON file")
     a = ap.parse_args(argv)
     reg = default_registry()
     if a.capabilities:
@@ -46,6 +47,8 @@ def main(argv=None):
     finally:
         runner.unload()
     print(json.dumps(rep, indent=1))
+    if a.report:
+        Path(a.report).write_text(json.dumps(rep, indent=1))
     return 0 if rep["verdict"] == "VERIFIED" else 1
 
 

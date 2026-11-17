@@ -46,15 +46,35 @@ class Job:
         self.registry = registry or default_registry()
         self.design = design
         self.calls, self.model_seconds, self.tokens, self.online_calls = 0, 0.0, 0, 0
+        self.usage_file = Path(workspace) / ".neuron" / "job" / "usage.json"     # totals over every session of this job
+        try:
+            self.prior = json.loads(self.usage_file.read_text())
+        except (OSError, ValueError):
+            self.prior = {}
 
     # ---- model access (roles share one loaded model unless configured otherwise) -------------------
     def chat(self, role, messages, **kw):
         reply = self.runner.client(role).chat(messages, **kw)
-        self.calls += 1
-        self.online_calls += str(reply.model).startswith("online:")
-        self.model_seconds += reply.seconds
-        self.tokens += reply.completion_tokens
+        self.count(1, reply.completion_tokens, reply.seconds, str(reply.model).startswith("online:"))
         return reply
+
+    def count(self, calls, tokens, seconds, online=0):
+        """Add model use (also used by tools that call the model through their own loop, like the app builder)."""
+        self.calls += calls
+        self.tokens += tokens
+        self.model_seconds += seconds
+        self.online_calls += online
+        try:
+            self.usage_file.parent.mkdir(parents=True, exist_ok=True)
+            self.usage_file.write_text(json.dumps(self.usage_total()))
+        except OSError:
+            pass
+
+    def usage_total(self):
+        p = self.prior
+        return {"model_calls": p.get("model_calls", 0) + self.calls, "tokens": p.get("tokens", 0) + self.tokens,
+                "model_seconds": round(p.get("model_seconds", 0) + self.model_seconds, 1),
+                "online_calls": p.get("online_calls", 0) + self.online_calls, "sessions": p.get("sessions", 0) + 1}
 
     def ask_text(self, role, system, user, max_tokens=800, temperature=0.2):
         try:
@@ -239,6 +259,7 @@ class Agent:
         rep = {"verdict": verdict, "kind": self.s.goal().get("kind"), "tasks": {t["id"]: t["status"] for t in plan},
                "failed": {t["id"]: t.get("summary", "") for t in failed}, "files": files, "made_by": made,
                "model_calls": self.job.calls, "online_calls": self.job.online_calls, "model_seconds": round(self.job.model_seconds, 1), "tokens": self.job.tokens,
+               "usage_all_sessions": self.job.usage_total(),
                "seconds": round(seconds, 1), "pending": [t["id"] for t in plan if t["status"] in ("pending", "waiting_approval")],
                "waiting_approval": [t["id"] for t in plan if t["status"] == "waiting_approval"]}
         self.s.set_progress(state="finished" if not rep["pending"] else "paused", verdict=verdict)
