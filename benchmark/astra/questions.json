@@ -1,0 +1,10 @@
+[
+  {"id": "element", "question": "Which element has the chemical symbol Sn? Give its name in one short sentence.", "expected": "tin", "kind": "unsourced fact"},
+  {"id": "grouping", "question": "What is (34 - 9) * 7?", "expected": "175", "kind": "arithmetic"},
+  {"id": "train", "question": "Which train did I take yesterday? I have supplied no itinerary.", "expected": "insufficient information", "kind": "missing input"},
+  {"id": "decimal", "question": "What is 0.08 + 0.165?", "expected": "0.245", "kind": "arithmetic"},
+  {"id": "numeral", "question": "What is 42 in Roman numerals?", "expected": "XLII", "kind": "unsourced fact"},
+  {"id": "negative", "question": "What is -16 + 3 * 4?", "expected": "-4", "kind": "arithmetic"},
+  {"id": "meter", "question": "What is my meter reading after adding 17 + 4 to its previous reading? I have not supplied the previous reading.", "expected": "insufficient information", "kind": "missing input"},
+  {"id": "quotient", "question": "What is (19 + 4) / 6? Give the exact fraction.", "expected": "23/6", "kind": "arithmetic"}
+]
