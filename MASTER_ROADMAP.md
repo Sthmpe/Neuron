@@ -18,12 +18,12 @@ Status words: **done** (built and measured), **built** (built, tested with scrip
 
 | | |
 |---|---|
-| Status | Linux **built**; Windows (WSL2) **planned, step 2**; macOS **later** |
-| Evidence | `scripts/install.sh` + `neuron/install.py` ran end to end on Ubuntu 24.04 in a cloud container (2 GB tier, 2026-11-17): packages, private Python libraries, checksum, model self-test (answered 42), sandbox self-test. Resumable download and wrong-checksum refusal are unit-tested (`tests/test_install.py`). Frozen model list: `model_manifests/frozen.json` |
-| Unverified | A clean machine install with the real frozen list and a real download; any home PC; Windows; macOS |
+| Status | Linux **done in the cloud machine**; Windows (WSL2) **built, unverified**; macOS **later** |
+| Evidence | Clean-setup retest 2026-11-18: fresh code copy, empty home, llama.cpp built from source, real 4.64 GB download, checksum, self-tests; 4 of 4 real tasks after fixes (`benchmark/results/release_retest_run2.json`). Windows: `scripts/install-windows.ps1`, rules unit-tested in `windows_plan()` |
+| Unverified | Any home PC; stock Ubuntu desktop (cgroup v2 memory limits via systemd and the AppArmor offer were not exercised here); Windows (never run); macOS |
 | Acceptance | From a fresh Ubuntu machine: one command installs, picks the right tier, verifies the model, self-tests, starts; a phone pairs and completes a real task offline. Windows: the owner reports the same via WSL2 |
 | Depends on | W4 (frozen models) |
-| Next | Clean-setup retest on real tasks; Windows installer via WSL2 with an owner test in `TESTING.md` |
+| Next | Owner tests: Windows (TESTING.md 1b) and a home Linux PC |
 
 ## W2. Phone interface
 

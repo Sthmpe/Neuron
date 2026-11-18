@@ -215,7 +215,7 @@ class JobManager:
         out = []
         for p in sorted(ws.rglob("*")):
             rel = p.relative_to(ws)
-            if p.is_file() and rel.parts[0] not in (".neuron", "inputs") and "kit" not in rel.parts and "__pycache__" not in rel.parts \
+            if p.is_file() and rel.parts[0] != "inputs" and ".neuron" not in rel.parts and "kit" not in rel.parts and "__pycache__" not in rel.parts \
                     and not rel.name.startswith("data.db") and p.stat().st_size < 50 * 1024 * 1024:
                 out.append({"path": str(rel), "bytes": p.stat().st_size})
         return out[:200]

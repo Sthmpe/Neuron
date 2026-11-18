@@ -83,6 +83,12 @@ Then, in order: full suite, merge, fast-forward main; design proof (20 requests)
 
 ## Events
 
+- 2026-11-18: step 1 MASTER_ROADMAP.md. Step 2: clean-setup Linux retest (real build, download, self-test, real tasks
+  through the phone API): run 1 2/4 with three bugs found and fixed, run 2 4/4; phone page polish (plain summaries,
+  app.zip). Windows installer via WSL2 written, unverified (no Windows; PowerShell download not permitted here).
+  Sandbox memory limits for cgroup v2 via systemd scopes and an AppArmor offer for stock Ubuntu: written, not
+  exercisable on this cgroup-v1 root machine.
+
 - 2026-11-18 morning: labelled rerun of the held-out builds with the current system found a regression (invented
   rules rejected 2 GB plans, 0/19); fixed (invalid rules and links are dropped and recorded); rerun: 9 of 9 builds
   pass on all tiers, all pages model-written, 0 design failures.

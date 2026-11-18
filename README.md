@@ -25,7 +25,9 @@ machines.
 
 ## Try it
 
-Linux only for now (tested: Ubuntu 24.04). Windows and Mac are not supported until they have been tested.
+Linux: tested on Ubuntu 24.04 (cloud machine, clean setup, real download and real tasks: see below).
+Windows 10/11: installer through WSL2 written (`scripts/install-windows.ps1`), **not yet run on Windows**; the owner's
+test is in `TESTING.md` section 1b. Mac: not supported yet.
 
 ```
 git clone https://github.com/Sthmpe/Neuron.git && cd Neuron
@@ -66,6 +68,16 @@ granite-4.1-8b's 10th task overlapped my installer test, so its time is inflated
 The dev set was also used for tuning, so these scores are optimistic. The held-out scores below are the real test.
 
 ## Results
+
+### Release retest from a clean setup (2026-11-18)
+
+Fresh copy of the code, empty NEURON home, llama.cpp built from source, the real 4.64 GB model download for the tier
+the installer picked (8 GB on this 16 GB machine), checksum matched, model self-test 5.6 tokens/s, sandbox passed.
+Then four new real tasks through the phone API (`benchmark/release/retest.py`): run 1 solved 2 of 4 and found three
+bugs (a llama.cpp build break from changed UI downloads, a Word letter routed to code fixing because it said "fix",
+an app without a dashboard opening on "Not found"); after the fixes, run 2 (labelled rerun) solved **4 of 4**:
+Excel with formulas plus a follow-up, a Word letter, an answer, and a bookshop app with a stock rule.
+Screenshots of the real install: `docs/screens/release/`.
 
 ### Phase 5: locked evaluation (2026-11-18)
 

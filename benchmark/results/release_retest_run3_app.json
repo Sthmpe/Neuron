@@ -1,0 +1,64 @@
+{
+ "started": "2026-11-18 11:02:51",
+ "paired": true,
+ "rows": [
+  {
+   "task": "app",
+   "status": "done",
+   "seconds": 310,
+   "outputs": [
+    "app/.neuron/acceptance.json",
+    "app/.neuron/decisions.jsonl",
+    "app/.neuron/design.json",
+    "app/.neuron/journal.jsonl",
+    "app/.neuron/map.json",
+    "app/.neuron/spec.json",
+    "app/.neuron/tasks.json",
+    "app/.neuron/test_results.jsonl",
+    "app/app.py",
+    "app/pages/__init__.py",
+    "app/pages/books.py",
+    "app/pages/sales.py"
+   ],
+   "report": {
+    "verdict": "VERIFIED",
+    "model_calls": 3,
+    "not_done": {},
+    "made_by": {
+     "model (2 files) + code (1 file)": 1
+    }
+   },
+   "checks": [
+    {
+     "id": "preview_opens_login",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "solved": true
+  }
+ ],
+ "status": {
+  "memory": {
+   "total_mb": 16087,
+   "available_mb": 3913
+  },
+  "load": {
+   "load_1min": 1.02,
+   "cpus": 4
+  },
+  "online": false,
+  "uptime_s": 6,
+  "models": {
+   "tier": "8gb",
+   "builder": "gemma-4-e4b-q4",
+   "online_boost": {
+    "on": false,
+    "why": "not turned on"
+   }
+  },
+  "loaded_model": null,
+  "current_job": null,
+  "queue": []
+ }
+}
