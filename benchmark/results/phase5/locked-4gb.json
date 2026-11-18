@@ -1,0 +1,179 @@
+{
+ "rows": [
+  {
+   "task": "L01_pdf_research",
+   "kind": "pdf_qa",
+   "solved": false,
+   "checks_passed": 15,
+   "checks_total": 16,
+   "failed_checks": [
+    "q7_answer_correct: Students with a valid card pay half the adult single fare. (greenline bus policy 2026, page 2)"
+   ],
+   "seconds": 120.0,
+   "peak_mb": 3824,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 120.0
+    }
+   ],
+   "model_calls": 8,
+   "tokens": 550,
+   "model_seconds": 112.9,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": true
+  },
+  {
+   "task": "L02_excel_summary",
+   "kind": "excel",
+   "solved": true,
+   "checks_passed": 14,
+   "checks_total": 14,
+   "failed_checks": [],
+   "seconds": 45.0,
+   "peak_mb": 3932,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 45.0
+    }
+   ],
+   "model_calls": 1,
+   "tokens": 219,
+   "model_seconds": 37.4,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1,
+    "template": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "L03_word_proposal",
+   "kind": "word",
+   "solved": true,
+   "checks_passed": 5,
+   "checks_total": 5,
+   "failed_checks": [],
+   "seconds": 465.1,
+   "peak_mb": 3911,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 465.1
+    }
+   ],
+   "model_calls": 11,
+   "tokens": 2948,
+   "model_seconds": 458.4,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1,
+    "model+template": 1,
+    "deterministic": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "L04_pptx_pitch",
+   "kind": "pptx",
+   "solved": true,
+   "checks_passed": 9,
+   "checks_total": 9,
+   "failed_checks": [],
+   "seconds": 82.0,
+   "peak_mb": 3876,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 82.0
+    }
+   ],
+   "model_calls": 1,
+   "tokens": 486,
+   "model_seconds": 73.3,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1,
+    "template": 1,
+    "deterministic": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "L05_cpp_budget_cli",
+   "kind": "cpp_build",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "builds_with_make: tialized.h:90:56: error: static assertion failed: result type must be constructible from input type\n   90 |       static_assert(is_constructible<_ValueType, _Tp"
+   ],
+   "seconds": 1890.3,
+   "peak_mb": 3974,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 1890.3
+    }
+   ],
+   "model_calls": 10,
+   "tokens": 11595,
+   "model_seconds": 1879.7,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1
+   },
+   "agent_verdict": "PARTIAL",
+   "false_claim": false
+  }
+ ],
+ "set": "locked",
+ "tier": "4gb",
+ "tier_limit_mb": 4096,
+ "network": "new empty network namespace (loopback only)",
+ "model": {
+  "planner": "qwen3.5-4b-q4",
+  "reviewer": "qwen3.5-4b-q4",
+  "builder": "qwen3.5-4b-q4"
+ },
+ "bug_request": "The tests of this project fail. Find the bug in the source code and fix it so the tests pass. Do not change the tests.",
+ "started": "2026-11-18 04:16:36",
+ "code_commit": "ee749502a6b2362d0533446dc52ca4a6dd1abb52",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

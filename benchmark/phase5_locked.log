@@ -1,0 +1,5 @@
+locked-4gb L01_pdf_research: not solved | 15/16 checks | 120.0s | peak 3824 MB | calls 8 | agent says VERIFIED
+locked-4gb L02_excel_summary: SOLVED | 14/14 checks | 45.0s | peak 3932 MB | calls 1 | agent says VERIFIED
+locked-4gb L03_word_proposal: SOLVED | 5/5 checks | 465.1s | peak 3911 MB | calls 11 | agent says VERIFIED
+locked-4gb L04_pptx_pitch: SOLVED | 9/9 checks | 82.0s | peak 3876 MB | calls 1 | agent says VERIFIED
+locked-4gb L05_cpp_budget_cli: not solved | 0/1 checks | 1890.3s | peak 3974 MB | calls 10 | agent says PARTIAL
