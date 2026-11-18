@@ -1,0 +1,237 @@
+{
+ "rows": [
+  {
+   "task": "D01_pdf_library",
+   "kind": "pdf_qa",
+   "solved": true,
+   "checks_passed": 4,
+   "checks_total": 4,
+   "failed_checks": [],
+   "seconds": 119.0,
+   "peak_mb": 3778,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 119.0
+    }
+   ],
+   "model_calls": 2,
+   "tokens": 109,
+   "model_seconds": 20.4,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "D02_excel_expenses",
+   "kind": "excel",
+   "solved": true,
+   "checks_passed": 6,
+   "checks_total": 6,
+   "failed_checks": [],
+   "seconds": 27.0,
+   "peak_mb": 3918,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 27.0
+    }
+   ],
+   "model_calls": 1,
+   "tokens": 106,
+   "model_seconds": 19.9,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1,
+    "template": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "D03_word_memo",
+   "kind": "word",
+   "solved": true,
+   "checks_passed": 4,
+   "checks_total": 4,
+   "failed_checks": [],
+   "seconds": 156.0,
+   "peak_mb": 3805,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 156.0
+    }
+   ],
+   "model_calls": 7,
+   "tokens": 964,
+   "model_seconds": 149.8,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1,
+    "model+template": 1,
+    "deterministic": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "D04_pptx_short",
+   "kind": "pptx",
+   "solved": true,
+   "checks_passed": 8,
+   "checks_total": 8,
+   "failed_checks": [],
+   "seconds": 35.0,
+   "peak_mb": 3940,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 35.0
+    }
+   ],
+   "model_calls": 1,
+   "tokens": 160,
+   "model_seconds": 26.4,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1,
+    "template": 1,
+    "deterministic": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "D05_cpp_wordcount",
+   "kind": "cpp_build",
+   "solved": true,
+   "checks_passed": 4,
+   "checks_total": 4,
+   "failed_checks": [],
+   "seconds": 631.1,
+   "peak_mb": 4007,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 631.1
+    }
+   ],
+   "model_calls": 10,
+   "tokens": 3935,
+   "model_seconds": 620.0,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1
+   },
+   "agent_verdict": "PARTIAL",
+   "false_claim": false
+  },
+  {
+   "task": "D06_app_classes",
+   "kind": "web_app",
+   "solved": false,
+   "checks_passed": 18,
+   "checks_total": 19,
+   "failed_checks": [
+    "works_on_a_phone: sideways scrolling on: students"
+   ],
+   "seconds": 193.1,
+   "peak_mb": 4064,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 193.1
+    }
+   ],
+   "model_calls": 4,
+   "tokens": 850,
+   "model_seconds": 174.6,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": true
+  },
+  {
+   "task": "D07_long_docstrings",
+   "kind": "long_task",
+   "solved": true,
+   "checks_passed": 4,
+   "checks_total": 4,
+   "failed_checks": [],
+   "seconds": 96.0,
+   "peak_mb": 3787,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 96.0
+    }
+   ],
+   "model_calls": 12,
+   "tokens": 485,
+   "model_seconds": 89.6,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  }
+ ],
+ "set": "dev",
+ "tier": "4gb",
+ "tier_limit_mb": 4096,
+ "network": "new empty network namespace (loopback only)",
+ "model": {
+  "planner": "qwen3.5-4b-q4",
+  "reviewer": "qwen3.5-4b-q4",
+  "builder": "qwen3.5-4b-q4"
+ },
+ "bug_request": "The tests of this project fail. Find the bug in the source code and fix it so the tests pass. Do not change the tests.",
+ "started": "2026-11-18 03:37:45",
+ "tier_limit_hits": 0,
+ "oom_kills": 1
+}

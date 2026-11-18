@@ -1,0 +1,8 @@
+dev-4gb-try1 D01_pdf_library: SOLVED | 4/4 checks | 119.0s | peak 3778 MB | calls 2 | agent says VERIFIED
+dev-4gb-try1 D02_excel_expenses: SOLVED | 6/6 checks | 27.0s | peak 3918 MB | calls 1 | agent says VERIFIED
+dev-4gb-try1 D03_word_memo: SOLVED | 4/4 checks | 156.0s | peak 3805 MB | calls 7 | agent says VERIFIED
+dev-4gb-try1 D04_pptx_short: SOLVED | 8/8 checks | 35.0s | peak 3940 MB | calls 1 | agent says VERIFIED
+dev-4gb-try1 D05_cpp_wordcount: SOLVED | 4/4 checks | 631.1s | peak 4007 MB | calls 10 | agent says PARTIAL
+dev-4gb-try1 D06_app_classes: not solved | 18/19 checks | 193.1s | peak 4064 MB | calls 4 | agent says VERIFIED
+dev-4gb-try1 D07_long_docstrings: SOLVED | 4/4 checks | 96.0s | peak 3787 MB | calls 12 | agent says VERIFIED
+PHASE5-DONE dev-4gb-try1
