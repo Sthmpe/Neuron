@@ -12,3 +12,4 @@
 11:43 downloaded the 37 MB embedding model during the 2 GB scorecard run
 11:44 memory module test with the embedding model (~20 s)
 11:48 full test suite during the 2 GB scorecard run (~100 s)
+11:55 eval2 examiner validation (LibreOffice, builds, browser) during the memory-effect run

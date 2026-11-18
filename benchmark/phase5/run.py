@@ -29,7 +29,10 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
-from benchmark.phase5.examine import examine                 # noqa: E402
+import importlib                                              # noqa: E402
+
+SUITE = HERE                                                  # benchmark/phase5 or benchmark/eval2 (set in main)
+examine = None
 from benchmark.run_benchmark import cut_network               # noqa: E402
 from neuron.brain.tiers import Tier                           # noqa: E402
 
@@ -42,10 +45,10 @@ BUG_REQUEST = ("The tests of this project fail. Find the bug in the source code 
 
 def load_tasks(which):
     if which == "locked":
-        r = subprocess.run([sys.executable, str(HERE / "verify_lock.py")], capture_output=True, text=True)
+        r = subprocess.run([sys.executable, str(SUITE / "verify_lock.py")], capture_output=True, text=True)
         if r.returncode != 0:
             sys.exit("REFUSED: the locked tasks or examiners changed since they were locked:\n" + r.stdout + r.stderr)
-    return json.loads((HERE / which / "tasks.json").read_text()), HERE / which
+    return json.loads((SUITE / which / "tasks.json").read_text()), SUITE / which
 
 
 def goal_of(task, base):
@@ -62,12 +65,12 @@ def goal_of(task, base):
 def prepare(task, base, job):
     shutil.rmtree(job, ignore_errors=True)
     job.mkdir(parents=True)
-    attach = [str(HERE / rel) for rel in task.get("inputs", [])]
+    attach = [str(SUITE / rel) for rel in task.get("inputs", [])]
     if task["kind"] == "workspace_bug":
-        src = HERE / "workspace_tasks" / f"{task['workspace']}_bug{task['bug']}"
+        src = SUITE / "workspace_tasks" / (f"{task['workspace']}_bug{task['bug']}" if "bug" in task else f"{task['workspace']}_bug")
         shutil.copytree(src, job, dirs_exist_ok=True)
     elif task.get("workspace"):
-        shutil.copytree((HERE / task["workspace"]).resolve(), job, dirs_exist_ok=True,
+        shutil.copytree((SUITE / task["workspace"]).resolve(), job, dirs_exist_ok=True,
                         ignore=shutil.ignore_patterns("__pycache__", ".neuron"))
     return attach
 
@@ -148,6 +151,7 @@ def examine_task(task, base, job, shots):
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
+    ap.add_argument("--suite", default="phase5", choices=["phase5", "eval2"])
     ap.add_argument("--set", required=True, choices=["dev", "locked"])
     ap.add_argument("--tier", required=True, choices=["2gb", "4gb", "8gb"])
     ap.add_argument("--only")
@@ -155,8 +159,11 @@ def main(argv=None):
     ap.add_argument("--examine-existing", help="record a row for this task from the folder the agent already delivered, "
                     "without running the agent again (used after an examiner crash)")
     a = ap.parse_args(argv)
+    global SUITE, examine
+    SUITE = HERE.parent / a.suite
+    examine = importlib.import_module(f"benchmark.{a.suite}.examine").examine
     tasks, base = load_tasks(a.set)
-    label = f"{a.set}-{a.tier}" + (f"-{a.tag}" if a.tag else "")
+    label = ("" if a.suite == "phase5" else f"{a.suite}-") + f"{a.set}-{a.tier}" + (f"-{a.tag}" if a.tag else "")
     out_file = ROOT / "benchmark" / "results" / "phase5" / f"{label}.json"
     out_file.parent.mkdir(parents=True, exist_ok=True)
     results = json.loads(out_file.read_text()) if out_file.exists() else {"rows": []}

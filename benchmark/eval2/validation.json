@@ -1,0 +1,156 @@
+{
+ "E01_pdf_market correct answers": {
+  "as_expected": true,
+  "score": "12/12",
+  "failed": []
+ },
+ "E01_pdf_market wrong pages": {
+  "as_expected": true,
+  "score": "6/12",
+  "failed": [
+   "q1_cites_right_page",
+   "q2_cites_right_page",
+   "q3_cites_right_page",
+   "q4_cites_right_page",
+   "q5_cites_right_page",
+   "q6_cites_right_page"
+  ]
+ },
+ "E02_excel_clinic reference workbook": {
+  "as_expected": true,
+  "score": "10/10",
+  "failed": []
+ },
+ "E02_excel_clinic nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "file_exists"
+  ]
+ },
+ "E03_word_notice reference document": {
+  "as_expected": true,
+  "score": "5/5",
+  "failed": []
+ },
+ "E03_word_notice nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "file_exists"
+  ]
+ },
+ "E04_pptx_training reference deck": {
+  "as_expected": true,
+  "score": "9/9",
+  "failed": []
+ },
+ "E04_pptx_training nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "file_exists"
+  ]
+ },
+ "E05_python_bug reference fix": {
+  "as_expected": true,
+  "score": "1/1",
+  "failed": []
+ },
+ "E05_python_bug bug as shipped": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "original_tests_pass"
+  ]
+ },
+ "E06_js_bug reference fix": {
+  "as_expected": true,
+  "score": "1/1",
+  "failed": []
+ },
+ "E06_js_bug bug as shipped": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "original_tests_pass"
+  ]
+ },
+ "E07_go_bug reference fix": {
+  "as_expected": true,
+  "score": "1/1",
+  "failed": []
+ },
+ "E07_go_bug bug as shipped": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "original_tests_pass"
+  ]
+ },
+ "E08_rust_bug reference fix": {
+  "as_expected": true,
+  "score": "1/1",
+  "failed": []
+ },
+ "E08_rust_bug bug as shipped": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "original_tests_pass"
+  ]
+ },
+ "E09_cpp_csvsum reference program": {
+  "as_expected": true,
+  "score": "5/5",
+  "failed": []
+ },
+ "E09_cpp_csvsum nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "builds_with_make"
+  ]
+ },
+ "E10_repair_app reference app": {
+  "as_expected": true,
+  "score": "11/11",
+  "failed": []
+ },
+ "E10_repair_app nothing delivered": {
+  "as_expected": true,
+  "score": "0/11",
+  "failed": [
+   "login_required",
+   "wrong_password_rejected",
+   "login_works",
+   "add_customers",
+   "add_repairs",
+   "repairs_list_shows_totals"
+  ]
+ },
+ "E11_long_docstrings reference docstrings": {
+  "as_expected": true,
+  "score": "4/4",
+  "failed": []
+ },
+ "E11_long_docstrings no docstrings added": {
+  "as_expected": true,
+  "score": "3/4",
+  "failed": [
+   "every_function_documented"
+  ]
+ },
+ "E12_computed_answer right number": {
+  "as_expected": true,
+  "score": "2/2",
+  "failed": []
+ },
+ "E12_computed_answer VAT forgotten": {
+  "as_expected": true,
+  "score": "1/2",
+  "failed": [
+   "number_correct"
+  ]
+ }
+}

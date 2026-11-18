@@ -1,0 +1,130 @@
+[
+ {
+  "id": "E01_pdf_market",
+  "kind": "pdf_qa",
+  "inputs": [
+   "sources/harbour_market_report_2026.pdf"
+  ],
+  "request": "Answer from the attached report, with the page number for each answer.",
+  "questions": [
+   {
+    "q": "How many stalls did Harbour Street Market have in 2026?",
+    "expect": [
+     "142"
+    ],
+    "doc": "harbour_market_report_2026",
+    "page": 1
+   },
+   {
+    "q": "What is the daily stall fee for a food stall?",
+    "expect": [
+     "2500"
+    ],
+    "doc": "harbour_market_report_2026",
+    "page": 2
+   },
+   {
+    "q": "How many visitors come on an average Saturday?",
+    "expect": [
+     "6400"
+    ],
+    "doc": "harbour_market_report_2026",
+    "page": 2
+   },
+   {
+    "q": "On which day of the week is the market closed?",
+    "expect": [
+     "monday"
+    ],
+    "doc": "harbour_market_report_2026",
+    "page": 1
+   },
+   {
+    "q": "What capacity will the new cold room have?",
+    "expect": [
+     "12tonnes"
+    ],
+    "doc": "harbour_market_report_2026",
+    "page": 3
+   },
+   {
+    "q": "How many complaints did the market receive in 2025?",
+    "expect": [
+     "37"
+    ],
+    "doc": "harbour_market_report_2026",
+    "page": 3
+   }
+  ]
+ },
+ {
+  "id": "E02_excel_clinic",
+  "kind": "excel",
+  "inputs": [
+   "sources/clinic_visits_2026.csv"
+  ],
+  "request": "Make clinic_summary.xlsx: put the rows on a sheet named Data; on a sheet named Summary show, for each department, the total visits and the total fees (visits times fee per visit), and a Total row. Use formulas."
+ },
+ {
+  "id": "E03_word_notice",
+  "kind": "word",
+  "inputs": [],
+  "request": "Write tenancy_notice.docx: a notice from Harbourview Apartments to its tenants about the 2027 rent review, with the headings Purpose, Details and Next steps, 200 to 400 words, and a table with the columns Item and Amount (NGN) with the rows Rent 450000, Service charge 60000 and Caution deposit 100000, followed by a Total row."
+ },
+ {
+  "id": "E04_pptx_training",
+  "kind": "pptx",
+  "inputs": [],
+  "request": "Make food_safety.pptx: a 5-slide training deck for kitchen staff at Mama Put Kitchens: a title slide, then handwashing, safe cooking temperatures (cook chicken to 75 degrees Celsius), storage, and cleaning. At most 5 bullets per slide."
+ },
+ {
+  "id": "E05_python_bug",
+  "kind": "workspace_bug",
+  "lang": "python",
+  "workspace": "pantry"
+ },
+ {
+  "id": "E06_js_bug",
+  "kind": "workspace_bug",
+  "lang": "javascript",
+  "workspace": "invoice_js"
+ },
+ {
+  "id": "E07_go_bug",
+  "kind": "workspace_bug",
+  "lang": "go",
+  "workspace": "go_shifts"
+ },
+ {
+  "id": "E08_rust_bug",
+  "kind": "workspace_bug",
+  "lang": "rust",
+  "workspace": "rust_temps"
+ },
+ {
+  "id": "E09_cpp_csvsum",
+  "kind": "cpp_build",
+  "inputs": [],
+  "request": "Write a C++17 command-line program called csvsum. It reads the CSV file given as its first argument (the first line is the header) and, for every column whose values are all numbers, prints a line 'name: total' with the total to 2 decimal places, in column order. Put the sources in src/ and write a Makefile that builds ./csvsum."
+ },
+ {
+  "id": "E10_repair_app",
+  "kind": "web_app",
+  "kill_and_resume": true,
+  "request": "Build an app for my phone repair shop, Tunde Fixes, with login (user tunde, password spanner9). Keep customers with their name and phone. Keep repairs with the customer, the device, the parts cost and the labour cost; the repairs list must show each repair's total (parts plus labour). The dashboard shows the number of customers, the number of repairs, and the total billed (all repair totals added together)."
+ },
+ {
+  "id": "E11_long_docstrings",
+  "kind": "long_task",
+  "kill_and_resume": true,
+  "workspace": "workspaces/pantry_docs",
+  "request": "Add a clear docstring to every function and method in this project's source code (not the tests) that does not already have one, explaining what it does, its inputs and what it returns. Do not change any behaviour: every existing test must still pass."
+ },
+ {
+  "id": "E12_computed_answer",
+  "kind": "answer",
+  "inputs": [],
+  "request": "A caterer buys 18 kg of rice at 1,250 naira per kg and 7 litres of oil at 2,900 naira per litre, and pays 7.5% VAT on the whole amount. How much does she pay in total, in naira?",
+  "expect_number": 46010
+ }
+]
