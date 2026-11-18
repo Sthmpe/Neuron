@@ -155,17 +155,18 @@ class Scripted:
         return "scripted"
 
 
-def shop_model(write_pages):
+def shop_model(write_pages, raw=None):
     """Planner gives the corner-shop spec; the builder either writes correct pages or answers uselessly."""
     import json
     import re
     from tests.fakes import ScriptedLLM
-    s, _ = spec_of(RAW)
+    raw = raw or RAW
+    s, _ = spec_of(raw)
     files = templates.reference_files(s)
 
     def reply(messages):
         if messages[0]["content"].startswith("You turn a plain-language request"):
-            return json.dumps(RAW)
+            return json.dumps(raw)
         m = re.search(r"# Your task: (\S+)", messages[-1]["content"])
         if m and write_pages:
             return "```python\n" + files[m.group(1)] + "```"
@@ -178,11 +179,11 @@ class BuildWithRules(unittest.TestCase):
     REQUEST = ("Shop app: products with name, stock and price; sales with the product, quantity and customer. "
                "A sale lowers the product's stock and is refused if there is not enough.")
 
-    def build(self, write_pages, templates_allowed):
+    def build(self, write_pages, templates_allowed, raw=None):
         from neuron.brain.sandbox import Sandbox
         from neuron.builder.build import build_full
         project = Path(tempfile.mkdtemp(prefix="shop-")) / "app"
-        return build_full(project, self.REQUEST, Scripted(shop_model(write_pages)), Sandbox(timeout=60, mem_mb=256),
+        return build_full(project, BuildWithRules.REQUEST, Scripted(shop_model(write_pages, raw)), Sandbox(timeout=60, mem_mb=256),
                           log=lambda *_: None, design=False, templates_allowed=templates_allowed), project
 
     def test_model_written_shop_passes_rule_checks(self):
@@ -258,3 +259,17 @@ class CopyQualityTests(unittest.TestCase):
         self.assertTrue(any("same line" in p for p in problems), problems)
         raw["home"]["sections"][0]["items"][1]["text"] = "Divorce and custody."
         self.assertEqual(normalise(raw)[1], [])
+
+
+@unittest.skipUnless(__import__("neuron.brain.sandbox", fromlist=["Sandbox"]).Sandbox().available(), "needs bubblewrap")
+class SearchByLinkTests(unittest.TestCase):
+    def test_orders_searched_by_their_product_pass_with_the_template(self):
+        """An entity whose search field is the link: the drop-down lists every product, so the search check must not
+        expect the other product's name to vanish."""
+        import copy
+        from neuron.brain.sandbox import Sandbox
+        from neuron.builder.build import build_full
+        raw = copy.deepcopy(RAW)
+        raw["entities"][1]["search_field"] = "product"
+        summary, project = BuildWithRules.build(self, False, True, raw=raw)
+        self.assertTrue(summary["ok"], summary)
