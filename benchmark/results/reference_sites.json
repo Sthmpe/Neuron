@@ -1,0 +1,95 @@
+{
+ "law_firm": {
+  "request": "Build a website for Okafor & Bello Legal Practitioners, a family and property law firm at 12 Adeola Odeku Street, Victoria Island, Lagos. We help with divorce and separation, child custody, wills and estates, and land and tenancy disputes. A first consultation lasts 30 minutes and costs 20,000 naira. Explain how a matter starts: you book a consultation, you bring your documents, and we explain your options and our fees in writing before any work begins. Office hours are Monday to Friday, 9am to 5pm. Add a form to request a consultation with name, phone, email and a short note about the matter, and thank people afterwards.",
+  "tier": "8gb",
+  "code_commit": "423d23e",
+  "built_at": "2026-11-18 17:37",
+  "seconds": 500.9,
+  "agent_verdict": "PARTIAL",
+  "not_done": {
+   "images": [
+    "Wikimedia Commons asked NEURON to slow down; tries again by itself in 10 minutes (1 licensed photo(s) added (hero); still needed: photo1, photo2)"
+   ]
+  },
+  "model_calls": 6,
+  "page_word_problems": [],
+  "pictures": {
+   "hero": "licensed",
+   "photo1": "needed",
+   "photo2": "needed"
+  },
+  "overflow_px": {
+   "phone": 0,
+   "tablet": 0,
+   "desktop": 0
+  },
+  "broken": {},
+  "screenshots": [
+   "docs/screens/reference/law_firm-phone.png",
+   "docs/screens/reference/law_firm-tablet.png",
+   "docs/screens/reference/law_firm-desktop.png"
+  ]
+ },
+ "bakery": {
+  "request": "Make a website for Iya Bisi's Bakery at 24 Adelabu Street, Surulere, Lagos. We bake agege bread, wholemeal loaves, meat pies, chin chin and celebration cakes to order. Prices: agege bread 1,200 naira, wholemeal loaf 2,000 naira, meat pie 800 naira, chin chin 1,500 naira a pack, celebration cakes from 25,000 naira. We are open every day from 6am to 8pm. Cakes need 3 days' notice. Add an order form for cakes with name, phone, the date needed and what to write on the cake, and thank people afterwards.",
+  "tier": "8gb",
+  "code_commit": "423d23e",
+  "built_at": "2026-11-18 17:42",
+  "seconds": 341.7,
+  "agent_verdict": "PARTIAL",
+  "not_done": {
+   "images": [
+    "Wikimedia Commons asked NEURON to slow down; tries again by itself in 10 minutes (0 licensed photo(s) added (none); still needed: hero, photo1, photo2)"
+   ]
+  },
+  "model_calls": 4,
+  "page_word_problems": [],
+  "pictures": {
+   "hero": "needed",
+   "photo1": "needed",
+   "photo2": "needed"
+  },
+  "overflow_px": {
+   "phone": 0,
+   "tablet": 0,
+   "desktop": 0
+  },
+  "broken": {},
+  "screenshots": [
+   "docs/screens/reference/bakery-phone.png",
+   "docs/screens/reference/bakery-tablet.png",
+   "docs/screens/reference/bakery-desktop.png"
+  ]
+ },
+ "salon": {
+  "request": "Create a website for Glow Hair Studio, a women's hair salon at Plot 45 Aminu Kano Crescent, Wuse 2, Abuja. Services and prices: knotless braids from 25,000 naira, silk press 15,000 naira, wash and deep treatment 8,000 naira, children's cornrows 6,000 naira. We are open Tuesday to Saturday, 9am to 7pm, and closed on Sunday and Monday. Clients can bring their own extensions or buy them at the salon. Add a booking form with name, phone, the service wanted and a preferred date, and thank people afterwards.",
+  "tier": "8gb",
+  "code_commit": "423d23e",
+  "built_at": "2026-11-18 17:48",
+  "seconds": 327.2,
+  "agent_verdict": "PARTIAL",
+  "not_done": {
+   "images": [
+    "Wikimedia Commons asked NEURON to slow down; tries again by itself in 10 minutes (0 licensed photo(s) added (none); still needed: hero, photo1, photo2)"
+   ]
+  },
+  "model_calls": 4,
+  "page_word_problems": [],
+  "pictures": {
+   "hero": "needed",
+   "photo1": "needed",
+   "photo2": "needed"
+  },
+  "overflow_px": {
+   "phone": 0,
+   "tablet": 0,
+   "desktop": 0
+  },
+  "broken": {},
+  "screenshots": [
+   "docs/screens/reference/salon-phone.png",
+   "docs/screens/reference/salon-tablet.png",
+   "docs/screens/reference/salon-desktop.png"
+  ]
+ }
+}

@@ -83,6 +83,13 @@ Then, in order: full suite, merge, fast-forward main; design proof (20 requests)
 
 ## Events
 
+- 2026-11-18 evening: step 7 reference sites (law firm, bakery, salon) built by NEURON on the 8 GB model after four
+  rounds of fixes found by real builds (see `docs/REFERENCE_SITES.md`). Words clean, all owner facts present, 0 design
+  failures, no sideways scrolling; photos: 1 of 9 licensed (Wikimedia rate-limits this cloud address; not worked
+  around). Track stopped for the owner's approval. The scorecard was paused by hand during the builds (no overlapping
+  model runs) and resumed. Owner approved thumb.wikimedia.org. Machine restarted once mid-build (salon rebuilt).
+  Step 5 code: one-token repair search for C++/Go (dev set: 4 of 4 one-token bugs fixed without the model).
+
 - 2026-11-18 afternoon: step 6 (offline to online) built: waiting steps resume by themselves with polite backoff,
   crash-safe ledger for outside actions (owner asked before an interrupted action is repeated), pictures (owner
   first, on-brand placeholders offline, licensed Commons photos online with credits), safe package upgrades (isolated

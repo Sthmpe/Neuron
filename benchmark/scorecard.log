@@ -188,3 +188,15 @@ SCORECARD-DONE 2gb neuron {"mmlu_pro": {"n": 28, "correct": 4, "score": 0.143, "
 4gb-alone mmlu_pro-4383: wrong 106.0s
 4gb-alone mmlu_pro-10706: wrong 71.3s
 4gb-alone mmlu_pro-10366: right 87.4s
+4gb-alone mmlu_pro-7346: wrong 141.4s
+4gb-alone mmlu_pro-7036: right 59.0s
+4gb-alone mmlu_pro-11688: wrong 84.5s
+4gb-alone mmlu_pro-12214: wrong 111.2s
+4gb-alone mmlu_pro-6516: wrong 228.2s
+4gb-alone mmlu_pro-6638: right 97.6s
+4gb-alone mmlu_pro-4698: right 122.6s
+4gb-alone mmlu_pro-4779: wrong 21.4s
+[2026-11-18 13:51:23] paused by hand to build the step-7 reference sites without overlapping model runs (finished items kept; the item in progress restarts from scratch on resume)
+[2026-11-18 17:48:38] resumed after the reference-site builds (no model run overlapped)
+SCORECARD-DONE 2gb alone {"mmlu_pro": {"n": 28, "correct": 5, "score": 0.179, "ci95": [0.079, 0.356], "seconds": 314, "tokens": 4803, "calls": 28, "peak_mb": 1583}, "gpqa": {"n": 20, "correct": 2, "score": 0.1, "ci95": [0.028, 0.301], "seconds": 514, "tokens": 5529, "calls": 20, "peak_mb": 1585}, "lcb": {"n": 10, "correct": 0, "score": 0.0, "ci95": [0, 0.278], "seconds": 128, "tokens": 1485, "calls": 10, "peak_mb": 1640}, "bfcl": {"n": 30, "correct": 26, "score": 0.867, "ci95": [0.703, 0.947], "seconds": 146, "tokens": 1513, "calls": 30, "peak_mb": 1635}}
+SCORECARD-DONE 2gb neuron {"mmlu_pro": {"n": 28, "correct": 4, "score": 0.143, "ci95": [0.057, 0.315], "seconds": 427, "tokens": 5012, "calls": 57, "peak_mb": 1597}, "gpqa": {"n": 20, "correct": 2, "score": 0.1, "ci95": [0.028, 0.301], "seconds": 582, "tokens": 7729, "calls": 40, "peak_mb": 1598}, "lcb": {"n": 10, "correct": 0, "score": 0.0, "ci95": [0, 0.278], "seconds": 336, "tokens": 4185, "calls": 28, "peak_mb": 1625}, "bfcl": {"n": 30, "correct": 26, "score": 0.867, "ci95": [0.703, 0.947], "seconds": 215, "tokens": 1513, "calls": 30, "peak_mb": 1620}}
