@@ -151,6 +151,8 @@ def main(argv=None):
     ap.add_argument("--tier", required=True, choices=["2gb", "4gb", "8gb"])
     ap.add_argument("--only")
     ap.add_argument("--tag", default="")
+    ap.add_argument("--examine-existing", help="record a row for this task from the folder the agent already delivered, "
+                    "without running the agent again (used after an examiner crash)")
     a = ap.parse_args(argv)
     tasks, base = load_tasks(a.set)
     label = f"{a.set}-{a.tier}" + (f"-{a.tag}" if a.tag else "")
@@ -176,6 +178,25 @@ def main(argv=None):
             if task["id"] in done or (only and task["id"] not in only):
                 continue
             job = scratch / task["id"]
+            if a.examine_existing:
+                if task["id"] != a.examine_existing:
+                    continue
+                rep = json.loads((job / ".neuron" / "final_report.json").read_text()) if (job / ".neuron" / "final_report.json").exists() else {}
+                exam = examine_task(task, base, job, scratch / f"{task['id']}__shots")
+                usage = rep.get("usage_all_sessions") or {}
+                row = {"task": task["id"], "kind": task["kind"], "solved": exam["total"] > 0 and exam["passed"] == exam["total"],
+                       "checks_passed": exam["passed"], "checks_total": exam["total"],
+                       "failed_checks": [c["id"] + (": " + str(c.get("detail"))[:160] if c.get("detail") else "") for c in exam["checks"] if not c["pass"]],
+                       "seconds": rep.get("seconds"), "peak_mb": None, "sessions": "see the task log", "model_calls": usage.get("model_calls"),
+                       "tokens": usage.get("tokens"), "model_seconds": usage.get("model_seconds"), "online_calls": usage.get("online_calls", 0),
+                       "human_help": {"approvals_asked": len(rep.get("waiting_approval") or []), "manual_steps": 0}, "recovery": None,
+                       "made_by": rep.get("made_by"), "agent_verdict": rep.get("verdict", "no report"),
+                       "false_claim": rep.get("verdict") == "VERIFIED" and not (exam["total"] > 0 and exam["passed"] == exam["total"]),
+                       "note": "examined from the delivered folder after an examiner crash (lock amendment 3); agent not rerun; peak memory not measured"}
+                results["rows"].append(row)
+                out_file.write_text(json.dumps(results, indent=1))
+                print(f"{label} {task['id']}: examined existing delivery: {row['checks_passed']}/{row['checks_total']} | agent says {row['agent_verdict']}", flush=True)
+                continue
             attach = prepare(task, base, job)
             goal = goal_of(task, base)
             total_docs = undocumented(job) if task["kind"] == "long_task" else 0

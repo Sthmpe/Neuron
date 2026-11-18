@@ -18,3 +18,38 @@ PHASE5-DONE locked-4gb-rerun-after-portfix
 locked-4gb-rerun2-after-fixes L11_business_app: not solved | 13/17 checks | 289.1s | peak 4055 MB | calls 2 | agent says VERIFIED
 locked-4gb-rerun2-after-fixes L12_long_docstrings: not solved | 3/4 checks | 181.1s | peak 3748 MB | calls 31 | agent says VERIFIED
 PHASE5-DONE locked-4gb-rerun2-after-fixes
+locked-2gb L01_pdf_research: not solved | 9/16 checks | 149.0s | peak 1479 MB | calls 24 | agent says PARTIAL
+locked-2gb L02_excel_summary: SOLVED | 14/14 checks | 11.0s | peak 1574 MB | calls 1 | agent says VERIFIED
+locked-2gb L03_word_proposal: SOLVED | 5/5 checks | 97.0s | peak 1459 MB | calls 6 | agent says VERIFIED
+locked-2gb L04_pptx_pitch: SOLVED | 9/9 checks | 24.0s | peak 1518 MB | calls 1 | agent says VERIFIED
+locked-2gb L05_cpp_budget_cli: not solved | 0/1 checks | 1448.2s | peak 1565 MB | calls 37 | agent says PARTIAL
+locked-2gb L06_cpp_bug_stock: SOLVED | 1/1 checks | 37.0s | peak 1564 MB | calls 5 | agent says VERIFIED
+locked-2gb L07_cpp_bug_discount: not solved | 0/1 checks | 60.0s | peak 1558 MB | calls 7 | agent says PARTIAL
+locked-2gb L08_cpp_bug_parse: not solved | 0/1 checks | 43.0s | peak 1563 MB | calls 7 | agent says PARTIAL
+locked-2gb L09_go_bug_rate: not solved | 0/1 checks | 75.0s | peak 1774 MB | calls 7 | agent says PARTIAL
+locked-2gb L10_go_bug_round: not solved | 0/1 checks | 63.0s | peak 1759 MB | calls 7 | agent says PARTIAL
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/user/neuron/benchmark/phase5/run.py", line 226, in <module>
+    main()
+    ~~~~^^
+  File "/home/user/neuron/benchmark/phase5/run.py", line 200, in main
+    exam = examine_task(task, base, job, scratch / f"{task['id']}__shots")
+  File "/home/user/neuron/benchmark/phase5/run.py", line 145, in examine_task
+    return examine(task, delivered_folder(task, job), answers=answers_for(job), out_dir=shots)
+  File "/home/user/neuron/benchmark/phase5/examine.py", line 77, in examine
+    return _shop_app(d, out_dir or d.parent / (d.name + "__shots"), sandbox or Sandbox(mem_mb=256))
+  File "/home/user/neuron/benchmark/phase5/examine.py", line 51, in _shop_app
+    checks += code_exam.has_passing_tests(project)["checks"]
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/user/neuron/benchmark/phase5/examiners/code.py", line 174, in has_passing_tests
+    work = _copy(project)
+  File "/home/user/neuron/benchmark/phase5/examiners/code.py", line 23, in _copy
+    shutil.copytree(project, work, ignore=shutil.ignore_patterns(".neuron", "__pycache__", ".git"))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/shutil.py", line 591, in copytree
+    with os.scandir(src) as itr:
+         ~~~~~~~~~~^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/user/neuron/benchmark/run/phase5/locked-2gb/L11_business_app/app'
+-- examiner crashed on 2gb L11 (no app folder delivered); lock amendment 3; L11 scored from the delivered folder without rerunning the agent; run resumed at 06:41 --

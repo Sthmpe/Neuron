@@ -171,6 +171,9 @@ def wc2_cli(project):
 def has_passing_tests(project, min_tests=2):
     """The project's OWN tests: they must exist, be more than a token, and pass."""
     import re as _re
+    if not Path(project).exists():                         # nothing delivered: fail, do not crash (amendment 3)
+        return _result([{"id": "own_tests_exist", "pass": False, "detail": "no project folder was delivered"},
+                        {"id": "own_tests_pass", "pass": False, "detail": "no project folder was delivered"}])
     work = _copy(project)
     files = [f for f in work.rglob("test*.py") if "kit" not in f.parts]
     count = sum(len(_re.findall(r"^\s*def test_", f.read_text(), _re.M)) for f in files)

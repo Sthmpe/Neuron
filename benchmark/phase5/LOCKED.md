@@ -20,3 +20,7 @@ Fingerprint of every task, input, checker and workspace file: `58c9d515c4f189686
    Found AFTER locked runs (4 GB L12 official run and two labelled reruns). No agent was rerun for this: the files
    already delivered were examined again with the fixed checker, and both scores are kept in the results.
    New fingerprint `acd637db90683f5b7ed811375dc7ae632a542382e77245ec7985ab883a352d33` (old `20e5fa0a39cfadcc85314244f8d427d2e60f08d62d72efbf53cff70116927fe7`).
+3. 2026-11-18: `examiners/code.py` crashed (FileNotFoundError) when a task delivered no app folder, instead of
+   failing its checks; this stopped the 2 GB locked run at L11. Fixed to fail the checks. The agent was NOT rerun:
+   the folder it delivered was examined with the fixed checker (`run.py --examine-existing`).
+   New fingerprint `69198864bfe616904a24d2cebee0ce8ceda64b9e80d97c17b2c96183bbab9c97` (old `acd637db90683f5b7ed811375dc7ae632a542382e77245ec7985ab883a352d33`).

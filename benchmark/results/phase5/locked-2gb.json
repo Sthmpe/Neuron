@@ -1,0 +1,385 @@
+{
+ "rows": [
+  {
+   "task": "L01_pdf_research",
+   "kind": "pdf_qa",
+   "solved": false,
+   "checks_passed": 9,
+   "checks_total": 16,
+   "failed_checks": [
+    "q2_cites_right_page: needs riverside page 2",
+    "q3_answer_correct: Old Town uses the most water per day, with a daily use of 19,500 million litres. (riverside water report 2025, page 4)",
+    "q3_cites_right_page: needs riverside page 2",
+    "q5_answer_correct: not found (greenline bus policy 2026, page 2)",
+    "q5_cites_right_page: needs riverside page 4",
+    "q7_answer_correct: not found (riverside water report 2025, page 3)",
+    "q7_cites_right_page: needs greenline page 2"
+   ],
+   "seconds": 149.0,
+   "peak_mb": 1479,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 149.0
+    }
+   ],
+   "model_calls": 24,
+   "tokens": 1634,
+   "model_seconds": 108.8,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1
+   },
+   "agent_verdict": "PARTIAL",
+   "false_claim": false
+  },
+  {
+   "task": "L02_excel_summary",
+   "kind": "excel",
+   "solved": true,
+   "checks_passed": 14,
+   "checks_total": 14,
+   "failed_checks": [],
+   "seconds": 11.0,
+   "peak_mb": 1574,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 11.0
+    }
+   ],
+   "model_calls": 1,
+   "tokens": 129,
+   "model_seconds": 7.3,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1,
+    "template": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "L03_word_proposal",
+   "kind": "word",
+   "solved": true,
+   "checks_passed": 5,
+   "checks_total": 5,
+   "failed_checks": [],
+   "seconds": 97.0,
+   "peak_mb": 1459,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 97.0
+    }
+   ],
+   "model_calls": 6,
+   "tokens": 1904,
+   "model_seconds": 93.9,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1,
+    "model+template": 1,
+    "deterministic": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "L04_pptx_pitch",
+   "kind": "pptx",
+   "solved": true,
+   "checks_passed": 9,
+   "checks_total": 9,
+   "failed_checks": [],
+   "seconds": 24.0,
+   "peak_mb": 1518,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 24.0
+    }
+   ],
+   "model_calls": 1,
+   "tokens": 415,
+   "model_seconds": 20.3,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1,
+    "template": 1,
+    "deterministic": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "L05_cpp_budget_cli",
+   "kind": "cpp_build",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "builds_with_make: iter.cpp: In function \u2018int main(int, char**)\u2019:\nsrc/transaction_writer.cpp:97:60: error: conversion from \u2018vector<Transaction>\u2019 to non-scalar type \u2018vector<std::__"
+   ],
+   "seconds": 1448.2,
+   "peak_mb": 1565,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 1448.2
+    }
+   ],
+   "model_calls": 37,
+   "tokens": 26867,
+   "model_seconds": 1432.4,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1
+   },
+   "agent_verdict": "PARTIAL",
+   "false_claim": false
+  },
+  {
+   "task": "L06_cpp_bug_stock",
+   "kind": "workspace_bug",
+   "solved": true,
+   "checks_passed": 1,
+   "checks_total": 1,
+   "failed_checks": [],
+   "seconds": 37.0,
+   "peak_mb": 1564,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 37.0
+    }
+   ],
+   "model_calls": 5,
+   "tokens": 569,
+   "model_seconds": 29.3,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "L07_cpp_bug_discount",
+   "kind": "workspace_bug",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "original_tests_pass: FAIL line 42: discount_percent(10) == 5\nFAIL line 45: order_total({{1000, 10}}) == 9500\nFAIL line 46: order_total({{999, 10}}) == 9490\nmake: *** [Makefile:9: te"
+   ],
+   "seconds": 60.0,
+   "peak_mb": 1558,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 60.0
+    }
+   ],
+   "model_calls": 7,
+   "tokens": 1030,
+   "model_seconds": 51.5,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1
+   },
+   "agent_verdict": "PARTIAL",
+   "false_claim": false
+  },
+  {
+   "task": "L08_cpp_bug_parse",
+   "kind": "workspace_bug",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "original_tests_pass: FAIL line 56: parse_cents(\"12.5\") == 1250\nmake: *** [Makefile:9: test] Error 1\n"
+   ],
+   "seconds": 43.0,
+   "peak_mb": 1563,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 43.0
+    }
+   ],
+   "model_calls": 7,
+   "tokens": 625,
+   "model_seconds": 33.0,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1
+   },
+   "agent_verdict": "PARTIAL",
+   "false_claim": false
+  },
+  {
+   "task": "L09_go_bug_rate",
+   "kind": "workspace_bug",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "original_tests_pass: --- FAIL: TestRates (0.00s)\n    ledger_test.go:31: 15000 NGN = 2250000000 USD cents, want 1000\nFAIL\nFAIL\texample.com/ledger/ledger\t0.001s\nFAIL\n"
+   ],
+   "seconds": 75.0,
+   "peak_mb": 1774,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 75.0
+    }
+   ],
+   "model_calls": 7,
+   "tokens": 931,
+   "model_seconds": 45.6,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1
+   },
+   "agent_verdict": "PARTIAL",
+   "false_claim": false
+  },
+  {
+   "task": "L10_go_bug_round",
+   "kind": "workspace_bug",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "original_tests_pass: --- FAIL: TestRoundDiv (0.00s)\n    ledger_test.go:9: RoundDiv(10,4)=2 want 3\n    ledger_test.go:9: RoundDiv(-10,4)=-2 want -3\n    ledger_test.go:9: RoundDiv(7,2"
+   ],
+   "seconds": 63.0,
+   "peak_mb": 1759,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 63.0
+    }
+   ],
+   "model_calls": 7,
+   "tokens": 779,
+   "model_seconds": 38.1,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1
+   },
+   "agent_verdict": "PARTIAL",
+   "false_claim": false
+  },
+  {
+   "task": "L11_business_app",
+   "kind": "web_app",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 17,
+   "failed_checks": [
+    "login_required: the app was not running",
+    "wrong_password_rejected: the app was not running",
+    "login_works: the app was not running",
+    "add_products: the app was not running",
+    "product_search: the app was not running",
+    "add_customers: the app was not running",
+    "order_reduces_stock: the app was not running",
+    "second_order: the app was not running",
+    "oversized_order_refused: the app was not running",
+    "orders_list_shows_totals: the app was not running",
+    "dashboard_numbers: the app was not running",
+    "works_on_a_phone: the app was not running",
+    "no_server_errors: the app was not running",
+    "data_survives_restart: the app was not running",
+    "no_server_errors_after_restart: the app was not running",
+    "own_tests_exist: no project folder was delivered",
+    "own_tests_pass: no project folder was delivered"
+   ],
+   "seconds": 163.5,
+   "peak_mb": null,
+   "sessions": "see the task log",
+   "model_calls": 9,
+   "tokens": 3517,
+   "model_seconds": 161.4,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {},
+   "agent_verdict": "FAILED",
+   "false_claim": false,
+   "note": "examined from the delivered folder after an examiner crash (lock amendment 3); agent not rerun; peak memory not measured"
+  }
+ ],
+ "set": "locked",
+ "tier": "2gb",
+ "tier_limit_mb": 2048,
+ "network": "new empty network namespace (loopback only)",
+ "model": {
+  "planner": "qwen2.5-coder-1.5b-q4",
+  "reviewer": "qwen2.5-coder-1.5b-q4",
+  "builder": "qwen2.5-coder-1.5b-q4"
+ },
+ "bug_request": "The tests of this project fail. Find the bug in the source code and fix it so the tests pass. Do not change the tests.",
+ "started": "2026-11-18 06:03:39",
+ "code_commit": "01ae51986eeb1679ff89c8af4eb25b767ec06385",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}
