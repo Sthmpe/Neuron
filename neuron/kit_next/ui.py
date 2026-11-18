@@ -246,7 +246,7 @@ def section(title, *content, id=""):
     if grids and not forms:
         items = [it for g in grids for it in g.meta["items"]]
         intro = "".join(f'<p class="lead">{_esc(t.meta["words"])}</p>' for t in texts)
-        body = _features(items, v.get("features", "cards"))
+        body = _features(items, v.get("features", "cards"), sequence=bool(SEQUENCE.search(str(title))))
         html = (f'<section class="section"{sid} data-tone="auto"><div class="wrap"><div class="section-head">'
                 f'<h2>{_esc(title)}</h2>{intro}</div>{body}{_join(others)}</div></section>')
         return HTML(html, "section", role="features", title=str(title), items=items)
@@ -308,7 +308,10 @@ def _is_price_list(items):
     return len(items) >= 2 and len(priced) >= max(2, round(len(items) * 0.75))
 
 
-def _features(items, variant):
+SEQUENCE = re.compile(r"\b(how|steps?|process|stages?|starts?|works|begin|getting started|what happens)\b", re.I)
+
+
+def _features(items, variant, sequence=False):
     if _is_price_list(items):
         body = "".join(f'<div class="pl-row"><span class="pl-name">{_esc(t)}</span><span class="pl-price">{_esc(x)}</span></div>'
                        for t, x in items)
@@ -317,10 +320,12 @@ def _features(items, variant):
         body = "".join(f'<div class="fl-item">{_icon(t, x, i + 1)}<div><h3>{_esc(t)}</h3><p>{_esc(x)}</p></div></div>'
                        for i, (t, x) in enumerate(items))
         return f'<div class="f-list">{body}</div>'
-    if variant == "rows":
-        body = "".join(f'<div class="fr-item"><span class="fr-num">{i + 1:02d}</span><h3>{_esc(t)}</h3><p>{_esc(x)}</p></div>'
+    if variant == "rows":                # numbers would say "do these in order": only steps get numbers
+        body = "".join(f'<div class="fr-item"><span class="fr-num fr-icon">{_icon(t, x, i + 1)}</span><h3>{_esc(t)}</h3><p>{_esc(x)}</p></div>'
                        for i, (t, x) in enumerate(items))
         return f'<div class="f-rows">{body}</div>'
+    if variant == "steps" and not sequence:
+        variant = "cards"
     if variant == "tiles":
         body = "".join(f'<div class="f-tile">{_icon(t, x, i + 1)}<h3>{_esc(t)}</h3><p>{_esc(x)}</p></div>' for i, (t, x) in enumerate(items))
         return f'<div class="f-tiles">{body}</div>'

@@ -26,6 +26,12 @@ class FindImages(Capability):
         m = images.Manifest(project, params.get("image_dir", "static/images"))
         if not m.slots:
             return Outcome(True, "no pictures needed", {"filled": [], "not_found": []})
+        theme = job.workspace / params["project"] / "theme.json"
+        if theme.exists():                         # photos chosen under older, looser rules are checked again
+            import json
+            roles = json.loads(theme.read_text())["palette"]["roles"]
+            for slot in images.recheck_licensed(m, (roles["dominant"], roles["support"], roles["accent"])):
+                job.log(f"  image {slot}: the earlier photo is refused by the current rules; looking again")
         r = images.fetch_licensed(m, self.provider_factory(), job.effects, log=job.log)
         if r["filled"] and params["project"] == "app" and (job.workspace / "app.zip").exists():
             from .web import zip_app

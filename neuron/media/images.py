@@ -30,7 +30,8 @@ SHAPES = {"wide": (1600, 900), "tall": (900, 1200), "square": (1000, 1000), "ban
 LICENCE_OK = re.compile(r"^(public domain|pd\b|pdm|cc0|cc[- ]by(-sa)?[- ]\d|cc[- ]by(-sa)?$)", re.I)
 LICENCE_BAD = re.compile(r"\bnc\b|\bnd\b|non-?commercial|fair use|no derivatives", re.I)
 AVOID_TITLE = re.compile(r"\b(logo|map|diagram|chart|coat of arms|flag|seal|icon|drawing|illustration|poster|scan|"
-                         r"document|svg|screenshot|sign|stamp|banknote|postcard|painting|engraving|lithograph|etching)\b", re.I)
+                         r"document|svg|screenshot|sign|stamp|banknote|postcard|painting|engraving|lithograph|etching|allegory|fresco|ceiling|"
+                         r"mural|statue|sculpture|relief|portrait|museum|cathedral|church|altar|tapestry|artwork|baroque|monument)\b", re.I)
 USER_AGENT = "NEURON-local-assistant/0.1 (offline-first desktop assistant; image search for the owner's project)"
 
 
@@ -49,9 +50,10 @@ class Manifest:
         self.path = self.project / "images.json"
         self.image_dir = image_dir
         try:
-            self.slots = json.loads(self.path.read_text())["slots"]
+            data = json.loads(self.path.read_text())
+            self.slots, self.rejected = data["slots"], data.get("rejected", [])
         except (OSError, ValueError, KeyError):
-            self.slots = []
+            self.slots, self.rejected = [], []
 
     def add(self, slot, purpose, query=None, shape="wide"):
         if not any(s["slot"] == slot for s in self.slots):
@@ -67,7 +69,7 @@ class Manifest:
 
     def save(self):
         self.project.mkdir(parents=True, exist_ok=True)
-        self.path.write_text(json.dumps({"slots": self.slots}, indent=1))
+        self.path.write_text(json.dumps({"slots": self.slots, "rejected": self.rejected}, indent=1))
         write_credits(self)
 
     def summary(self):
@@ -269,11 +271,41 @@ def acceptable(c, shape="wide"):
     return ""
 
 
+def reject(m, slot, palette, why):
+    """A chosen photo is not right (the owner said so, or a stricter rule now refuses it): the labelled placeholder comes
+    back, the photo is never picked again for this project, and the reason is kept."""
+    s = m.get(slot)
+    page = (s.get("source") or {}).get("page")
+    if page:
+        m.rejected.append({"slot": slot, "page": page, "why": why})
+    old = s.get("file")
+    s.update(status="needed", source=None, file="")
+    fill_placeholders(m, palette)
+    if old and old != s["file"]:
+        relink(m.project, old, s["file"])
+        if (m.project / old).exists():
+            (m.project / old).unlink()
+    m.save()
+    return m
+
+
+def recheck_licensed(m, palette):
+    """Apply today's rules to photos chosen earlier; any that would now be refused are rejected. Returns their slots."""
+    out = []
+    for s in [x for x in m.slots if x["status"] == "licensed"]:
+        src = s.get("source") or {}
+        why = AVOID_TITLE.search(src.get("title", "")) and "looks like an artwork, logo or document, not a photo for this business"
+        if why:
+            reject(m, s["slot"], palette, why)
+            out.append(s["slot"])
+    return out
+
+
 def fetch_licensed(m, provider, effects=None, log=print):
     """Online: replace each placeholder with a suitable licensed photo.
     Returns {"filled": [...], "not_found": [...], "retry_after": seconds or None}. retry_after is set when the photo site
     asked NEURON to slow down: it stops at once (photos found so far are kept) and the step is tried again later."""
-    used = {(s.get("source") or {}).get("page") for s in m.slots}
+    used = {(s.get("source") or {}).get("page") for s in m.slots} | {r["page"] for r in m.rejected}
     filled, not_found, retry_after = [], [], None
     for s in m.needed():
         try:

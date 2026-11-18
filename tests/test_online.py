@@ -270,6 +270,26 @@ class ImageTests(unittest.TestCase):
         self.assertEqual(rep["verdict"], "VERIFIED", rep)
         self.assertEqual(images.Manifest(ws / "site").summary(), {"licensed": 2})
 
+    def test_rejected_photo_goes_back_to_placeholder_and_is_never_picked_again(self):
+        p = self.project()
+        m = images.prepare(p, self.SLOTS, self.PALETTE)
+        (p / "index.html").write_text('<img src="static/images/hero.svg">')
+        images.fetch_licensed(m, self.Provider(), log=lambda *_: None)
+        m = images.Manifest(p)
+        first = m.get("hero")["source"]["page"]
+        images.reject(m, "hero", self.PALETTE, "not right for this business")
+        m = images.Manifest(p)
+        self.assertEqual(m.get("hero")["status"], "needed")
+        self.assertIn("static/images/hero.svg", (p / "index.html").read_text())
+        images.fetch_licensed(m, self.Provider(), log=lambda *_: None)
+        self.assertNotEqual(images.Manifest(p).get("hero")["source"]["page"], first)
+        self.assertEqual(images.Manifest(p).rejected[0]["why"], "not right for this business")
+
+    def test_artworks_are_refused(self):
+        c = {"mime": "image/jpeg", "title": "Allegory of war and Law - Prunksaal", "file_title": "File:A.jpg", "width": 3000,
+             "height": 2000, "licence": "CC BY 2.5"}
+        self.assertIn("not a photo", images.acceptable(c))
+
     def test_licence_rules(self):
         ok = lambda lic: images.acceptable({"mime": "image/jpeg", "title": "Bread", "file_title": "File:B.jpg", "width": 2000,
                                             "height": 1300, "licence": lic}) == ""
