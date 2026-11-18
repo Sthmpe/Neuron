@@ -100,6 +100,109 @@
    "tests_untouched": true,
    "seconds": 474.4,
    "peak_mb": 3913
+  },
+  {
+   "task": "w06_lunch_slots",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 230.3,
+    "tokens": 1011
+   },
+   "what_happened": [
+    "rejected: the proposed file is identical to the original (no change)",
+    "rejected: the proposed file is identical to the original (no change)",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 230.5,
+   "peak_mb": 3913
+  },
+  {
+   "task": "w07_cancelled_blocks",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 361.6,
+    "tokens": 1632
+   },
+   "what_happened": [
+    "tests still failing",
+    "tests still failing",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 362.0,
+   "peak_mb": 3913
+  },
+  {
+   "task": "w08_reminder_day",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 301.8,
+    "tokens": 1266
+   },
+   "what_happened": [
+    "rejected: the proposed file is identical to the original (no change)",
+    "tests still failing",
+    "rejected: the proposed file is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 302.0,
+   "peak_mb": 3863
+  },
+  {
+   "task": "w09_insurance_share",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 211.0,
+    "tokens": 972
+   },
+   "what_happened": [
+    "rejected: the proposed file is identical to the original (no change)",
+    "rejected: the proposed file is identical to the original (no change)",
+    "rejected: the proposed file is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 211.1,
+   "peak_mb": 3913
+  },
+  {
+   "task": "w10_child_age",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 77.5,
+    "tokens": 202
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 77.8,
+   "peak_mb": 3918
   }
  ],
  "set": "workspace",

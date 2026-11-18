@@ -100,3 +100,34 @@
 4gb-base w03_due_date_weekend: not solved | attempts 3 | 166.8s | peak 3911 MB
 4gb-base w04_cancelled_spelling: not solved | attempts 3 | 220.5s | peak 3920 MB
 4gb-base w05_search_case: not solved | attempts 3 | 474.4s | peak 3913 MB
+4gb-base w06_lunch_slots: not solved | attempts 3 | 230.5s | peak 3913 MB
+4gb-base w07_cancelled_blocks: not solved | attempts 3 | 362.0s | peak 3913 MB
+4gb-base w08_reminder_day: not solved | attempts 3 | 302.0s | peak 3863 MB
+4gb-base w09_insurance_share: not solved | attempts 3 | 211.1s | peak 3913 MB
+4gb-base w10_child_age: SOLVED | attempts 1 | 77.8s | peak 3918 MB
+4gb-base: solved 3/10; mean score 0.30
+4gb-full h01_readings: SOLVED | attempts 1 | 34.4s | peak 3801 MB
+4gb-full h02_truncate: SOLVED | attempts 1 | 39.1s | peak 3856 MB
+4gb-full h03_rpn: SOLVED | attempts 1 | 45.4s | peak 3857 MB
+4gb-full h04_roman: SOLVED | attempts 1 | 47.6s | peak 3857 MB
+4gb-full h05_priority: SOLVED | attempts 1 | 37.4s | peak 3857 MB
+4gb-full h06_wrap: SOLVED | attempts 1 | 68.3s | peak 3857 MB
+4gb-full h07_warehouse: SOLVED | attempts 1 | 39.7s | peak 3862 MB
+4gb-full h08_paging: SOLVED | attempts 1 | 38.5s | peak 3857 MB
+4gb-full h09_grades: SOLVED | attempts 1 | 42.7s | peak 3857 MB
+4gb-full h10_clock: SOLVED | attempts 3 | 202.8s | peak 3858 MB
+4gb-full h11_flatten: SOLVED | attempts 1 | 39.4s | peak 3859 MB
+4gb-full h12_dedupe: SOLVED | attempts 1 | 41.7s | peak 3859 MB
+4gb-full h13_caesar: SOLVED | attempts 1 | 40.2s | peak 3949 MB
+4gb-full h14_calendar: SOLVED | attempts 1 | 38.8s | peak 3860 MB
+4gb-full h15_settings: SOLVED | attempts 1 | 52.2s | peak 3860 MB
+4gb-full h16_bill: SOLVED | attempts 1 | 41.8s | peak 3860 MB
+4gb-full h17_chain: SOLVED | attempts 1 | 63.8s | peak 3860 MB
+4gb-full h18_tokens: SOLVED | attempts 1 | 49.9s | peak 3860 MB
+4gb-full h19_buckets: SOLVED | attempts 1 | 54.8s | peak 3860 MB
+4gb-full h20_access: SOLVED | attempts 1 | 34.7s | peak 3860 MB
+4gb-full b1_bakery_landing: SOLVED | 13/13 checks | 237.4s | peak 3996 MB
+4gb-full b2_shop_app: SOLVED | 19/19 checks | 189.2s | peak 3913 MB
+4gb-full b3_shop_app_resumed: SOLVED | 19/19 checks | 200.6s | peak 3900 MB
+4gb-full: solved 23/23; mean score 1.00
+4gb-full w01_vat_rounding: SOLVED | attempts 1 | 34.0s | peak 3797 MB

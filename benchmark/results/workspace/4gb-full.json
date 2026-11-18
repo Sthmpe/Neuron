@@ -1,0 +1,36 @@
+{
+ "rows": [
+  {
+   "task": "w01_vat_rounding",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 28.185755491256714,
+    "tokens": 141
+   },
+   "what_happened": [
+    "vat_for: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 34.0,
+   "peak_mb": 3797
+  }
+ ],
+ "set": "workspace",
+ "tier": "4gb",
+ "tier_limit_mb": 4096,
+ "condition": "full",
+ "models": {
+  "planner": "qwen3.5-4b-q4",
+  "reviewer": "qwen3.5-4b-q4",
+  "builder": "qwen3.5-4b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-17 23:59:03",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}
