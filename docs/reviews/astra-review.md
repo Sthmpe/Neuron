@@ -1,0 +1,27 @@
+# Astra’s independent review of NEURON
+
+I reviewed `1f65640b4c85204652259110e810beb4432e56dc` on 18 November 2026. My first priority is the verdict on ordinary questions. A person using the phone sees “Done and checked” for an answer the system explicitly recorded as unverified.
+
+## What works
+
+- Saving the plan outside the model gives small models a measurable advantage on multi-step work. The 2 GB held-out comparison moved from 0/3 to 3/3 app builds and from 0/10 to 3/10 workspace repairs. The harness runs the app examiner separately and records its score alongside the agent’s claim. Those numbers support the whole loop on these tasks. They do not isolate the contribution of any one role. See `benchmark/results/heldout_summary.md` and `benchmark/harness.py` (`run_build` and the call to `examine`).
+- The system has concrete recovery mechanisms. Job state uses temporary-file replacement, and the append-only job journal flushes to disk. In the published 2 GB phase-5 run the interrupted docstring task resumed and passed all four external checks. That is a stronger acceptance test than a process merely restarting. See `neuron/agent/state.py` (`_write`, `_append`) and `benchmark/results/phase5_summary.md`.
+- A failed compiled-code edit is rolled back and a successful one gets a fresh run of the project tests. This protects the user’s working copy even where the model struggles to propose a fix. See `neuron/agent/capabilities/code.py` (`FixBug._fix_other` and `verify`).
+
+## Where the evidence breaks down
+
+| Area | Observation and consequence |
+| --- | --- |
+| Ordinary answers | `AnswerQuestion.verify` returns a passing verdict with method `unverified`. The loop records the step as done and promotes an all-done plan to `VERIFIED`. The phone maps that to “Done and checked”. A wrong answer and a correct one take the same route. See `neuron/agent/capabilities/research.py` lines 175–178, `neuron/agent/loop.py` lines 269–279 and 332–342, `neuron/server/jobs.py` lines 194–198, and `neuron/server/ui/app.js` (`LABEL`). |
+| What the release test proves | The historical bread question got `VERIFIED` after one model call. Its release check counted whether more than 20 words appeared. That demonstrates delivery. It leaves factual accuracy open. See `benchmark/results/release_retest_run2.json` lines 74–96 and `benchmark/release/retest.py` lines 118–119. |
+| Evidence from PDFs | The current `facts_backed` compares sets of number strings. A value attached to the wrong item can pass when both values occur in the same quote. A nonnumeric answer need share no words with the quote. Accepted answers can be saved as verified findings. Historical official PDF verdicts disagreed with the examiner at 4 and 8 GB, on earlier commits. See `neuron/agent/capabilities/research.py` lines 47–58 and 124–138, and `benchmark/results/phase5_summary.md`. |
+| Compiled repairs | Phase 5 recorded 0/2 Go repairs in every tier and 1/3, 1/3 and 2/3 C++ repairs. The current finder counts literal brace characters in source lines and the edit path works on one selected function at a time. Those are plausible limitations. The scores alone do not identify the cause of a particular failure. See `neuron/agent/capabilities/code.py` (`functions_in`, `FixBug._fix_other`) and `benchmark/results/phase5_summary.md`. |
+| Memory | The experiment repeats one transfer pair three times. Both conditions solved 3/3. Average time fell from 63.4 to 53.3 seconds, while calls rose from 2.0 to 2.33. One learning job failed and its paired job received no note. A note being offered during a successful repair earns “helped” credit without establishing causation. See `benchmark/memory_effect.py`, `benchmark/results/memory_effect.json` and `fix_note` in `neuron/agent/capabilities/code.py`. |
+
+Two operational risks matter when interpreting those scores. A damaged final record makes `Effects._lines` return an empty history, potentially losing the evidence that an earlier action ran. This follows from code inspection. I did not exercise an external action. The tier harness also requires a writable **v1** memory controller. Support for a systemd scope in the sandbox applies to a child command. It does not impose a limit on the model and the agent together. See `neuron/agent/effects.py` lines 38–42, `neuron/brain/tiers.py` (`Tier.enter`) and `neuron/brain/sandbox.py` (`scope_prefix`).
+
+## Why work on ordinary answers first
+
+I reproduced the verdict error through `Agent.run` using the repository’s scripted model fixture. For “Which planet do humans live on?” I deliberately supplied “Mars.” The delivered file contained “Mars.”, the saved step method was `unverified`, and the final verdict was `VERIFIED`. This was a control-flow test with one scripted call. All other numbers above are historical repository measurements.
+
+A failed repair has an external test that can tell the owner it failed. An unsourced answer currently offers the owner the same assurance as a checked repair, even when the step itself says otherwise. This can be improved independently of model size. For phase 1 I will test a narrow positive case where the system can supply independent evidence, exact arithmetic, alongside ordinary questions where it must deliver an answer and accurately disclose its evidence. Both coverage and unwarranted verification will count. The PDF workflow, compiled repairs and memory remain follow-up research questions.
