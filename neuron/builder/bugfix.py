@@ -82,7 +82,7 @@ def apply_edit(file_text, function_source, reply):
     return None
 
 
-def fix_project(project, runner, sandbox, log=print, test_command=None, write_back=True, max_seconds=None):
+def fix_project(project, runner, sandbox, log=print, test_command=None, write_back=True, max_seconds=None, memory_hint=""):
     project, state, meter, t0 = Path(project), ProjectState(project), Meter(), time.time()
     work = project.parent / (project.name + "__work")
     cmd = test_command or default_test_command(project)
@@ -173,7 +173,8 @@ def fix_project(project, runner, sandbox, log=print, test_command=None, write_ba
         try:
             # ---- review: diagnose -------------------------------------------------
             user = (f"Failing test output:\n```\n{tail(output, 1800)}\n```\n\nThe failing tests:\n```python\n{test_block}\n```\n\n"
-                    f"Source code:\n```python\n{whole}\n```{hint}\n\nFunctions you can choose: {', '.join(offered)}"
+                    f"Source code:\n```python\n{whole}\n```{hint}\n\n" + (f"{memory_hint}\n\n" if memory_hint else "")
+                    + f"Functions you can choose: {', '.join(offered)}"
                     + (f"\n\nEarlier attempts that did NOT fix it (choose differently or fix differently):{history}" if history else ""))
             reply = meter.chat(runner.client("reviewer"), [{"role": "system", "content": prompts.DIAGNOSE_SYSTEM},
                                                            {"role": "user", "content": user}],
@@ -245,5 +246,5 @@ def fix_project(project, runner, sandbox, log=print, test_command=None, write_ba
         state.refresh_map()
     state.update_task("fix", status="done" if winner else "failed")
     return {"claimed": bool(winner), "attempts": len(task["attempts"]), "file": winner[0] if winner else None,
-            "history": [{k: a.get(k) for k in ("n", "function", "problem", "passed", "failure", "timed_out")} for a in task["attempts"]],
+            "history": [{k: a.get(k) for k in ("n", "function", "problem", "fix", "passed", "failure", "timed_out")} for a in task["attempts"]],
             "llm": vars(meter), "seconds": round(time.time() - t0, 1)}

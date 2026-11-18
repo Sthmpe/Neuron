@@ -111,7 +111,8 @@ def run_agent(goal, job, attach, tier_name, seconds, log_file, kill_when=None):
     with open(log_file, "a") as log:
         log.write(f"\n===== session started {time.strftime('%H:%M:%S')} =====\n")
         log.flush()
-        proc = subprocess.Popen(cmd, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+        env = dict(os.environ, NEURON_MEMORY="off")      # evaluations never read or write knowledge memory
+        proc = subprocess.Popen(cmd, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, start_new_session=True, env=env)
         t0 = time.time()
         while proc.poll() is None:
             if time.time() - t0 > seconds + 900 or (kill_when and kill_when()):

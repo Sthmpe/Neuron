@@ -41,7 +41,10 @@ def main(argv=None):
         attached.append(str(dst))
     overrides = {r: a.model for r in ("planner", "reviewer", "builder")} if a.model else {}
     runner = ModelRunner(ModelManager(), a.tier, overrides=overrides, log_dir=ws / ".neuron")
-    job = Job(ws, runner, Sandbox(timeout=120, mem_mb=1024, toolchains=True), registry=reg, log=lambda m: print(m, flush=True))
+    from ..memory import default_memory, memory_enabled
+    memory = default_memory() if memory_enabled() else None          # evaluations run with NEURON_MEMORY=off
+    job = Job(ws, runner, Sandbox(timeout=120, mem_mb=1024, toolchains=True), registry=reg, log=lambda m: print(m, flush=True),
+              memory=memory)
     try:
         rep = Agent(job).run(a.goal or "", attached, max_seconds=a.max_seconds)
     finally:

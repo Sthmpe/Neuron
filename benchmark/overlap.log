@@ -9,3 +9,6 @@
 20:28 server + phone browser tests (~20 s, nice 19)
 20:34 server and phone tests incl. HTTPS (~30 s, nice 19)
 03:06 side-copy builder tests during the design proof (~15 s)
+11:43 downloaded the 37 MB embedding model during the 2 GB scorecard run
+11:44 memory module test with the embedding model (~20 s)
+11:48 full test suite during the 2 GB scorecard run (~100 s)

@@ -32,6 +32,7 @@ class JobManager:
             if meta["status"] in ("queued", "running"):            # interrupted by a restart: continue
                 self.queue.append(meta["id"])
                 self._meta(meta["id"], status="queued", note="resumed after a restart")
+        self.memory = None                              # created on the first job (default: <home>/memory/knowledge.db)
         self.thread = threading.Thread(target=self._work, daemon=True)
         self.thread.start()
 
@@ -169,7 +170,15 @@ class JobManager:
             self.runner = self.runner_factory()
         if hasattr(self.runner, "boost"):
             self.runner.boost.new_job()
-        job = Job(ws, self.runner, self.sandbox_factory(), registry=self.registry, log=lambda msg: self.log(f"[{jid}] {msg}"))
+        if self.memory is None:
+            from ..memory import Memory, memory_enabled
+            try:
+                self.memory = Memory(self.dir.parent / "memory" / "knowledge.db") if memory_enabled() else False
+            except Exception as e:                       # noqa: BLE001  NEURON works without memory
+                self.log(f"knowledge memory unavailable: {e}")
+                self.memory = False
+        job = Job(ws, self.runner, self.sandbox_factory(), registry=self.registry, log=lambda msg: self.log(f"[{jid}] {msg}"),
+                  memory=self.memory or None)
         self.current_job = job
         rep = Agent(job).run(m["goal"], attachments)
         status = "waiting_approval" if rep.get("waiting_approval") else ("paused" if getattr(job, "stop_requested", False)

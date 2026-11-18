@@ -187,6 +187,7 @@ def main(argv=None):
     a = ap.parse_args(argv)
     for var in ("NEURON_DESIGN", "NEURON_TEMPLATES"):                  # the builder process inherits these
         os.environ[var] = "1" if a.system == "current" else "0"
+    os.environ["NEURON_MEMORY"] = "off"                                 # evaluations never use knowledge memory
     manager = ModelManager()
     roles = ("planner", "reviewer", "builder")
     models = {r: a.model for r in roles} if a.model else dict(x.split("=") for x in a.models.split(",")) if a.models \

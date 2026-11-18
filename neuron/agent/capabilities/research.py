@@ -132,7 +132,9 @@ class AnswerFromDocuments(Capability):
         (job.workspace / "answers.md").write_text("\n".join(md) + "\n")
         (job.workspace / "answers.json").write_text(json.dumps(answers, indent=1))
         ok = sum(a["verified"] for a in answers)
-        return Outcome(True, f"{ok} of {len(answers)} answers have a quote confirmed on the cited page", {"answers": answers},
+        notes = [{"kind": "finding", "text": f"{a['question']} {a['answer']} (quote: \"{a['quote'][:200]}\")",
+                  "source": f"{a['doc']} page {a['page']}", "verified": True, "tags": [a["doc"]]} for a in answers if a["verified"]]
+        return Outcome(True, f"{ok} of {len(answers)} answers have a quote confirmed on the cited page", {"answers": answers, "memory_notes": notes},
                        ["answers.md", "answers.json"], made_by="model")
 
     def verify(self, job, params, outcome):
@@ -163,8 +165,9 @@ class AnswerQuestion(Capability):
                                   else "\n\n(Checked once by a second pass.)")
             (job.workspace / "answer.md").write_text(clean(text) + "\n")
             return Outcome(True, clean(text)[:300], {"answer": clean(text), "tool_runs": s["tool_runs"]}, ["answer.md"], made_by="model")
-        text = job.ask_text("builder", "You are NEURON, an offline assistant. Answer clearly. Say so if you are not sure. No em dashes.",
-                            q, max_tokens=700)
+        mem = job.memory_context() if hasattr(job, "memory_context") else ""
+        text = job.ask_text("builder", "You are NEURON, an offline assistant. Answer clearly. Say so if you are not sure. No em dashes."
+                            + (f"\n\n{mem}" if mem else ""), q, max_tokens=700)
         if not text:
             return Outcome(False, "no answer from the local model")
         (job.workspace / "answer.md").write_text(clean(text) + "\n")

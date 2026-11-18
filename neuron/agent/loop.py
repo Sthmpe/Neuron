@@ -38,7 +38,9 @@ WORKFLOWS = {
 class Job:
     """One goal in one workspace: the state on disk, the models (one in memory at a time), the sandbox."""
 
-    def __init__(self, workspace, runner, sandbox, registry=None, log=print, design=True):
+    def __init__(self, workspace, runner, sandbox, registry=None, log=print, design=True, memory=None):
+        self.memory = memory               # knowledge memory (neuron.memory.Memory) or None
+        self.memory_notes = []
         self.workspace = Path(workspace)
         self.workspace.mkdir(parents=True, exist_ok=True)
         self.state = JobState(self.workspace)
@@ -51,6 +53,12 @@ class Job:
             self.prior = json.loads(self.usage_file.read_text())
         except (OSError, ValueError):
             self.prior = {}
+
+    def memory_context(self, kinds=None):
+        """Remembered notes relevant to this job, as a prompt block to be checked before use ('' if none)."""
+        from ..memory import context_text
+        notes = [n for n in self.memory_notes if not kinds or n["kind"] in kinds]
+        return context_text(notes)
 
     # ---- model access (roles share one loaded model unless configured otherwise) -------------------
     def chat(self, role, messages, **kw):
@@ -112,6 +120,15 @@ class Agent:
         else:
             s.create(request, attachments)
         s.journal("session", models={r: job.runner.model_for(r) for r in ("planner", "reviewer", "builder")})
+        if job.memory is not None:                                       # memory first, before any reasoning
+            try:
+                job.memory_notes = job.memory.search(s.goal()["request"], k=4)
+            except Exception as e:                                       # noqa: BLE001  memory problems never stop a job
+                job.memory_notes = []
+                job.log(f"memory search failed: {e}")
+            s.journal("memory", found=[{"id": n["id"], "kind": n["kind"], "status": n["status"], "score": n["score"]} for n in job.memory_notes])
+            for n in job.memory_notes:
+                job.memory.mark(n["id"], used=True)
         g = s.goal()
         if not g.get("kind"):                                            # understand
             kind, how = router.understand(job, request, attachments)
@@ -132,6 +149,21 @@ class Agent:
                 break
             self.step(task)
         return self.report(time.time() - t0)
+
+    def _remember(self, tid, out):
+        """Save what a verified step learned (its capability lists the notes), and credit remembered notes that helped."""
+        job = self.job
+        if job.memory is None:
+            return
+        for note in (out.result or {}).get("memory_notes", []) if isinstance(out.result, dict) else []:
+            try:
+                nid = job.memory.add(note["kind"], note["text"], note.get("source", f"job {job.workspace.name}"),
+                                     version=note.get("version", ""), verified=note.get("verified", False), tags=note.get("tags", ()))
+                self.s.journal("memory_saved", id=nid, kind=note["kind"], task=tid)
+            except Exception as e:                                       # noqa: BLE001
+                job.log(f"memory save failed: {e}")
+        for nid in (out.result or {}).get("memory_helped", []) if isinstance(out.result, dict) else []:
+            job.memory.mark(nid, helped=True)
 
     def plan(self, goal):
         kind = goal["kind"]
@@ -202,6 +234,7 @@ class Agent:
             if verdict.passed:
                 s.update_task(tid, status="done", summary=out.summary, result=out.result, files=out.files, made_by=out.made_by,
                               verification=verdict.how)
+                self._remember(tid, out)
                 return
             if out.ok and verdict.failures and all(c.get("gap") for c in verdict.failures):
                 # what was built passes its checks; the rest cannot be built yet: deliver it and say so, retrying cannot help

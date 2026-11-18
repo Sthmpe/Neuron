@@ -48,6 +48,17 @@ def functions_in(path, text):
     return out
 
 
+def fix_note(job, lang, function, problem, fix, file):
+    """What a verified fix teaches, for memory: the symptom, the cause and the change; plus which remembered fixes were
+    in front of the model (they helped only in the sense that this fix then passed the tests)."""
+    if not (problem and fix):
+        return {}
+    text = f"{lang} bug in {function} ({file}): {problem.strip()} Fix: {fix.strip()} The project's tests passed after the change."
+    helped = [n["id"] for n in getattr(job, "memory_notes", []) if n["kind"] == "fix"]
+    return {"memory_notes": [{"kind": "fix", "text": text[:900], "source": f"job {job.workspace.name}: {file}", "verified": True,
+                              "tags": [lang, str(function).split("::")[-1].split(".")[-1]]}], "memory_helped": helped}
+
+
 class FixBug(Capability):
     name = "fix_bug"
     purpose = "Find the faulty code in a project (any installed language), change it, and run the project's tests"
@@ -62,10 +73,15 @@ class FixBug(Capability):
         cmd = detect_test_command(ws)
         if cmd is None:
             return Outcome(False, "no test command found, so a fix could not be proven", evidence={"no_retry": True})
+        hint = job.memory_context(kinds=("fix",)) if hasattr(job, "memory_context") else ""
         if cmd[0] == "python3":                               # the proven step-3 loop for Python
-            r = fix_project(ws, job.runner, job.sandbox, log=lambda *_: None)
+            r = fix_project(ws, job.runner, job.sandbox, log=lambda *_: None, memory_hint=hint)
+            res = {"history": r.get("history")}
+            win = next((h for h in (r.get("history") or []) if h.get("passed")), None)
+            if r.get("claimed") and win:
+                res.update(fix_note(job, "python", win.get("function"), win.get("problem"), win.get("fix"), r.get("file")))
             return Outcome(bool(r.get("claimed")), f"python fix loop: {'fixed' if r.get('claimed') else 'not fixed'} in {r.get('attempts')} attempts",
-                           {"history": r.get("history")}, [r["file"]] if r.get("file") else [], made_by="model")
+                           res, [r["file"]] if r.get("file") else [], made_by="model")
         return self._fix_other(job, params, cmd)
 
     def _fix_other(self, job, params, cmd):
@@ -101,6 +117,7 @@ class FixBug(Capability):
         tried = params.get("feedback", "")
         diag = job.ask_json("reviewer", "You find the one bug that makes the tests fail. The tests are correct.",
                             f"Test output:\n{clip(output, 2500)}\n\nCandidate functions:\n{ctx}\n\n" + (f"Earlier attempt failed: {clip(tried, 800)}\n" if tried else "")
+                            + (f"{job.memory_context(kinds=('fix',))}\n" if hasattr(job, "memory_context") and job.memory_context(kinds=("fix",)) else "")
                             + "Which function has the bug, what is wrong, and what is the fix?",
                             {"type": "object", "required": ["function", "problem", "fix"],
                              "properties": {"function": {"type": "string", "enum": keys}, "problem": {"type": "string"}, "fix": {"type": "string"}}},
@@ -129,7 +146,9 @@ class FixBug(Capability):
         if not passed:
             (ws / f).write_text(backup)                       # never leave a failed change behind
             return Outcome(False, f"changed {f}::{name} but the tests still fail: {clip(res.output, 600)}")
-        return Outcome(True, f"fixed {f}::{name}: {diag['problem']}", {"file": f, "function": name}, [f], made_by="model")
+        lang = {".go": "go", ".rs": "rust", ".java": "java", ".js": "javascript", ".ts": "typescript"}.get(Path(f).suffix, "c++")
+        return Outcome(True, f"fixed {f}::{name}: {diag['problem']}",
+                       {"file": f, "function": name, **fix_note(job, lang, name, diag["problem"], diag["fix"], f)}, [f], made_by="model")
 
     def verify(self, job, params, outcome):
         passed, res = run_project_tests(job)
