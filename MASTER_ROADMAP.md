@@ -62,15 +62,16 @@ Status words: **done** (built and measured), **built** (built, tested with scrip
 |---|---|---|
 | Step-3 held-out (bugs, builds, workspaces) | **done** | `benchmark/results/heldout_summary.md`; labelled rerun of builds with the current system 9/9 |
 | Phase-5 locked set | **done** | 3 examiner amendments recorded in `benchmark/phase5/LOCKED.md`; official + labelled reruns kept apart |
-| W5a. New locked set (phase 6 evaluation) | **planned, step 5** | Written and locked before tuning: code in several languages, Excel, Word, PowerPoint, PDF, an unseen app. Acceptance: zero false "verified" claims |
-| W5b. Scorecard (MMLU-Pro, GPQA Diamond, LiveCodeBench, BFCL) | **planned, step 3** | `SCORECARD.md`: model alone vs full NEURON per tier, fixed samples labelled as samples, version/count/score/time/RAM/tokens/tools. Benchmark data never enters memory or tuning |
+| W5a. New locked set "eval2" | **written and LOCKED, not yet run** | `benchmark/eval2/` (12 tasks: PDF, Excel, Word, PowerPoint, Python/JS/Go/Rust bugs, C++ program, unseen repair-shop app, long task, computed answer). Locked 2026-11-18 before any tuning, fingerprint in `LOCK.json`; every examiner validated (24/24: references pass, wrong deliveries fail). Next: official runs on 2/4/8 GB with memory off. Acceptance: zero false "verified" claims |
+| W5b. Scorecard (MMLU-Pro, GPQA Diamond, LiveCodeBench, BFCL) | **running** | Fixed samples (labelled as samples), same for every model and condition, network cut. 2 GB model alone finished; 2 GB full NEURON running; then 4 GB and 8 GB. Results in `benchmark/results/scorecard/`, log `benchmark/scorecard.log`. `SCORECARD.md` written when all six runs finish. Benchmark data never enters memory or tuning |
 
 ## W6. Knowledge memory
 
 | | |
 |---|---|
-| Status | **planned, step 4** |
-| Evidence | none yet (the agent keeps per-job state only) |
+| Status | **built** (2026-11-18); effect not yet shown |
+| Evidence | `neuron/memory/`: SQLite store, keyword (FTS5) + meaning search (bge-small-en-v1.5, 37 MB, about 60 MB in memory; character-hash fallback), searched before reasoning, notes carry source, date, version and verification status; fixes saved after verified repairs and offered only as hints to be checked. Old notes rechecked when online (`neuron/memory/recheck.py`, step 6). Measured on a second similar task, same 2 GB model (`benchmark/results/memory_effect.json`): without memory 3/3 in 63.4 s, with memory 3/3 in 53.3 s; one learning run saved no note, so no reliable effect on this easy pair |
+| Unverified | Effect on a harder pair of tasks; behaviour with thousands of notes |
 | Acceptance | Local store, keyword + meaning search (embedding model that fits 2 GB, with a fallback); searched before reasoning; findings saved with source, date, version and verification status; fixes reused only after checking they apply; old notes rechecked when online; measured effect on a second similar task with the same model |
 | Depends on | W3 |
 
@@ -88,7 +89,7 @@ Status words: **done** (built and measured), **built** (built, tested with scrip
 | Item | Status | Evidence / next |
 |---|---|---|
 | Web apps (lists, forms, search, login, dashboard counts, links, one rule per record type) | **done** | held-out builds 3/3 on all tiers (step-3 and current system) |
-| Computed totals and sums in apps | **planned, step 5** | Locked shop app failed only on totals, revenue sum and own tests (13/17) |
+| Computed totals and sums in apps | **built, not yet measured with a real model** | Computed fields (formula over own and linked number fields) and dashboard sums, worked out in the database query; template builds pass their checks. Locked shop app had failed only on totals, revenue sum and own tests (13/17). Next: measure on a dev app with the real 2/4/8 GB models |
 | New programs (C++, Go, Python, ...) | **built** | locked C++ program: only 8 GB built it (7/7) |
 | Bug fixing: Python | **done** | held-out 4 GB 20/20 bugs, workspaces 6/10 |
 | Bug fixing: C++ / Go | **weak** | locked: C++ 1-2 of 3, Go 0 of 2 at every tier. Step 5 improves on dev tasks |
@@ -106,7 +107,9 @@ Status words: **done** (built and measured), **built** (built, tested with scrip
 
 | | |
 |---|---|
-| Status | **planned, step 6** (the step-1 task engine already waits for the network in its own tests; the agent marks `needs_internet` steps but nothing fetches yet) |
+| Status | **built** (2026-11-18, step 6) |
+| Evidence | Steps needing the internet wait (`waiting_network`) and resume when it is back; services that say "slow down" get a growing pause (10 min up to 6 h), never repeated asking. Outside actions go through a crash-safe ledger: done ones are never repeated, interrupted ones are not repeated without the owner's answer. Pictures: owner photos first, on-brand "Image needed" placeholders offline, licensed Wikimedia Commons photos online (PD/CC0/CC BY/CC BY-SA only) with source in `IMAGE_CREDITS.md`. Packages: PyPI/npm checked with docs links, upgraded in an isolated copy, tested in the sandbox, swapped in only if tests pass, backup and rollback. Real upgrade run (`benchmark/results/online_upgrade_demo.json`): six upgraded, packaging kept back because 26.3 breaks the project's test, real project untouched by the failing attempt (17.5 s). 20 tests in `tests/test_online.py` |
+| Unverified | Real photo downloads: the Commons search works from this cloud machine, but downloads are rate-limited for its shared address (recorded in `benchmark/results/online_images_demo.json`; a polite retry runs every 20 minutes). Real npm upgrade run. A real crash in the middle of a real outside action (tested with a simulated crash) |
 | Acceptance | Internet steps wait and resume by themselves; images: owner's first, offline placeholders marked "images needed", online licensed photos with recorded source; packages checked when online, upgraded in isolation, tested, rolled back on failure; no duplicate side effects after a crash |
 
 ## W11. Creative quality and design

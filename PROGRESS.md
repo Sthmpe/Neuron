@@ -83,6 +83,18 @@ Then, in order: full suite, merge, fast-forward main; design proof (20 requests)
 
 ## Events
 
+- 2026-11-18 afternoon: step 6 (offline to online) built: waiting steps resume by themselves with polite backoff,
+  crash-safe ledger for outside actions (owner asked before an interrupted action is repeated), pictures (owner
+  first, on-brand placeholders offline, licensed Commons photos online with credits), safe package upgrades (isolated
+  copy, tests, swap only on pass, backup, rollback), old memory notes rechecked when online. Real runs: package
+  upgrade as expected (six upgraded, packaging kept back); photo search real, photo downloads rate-limited for this
+  cloud address (honestly recorded, polite retry running). Owner approved adding commons.wikimedia.org and
+  upload.wikimedia.org to this machine's network. Two machine restarts during the day: the scorecard chain was resumed
+  each time (finished items are kept, nothing rerun silently). Full suite 192 OK; main moved to 1f65640.
+- 2026-11-18: step 4 memory built and measured (no reliable effect on an easy pair), step 5 locked set eval2 written
+  and LOCKED before tuning (fingerprint e72a2d9e...), computed totals and dashboard sums built (not yet measured with
+  real models).
+
 - 2026-11-18: step 1 MASTER_ROADMAP.md. Step 2: clean-setup Linux retest (real build, download, self-test, real tasks
   through the phone API): run 1 2/4 with three bugs found and fixed, run 2 4/4; phone page polish (plain summaries,
   app.zip). Windows installer via WSL2 written, unverified (no Windows; PowerShell download not permitted here).
