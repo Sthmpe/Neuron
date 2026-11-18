@@ -6,6 +6,7 @@ const LABEL = { draft: 'Draft', queued: 'Waiting to start', running: 'Working', 
   waiting_approval: 'Needs your OK', paused: 'Paused' };
 const STEP = { pending: '', in_progress: '·', done: '✓', failed: '!', skipped: '-', waiting_approval: '?' };
 let timer = null;
+let gen = 0;       // only the newest screen may draw: an older one that finishes loading later is dropped
 
 async function api(path, opts = {}) {
   const r = await fetch(path, { ...opts, headers: { 'X-Neuron': '1', ...(opts.json ? { 'Content-Type': 'application/json' } : {}), ...(opts.headers || {}) },
@@ -34,7 +35,7 @@ function pairView() {
   };
 }
 
-async function homeView() {
+async function homeView(g) {
   const files = [];
   view.innerHTML = `<section class="card hero"><h1>What should NEURON do?</h1>
   <p class="lead">Describe the goal in your own words. Attach data, documents or a whole project as a .zip.</p>
@@ -54,16 +55,18 @@ async function homeView() {
     } catch (e) { $('#msg').innerHTML = `<div class="err">${esc(e.message)}</div>`; $('#go').disabled = false; $('#go').textContent = 'Start'; }
   };
   const { jobs } = await api('/api/jobs');
+  if (g !== gen) return;
   $('#jobs').innerHTML = jobs.length ? jobs.map(j => `<a class="item" href="#/job/${j.id}"><div><div class="t">${esc(j.title)}</div>
     <div class="s">${ago(j.created)}</div></div><span class="badge b-${j.status}">${LABEL[j.status] || j.status}</span></a>`).join('')
     : '<p class="note">Nothing yet. Your first job will appear here.</p>';
 }
 
-async function jobView(id) {
+async function jobView(id, g) {
   let after = 0, feed = [];
   async function draw() {
     const j = await api(`/api/jobs/${id}`);
-    const ev = (await api(`/api/jobs/${id}/events?after=${after}`)).events; if (ev.length) { after = ev[ev.length - 1].seq; feed = feed.concat(ev).slice(-60); }
+    const ev = (await api(`/api/jobs/${id}/events?after=${after}`)).events;
+    if (g !== gen) return; if (ev.length) { after = ev[ev.length - 1].seq; feed = feed.concat(ev).slice(-60); }
     const live = ['queued', 'running'].includes(j.status);
     const outs = (j.outputs || []).filter(o => !o.path.startsWith('app/') || o.path === 'app/app.py');
     const earlier = (j.thread || []).filter(t => t.id !== j.id);
@@ -103,13 +106,14 @@ async function jobView(id) {
       if (r.url) location.href = `${location.protocol}//${location.hostname}${r.url}`; });
     view.querySelectorAll('[data-ok],[data-no]').forEach(b => b.onclick = () => { const [task, action] = (b.dataset.ok || b.dataset.no).split('|');
       api(`/api/jobs/${id}/approve`, { method: 'POST', json: { task, action, approve: !!b.dataset.ok } }).then(draw); });
-    clearTimeout(timer); if (live || j.status === 'waiting_approval') timer = setTimeout(() => location.hash === `#/job/${id}` && draw(), 2500);
+    clearTimeout(timer); if (live || j.status === 'waiting_approval') timer = setTimeout(() => g === gen && draw(), 2500);
   }
   await draw();
 }
 
-async function statusView() {
+async function statusView(g) {
   const s = await api('/api/status');
+  if (g !== gen) return;
   const m = s.memory || {};
   view.innerHTML = `<p><a href="#/">Back</a></p><section class="card"><h1>This NEURON</h1><div class="stats">
     <div class="stat"><b>${s.online ? 'Online' : 'Offline'}</b><span>Internet</span></div>
@@ -123,15 +127,16 @@ async function statusView() {
 
 async function route() {
   clearTimeout(timer);
+  const g = ++gen;
   const h = location.hash || '#/';
   try {
     if (h === '#/pair') return pairView();
-    const me = await api('/api/me'); if (!me.paired) { location.hash = '#/pair'; return; }
+    const me = await api('/api/me'); if (g !== gen) return; if (!me.paired) { location.hash = '#/pair'; return; }
     pill();
-    if (h.startsWith('#/job/')) return jobView(h.slice(6));
-    if (h === '#/status') return statusView();
-    return homeView();
-  } catch (e) { if (e.message !== 'not paired') view.innerHTML = `<div class="err">${esc(e.message)}</div>`; }
+    if (h.startsWith('#/job/')) return jobView(h.slice(6), g);
+    if (h === '#/status') return statusView(g);
+    return homeView(g);
+  } catch (e) { if (e.message !== 'not paired' && g === gen) view.innerHTML = `<div class="err">${esc(e.message)}</div>`; }
 }
 window.addEventListener('hashchange', route);
 route(); setInterval(pill, 30000);

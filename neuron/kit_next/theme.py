@@ -111,8 +111,8 @@ main{display:block}
 .page-head{padding:calc(var(--space)*6) 0 calc(var(--space)*3)}
 .page-head h1{font-size:var(--fs-2xl);margin:0}
 .app-main{padding-bottom:calc(var(--space)*10)}
-.section{padding-block:calc(var(--section-space)*0.62)}
-@media(min-width:900px){.section{padding-block:var(--section-space)}}
+.section{padding-block:calc(var(--section-space)*0.4)}
+@media(min-width:900px){.section{padding-block:calc(var(--section-space)*0.55)}}
 .tone-1{background:var(--color-bg)}.tone-2{background:var(--color-surface-2)}
 .tone-strong{background:var(--color-strong);color:var(--color-on-strong)}
 .tone-strong h1,.tone-strong h2,.tone-strong h3{color:var(--color-on-strong)}.tone-strong p,.tone-strong .lead{color:var(--color-on-strong-muted)}

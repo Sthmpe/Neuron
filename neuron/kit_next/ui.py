@@ -161,12 +161,11 @@ def _render_hero(m, items, facts, variant, brand):
     h1 = f'<h1>{_esc(m["title"])}</h1>'
     lead = f'<p class="lead">{_esc(m["subtitle"])}</p>' if m.get("subtitle") else ""
     cta = _cta(m)
-    # a hero preview shows one kind of thing (never facts mixed into a list of items) and at least two of them
-    peek = (facts if variant == "editorial" and len(facts) >= 2 else items or facts)[:4]
-    if len(peek) < 2:
-        peek = []
+    # a hero preview shows one kind of thing and at least two of them, and never the items the features section
+    # below shows anyway (the design proof found every hero repeating them): only short facts qualify
+    peek = facts[:4] if len(facts) >= 2 else []
     if variant == "centered":
-        chips = "".join(f'<span class="chip">{_icon(t, x, i + 1)}{_esc(t)}</span>' for i, (t, x) in enumerate(items[:4]))
+        chips = "".join(f'<span class="chip">{_icon(t, x, i + 1)}{_esc(t)}</span>' for i, (t, x) in enumerate(peek))
         return (f'<section class="hero hero-centered"><div class="wrap">{h1}{lead}{cta}'
                 f'{f"<div class=chips>{chips}</div>" if chips else ""}</div></section>')
     if variant == "editorial":

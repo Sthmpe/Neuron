@@ -247,3 +247,14 @@ class SchemaByCodeTests(unittest.TestCase):
         self.assertNotIn("librarian", schema)
         self.assertIn("CREATE TABLE IF NOT EXISTS product", schema)
         self.assertEqual(summary["tasks"]["schema"]["made_by"], "code")
+
+
+class CopyQualityTests(unittest.TestCase):
+    def test_same_line_for_every_item_is_sent_back(self):
+        raw = {"app_name": "Law", "kind": "site", "login_required": False, "username": "", "password": "", "forms": [], "entities": [],
+               "dashboard": [], "home": {"headline": "Law", "subheadline": "x", "sections": [{"title": "Practice areas", "text": "", "items": [
+                   {"title": "Property law", "text": "Free consultation."}, {"title": "Family law", "text": "Free consultation."}]}]}}
+        s, problems = normalise(raw)
+        self.assertTrue(any("same line" in p for p in problems), problems)
+        raw["home"]["sections"][0]["items"][1]["text"] = "Divorce and custody."
+        self.assertEqual(normalise(raw)[1], [])

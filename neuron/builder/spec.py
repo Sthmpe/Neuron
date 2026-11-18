@@ -125,6 +125,10 @@ def normalise(spec):
                      if isinstance(i, dict) and str(i.get("title") or "").strip()]
             s["home"]["sections"].append({"title": str(sec["title"]).strip(), "text": str(sec.get("text") or "").strip(),
                                           "items": items})
+            lines = [i["text"].lower().strip(" .") for i in items if i["text"]]
+            if len(items) >= 2 and len(lines) == len(items) and len(set(lines)) == 1:
+                problems.append(f"section '{sec['title']}': every item has the same line ('{items[0]['text']}'); "
+                                "write one short line about each item")
     s["forms"] = []
     for f in spec.get("forms") if isinstance(spec.get("forms"), list) else []:
         if isinstance(f, dict) and f.get("name"):

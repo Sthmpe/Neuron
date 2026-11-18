@@ -83,7 +83,9 @@ async function audit(page, name) {
     await page.waitForSelector('.item');
     note('recent work listed: ' + (await page.textContent('.item .t')));
   } catch (e) {
-    problem('journey broke: ' + e.message.split('\n')[0]);
+    let shown = '';
+    try { shown = (await page.evaluate(() => location.hash + ' | ' + document.body.innerText.replace(/\s+/g, ' '))).slice(0, 300); } catch (x) { }
+    problem('journey broke: ' + e.message.split('\n')[0] + ' | page: ' + shown);
   }
   await browser.close();
   console.log(JSON.stringify(out));
