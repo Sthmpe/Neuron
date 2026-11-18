@@ -166,6 +166,7 @@ class DocumentFunctions(Capability):
                 (orig / f).parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy(ws / f, orig / f)
         done_file = job.state.dir / "documented.json"
+        ph_file = job.state.dir / "placeholders.json"
         done = json.loads(done_file.read_text()) if done_file.exists() else []
         wrote, skipped = 0, []
         for rel in files(ws, {".py"}):
@@ -189,8 +190,15 @@ class DocumentFunctions(Capability):
                                     "1 to 3 sentences of plain text. No quotes, no code, no em dashes.",
                                     f"File {rel}:\n```python\n{clip(fn_src, 2500)}\n```\nDocstring for {todo.name}:", max_tokens=160, temperature=0.2)
                 text = clean(re.sub(r'"""|\'\'\'|```.*', "", text)).strip().replace("\\", "\\\\")
-                if len(text.split()) < 5:
+                if len(text.split()) < 5:                  # too short: one more try with a plainer request
+                    text = job.ask_text("builder", "Describe what a Python function does in one or two plain sentences.",
+                                        f"```python\n{clip(fn_src, 2500)}\n```\nIn one or two sentences: what does {todo.name} do, "
+                                        "what does it take and what does it give back?", max_tokens=120, temperature=0.5)
+                    text = clean(re.sub(r'"""|\'\'\'|```.*', "", text)).strip().replace("\\", "\\\\")
+                if len(text.split()) < 5:                  # still nothing useful: a placeholder, and it is reported, not hidden
                     text = f"{todo.name.replace('_', ' ').capitalize()}: see the code below for its inputs and result."
+                    placeholders = json.loads(ph_file.read_text()) if ph_file.exists() else []
+                    ph_file.write_text(json.dumps(placeholders + [key]))
                 lines = src.splitlines()
                 indent = " " * body0.col_offset
                 lines.insert(body0.lineno - 1 - (len(getattr(body0, "decorator_list", [])) if hasattr(body0, "decorator_list") else 0),
@@ -218,9 +226,14 @@ class DocumentFunctions(Capability):
             if _strip_docs((orig / rel).read_text()) != _strip_docs(new):
                 changed.append(rel)
             missing += [f"{rel}:{n.name}" for n in ast.walk(ast.parse(new)) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and not ast.get_docstring(n)]
+        ph_file = job.state.dir / "placeholders.json"
+        placeholders = json.loads(ph_file.read_text()) if ph_file.exists() else []
         checks = [{"id": "behaviour_code_unchanged", "pass": not changed, "detail": changed[:5]},
-                  {"id": "every_function_documented", "pass": not missing, "detail": missing[:5]}]
-        return Verdict(not changed and not missing, checks, "AST comparison with the original")
+                  {"id": "every_function_documented", "pass": not missing, "detail": missing[:5]},
+                  {"id": "every_docstring_written_by_the_model", "pass": not placeholders,
+                   "detail": f"placeholder text (the model gave nothing useful) for: {placeholders[:5]}" if placeholders else ""}]
+        return Verdict(not changed and not missing and not placeholders, checks,
+                       "AST comparison with the original; placeholders are reported as not done")
 
 
 CAPABILITIES = [FixBug(), DocumentFunctions()]

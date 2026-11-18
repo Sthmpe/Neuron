@@ -198,6 +198,22 @@ def _ui_fields(fs, spec=None):
     return ", ".join(relations.ui_field_code(spec, f, INPUT_TYPE.get(f["type"], "text")) for f in fs)
 
 
+def _hidden_after_search(spec, e, a, b):
+    """Values of the second record that must vanish when searching for the first. A linked name never counts:
+    the page's drop-down lists every linked record anyway (the locked phase-5 rerun found this check rejecting
+    a correct orders page searched by product)."""
+    from . import relations
+    shown_anyway = {relations.sample(spec, next(x for x in spec["entities"] if x["name"] == f["to"]), k)[
+        next(x for x in spec["entities"] if x["name"] == f["to"])["search_field"]] for f in relations.links_of(e) for k in (0, 1)}
+    out = []
+    for f in e["fields"]:
+        v = str(b[f["name"]])
+        if f["type"] in ("text", "email", "phone") and v not in shown_anyway and v != str(a[f["name"]]) and v not in str(a.values()):
+            out.append(v)
+            break
+    return out
+
+
 def _ordered(entities):
     """Entities that others link to come first, so their pages exist when the linking page is checked."""
     out, left = [], list(entities)
@@ -267,7 +283,7 @@ def expand(spec):
             {"get": f"/{n}", "expect_text": [e["label"]] + [f["label"] for f in fs]},
             {"post": f"/{n}", "form": a}, {"post": f"/{n}", "form": b},
             {"get": f"/{n}", "expect_text": [a[sf], b[sf]]},
-            {"get": f"/{n}?q={a[sf].split()[0]}", "expect_text": [a[sf]], "expect_no_text": [b[sf]]},
+            {"get": f"/{n}?q={a[sf].split()[0]}", "expect_text": [a[sf]], "expect_no_text": _hidden_after_search(spec, e, a, b)},
             {"restart": True}, {"get": f"/{n}", "expect_text": [a[sf], b[sf]]}]
         linked = relations.links_of(e) or relations.rule_for(spec, n)
         rule_checks = relations.rule_checks(spec, auth, on_add=n)
