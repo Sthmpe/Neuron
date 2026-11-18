@@ -1,0 +1,76 @@
+{
+ "rows": [
+  {
+   "task": "h01_readings",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 27.072795391082764,
+    "tokens": 126
+   },
+   "what_happened": [
+    "average: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 36.7,
+   "peak_mb": 5576
+  },
+  {
+   "task": "h02_truncate",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 37.943094968795776,
+    "tokens": 182
+   },
+   "what_happened": [
+    "truncate: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 38.4,
+   "peak_mb": 5596
+  },
+  {
+   "task": "h03_rpn",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 137.65677070617676,
+    "tokens": 605
+   },
+   "what_happened": [
+    "apply: tests still fail: [...]\n====================================\nFAIL: test_division",
+    "apply: tests still fail: [...]\n=========================\nFAIL: test_subtraction (tests.",
+    "apply: tests still fail: [...]\n====================================\nFAIL: test_division"
+   ],
+   "tests_untouched": true,
+   "seconds": 138.1,
+   "peak_mb": 5602
+  }
+ ],
+ "set": "heldout",
+ "tier": "8gb",
+ "tier_limit_mb": 8192,
+ "condition": "full",
+ "models": {
+  "planner": "gemma-4-e4b-q4",
+  "reviewer": "gemma-4-e4b-q4",
+  "builder": "gemma-4-e4b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-18 01:59:42",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

@@ -100,6 +100,106 @@
    "tests_untouched": true,
    "seconds": 777.8,
    "peak_mb": 5647
+  },
+  {
+   "task": "w06_lunch_slots",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 133.0,
+    "tokens": 374
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 133.3,
+   "peak_mb": 5647
+  },
+  {
+   "task": "w07_cancelled_blocks",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 507.0,
+    "tokens": 2897
+   },
+   "what_happened": [
+    "rejected: the proposed code is not valid Python: unexpected indent (line 1)",
+    "rejected: the proposed code is not valid Python: unexpected indent (line 1)",
+    "rejected: the proposed code is not valid Python: unexpected indent (line 1)"
+   ],
+   "tests_untouched": true,
+   "seconds": 507.1,
+   "peak_mb": 5647
+  },
+  {
+   "task": "w08_reminder_day",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 99.0,
+    "tokens": 240
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 99.3,
+   "peak_mb": 5655
+  },
+  {
+   "task": "w09_insurance_share",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 2,
+   "llm": {
+    "calls": 2,
+    "seconds": 533.5,
+    "tokens": 3109
+   },
+   "what_happened": [
+    "rejected: the model's reply was cut off by the length limit; the reply contained",
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 534.0,
+   "peak_mb": 5636
+  },
+  {
+   "task": "w10_child_age",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 239.0,
+    "tokens": 566
+   },
+   "what_happened": [
+    "tests still failing",
+    "tests still failing",
+    "rejected: the proposed file is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 239.3,
+   "peak_mb": 5628
   }
  ],
  "set": "workspace",

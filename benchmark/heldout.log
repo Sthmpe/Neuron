@@ -180,3 +180,12 @@
 8gb-base w03_due_date_weekend: not solved | attempts 3 | 389.9s | peak 5624 MB
 8gb-base w04_cancelled_spelling: not solved | attempts 3 | 575.1s | peak 5632 MB
 8gb-base w05_search_case: not solved | attempts 3 | 777.8s | peak 5647 MB
+8gb-base w06_lunch_slots: SOLVED | attempts 1 | 133.3s | peak 5647 MB
+8gb-base w07_cancelled_blocks: not solved | attempts 3 | 507.1s | peak 5647 MB
+8gb-base w08_reminder_day: SOLVED | attempts 1 | 99.3s | peak 5655 MB
+8gb-base w09_insurance_share: SOLVED | attempts 2 | 534.0s | peak 5636 MB
+8gb-base w10_child_age: not solved | attempts 3 | 239.3s | peak 5628 MB
+8gb-base: solved 5/10; mean score 0.50
+8gb-full h01_readings: SOLVED | attempts 1 | 36.7s | peak 5576 MB
+8gb-full h02_truncate: SOLVED | attempts 1 | 38.4s | peak 5596 MB
+8gb-full h03_rpn: not solved | attempts 3 | 138.1s | peak 5602 MB
