@@ -107,6 +107,15 @@ class ResearchJobTests(unittest.TestCase):
 
 @unittest.skipUnless(SBX.available(), "bubblewrap missing")
 class CodeJobTests(unittest.TestCase):
+    """The model's path (diagnosis, edit, tests, undo on failure). The small-change search, which would fix these
+    one-token bugs before the model is asked, is switched off here and tested in tests/test_repair_search.py."""
+
+    def setUp(self):
+        os.environ["NEURON_REPAIR_SEARCH"] = "0"
+
+    def tearDown(self):
+        os.environ.pop("NEURON_REPAIR_SEARCH", None)
+
     def test_cpp_bug_is_fixed_and_proven_by_the_tests(self):
         ws = Path(tempfile.mkdtemp()) / "ws"
         shutil.copytree(P5 / "dev" / "workspaces" / "cpp_grades", ws)
