@@ -18,7 +18,7 @@ from ..brain.llm import LLMUnavailable
 from . import prompts
 from .checks import CheckRunner
 from . import relations, templates
-from .spec import SPEC_SCHEMA, expand, normalise
+from .spec import SPEC_SCHEMA, expand, normalise, unsupported_features
 
 PLAN_SCHEMA = relations.extend_schema(SPEC_SCHEMA)       # the planner may also give link fields and rules
 from .state import ProjectState
@@ -227,6 +227,9 @@ def build_full(project, request, runner, sandbox, log=print, max_seconds=None, d
         if spec is None:
             return {"ok": False, "stage": "plan", "error": "; ".join(problems), "llm": vars(meter), "resumed": False}
         tasks, acceptance, purposes = expand(spec)
+        spec["not_built"] = unsupported_features(request)
+        if spec["not_built"]:
+            log(f"cannot build yet (will be reported): {spec['not_built']}")
         prepare_project(project, spec["app_name"], design)
         state.create(request, "build", spec, tasks, acceptance, purposes)
         if design:
@@ -345,6 +348,7 @@ def build_full(project, request, runner, sandbox, log=print, max_seconds=None, d
             "design": design_result["final"] if design_result else None,
             "tasks": {t["id"]: {"status": t["status"], "attempts": len(t["attempts"]), "made_by": t.get("made_by")} for t in tasks},
             "made_by": {k: sum(t.get("made_by") == k for t in tasks) for k in ("model", "template", "code")},
+            "not_built": (state.spec()["spec"] or {}).get("not_built", []),
             "llm": vars(meter), "model_loads": runner.loads, "seconds": round(time.time() - t0, 1)}
 
 

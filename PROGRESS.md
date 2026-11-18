@@ -24,9 +24,11 @@ session, or a new model, to continue. Update this file after every meaningful st
 
 ## Next (proposed, in order)
 
-1. Honesty gap: no "verified" unless every requested part is covered. The builder planner should list requested
-   features it cannot express (computed totals, sums, own tests) and the report should say PARTIAL; PDF answers
-   should check that the answer's facts are in the quoted text.
+1. Honesty gap: **first version done 2026-11-18**. Requested app features the builder cannot make (sums, computed
+   totals, tests, charts, messages, payments, export) are detected and reported; the step is delivered as 'partial'
+   and the job says PARTIAL instead of VERIFIED. PDF answers count as confirmed only if every number in the answer is
+   in the quote and a 'how much' question gets a number. Informed by the locked results, so any later locked run is
+   not a clean measurement (label it as such). Not yet measured with real models.
 2. Builder: computed columns (quantity x price), sum aggregations on the dashboard, generated tests for apps.
 3. Compiled-language bug fixing (Go 0/2, C++ 1-2/3 in the locked set).
 4. Owner's acceptance test on a real home PC and phone (TESTING.md).

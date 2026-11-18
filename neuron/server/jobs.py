@@ -181,7 +181,7 @@ class JobManager:
         m = self.meta(jid)
         st = JobState(self._path(jid) / "workspace")
         plan = [{"id": t["id"], "title": t["title"], "status": t["status"], "summary": t.get("summary", ""), "made_by": t.get("made_by"),
-                 "verification": t.get("verification"), "tries": len(t.get("attempts", [])),
+                 "verification": t.get("verification"), "tries": len(t.get("attempts", [])), "gaps": t.get("gaps", []),
                  "last_failure": (t["attempts"][-1].get("failure") if t.get("attempts") and not t["attempts"][-1].get("passed") else "")}
                 for t in st.plan()] if st.exists() else []
         evidence = st.lines("evidence.jsonl")[-12:] if st.exists() else []

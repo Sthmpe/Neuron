@@ -14,7 +14,7 @@ import os
 import time
 from pathlib import Path
 
-TERMINAL = ("done", "failed", "skipped")
+TERMINAL = ("done", "partial", "failed", "skipped")     # partial: delivered with stated gaps
 
 
 def _write(path, obj):
@@ -102,7 +102,7 @@ class JobState:
 
     def ready_task(self):
         plan = self.plan()
-        done = {t["id"] for t in plan if t["status"] == "done"}
+        done = {t["id"] for t in plan if t["status"] in ("done", "partial")}
         blocked = {t["id"] for t in plan if t["status"] in ("failed", "skipped")}
         for t in plan:
             if t["status"] in ("pending", "in_progress"):

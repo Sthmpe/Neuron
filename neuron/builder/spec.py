@@ -198,6 +198,29 @@ def _ui_fields(fs, spec=None):
     return ", ".join(relations.ui_field_code(spec, f, INPUT_TYPE.get(f["type"], "text")) for f in fs)
 
 
+GAPS = [
+    (r"\b(revenue|turnover|takings|income|sum of|total (sales|revenue|amount|value|cost|spent|money|takings))\b",
+     "a sum of money or amounts (the dashboard can only count records)"),
+    (r"\b(order|line|invoice|sale|basket) totals?\b|\btotal (price|cost|amount) (for|of|on) (each|every|the) (order|sale|invoice)\b|"
+     r"\bquantity\s*(x|times)\s*(the )?(unit )?price\b", "a computed total on each record (such as quantity times price)"),
+    (r"\b(write|add|include|with|and|has|have) (its own |some |unit |automated )?tests\b|\btest suite\b", "automated tests for the app"),
+    (r"\b(charts?|graphs?)\b", "charts"),
+    (r"\b(send|sends|sending|email|emails|text) (an? )?(email|sms|text message|whatsapp|reminders?)\b", "sending messages"),
+    (r"\b(online payments?|pay online|card payments?|accept payments?)\b", "online payments"),
+    (r"\bexport\b|\bdownload (it |them |the \w+ )?as (csv|excel|pdf)\b", "exporting data"),
+]
+
+
+def unsupported_features(request):
+    """Parts of a request this builder cannot make yet. They are reported as not built, never silently dropped (the
+    locked phase-5 run found a shop app called verified without its order totals, revenue sum or tests)."""
+    found = []
+    for pattern, what in GAPS:
+        if re.search(pattern, request or "", re.I) and what not in found:
+            found.append(what)
+    return found
+
+
 def _hidden_after_search(spec, e, a, b):
     """Values of the second record that must vanish when searching for the first. A linked name never counts:
     the page's drop-down lists every linked record anyway (the locked phase-5 rerun found this check rejecting

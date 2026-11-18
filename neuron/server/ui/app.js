@@ -4,7 +4,7 @@ const view = $('#view');
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const LABEL = { draft: 'Draft', queued: 'Waiting to start', running: 'Working', done: 'Done and checked', partial: 'Partly done', failed: 'Not done',
   waiting_approval: 'Needs your OK', paused: 'Paused' };
-const STEP = { pending: '', in_progress: '·', done: '✓', failed: '!', skipped: '-', waiting_approval: '?' };
+const STEP = { pending: '', in_progress: '·', done: '✓', partial: '~', failed: '!', skipped: '-', waiting_approval: '?' };
 let timer = null;
 let gen = 0;       // only the newest screen may draw: an older one that finishes loading later is dropped
 
@@ -86,7 +86,8 @@ async function jobView(id, g) {
       <section class="card"><h2>Steps</h2><div class="steps">${j.plan.map(t => `<div class="step"><span class="dot ${t.status}">${STEP[t.status] || ''}</span>
         <div><div class="t">${esc(t.title)}</div>${t.summary ? `<div class="s">${esc(t.summary)}</div>` : ''}
         <div class="m">${t.verification ? 'Checked by: ' + esc(t.verification) : ''}${t.made_by ? ' · made by: ' + esc(t.made_by) : ''}${t.tries > 1 ? ' · tries: ' + t.tries : ''}</div>
-        ${t.last_failure && t.status !== 'done' ? `<div class="s no">${esc(t.last_failure).slice(0, 300)}</div>` : ''}</div></div>`).join('') || '<p class="note">Planning</p>'}</div></section>
+        ${t.last_failure && t.status !== 'done' && t.status !== 'partial' ? `<div class="s no">${esc(t.last_failure).slice(0, 300)}</div>` : ''}
+        ${(t.gaps || []).map(g => `<div class="s no">Not done: ${esc(g)}</div>`).join('')}</div></div>`).join('') || '<p class="note">Planning</p>'}</div></section>
       ${outs.length ? `<section class="card out"><h2>Results</h2>${outs.map(o => `<a href="/api/jobs/${id}/file?path=${encodeURIComponent(o.path)}">
         <span>${esc(o.path)}</span><span class="note">${Math.max(1, Math.round(o.bytes / 1024))} KB</span></a>`).join('')}</section>` : ''}
       ${j.evidence.length ? `<section class="card"><h2>Evidence</h2>${j.evidence.slice(-4).map(e => `<h3>${esc(e.task)}: ${e.passed ? 'passed' : 'failed'}</h3>

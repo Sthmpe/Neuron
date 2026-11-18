@@ -104,7 +104,8 @@ What this says:
 - **False claims:** in the official runs the agent said "verified" on 3 tasks the examiner did not fully pass: the PDF
   answers at 4 GB and 8 GB (the quote was really on the cited page, but an answer was wrong) and the shop app at 8 GB
   (features it cannot build were silently left out); the 4 GB shop rerun did the same. Fixing this honesty gap is
-  the next priority.
+  the next priority. (A first fix is in: unbuildable requested features are now reported and the job says PARTIAL;
+  answer numbers must appear in the quote. Not yet re-measured.)
 
 ### Step 3 held-out scoring (2026-11-18)
 

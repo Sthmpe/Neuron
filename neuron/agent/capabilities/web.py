@@ -21,12 +21,18 @@ class BuildWebApp(Capability):
         mb = r.get("made_by") or {}
         parts = [f"{k} ({mb[k]} file{'s' if mb[k] != 1 else ''})" for k in ("model", "template", "code") if mb.get(k)]
         made = " + ".join(parts) or "model"
-        return Outcome(bool(r.get("ok")), f"app {'passes' if r.get('ok') else 'fails'} its acceptance checks; tasks {tasks}",
-                       {"builder": r}, ["app/"], made_by=made)
+        gaps = r.get("not_built") or []
+        out = Outcome(bool(r.get("ok")), f"app {'passes' if r.get('ok') else 'fails'} its acceptance checks; tasks {tasks}"
+                      + (f"; NOT built (asked for, not supported yet): {', '.join(gaps)}" if gaps else ""),
+                      {"builder": r}, ["app/"], made_by=made)
+        return out
 
     def verify(self, job, params, outcome):
         r = outcome.result["builder"]
         checks = [{"id": "acceptance_checks", "pass": bool(r.get("ok")), "detail": r.get("error", "")[:400]}]
+        gaps = r.get("not_built") or []
+        checks.append({"id": "every_requested_feature_built", "pass": not gaps, "gap": True,
+                       "detail": ("asked for but not supported yet: " + "; ".join(gaps)) if gaps else ""})
         if r.get("design") is not None:
             checks.append({"id": "design_checks", "pass": r["design"].get("fails") == 0, "detail": str(r["design"].get("by_rule"))})
         return Verdict(all(c["pass"] for c in checks), checks, "HTTP acceptance checks + browser design checks")

@@ -9,7 +9,7 @@ import unittest
 from pathlib import Path
 
 os.environ.setdefault("NEURON_DESIGN_HISTORY", os.path.join(tempfile.mkdtemp(prefix="neuron-hist-"), "h.json"))
-from neuron.agent.capability import Capability, Outcome, Registry, default_registry   # noqa: E402
+from neuron.agent.capability import Capability, Outcome, Registry, Verdict, default_registry   # noqa: E402
 from neuron.agent.loop import Agent, Job                                              # noqa: E402
 from neuron.agent.router import rule_guess                                            # noqa: E402
 from neuron.brain.sandbox import Sandbox                                              # noqa: E402
@@ -208,3 +208,42 @@ int main(int argc, char** argv) {
         rep, job, _ = run("Write a C++17 program called lc that prints 'lines: N' for the text file given as the first argument.",
                           [self.plan("lines: 5"), "```cpp\n" + bad + "```", "```python\n" + self.REF + "```"] + ["```cpp\n" + bad + "```"] * 12)
         self.assertNotEqual(rep["verdict"], "VERIFIED")
+
+
+class GapTests(unittest.TestCase):
+    def test_requested_features_the_builder_cannot_make_are_found(self):
+        from neuron.builder.spec import unsupported_features as u
+        gaps = u("A shop app with products and orders. Show order totals and total revenue on the dashboard, and add tests.")
+        self.assertEqual(len(gaps), 3, gaps)
+        self.assertEqual(u("A clinic app with patients, their blood test results and how many visits there were."), [])
+
+    def test_a_step_with_only_stated_gaps_is_partial_delivered_and_not_retried(self):
+        class Gappy(Capability):
+            name = "answer_question"
+            purpose = "x"
+            calls = 0
+
+            def run(self, job, params):
+                Gappy.calls += 1
+                (job.workspace / "app.txt").write_text("built part")
+                return Outcome(True, "built what it could", files=["app.txt"])
+
+            def verify(self, job, params, outcome):
+                return Verdict(False, [{"id": "built", "pass": True, "detail": ""},
+                                       {"id": "every_requested_feature_built", "pass": False, "gap": True, "detail": "charts"}], "test")
+        reg = default_registry()
+        reg.add(Gappy())
+        rep, job, _ = run("Why is the sky blue?", [], registry=reg)
+        self.assertEqual(rep["verdict"], "PARTIAL", rep)
+        self.assertIn("app.txt", rep["files"])
+        self.assertEqual(Gappy.calls, 1)
+        self.assertEqual(list(rep["not_done"].values()), [["charts"]])
+
+
+class AnswerFactsTests(unittest.TestCase):
+    def test_answer_numbers_must_be_in_the_quote(self):
+        from neuron.agent.capabilities.research import facts_backed as f
+        self.assertFalse(f("How much does a student pay?", "Half the adult fare.", "Students pay half the adult fare of 300."))
+        self.assertTrue(f("How much does a student pay?", "150 naira.", "Students pay 150 naira, half the adult fare."))
+        self.assertFalse(f("Which area uses most?", "Northbank, 31,200 litres.", "Old Town used 19,500 litres."))
+        self.assertTrue(f("Which area uses most?", "Northbank.", "Northbank used the most water."))

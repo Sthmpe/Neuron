@@ -203,6 +203,11 @@ class Agent:
                 s.update_task(tid, status="done", summary=out.summary, result=out.result, files=out.files, made_by=out.made_by,
                               verification=verdict.how)
                 return
+            if out.ok and verdict.failures and all(c.get("gap") for c in verdict.failures):
+                # what was built passes its checks; the rest cannot be built yet: deliver it and say so, retrying cannot help
+                s.update_task(tid, status="partial", summary=out.summary, result=out.result, files=out.files, made_by=out.made_by,
+                              verification=verdict.how, gaps=[c["detail"] for c in verdict.failures])
+                return
             if verdict.rework and self._rework(task, verdict, attempt["failure"]):
                 return
             task = s.task(tid)
@@ -250,14 +255,16 @@ class Agent:
     def report(self, seconds):
         plan = self.s.plan()
         done = [t for t in plan if t["status"] == "done"]
+        partial = [t for t in plan if t["status"] == "partial"]
         failed = [t for t in plan if t["status"] in ("failed", "skipped")]
         made = {}
         for t in done:
             made[t.get("made_by", "deterministic")] = made.get(t.get("made_by", "deterministic"), 0) + 1
-        verdict = "VERIFIED" if plan and len(done) == len(plan) else "PARTIAL" if done else "FAILED"
-        files = sorted({f for t in done for f in t.get("files", [])})
+        verdict = "VERIFIED" if plan and len(done) == len(plan) else "PARTIAL" if done or partial else "FAILED"
+        files = sorted({f for t in done + partial for f in t.get("files", [])})
         rep = {"verdict": verdict, "kind": self.s.goal().get("kind"), "tasks": {t["id"]: t["status"] for t in plan},
                "failed": {t["id"]: t.get("summary", "") for t in failed}, "files": files, "made_by": made,
+               "not_done": {t["id"]: t.get("gaps", []) for t in partial},
                "model_calls": self.job.calls, "online_calls": self.job.online_calls, "model_seconds": round(self.job.model_seconds, 1), "tokens": self.job.tokens,
                "usage_all_sessions": self.job.usage_total(),
                "seconds": round(seconds, 1), "pending": [t["id"] for t in plan if t["status"] in ("pending", "waiting_approval")],
