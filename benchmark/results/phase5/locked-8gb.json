@@ -129,6 +129,130 @@
    },
    "agent_verdict": "VERIFIED",
    "false_claim": false
+  },
+  {
+   "task": "L05_cpp_budget_cli",
+   "kind": "cpp_build",
+   "solved": true,
+   "checks_passed": 7,
+   "checks_total": 7,
+   "failed_checks": [],
+   "seconds": 949.2,
+   "peak_mb": 5777,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 949.2
+    }
+   ],
+   "model_calls": 4,
+   "tokens": 5165,
+   "model_seconds": 932.4,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 2
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "L06_cpp_bug_stock",
+   "kind": "workspace_bug",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "original_tests_pass: FAIL line 27: inv.get(\"RICE\").stock == 10\nFAIL line 29: inv.get(\"RICE\").stock == 15\nmake: *** [Makefile:9: test] Error 2\n"
+   ],
+   "seconds": 371.1,
+   "peak_mb": 5796,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 371.1
+    }
+   ],
+   "model_calls": 7,
+   "tokens": 1565,
+   "model_seconds": 352.6,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1
+   },
+   "agent_verdict": "PARTIAL",
+   "false_claim": false
+  },
+  {
+   "task": "L07_cpp_bug_discount",
+   "kind": "workspace_bug",
+   "solved": true,
+   "checks_passed": 1,
+   "checks_total": 1,
+   "failed_checks": [],
+   "seconds": 77.0,
+   "peak_mb": 5745,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 77.0
+    }
+   ],
+   "model_calls": 2,
+   "tokens": 199,
+   "model_seconds": 57.5,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "L08_cpp_bug_parse",
+   "kind": "workspace_bug",
+   "solved": true,
+   "checks_passed": 1,
+   "checks_total": 1,
+   "failed_checks": [],
+   "seconds": 414.1,
+   "peak_mb": 5765,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 414.1
+    }
+   ],
+   "model_calls": 8,
+   "tokens": 1733,
+   "model_seconds": 390.5,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
   }
  ],
  "set": "locked",
