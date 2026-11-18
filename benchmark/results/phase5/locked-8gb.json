@@ -1,0 +1,148 @@
+{
+ "rows": [
+  {
+   "task": "L01_pdf_research",
+   "kind": "pdf_qa",
+   "solved": false,
+   "checks_passed": 14,
+   "checks_total": 16,
+   "failed_checks": [
+    "q3_answer_correct: Northbank uses the most water per day, at 31,200 million litres. (riverside water report 2025, page 2)",
+    "q7_answer_correct: A student pays half the adult single fare. (greenline bus policy 2026, page 2)"
+   ],
+   "seconds": 340.1,
+   "peak_mb": 5635,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 340.1
+    }
+   ],
+   "model_calls": 8,
+   "tokens": 646,
+   "model_seconds": 181.5,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": true
+  },
+  {
+   "task": "L02_excel_summary",
+   "kind": "excel",
+   "solved": true,
+   "checks_passed": 14,
+   "checks_total": 14,
+   "failed_checks": [],
+   "seconds": 47.0,
+   "peak_mb": 5726,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 47.0
+    }
+   ],
+   "model_calls": 1,
+   "tokens": 119,
+   "model_seconds": 30.5,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1,
+    "template": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "L03_word_proposal",
+   "kind": "word",
+   "solved": true,
+   "checks_passed": 5,
+   "checks_total": 5,
+   "failed_checks": [],
+   "seconds": 484.1,
+   "peak_mb": 5655,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 484.1
+    }
+   ],
+   "model_calls": 11,
+   "tokens": 2866,
+   "model_seconds": 471.4,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1,
+    "model+template": 1,
+    "deterministic": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "L04_pptx_pitch",
+   "kind": "pptx",
+   "solved": true,
+   "checks_passed": 9,
+   "checks_total": 9,
+   "failed_checks": [],
+   "seconds": 81.0,
+   "peak_mb": 5767,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 81.0
+    }
+   ],
+   "model_calls": 1,
+   "tokens": 419,
+   "model_seconds": 67.6,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1,
+    "template": 1,
+    "deterministic": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  }
+ ],
+ "set": "locked",
+ "tier": "8gb",
+ "tier_limit_mb": 8192,
+ "network": "new empty network namespace (loopback only)",
+ "model": {
+  "planner": "gemma-4-e4b-q4",
+  "reviewer": "gemma-4-e4b-q4",
+  "builder": "gemma-4-e4b-q4"
+ },
+ "bug_request": "The tests of this project fail. Find the bug in the source code and fix it so the tests pass. Do not change the tests.",
+ "started": "2026-11-18 06:46:06",
+ "code_commit": "429243aca4a59fdee40921e616a091a2f188c568",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

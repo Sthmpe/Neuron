@@ -55,3 +55,7 @@ FileNotFoundError: [Errno 2] No such file or directory: '/home/user/neuron/bench
 -- examiner crashed on 2gb L11 (no app folder delivered); lock amendment 3; L11 scored from the delivered folder without rerunning the agent; run resumed at 06:41 --
 locked-2gb L12_long_docstrings: SOLVED | 4/4 checks | 76.0s | peak 1407 MB | calls 31 | agent says VERIFIED
 PHASE5-DONE locked-2gb
+locked-8gb L01_pdf_research: not solved | 14/16 checks | 340.1s | peak 5635 MB | calls 8 | agent says VERIFIED
+locked-8gb L02_excel_summary: SOLVED | 14/14 checks | 47.0s | peak 5726 MB | calls 1 | agent says VERIFIED
+locked-8gb L03_word_proposal: SOLVED | 5/5 checks | 484.1s | peak 5655 MB | calls 11 | agent says VERIFIED
+locked-8gb L04_pptx_pitch: SOLVED | 9/9 checks | 81.0s | peak 5767 MB | calls 1 | agent says VERIFIED
