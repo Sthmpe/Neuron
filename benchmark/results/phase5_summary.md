@@ -4,13 +4,14 @@
 recorded examiner amendments). Network off, every process inside the tier's memory limit, results judged only by
 independent examiners. Official runs are the first run per tier; 'rerun' files are labelled reruns after fixing
 NEURON bugs that an official run exposed, and are not a clean held-out measurement.
+
 | Run | Solved |
 |---|---|
 | locked-2gb | 5 of 12 |
 | locked-4gb | 4 of 12 |
+| locked-8gb | 7 of 12 |
 | locked-4gb-rerun-after-portfix | 1 of 2 |
 | locked-4gb-rerun2-after-fixes | 1 of 2 |
-
 
 ### locked-2gb
 
@@ -72,6 +73,34 @@ What failed (examiner's words):
 - L10_go_bug_round: original_tests_pass: --- FAIL: TestRoundDiv (0.00s)     ledger_test.go:9: RoundDiv(10,4)=2 want 3     ledger_test.go:9: RoundDiv(-10,4)=-2 want -3    
 - L11_business_app: login_works: Cannot read properties of null (reading 'fill'); add_products: no field for Price; product_search: locator.fill: Timeout 30000ms exceeded.
 - L12_long_docstrings: every_function_documented: 35 of 50; missing ['shopkeeper/services/reports.py:customers_by_tier', 'shopkeeper/storage/repository.py:__init__', 'shopke
+
+### locked-8gb
+
+Model: gemma-4-e4b-q4 | tier limit 8192 MB | code 429243aca4 | network: new empty network namespace (loopback only)
+
+| Task | Solved | Checks | Minutes | Peak MB | Model calls | Agent said | False claim | Made by |
+|---|---|---|---|---|---|---|---|---|
+| L01_pdf_research | no | 14/16 | 5.7 | 5635 | 8 | VERIFIED | yes | deterministic 1, model 1 |
+| L02_excel_summary | yes | 14/14 | 0.8 | 5726 | 1 | VERIFIED |  | deterministic 2, model 1, template 1 |
+| L03_word_proposal | yes | 5/5 | 8.1 | 5655 | 11 | VERIFIED |  | model 1, model+template 1, deterministic 1 |
+| L04_pptx_pitch | yes | 9/9 | 1.4 | 5767 | 1 | VERIFIED |  | model 1, template 1, deterministic 1 |
+| L05_cpp_budget_cli | yes | 7/7 | 15.8 | 5777 | 4 | VERIFIED |  | model 2 |
+| L06_cpp_bug_stock | no | 0/1 | 6.2 | 5796 | 7 | PARTIAL |  | deterministic 1 |
+| L07_cpp_bug_discount | yes | 1/1 | 1.3 | 5745 | 2 | VERIFIED |  | deterministic 1, model 1 |
+| L08_cpp_bug_parse | yes | 1/1 | 6.9 | 5765 | 8 | VERIFIED |  | deterministic 1, model 1 |
+| L09_go_bug_rate | no | 0/1 | 7.6 | 6008 | 8 | PARTIAL |  | deterministic 1 |
+| L10_go_bug_round | no | 0/1 | 8.2 | 5998 | 7 | PARTIAL |  | deterministic 1 |
+| L11_business_app | no | 13/17 | 12.1 | 5878 | 6 | VERIFIED | yes | model (4 files) + code (1 file) 1 |
+| L12_long_docstrings | yes | 4/4 | 4.5 | 5614 | 31 | VERIFIED |  | deterministic 2, model 1 |
+
+Solved 7 of 12.
+
+What failed (examiner's words):
+- L01_pdf_research: q3_answer_correct: Northbank uses the most water per day, at 31,200 million litres. (riverside water report 2025, page 2); q7_answer_correct: A student pays half the adult single fare. (greenline bus policy 2026, page 2)
+- L06_cpp_bug_stock: original_tests_pass: FAIL line 27: inv.get("RICE").stock == 10 FAIL line 29: inv.get("RICE").stock == 15 make: *** [Makefile:9: test] Error 2 
+- L09_go_bug_rate: original_tests_pass: --- FAIL: TestRates (0.00s)     ledger_test.go:31: 15000 NGN = 2250000000 USD cents, want 1000 FAIL FAIL	example.com/ledger/ledge
+- L10_go_bug_round: original_tests_pass: --- FAIL: TestRoundDiv (0.00s)     ledger_test.go:9: RoundDiv(10,4)=2 want 3     ledger_test.go:9: RoundDiv(-10,4)=-2 want -3    
+- L11_business_app: orders_list_shows_totals: needs 6000 and 18000; dashboard_numbers: Skip to content M Mama Ngozi Provisions Dashboard Products Customers Orders ngozi Log out Dashboard Total Revenue 2 Number of Order; own_tests_exist: 0 tests in 0 files
 
 ### locked-4gb-rerun-after-portfix
 

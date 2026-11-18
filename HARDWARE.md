@@ -1,7 +1,7 @@
 # Hardware bottleneck log (for the future NEURON device)
 
 What limits NEURON on real hardware, measured, not guessed. Each entry says where the number comes from.
-Updated as new measurements arrive. Last update: 2026-11-17.
+Updated as new measurements arrive. Last update: 2026-11-18.
 
 ## The machine these numbers come from
 
@@ -54,6 +54,13 @@ writing. Faster prompt reading (more cores, matrix units) matters as well as ban
 - A device sold as "4 GB" also has to fit its operating system in those 4 GB. The installer keeps
   max(1 GB, 15%) for the system, so a 4 GB computer gets the 2 GB tier and an 8 GB computer the 4 GB tier.
 - For the device: 12 GB or more lets the 8 GB tier run with room for the system and the checking tools.
+
+## 3b. Measured in the locked evaluation: the 4 GB tier runs out
+
+In the phase-5 locked run at 4 GB, compiling a C++ project while the 3.6 GB model was in memory crossed the
+4096 MB limit (peak 4084 MB recorded, 2 limit hits); the kernel killed the model server and that task failed
+(NEURON now restarts a killed model server). Go builds also peaked at 4079 MB. For the device: a 4 GB-class model
+needs about 5 GB to also compile code; 6 GB or more is comfortable.
 
 ## 4. Never two models at once
 

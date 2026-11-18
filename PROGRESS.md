@@ -13,14 +13,24 @@ session, or a new model, to continue. Update this file after every meaningful st
 
 | Phase | What | Status |
 |---|---|---|
-| 0 | Finish current work, rules unchanged: model selection, held-out scoring (bugs, builds, workspaces), design system + 20-request proof, README with real numbers | **in progress**: selection DONE (2026-11-17 15:25); held-out scoring running since 15:25 (`benchmark/heldout.log`); design proof and README after it |
+| 0 | Finish current work: model selection, held-out scoring, design system + 20-request proof, README with real numbers | **done 2026-11-18** (held-out: `benchmark/results/heldout_summary.md`; design proof run 1: `benchmark/design/results.md`) |
 | 1 | `VISION.md` | done |
-| 2 | Freeze one reasoning model per tier (file, checksum, settings). No new model searches until the owner asks. Specialist models allowed. Measure total system RAM with headroom | **DONE 2026-11-17**: `model_manifests/frozen.json` (written by `benchmark/freeze_models.py` from `benchmark/results/selection.json`). 2 GB qwen2.5-coder-1.5b-q4, 4 GB qwen3.5-4b-q4, 8 GB gemma-4-e4b-q4. The installer reads only this file and keeps max(1 GB, 15%) of memory for the system |
-| 3 | Better intelligence with the same models: model-independent state + context slices, shared loop (understand, investigate, plan, execute, observe, verify, revise, continue), strategy change on failure, sequential roles, domain verification. Nothing hardcoded around templates or benchmark tasks | **first version built** in `neuron/agent/` (loop, state, context, router, rework, strategies); tested with a scripted model; not yet run with real models |
-| 4 | Tool registry: purpose, inputs, outputs, internet, permissions, resources, verification. Deterministic code where no model is needed. Missing tools reported honestly | **first version built**: 20 capabilities (sheets, Word, PowerPoint, PDF research, answers, workspace, multi-language bug fixing, docstrings, new programs, web apps); `python3 -m neuron.agent --capabilities` |
-| 5 | **Tasks LOCKED** (`benchmark/phase5/LOCKED.md`, 12 locked + 7 dev tasks, checkers validated, 1 amendment recorded). New evaluation, tasks locked before tuning: unseen business app (kill halfway, resume); a Flutter or C++ project; multi-module workspace bugs incl. a compiled language; Excel, Word, PowerPoint, PDF tasks with independent file checks; a task longer than one context window. Report completion, time, peak RAM, model calls, human help, recovery, model vs template share | not started |
-| 6 | Owner release: installer (detect RAM, pick model, verify downloads, start; Linux first, Windows/Mac only when tested), phone web UI on local Wi-Fi with secure pairing (chat, tasks, uploads, progress, approvals, previews, downloads, resume, model and memory status), works offline, `TESTING.md` | **first version built and tested in the cloud container**: `neuron/server/` (pairing, jobs, phone page), `scripts/install.sh` + `neuron/install.py`, `TESTING.md`, screenshots in `docs/screens/phone/`. Not yet: frozen model list (phase 2), real home PC, real phone, HTTPS, Windows/Mac |
-| 7 | Optional online boost interface (never blocks the release); hardware bottleneck log for the future device; README with every number, failure and limit | not started |
+| 2 | Freeze one reasoning model per tier | **done**: `model_manifests/frozen.json` |
+| 3 | Better intelligence with the same models | built; measured in phase 5 |
+| 4 | Tool registry, honest missing-tool reports | built: 20 capabilities |
+| 5 | Locked evaluation | **done 2026-11-18** on 2/4/8 GB: 5, 4, 7 of 12 solved (`benchmark/results/phase5_summary.md`); 3 examiner amendments in `benchmark/phase5/LOCKED.md` |
+| 6 | Owner release: installer, phone page, `TESTING.md` | built and tested in the cloud container (follow-ups, previews, optional HTTPS); not yet on a home PC or real phone |
+| 7 | Online boost, hardware log, README | done |
+
+## Next (proposed, in order)
+
+1. Honesty gap: no "verified" unless every requested part is covered. The builder planner should list requested
+   features it cannot express (computed totals, sums, own tests) and the report should say PARTIAL; PDF answers
+   should check that the answer's facts are in the quoted text.
+2. Builder: computed columns (quantity x price), sum aggregations on the dashboard, generated tests for apps.
+3. Compiled-language bug fixing (Go 0/2, C++ 1-2/3 in the locked set).
+4. Owner's acceptance test on a real home PC and phone (TESTING.md).
+5. Design proof run 2 with the fixes, labelled as a rerun.
 
 The owner's acceptance test for the next milestone: open NEURON on the phone, describe a complicated task
 in ordinary language, and watch it work through it on its own computer, offline, delivering real files
@@ -63,6 +73,13 @@ Then, in order: full suite, merge, fast-forward main; design proof (20 requests)
 `--system current` labelled as a rerun; phase-5 dev runs, then the locked runs per tier; README numbers.
 
 ## Events
+
+- 2026-11-18: held-out scoring finished (three machine restarts; interrupted tasks rerun from clean copies). Builder
+  integration merged (links and rules, template fallback, code-written schema, design system on). Phase-5 dev runs
+  found and fixed: example args with the program name, wrong hand-written examples (settled by an independent
+  Python version), phone overflow hidden by empty-page design checks. Locked runs found and fixed: model server port
+  still reserved after a crash, search check on linked names, docstring placeholders called verified, a killed model
+  server never restarted; examiner amendments 2 (pre-existing docstrings) and 3 (crash on a missing app folder).
 
 - 2026-11-17 about 20:22: the machine restarted while the held-out run was on 2gb-base b3_shop_app_resumed.
   Partial results (22 tasks) were committed; the run was resumed at 20:23 (the harness skips recorded tasks

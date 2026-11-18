@@ -143,3 +143,54 @@ class ModelServerPortTests(unittest.TestCase):
         srv2 = LlamaServer("/nonexistent.gguf", port=srv.port)
         srv2._choose_port()
         self.assertEqual(srv2.port, srv.port)                  # a free port is kept as it is
+
+
+class ModelRestartTests(unittest.TestCase):
+    def test_a_killed_model_server_is_started_again(self):
+        """Found by the locked 4 GB run: the memory limit killed the model server while a C++ project compiled, and every
+        later model call of that task failed. The runner now notices and starts the server again."""
+        from neuron.brain import models as M
+
+        class FakeProc:
+            def __init__(self):
+                self.code = None
+
+            def poll(self):
+                return self.code
+
+        class FakeServer:
+            started = 0
+
+            def __init__(self, *a, **k):
+                self.proc = FakeProc()
+
+            def start(self):
+                FakeServer.started += 1
+                return type("C", (), {"extra_body": {}})()
+
+            def stop(self):
+                pass
+
+        class Mgr:
+            def active(self, tier, role):
+                return "m"
+
+            def get(self, mid):
+                return {}
+
+            def path(self, mid):
+                return "/x.gguf"
+        import neuron.brain.llama_server as LS
+        real = LS.LlamaServer
+        LS.LlamaServer = FakeServer
+        try:
+            r = M.ModelRunner(Mgr(), "4gb")
+            r.client("builder")
+            r.client("builder")
+            self.assertEqual(FakeServer.started, 1)            # alive: reused
+            r.server.proc.code = -9                           # killed
+            r.client("builder")
+            self.assertEqual(FakeServer.started, 2)
+            self.assertEqual(r.restarts, 1)
+        finally:
+            LS.LlamaServer = real

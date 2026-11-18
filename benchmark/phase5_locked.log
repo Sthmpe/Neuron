@@ -63,3 +63,8 @@ locked-8gb L05_cpp_budget_cli: SOLVED | 7/7 checks | 949.2s | peak 5777 MB | cal
 locked-8gb L06_cpp_bug_stock: not solved | 0/1 checks | 371.1s | peak 5796 MB | calls 7 | agent says PARTIAL
 locked-8gb L07_cpp_bug_discount: SOLVED | 1/1 checks | 77.0s | peak 5745 MB | calls 2 | agent says VERIFIED
 locked-8gb L08_cpp_bug_parse: SOLVED | 1/1 checks | 414.1s | peak 5765 MB | calls 8 | agent says VERIFIED
+locked-8gb L09_go_bug_rate: not solved | 0/1 checks | 456.1s | peak 6008 MB | calls 8 | agent says PARTIAL
+locked-8gb L10_go_bug_round: not solved | 0/1 checks | 491.2s | peak 5998 MB | calls 7 | agent says PARTIAL
+locked-8gb L11_business_app: not solved | 13/17 checks | 727.3s | peak 5878 MB | calls 6 | agent says VERIFIED
+locked-8gb L12_long_docstrings: SOLVED | 4/4 checks | 268.1s | peak 5614 MB | calls 31 | agent says VERIFIED
+PHASE5-DONE locked-8gb

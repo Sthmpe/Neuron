@@ -172,6 +172,10 @@ class ModelRunner:
     def client(self, role):
         from .llama_server import LlamaServer
         model_id = self.model_for(role)
+        dead = self.server is not None and getattr(self.server, "proc", None) is not None and self.server.proc.poll() is not None
+        if dead:                                   # killed (for example by the memory limit): start it again
+            self.restarts = getattr(self, "restarts", 0) + 1
+            self.server = self.client_obj = self.loaded = None
         if self.loaded != model_id:
             self.unload()
             m = self.manager.get(model_id)

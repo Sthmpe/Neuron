@@ -10,18 +10,18 @@ Read [`VISION.md`](VISION.md) for where this is going, [`TESTING.md`](TESTING.md
 [`PROGRESS.md`](PROGRESS.md) for the detailed log, [`HARDWARE.md`](HARDWARE.md) for what limits it on real
 machines.
 
-## Where it stands (2026-11-17)
+## Where it stands (2026-11-18)
 
 | Phase | What | State |
 |---|---|---|
-| 0 | Finish step 3: model selection, held-out scoring, design system, honest numbers | Selection done. Held-out scoring **running** (results below when finished). Design proof after it |
+| 0 | Finish step 3: model selection, held-out scoring, design system, honest numbers | **Done**: held-out scored (below); design system on by default, 20-request proof run once (19 of 20 built) |
 | 1 | `VISION.md` | Done |
 | 2 | One frozen model per memory tier | **Done**: `model_manifests/frozen.json` |
-| 3 | Better intelligence with the same models (state, context slices, shared loop, strategies, roles, verification) | First version built in `neuron/agent/`; tested with scripted models; **not yet measured with real models** |
-| 4 | Tool registry with purpose, inputs, outputs, internet, permissions, resources, verification; honest missing-tool reports | First version built: 20 capabilities |
-| 5 | New evaluation, tasks locked before tuning | 12 tasks **locked** with independent examiners; runner written; **not yet run** |
+| 3 | Better intelligence with the same models (state, context slices, shared loop, strategies, roles, verification) | Built in `neuron/agent/`; **measured** in phase 5 (below) |
+| 4 | Tool registry with purpose, inputs, outputs, internet, permissions, resources, verification; honest missing-tool reports | Built: 20 capabilities |
+| 5 | New evaluation, tasks locked before tuning | **Done** on all three tiers (below), with three recorded examiner amendments |
 | 6 | Owner release: installer, phone web page with secure pairing, offline, `TESTING.md` | Built and tested in a cloud Linux container; not yet on a home PC or a real phone |
-| 7 | Optional online boost; hardware bottleneck log; this README | Boost built (off by default); `HARDWARE.md` started |
+| 7 | Optional online boost; hardware bottleneck log; this README | Done: boost (off by default), `HARDWARE.md`, this README |
 
 ## Try it
 
@@ -67,21 +67,70 @@ The dev set was also used for tuning, so these scores are optimistic. The held-o
 
 ## Results
 
-### Step 3 held-out scoring: running
+### Phase 5: locked evaluation (2026-11-18)
 
-20 new bug projects, 3 new builds (a landing page, a customer and stock app, the same app killed halfway and
-resumed) and 10 whole-workspace bug tasks, for each tier, with the full NEURON loop and without it (BASE:
-one prompt per attempt, no saved state, no roles). Written before any tuning; run once. Progress:
-[`benchmark/heldout.log`](benchmark/heldout.log). **No held-out number is reported here until the runs finish.**
+12 tasks locked before the system was built: answers from two PDFs with page citations, an Excel summary with
+formulas, a Word proposal with a budget table, a PowerPoint pitch, a C++ command-line program, three bugs in a C++
+project and two in a Go project, an unseen shop app (killed halfway, then resumed), and a docstring job too big for
+one context window (killed halfway, then resumed). Judged only by independent examiners (LibreOffice recalculation
+and rendering, the projects' original tests, a real browser). Full tables: [`benchmark/results/phase5_summary.md`](benchmark/results/phase5_summary.md).
 
-### Phase 5 locked evaluation: not run yet
+| Task | 2 GB | 4 GB | 8 GB |
+|---|---|---|---|
+| PDF answers with citations | 9/16 | 15/16 | 14/16 |
+| Excel with formulas | yes | yes | yes |
+| Word proposal | yes | yes | yes |
+| PowerPoint pitch | yes | yes | yes |
+| C++ program from a description | no (did not build) | no (did not build) | **yes (7/7)** |
+| C++ project bugs (3) | 1 | 1 | 2 |
+| Go project bugs (2) | 0 | 0 | 0 |
+| Shop app, killed and resumed | 0/17 | 5/17 * | 13/17 |
+| Docstrings, killed and resumed | yes | 3/4 * | yes |
+| **Solved (of 12)** | **5** | **4** | **7** |
 
-12 tasks locked on 2026-11-17 before any tuning (`benchmark/phase5/LOCKED.md`): answering from two PDFs with
-page citations, an Excel summary with formulas, a Word proposal with a budget table, a PowerPoint pitch, a
-C++ command-line program, three bugs in a C++ project and two in a Go project, an unseen business app killed
-halfway and resumed, and a docstring task larger than one context window, killed and resumed. Each is judged
-by an independent examiner (LibreOffice recalculation and rendering, the project's original tests, a real
-browser). Runner: `benchmark/phase5/run.py`.
+\* The 4 GB official run hit NEURON bugs: the resumed jobs could not restart their model server (the old one's port
+was still reserved), and NEURON's own app checks rejected a correct page. Both were fixed before the 2 GB and 8 GB
+runs. Labelled reruns of the two resumed tasks at 4 GB after the fixes: shop app 13/17, docstrings 4/4. In the same
+run the memory limit killed the model server during one C++ bug task and it was not restarted (fixed after all
+runs). So the tiers did not run identical code; each result file records its commit.
+
+What this says:
+- Documents are dependable on every tier: Excel, Word and PowerPoint were solved by all three models.
+- Resuming after a kill works (after the fixes): both resumed tasks continued from their saved state and finished.
+- The shop app gets the hard parts right (login, stock goes down when an order is added, an oversized order is
+  refused, data survives a restart) but not computed order totals, a revenue sum on the dashboard, or writing its
+  own tests: the builder cannot express those yet.
+- Bugs in compiled-language projects are weak: 1 to 2 of 5, and no tier fixed a Go bug.
+- **False claims:** in the official runs the agent said "verified" on 3 tasks the examiner did not fully pass: the PDF
+  answers at 4 GB and 8 GB (the quote was really on the cited page, but an answer was wrong) and the shop app at 8 GB
+  (features it cannot build were silently left out); the 4 GB shop rerun did the same. Fixing this honesty gap is
+  the next priority.
+
+### Step 3 held-out scoring (2026-11-18)
+
+20 new bug projects, 3 new app builds (a landing page, a customer and stock app, the same app killed halfway and
+resumed) and 10 bugs in whole multi-module codebases. Written before tuning, run once per tier, with the NEURON
+loop (full) and without it (base: one prompt per attempt, no saved state, no roles).
+Details: [`benchmark/results/heldout_summary.md`](benchmark/results/heldout_summary.md).
+
+| Tier | Loop | Bugs (of 20) | App builds (of 3) | Workspace bugs (of 10) | Minutes | Peak MB |
+|---|---|---|---|---|---|---|
+| 2 GB | base | 5 | 0 | 0 | 46 | 1467 |
+| 2 GB | **full** | 7 | **3** | 3 | 23 | 1510 |
+| 4 GB | base | 19 | 1 | 3 | 70 | 3996 |
+| 4 GB | **full** | **20** | **3** | 6 | 58 | 3996 |
+| 8 GB | base | 19 | 2 | 5 | 85 | 5655 |
+| 8 GB | **full** | 19 | **3** | **7** | 51 | 5735 |
+
+The loop matters most for the weak model and for app builds (every tier built all three apps with it), and it was
+faster at every tier. The 4 GB model is the best value on this machine.
+
+### Design system proof (20 requests, 2 GB model)
+
+19 of 20 sites built; 20 different palettes, 5 hero layouts, any two designs share at most 4 of 8 main choices,
+every colour the owner named was kept. Screenshots: [`benchmark/design/results.md`](benchmark/design/results.md).
+Problems it found, since fixed: a form called "join" (an SQL keyword) broke one build; the hero repeated the next
+section; section gaps too large; the model copied the example's database file into a site.
 
 ### Step 2 (15 Nov 2026): 5 of 10 bugs fixed
 
@@ -102,19 +151,21 @@ One 1.5B model, single prompt per attempt, network off. Details in [`docs/HISTOR
 
 ## Honest limits
 
-- **Not yet measured with real models:** the general agent and its tools (phase 3 and 4) have only been tested
-  with scripted model replies. The phase-5 evaluation will show how they do with the frozen models.
-- **The 2 GB model is weak:** 8 of 12 on the dev set, where it was also tuned.
+- **The agent sometimes claims more than it did** (3 false "verified" claims in the official locked runs, listed above).
+  Every result still shows its evidence, and the examiners caught these, but the claim itself is not yet trustworthy.
+- **Compiled-language bug fixing is weak** (C++ 1 to 2 of 3, Go 0 of 2 in the locked set).
+- **The 2 GB model is weak**: it never produced a valid plan for the shop app, and fixed 7 of 20 held-out bugs.
+- **The 4 GB tier is tight**: the memory limit killed the model server once while a C++ project compiled (the
+  runner now restarts it). Peak 4084 of 4096 MB.
 - **Small computers are slow.** Writing speed follows memory bandwidth: about 4 tokens per second for the
   8 GB model here, 17 to 36 for the smallest. A task can take many minutes.
-- **The 4 GB tier is tight:** peak 3994 of 4096 MB.
-- **Web apps are simple data apps** (lists, forms, search, login, dashboard counts, linked records with one
-  rule each). Links use the record's name, so two records with the same name are not told apart.
+- **Web apps are simple data apps** (lists, forms, search, login, dashboard counts, linked records with one rule
+  each). No computed columns or sums yet; links use the record's name.
 - **Phone traffic is plain HTTP by default** on the local network. Pairing protects access; `start.sh --https`
   encrypts it with a certificate made on your computer (the phone warns once; compare the printed fingerprint).
-- **Tested only in a cloud Linux container**, not yet on a home PC, a real phone, Windows or Mac.
-- One full test-suite run of five had one failing test whose name was not captured (it ran while a
-  benchmark used every core); the next runs all passed. Logged in `PROGRESS.md`.
+- **Tested only in a cloud Linux container**, not yet on a home PC, a real phone, Windows or Mac. That machine
+  restarted several times during the evaluations; finished results were kept and interrupted tasks rerun from
+  scratch (all noted in the logs).
 
 ## Tests
 
