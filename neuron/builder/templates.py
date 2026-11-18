@@ -76,14 +76,20 @@ def register(app):
 
 
 def home_py(spec):
+    from .spec import _hero_image, _photo_row
     h = spec["home"]
-    parts = [f'ui.hero({h["headline"]!r}, {h["subheadline"]!r})']
-    for s in h["sections"]:
+    button = f', {spec["forms"][0]["button"]!r}, "#{spec["forms"][0]["name"]}"' if spec["forms"] else ""
+    parts = [f'ui.hero({h["headline"]!r}, {h["subheadline"]!r}{button}{_hero_image(spec)})']
+    for n, s in enumerate(h["sections"]):
         if s["items"]:
             cards = ", ".join(f'ui.card({i["title"]!r}, ui.text({i["text"]!r}))' for i in s["items"])
             parts.append(f'ui.section({s["title"]!r}, ui.grid({cards}))')
         else:
             parts.append(f'ui.section({s["title"]!r}, ui.text({s["text"]!r}))')
+        if n == 0 and _photo_row(spec):
+            parts.append(_photo_row(spec))
+    if not h["sections"] and _photo_row(spec):
+        parts.append(_photo_row(spec))
     routes = ""
     for f in spec["forms"]:
         parts.append(f'ui.section({f["title"]!r}, ui.form("/{f["name"]}", {_fields(f["fields"])}, submit={f["button"]!r}), id={f["name"]!r})')

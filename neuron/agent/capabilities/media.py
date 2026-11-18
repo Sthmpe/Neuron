@@ -27,6 +27,9 @@ class FindImages(Capability):
         if not m.slots:
             return Outcome(True, "no pictures needed", {"filled": [], "not_found": []})
         r = images.fetch_licensed(m, self.provider_factory(), job.effects, log=job.log)
+        if r["filled"] and params["project"] == "app" and (job.workspace / "app.zip").exists():
+            from .web import zip_app
+            zip_app(job.workspace)                     # the download for the phone gets the new photos too
         left = [s["slot"] for s in m.needed()]
         summary = (f"{len(r['filled'])} licensed photo(s) added ({', '.join(r['filled']) or 'none'})"
                    + (f"; still needed: {', '.join(left)}" if left else ""))

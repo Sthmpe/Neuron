@@ -59,7 +59,11 @@ def choose_and_save(project, request, spec, state=None, seed=None):
     project = Path(project)
     existing = project / "theme.json"
     if existing.exists():                      # resume: the look was decided before and is kept
-        return json.loads(existing.read_text())
+        design = json.loads(existing.read_text())
+        if state is not None and not (state.dir / "design.json").exists():     # chosen earlier in this build (sites with pictures)
+            (state.dir / "design.json").write_text(json.dumps({"choice": design, "review": []}, indent=1))
+            state.decide("design", "choice", design["reason"])
+        return design
     design = engine.choose(request, app_name=spec.get("app_name", ""), kind=spec.get("kind", "site"), seed=seed)
     existing.write_text(json.dumps(design, indent=1))
     if state is not None:

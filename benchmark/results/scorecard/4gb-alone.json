@@ -1,0 +1,100 @@
+{
+ "rows": [
+  {
+   "correct": false,
+   "given": "D",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "mmlu_pro-3017",
+   "bench": "mmlu_pro",
+   "seconds": 184.6,
+   "peak_mb": 3901
+  },
+  {
+   "correct": true,
+   "given": "E",
+   "calls": 1,
+   "tokens": 361,
+   "tools": {},
+   "id": "mmlu_pro-3295",
+   "bench": "mmlu_pro",
+   "seconds": 80.2,
+   "peak_mb": 3901
+  },
+  {
+   "correct": false,
+   "given": "",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "mmlu_pro-390",
+   "bench": "mmlu_pro",
+   "seconds": 82.9,
+   "peak_mb": 3901
+  },
+  {
+   "correct": true,
+   "given": "A",
+   "calls": 1,
+   "tokens": 363,
+   "tools": {},
+   "id": "mmlu_pro-462",
+   "bench": "mmlu_pro",
+   "seconds": 82.0,
+   "peak_mb": 3909
+  },
+  {
+   "correct": false,
+   "given": "",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "mmlu_pro-4062",
+   "bench": "mmlu_pro",
+   "seconds": 109.0,
+   "peak_mb": 3909
+  },
+  {
+   "correct": false,
+   "given": "C",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "mmlu_pro-4383",
+   "bench": "mmlu_pro",
+   "seconds": 106.0,
+   "peak_mb": 3909
+  },
+  {
+   "correct": false,
+   "given": "C",
+   "calls": 1,
+   "tokens": 267,
+   "tools": {},
+   "id": "mmlu_pro-10706",
+   "bench": "mmlu_pro",
+   "seconds": 71.3,
+   "peak_mb": 3909
+  },
+  {
+   "correct": true,
+   "given": "A",
+   "calls": 1,
+   "tokens": 185,
+   "tools": {},
+   "id": "mmlu_pro-10366",
+   "bench": "mmlu_pro",
+   "seconds": 87.4,
+   "peak_mb": 3909
+  }
+ ],
+ "summary": {},
+ "tier": "4gb",
+ "condition": "alone",
+ "model": "qwen3.5-4b-q4",
+ "model_file": "Qwen3.5-4B-Q4_K_M.gguf",
+ "network": "new empty network namespace (loopback only)",
+ "seed": 20261118,
+ "started": "2026-11-18 13:23:08"
+}

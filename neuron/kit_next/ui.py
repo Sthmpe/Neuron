@@ -154,9 +154,28 @@ def footer(words):
 
 
 # ---- hero ----------------------------------------------------------------------------------------
-def hero(title, subtitle="", button_text="", button_href="#"):
-    h = HTML("", "hero", title=str(title), subtitle=str(subtitle or ""), button_text=str(button_text or ""), button_href=button_href)
+def hero(title, subtitle="", button_text="", button_href="#", image="", image_alt=""):
+    """The opening of a page. image: a picture in static/images (its words in image_alt, for people who cannot see it)."""
+    h = HTML("", "hero", title=str(title), subtitle=str(subtitle or ""), button_text=str(button_text or ""), button_href=button_href,
+             image=str(image or ""), image_alt=str(image_alt or ""))
     return HTML(_render_hero(h.meta, [], [], _variants().get("hero", "split"), ""), "hero", **h.meta)
+
+
+def _src(path):
+    p = str(path or "")
+    return p if p.startswith(("/", "http")) else "/" + p
+
+
+def photo(src, alt=""):
+    """One picture from static/images, with words describing it."""
+    return HTML(f'<figure class="photo"><img src="{_esc(_src(src))}" alt="{_esc(alt)}" loading="lazy" decoding="async"></figure>',
+                "photo", src=str(src), alt=str(alt))
+
+
+def photos(*items):
+    """A row of pictures between sections (two or three ui.photo(...))."""
+    return HTML(f'<section class="section photo-band"><div class="wrap"><div class="photos photos-{len(items)}">{_join(items)}</div></div></section>',
+                "photos", count=len(items))
 
 
 def _cta(meta):
@@ -170,6 +189,16 @@ def _render_hero(m, items, facts, variant, brand):
     h1 = f'<h1>{_esc(m["title"])}</h1>'
     lead = f'<p class="lead">{_esc(m["subtitle"])}</p>' if m.get("subtitle") else ""
     cta = _cta(m)
+    if m.get("image"):                 # a real picture (or its labelled placeholder) leads the page in every variant
+        pic = (f'<figure class="hero-photo"><img src="{_esc(_src(m["image"]))}" alt="{_esc(m.get("image_alt", ""))}" '
+               f'fetchpriority="high" decoding="async"></figure>')
+        if variant == "banner":
+            return (f'<section class="hero hero-banner on-strong"><div class="wrap hero-grid"><div>{h1}{lead}{cta}</div>{pic}</div></section>')
+        if variant in ("centered", "editorial"):
+            return (f'<section class="hero hero-{variant} hero-has-photo"><div class="wrap">{h1}{lead}{cta}{pic}</div></section>')
+        if variant == "card":
+            return (f'<section class="hero hero-card"><div class="wrap hc-grid"><div class="hc-card">{h1}{lead}{cta}</div>{pic}</div></section>')
+        return f'<section class="hero hero-split"><div class="wrap hero-grid"><div>{h1}{lead}{cta}</div>{pic}</div></section>'
     # a hero preview shows one kind of thing and at least two of them, and never the items the features section
     # below shows anyway (the design proof found every hero repeating them): only short facts qualify
     peek = facts[:4] if len(facts) >= 2 else []
@@ -381,6 +410,8 @@ def page(title, *content, brand="", nav=(), user=None, active="", narrow=False):
                 p = _form_side(p, facts)
             if p is heroes[0]:
                 rendered.append(_render_hero(h, items, facts, variant, brand))
+            elif isinstance(p, HTML) and p.kind == "photos":         # already a full-width band of its own
+                rendered.append(esc(p))
             elif isinstance(p, HTML) and p.kind == "section":
                 rendered.append(str(p))
             else:

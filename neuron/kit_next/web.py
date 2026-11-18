@@ -163,6 +163,13 @@ class App:
         req.user = session["username"] if session else None
         if path in ("/static/theme.css", "/static/neuron.css"):     # neuron.css: the name older checks look for
             return Response(_theme.css(_theme.load()), content_type="text/css; charset=utf-8")
+        if path.startswith("/static/images/"):                        # the project's own pictures (images.json)
+            pics = (Path.cwd() / "static" / "images").resolve()
+            f = (pics / path[len("/static/images/"):]).resolve()
+            if pics in f.parents and f.is_file():
+                kind = mimetypes.guess_type(f.name)[0] or "application/octet-stream"
+                return Response(f.read_bytes(), content_type=kind, headers={"Cache-Control": "max-age=3600"})
+            return Response("Not found", 404)
         if path.startswith("/static/"):
             f = (STATIC / path[len("/static/"):]).resolve()
             if STATIC in f.parents and f.is_file():

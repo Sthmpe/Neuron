@@ -1158,6 +1158,97 @@
    "bench": "bfcl",
    "seconds": 9.3,
    "peak_mb": 1620
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 56,
+   "tools": {
+    "schema_constrained": 1,
+    "validation_retry": 0
+   },
+   "id": "bfcl-multiple_115",
+   "bench": "bfcl",
+   "seconds": 7.2,
+   "peak_mb": 1620
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 42,
+   "tools": {
+    "schema_constrained": 1,
+    "validation_retry": 0
+   },
+   "id": "bfcl-multiple_153",
+   "bench": "bfcl",
+   "seconds": 5.6,
+   "peak_mb": 1620
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 49,
+   "tools": {
+    "schema_constrained": 1,
+    "validation_retry": 0
+   },
+   "id": "bfcl-multiple_159",
+   "bench": "bfcl",
+   "seconds": 6.8,
+   "peak_mb": 1620
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 42,
+   "tools": {
+    "schema_constrained": 1,
+    "validation_retry": 0
+   },
+   "id": "bfcl-multiple_160",
+   "bench": "bfcl",
+   "seconds": 6.7,
+   "peak_mb": 1620
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 55,
+   "tools": {
+    "schema_constrained": 1,
+    "validation_retry": 0
+   },
+   "id": "bfcl-multiple_162",
+   "bench": "bfcl",
+   "seconds": 6.9,
+   "peak_mb": 1620
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 44,
+   "tools": {
+    "schema_constrained": 1,
+    "validation_retry": 0
+   },
+   "id": "bfcl-multiple_194",
+   "bench": "bfcl",
+   "seconds": 8.0,
+   "peak_mb": 1620
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 48,
+   "tools": {
+    "schema_constrained": 1,
+    "validation_retry": 0
+   },
+   "id": "bfcl-multiple_199",
+   "bench": "bfcl",
+   "seconds": 7.5,
+   "peak_mb": 1620
   }
  ],
  "summary": {
@@ -1199,6 +1290,19 @@
    "tokens": 4185,
    "calls": 28,
    "peak_mb": 1625
+  },
+  "bfcl": {
+   "n": 30,
+   "correct": 26,
+   "score": 0.867,
+   "ci95": [
+    0.703,
+    0.947
+   ],
+   "seconds": 215,
+   "tokens": 1513,
+   "calls": 30,
+   "peak_mb": 1620
   }
  },
  "tier": "2gb",

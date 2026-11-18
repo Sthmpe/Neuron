@@ -140,7 +140,11 @@ Rules:
   record's number fields and + - * / (a linked record's number field is written link.field, e.g. "days * tool.daily_rate").
   A dashboard number that adds up a field over all records is kind "sum" with that field (it may be a computed field).
 - Labels must use the owner's own words: if they ask "how many students are under 18", the label is "Under 18".
-- Do not invent sections, forms or features that were not asked for.'''
+- Do not invent sections, forms or features that were not asked for.
+- Site words: specific to this business and taken from the request (what they sell or do, where, for whom); each
+  section says something different. Never invent reviews, testimonials, numbers of years or clients, awards,
+  qualifications, opening hours, phone numbers, emails or addresses: state only the ones the owner gave, exactly.
+  No stock phrases ("passionate about", "top-notch", "one-stop shop", "quality you can trust").'''
 
 PLANNER_SITE_REQUEST = ("I need a simple web page for my garden care business, Green Thumb Garden Care. Put the name in a big "
                         "headline, show the two things we do - mowing and pruning - with a line about each, say that we work "

@@ -5,6 +5,17 @@ from ...builder.build import build_full
 from ..capability import Capability, Outcome, Verdict
 
 
+def zip_app(workspace):
+    """app.zip: the whole app in one download (without NEURON's own records, caches or the database)."""
+    import zipfile
+    app = Path(workspace) / "app"
+    with zipfile.ZipFile(Path(workspace) / "app.zip", "w", zipfile.ZIP_DEFLATED) as z:
+        for f in sorted(app.rglob("*")):
+            rel = f.relative_to(app)
+            if f.is_file() and rel.parts[0] != ".neuron" and "__pycache__" not in rel.parts and not rel.name.startswith("data.db"):
+                z.write(f, Path("app") / rel)
+
+
 class BuildWebApp(Capability):
     name = "build_web_app"
     purpose = "Plan, build and test a website or record-keeping web app (pages, forms, lists, search, login, dashboard)"
@@ -15,8 +26,11 @@ class BuildWebApp(Capability):
 
     def run(self, job, params):
         from ...brain.sandbox import Sandbox
+        from ...media.images import PHOTO_EXT
+        photos = sorted(p for p in (job.workspace / "inputs").glob("*") if p.suffix.lower() in PHOTO_EXT) \
+            if (job.workspace / "inputs").exists() else []                  # the owner's own photos come first
         r = build_full(job.workspace / "app", job.state.goal()["request"], job.runner, Sandbox(timeout=60, mem_mb=256),
-                       log=lambda m: job.log("    " + m), design=job.design)
+                       log=lambda m: job.log("    " + m), design=job.design, photos=photos)
         tasks = r.get("tasks", {})
         llm = r.get("llm") or {}
         job.count(llm.get("calls", 0), llm.get("tokens", 0), llm.get("seconds", 0.0))   # the builder calls the model itself
@@ -28,17 +42,18 @@ class BuildWebApp(Capability):
         parts = ", ".join(f"{names.get(k, k.replace('_', ' ') + ' page')} ({v.get('made_by') or v.get('status')})" for k, v in tasks.items())
         files = ["app/"]
         if r.get("ok"):                                    # one download for the whole app, for the phone
-            import zipfile
-            app = job.workspace / "app"
-            with zipfile.ZipFile(job.workspace / "app.zip", "w", zipfile.ZIP_DEFLATED) as z:
-                for f in sorted(app.rglob("*")):
-                    rel = f.relative_to(app)
-                    if f.is_file() and rel.parts[0] != ".neuron" and "__pycache__" not in rel.parts and not rel.name.startswith("data.db"):
-                        z.write(f, Path("app") / rel)
+            zip_app(job.workspace)
             files.append("app.zip")
+        from ...media.images import Manifest
+        pics = Manifest(job.workspace / "app")
+        result = {"builder": r}
+        if pics.needed():                         # placeholders shown: licensed photos are fetched when online
+            result["add_tasks"] = [{"id": "images", "capability": "find_images", "title": "Find licensed photos for the site",
+                                    "params": {"project": "app"}}]
         out = Outcome(bool(r.get("ok")), f"the app {'passes' if r.get('ok') else 'fails'} its checks; parts: {parts}"
-                      + (f"; NOT built (asked for, not supported yet): {', '.join(gaps)}" if gaps else ""),
-                      {"builder": r}, files, made_by=made)
+                      + (f"; NOT built (asked for, not supported yet): {', '.join(gaps)}" if gaps else "")
+                      + (f"; images needed: {len(pics.needed())} placeholder(s) until photos are added" if pics.needed() else ""),
+                      result, files, made_by=made)
         return out
 
     def verify(self, job, params, outcome):
@@ -47,6 +62,11 @@ class BuildWebApp(Capability):
         gaps = r.get("not_built") or []
         checks.append({"id": "every_requested_feature_built", "pass": not gaps, "gap": True,
                        "detail": ("asked for but not supported yet: " + "; ".join(gaps)) if gaps else ""})
+        problems = r.get("content_problems") or []
+        if r.get("content_notes") or problems:
+            checks.append({"id": "words_checked", "pass": not problems, "gap": True,
+                           "detail": ("the words need a person's edit: " + "; ".join(problems[:4])) if problems else
+                                     "; ".join(r.get("content_notes", [])[:4])})
         if r.get("design") is not None:
             by_rule = r["design"].get("by_rule") or {}
             checks.append({"id": "design_checks", "pass": r["design"].get("fails") == 0,

@@ -169,8 +169,12 @@ class TrialRun:
         return True, ""
 
 
-def plan(request, client, meter):
-    """Planner role: request -> validated spec (up to two repair rounds). Returns (spec, problems)."""
+def plan(request, client, meter, content_rules=False):
+    """Planner role: request -> validated spec (up to two repair rounds). Returns (spec, problems).
+    content_rules: a site's words are checked (neuron.design.content): invented facts, leftover template text,
+    filler, repetition and duplicated sections go back to the planner with plain instructions; invented facts that
+    survive every round are removed and recorded in spec["content_notes"]."""
+    from ..design import content
     messages = [{"role": "system", "content": prompts.PLANNER_SYSTEM},
                 {"role": "user", "content": "Request: " + prompts.PLANNER_EXAMPLE_REQUEST},
                 {"role": "assistant", "content": json.dumps(prompts.PLANNER_EXAMPLE_SPEC)},
@@ -180,7 +184,7 @@ def plan(request, client, meter):
                 {"role": "assistant", "content": json.dumps(prompts.PLANNER_RULE_SPEC)},
                 {"role": "user", "content": "Request: " + request}]
     problems = ["no reply"]
-    for _ in range(3):      # first try + two repair rounds
+    for rnd in range(3):    # first try + two repair rounds
         reply = meter.chat(client, messages, max_tokens=1500, temperature=0.1, json_schema=PLAN_SCHEMA)
         try:
             raw = json.loads(reply.text[reply.text.index("{"): reply.text.rindex("}") + 1])
@@ -188,6 +192,18 @@ def plan(request, client, meter):
             raw, problems = None, ["the reply was not valid JSON"]
         if raw is not None:
             spec, problems = normalise(raw)
+            if not problems and content_rules and spec["kind"] == "site":
+                issues = content.check(content.spec_pieces(spec), request)
+                if issues and rnd < 2:
+                    messages += [{"role": "assistant", "content": reply.text},
+                                 {"role": "user", "content": "The words of that page have problems:\n" + content.feedback(issues)
+                                  + "\nSend the corrected specification."}]
+                    continue
+                notes = [f"{i['kind']}: {i['where']}: {i['detail']}" for i in issues]
+                removed = content.remove_invented(spec, request) if any(i["kind"] == "invented" for i in issues) else []
+                spec["content_notes"] = [f"removed {r}" for r in removed] + \
+                    [n for n in notes if not n.startswith("invented")]
+                return spec, []
             if not problems:
                 return spec, []
         messages += [{"role": "assistant", "content": reply.text},
@@ -211,7 +227,8 @@ def _builder_prompt(state, task):
     return "\n".join(parts)
 
 
-def build_full(project, request, runner, sandbox, log=print, max_seconds=None, design=None, shots_dir=None, templates_allowed=None):
+def build_full(project, request, runner, sandbox, log=print, max_seconds=None, design=None, shots_dir=None, templates_allowed=None,
+               photos=()):
     """Build (or resume building) a project. Returns a summary dict.
     templates_allowed: after the model fails a task MAX_ATTEMPTS times, try the fixed template for that file
     (on by default; off reproduces the step-3 evaluations). Every file says who made it."""
@@ -223,9 +240,18 @@ def build_full(project, request, runner, sandbox, log=print, max_seconds=None, d
         interrupted = state.resume()
         log(f"resuming: {sum(t['status'] == 'done' for t in state.tasks())} tasks already done, interrupted: {interrupted}")
     else:
-        spec, problems = plan(request, runner.client("planner"), meter)
+        spec, problems = plan(request, runner.client("planner"), meter, content_rules=bool(design))
         if spec is None:
             return {"ok": False, "stage": "plan", "error": "; ".join(problems), "llm": vars(meter), "resumed": False}
+        if design and spec["kind"] == "site":            # pictures: the owner's first, labelled placeholders for the rest
+            from ..media import images
+            from . import design_step, site_images
+            prepare_project(project, spec["app_name"], design)
+            look = design_step.choose_and_save(project, request, spec)
+            r = look["palette"]["roles"]
+            m = images.prepare(project, site_images.slots(request, spec), (r["dominant"], r["support"], r["accent"]), owner_photos=photos)
+            spec["images"] = [{"slot": x["slot"], "file": x["file"], "alt": x["purpose"]} for x in m.slots]
+            log(f"pictures: {m.summary()}")
         tasks, acceptance, purposes = expand(spec)
         spec["not_built"] = unsupported_features(request, spec) + relations.dropped_gaps(request, spec)
         if spec["not_built"]:
@@ -238,6 +264,8 @@ def build_full(project, request, runner, sandbox, log=print, max_seconds=None, d
             log(f"design: {look['mood']} / {look['palette']['name']} / hero {look['variants']['hero']}")
         for d in spec.get("dropped", []):
             state.decide("plan", "dropped", d)
+        for n in spec.get("content_notes", []):
+            state.decide("plan", "content", n)
         state.decide("plan", "spec", f"planned a {spec['kind']} called {spec['app_name']} with tasks: "
                      + ", ".join(t["id"] for t in tasks))
         log(f"planned {len(tasks)} tasks: {[t['id'] for t in tasks]}")
@@ -351,7 +379,18 @@ def build_full(project, request, runner, sandbox, log=print, max_seconds=None, d
             "tasks": {t["id"]: {"status": t["status"], "attempts": len(t["attempts"]), "made_by": t.get("made_by")} for t in tasks},
             "made_by": {k: sum(t.get("made_by") == k for t in tasks) for k in ("model", "template", "code")},
             "not_built": (state.spec()["spec"] or {}).get("not_built", []),
+            "content_notes": (state.spec()["spec"] or {}).get("content_notes", []),
+            "content_problems": _final_content(state, request) if design else [],
             "llm": vars(meter), "model_loads": runner.loads, "seconds": round(time.time() - t0, 1)}
+
+
+def _final_content(state, request):
+    """The words of the finished site, checked once more (nothing invented, no template text, filler or repeats)."""
+    spec = state.spec()["spec"] or {}
+    if spec.get("kind") != "site":
+        return []
+    from ..design import content
+    return [f"{i['kind']}: {i['where']}: {i['detail']}" for i in content.check(content.spec_pieces(spec), request)]
 
 
 def _content_review(state, code, client, meter):

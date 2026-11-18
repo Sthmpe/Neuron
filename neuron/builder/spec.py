@@ -189,6 +189,17 @@ def normalise(spec):
     return s, problems
 
 
+def _hero_image(spec):
+    """The hero's picture argument when the site has pictures (design system on). Paths come from images.json."""
+    hero = next((i for i in spec.get("images") or [] if i["slot"] == "hero"), None)
+    return f', image="{hero["file"]}", image_alt="{hero["alt"]}"' if hero else ""
+
+
+def _photo_row(spec):
+    pics = [i for i in spec.get("images") or [] if i["slot"] != "hero"]
+    return ("ui.photos(" + ", ".join(f'ui.photo("{i["file"]}", "{i["alt"]}")' for i in pics) + ")") if pics else ""
+
+
 def _table_sql(name, fs):
     cols = ", ".join(f"{f['name']} {SQL_TYPE.get(f['type'], 'TEXT')}" for f in fs)
     return f"{name}(id INTEGER PRIMARY KEY, {cols})"
@@ -425,9 +436,9 @@ def expand(spec):
                  "Inside the function, start with parts = [] and add each part on its own line with parts.append(...),",
                  'in this order, then return app.page(req, "Welcome", *parts). The parts:',
                  f'- ui.hero("{h["headline"]}", "{h["subheadline"]}"' +
-                 (f', "{spec["forms"][0]["button"]}", "#{spec["forms"][0]["name"]}")' if spec["forms"] else ")")]
+                 (f', "{spec["forms"][0]["button"]}", "#{spec["forms"][0]["name"]}"' if spec["forms"] else "") + _hero_image(spec) + ")"]
         must_show = [h["headline"]]
-        for sec in h["sections"]:
+        for n, sec in enumerate(h["sections"]):
             if sec["items"]:
                 lines.append(f'- ui.section("{sec["title"]}", ui.grid(' +
                              ", ".join(f'ui.card("{i["title"]}", ui.text("{i["text"]}"))' for i in sec["items"]) + "))")
@@ -435,6 +446,10 @@ def expand(spec):
             else:
                 lines.append(f'- ui.section("{sec["title"]}", ui.text("{sec["text"]}"))')
                 must_show.append(sec["title"])
+            if n == 0 and _photo_row(spec):
+                lines.append(f"- {_photo_row(spec)}")
+        if not h["sections"] and _photo_row(spec):
+            lines.append(f"- {_photo_row(spec)}")
         form_checks = []
         for f in spec["forms"]:
             cols = ", ".join(x["name"] for x in f["fields"])
