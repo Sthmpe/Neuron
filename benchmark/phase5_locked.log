@@ -12,3 +12,6 @@ locked-4gb L10_go_bug_round: not solved | 0/1 checks | 229.0s | peak 4079 MB | c
 locked-4gb L11_business_app: not solved | 5/17 checks | 152.1s | peak 3923 MB | calls None | agent says no report (crashed or killed)
 locked-4gb L12_long_docstrings: not solved | 2/4 checks | 96.0s | peak 3749 MB | calls None | agent says no report (crashed or killed)
 PHASE5-DONE locked-4gb
+locked-4gb-rerun-after-portfix L11_business_app: not solved | 5/17 checks | 649.2s | peak 3933 MB | calls 10 | agent says FAILED
+locked-4gb-rerun-after-portfix L12_long_docstrings: not solved | 3/4 checks | 188.1s | peak 3749 MB | calls 31 | agent says VERIFIED
+PHASE5-DONE locked-4gb-rerun-after-portfix
