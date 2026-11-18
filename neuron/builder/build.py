@@ -193,7 +193,8 @@ def plan(request, client, meter, content_rules=False):
         if raw is not None:
             spec, problems = normalise(raw)
             if not problems and content_rules and spec["kind"] == "site":
-                issues = content.check(content.spec_pieces(spec), request)
+                issues = content.check(content.spec_pieces(spec), request) + \
+                    content.missing_facts(request, content.spec_pieces(spec)) + content.thin_items(spec)
                 if issues and rnd < 2:
                     messages += [{"role": "assistant", "content": reply.text},
                                  {"role": "user", "content": "The words of that page have problems:\n" + content.feedback(issues)
@@ -390,7 +391,8 @@ def _final_content(state, request):
     if spec.get("kind") != "site":
         return []
     from ..design import content
-    return [f"{i['kind']}: {i['where']}: {i['detail']}" for i in content.check(content.spec_pieces(spec), request)]
+    found = content.check(content.spec_pieces(spec), request) + content.missing_facts(request, content.spec_pieces(spec))
+    return [f"{i['kind']}: {i['where']}: {i['detail']}" for i in found]
 
 
 def _content_review(state, code, client, meter):

@@ -144,7 +144,9 @@ Rules:
 - Site words: specific to this business and taken from the request (what they sell or do, where, for whom); each
   section says something different. Never invent reviews, testimonials, numbers of years or clients, awards,
   qualifications, opening hours, phone numbers, emails or addresses: state only the ones the owner gave, exactly.
-  No stock phrases ("passionate about", "top-notch", "one-stop shop", "quality you can trust").'''
+  No stock phrases ("passionate about", "top-notch", "one-stop shop", "quality you can trust").
+  Every fact the owner gave (prices, durations, times, days, the address) must appear, exactly as written, and every
+  item has one short line of text.'''
 
 PLANNER_SITE_REQUEST = ("I need a simple web page for my garden care business, Green Thumb Garden Care. Put the name in a big "
                         "headline, show the two things we do - mowing and pruning - with a line about each, say that we work "

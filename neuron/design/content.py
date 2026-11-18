@@ -44,6 +44,56 @@ INVENTED = [("testimonial", TESTIMONIAL), ("statistic", STATISTIC), ("credential
             ("contact detail", CONTACT)]
 
 
+OWNER_FACTS = [
+    ("price", re.compile(r"(?:₦|\$|£|€)\s?\d[\d,]*(?:\.\d+)?|\b\d[\d,]*(?:\.\d+)?\s*(?:naira|kobo|dollars?|pounds?|euros?)\b", re.I)),
+    ("duration", re.compile(r"\b\d+\s*(?:minutes?|mins?|hours?|days?|weeks?)\b", re.I)),
+    ("time", re.compile(r"\b\d{1,2}(?::\d{2})?\s*(?:am|pm)\b", re.I)),
+    ("days", re.compile(r"\b(?:mon|tues?|wed(?:nes)?|thu(?:rs)?|fri|sat(?:ur)?|sun)(?:day)?\s*(?:to|-|–|through)\s*"
+                        r"(?:mon|tues?|wed(?:nes)?|thu(?:rs)?|fri|sat(?:ur)?|sun)(?:day)?\b|\bevery day\b", re.I)),
+    ("address", re.compile(r"\b(?:[Pp]lot\s+)?\d+[a-z]?,?\s+[A-Z][\w']+(?:\s+[A-Z][\w']+)*\s+(?i:street|road|avenue|crescent|close|way|lane|drive|boulevard)\b")),
+]
+
+
+def owner_facts(request):
+    """The concrete facts the owner gave (prices, durations, times, days, addresses): a page must show them all."""
+    out = []
+    for kind, rx in OWNER_FACTS:
+        for m in rx.finditer(request or ""):
+            if m.group(0) not in [f for _, f in out]:
+                out.append((kind, m.group(0).strip()))
+    return out
+
+
+def _shown(fact, kind, text):
+    t = _norm(text).replace(",", "")
+    if kind in ("price", "duration", "time", "address"):
+        nums = re.findall(r"\d+", fact.replace(",", ""))
+        if not all(re.search(rf"(?<!\d){n}(?!\d)", t) for n in nums):
+            return False
+        if kind == "address":                    # the street name too, not just the number
+            name = re.sub(r"^(plot\s+)?\d+[a-z]?,?\s+", "", fact, flags=re.I).lower()
+            return name.split()[0] in t
+        return True
+    days = re.findall(r"mon|tue|wed|thu|fri|sat|sun|every day", fact.lower())
+    return all(d in t for d in days)
+
+
+def missing_facts(request, pieces):
+    text = " ".join(t or "" for _, t in pieces)
+    return [{"kind": "missing", "where": "page", "type": k, "fact": f, "detail": f"the owner's {k} '{f}' is not on the page"}
+            for k, f in owner_facts(request) if not _shown(f, k, text)]
+
+
+def thin_items(spec):
+    out = []
+    for sec in (spec.get("home") or {}).get("sections") or []:
+        empty = [it.get("title", "") for it in sec.get("items") or [] if not (it.get("text") or "").strip()]
+        if empty:
+            out.append({"kind": "thin", "where": sec.get("title", "section"),
+                        "detail": f"the items in '{sec.get('title', '')}' have no words ({', '.join(empty[:4])})"})
+    return out
+
+
 def _norm(t):
     return re.sub(r"\s+", " ", (t or "").lower()).strip()
 
@@ -187,7 +237,11 @@ def feedback(problems, limit=8):
     """Problems as plain instructions for the planner's next attempt."""
     lines = []
     for p in problems[:limit]:
-        if p["kind"] == "invented":
+        if p["kind"] == "missing":
+            lines.append(f"- add the owner's {p['type']} \"{p['fact']}\" exactly as given (in a section's text or an item).")
+        elif p["kind"] == "thin":
+            lines.append(f"- {p['detail']}: give each item one short, specific line about this business.")
+        elif p["kind"] == "invented":
             lines.append(f"- {p['where']}: remove the {p['type']} \"{p['fact']}\": the owner did not give it. Only state facts the owner gave.")
         elif p["kind"] == "placeholder":
             lines.append(f"- {p['where']}: replace the {p['detail']} with real words about this business.")

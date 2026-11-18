@@ -37,6 +37,15 @@ def online(cache_seconds=30):
             break
         except OSError:
             pass
+    if not ok and any(os.environ.get(v) for v in ("HTTPS_PROXY", "https_proxy")):
+        # behind a web proxy (offices, some cloud machines) direct connections fail although the internet works
+        import urllib.request
+        try:
+            req = urllib.request.Request("https://pypi.org/simple/", method="HEAD", headers={"User-Agent": "NEURON-local-assistant/0.1"})
+            with urllib.request.urlopen(req, timeout=4):
+                ok = True
+        except Exception:                    # noqa: BLE001  any failure means: not online
+            ok = False
     _net.update(at=time.time(), online=ok)
     return ok
 

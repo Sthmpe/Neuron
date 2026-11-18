@@ -405,7 +405,11 @@ def page(title, *content, brand="", nav=(), user=None, active="", narrow=False):
                 h["button_text"], h["button_href"] = form_sec.meta["submit"], "#" + form_sec.meta["id"]
         variant = v.get("hero", "split")
         rendered = []
+        # facts shown beside the form are MOVED there, never shown twice on the page
+        moved = set(facts[:3]) if form_sec is not None and form_sec.meta.get("needs_side") else set()
         for p in content:
+            if isinstance(p, HTML) and p.kind == "section" and p.meta.get("role") == "fact" and (p.meta["title"], p.meta["words"]) in moved:
+                continue
             if isinstance(p, HTML) and p.kind == "section" and p.meta.get("role") == "form" and p.meta.get("needs_side"):
                 p = _form_side(p, facts)
             if p is heroes[0]:

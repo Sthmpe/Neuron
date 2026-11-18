@@ -57,13 +57,33 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(len(removed), 3)
 
 
+class CoverageTests(unittest.TestCase):
+    def test_owner_facts_must_all_be_on_the_page(self):
+        spec = {"home": {"headline": "Adeyemi & Co", "subheadline": "Family law in Ikeja.", "sections": [
+            {"title": "Fees", "text": "A first consultation costs 25,000 naira.", "items": []}]}, "forms": []}
+        missing = {p["fact"] for p in C.missing_facts(REQ, C.spec_pieces(spec))}
+        self.assertEqual(missing, {"14 Allen Avenue", "9am", "5pm", "Monday to Friday"})
+        self.assertIn('add the owner\'s address "14 Allen Avenue" exactly as given', C.feedback(C.missing_facts(REQ, C.spec_pieces(spec))))
+
+    def test_empty_cards_are_reported(self):
+        spec = {"home": {"sections": [{"title": "What we handle", "text": "", "items": [{"title": "Divorce", "text": ""}]}]}}
+        self.assertEqual(C.thin_items(spec)[0]["kind"], "thin")
+
+    def test_facts_beside_the_form_are_moved_not_repeated(self):
+        from neuron.kit_next import ui
+        page = ui.page("Welcome", ui.hero("Adeyemi & Co", "Family law."), ui.section("Visit us", ui.text("14 Allen Avenue, Ikeja.")),
+                       ui.section("Book a consultation", ui.form("/b", ui.field("Name", "name"), submit="Book"), id="b"))
+        self.assertEqual(str(page).count("14 Allen Avenue, Ikeja."), 1)
+
+
 SITE = {"app_name": "Adeyemi & Co", "kind": "site", "login_required": False, "username": "", "password": "",
         "home": {"headline": "Adeyemi & Co, family law in Ikeja", "subheadline": "Award-winning lawyers trusted by 500+ families.",
                  "sections": [{"title": "What we handle", "text": "", "items": [
                      {"title": "Divorce", "text": "We guide you through each step."},
                      {"title": "Child custody", "text": "Arrangements that put children first."},
                      {"title": "Property disputes", "text": "Clear advice on who owns what."}]},
-                     {"title": "Visit us", "text": "14 Allen Avenue, Ikeja. Monday to Friday, 9am to 5pm. Call 0803 412 7788.", "items": []}]},
+                     {"title": "Visit us", "text": "14 Allen Avenue, Ikeja. Monday to Friday, 9am to 5pm. Call 0803 412 7788.", "items": []},
+                     {"title": "Fees", "text": "A first consultation costs 25,000 naira.", "items": []}]},
         "forms": [{"name": "bookings", "title": "Book a consultation", "fields": [{"name": "name", "type": "text"}, {"name": "phone", "type": "phone"}],
                    "button": "Book", "thanks": "Thank you, we will call you to confirm."}],
         "entities": [], "dashboard": []}
