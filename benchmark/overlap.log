@@ -14,3 +14,9 @@
 11:48 full test suite during the 2 GB scorecard run (~100 s)
 11:55 eval2 examiner validation (LibreOffice, builds, browser) during the memory-effect run
 12:02 full test suite at the start of the resumed scorecard
+2026-11-18 (all times UTC, approximate, from the session's command history; scorecard 4gb-alone was running)
+13:20-13:30 step-6 tests, a real pip upgrade run (venv installs) and the full test suite (~150 s)
+13:36-13:40 full test suite (~180 s)
+13:40-13:50 content, online and repair-search tests (Go and C++ builds), the small-change search on the dev set (~2 min)
+13:51-17:49 scorecard paused by hand (reference-site builds); 16:49 machine restart; no overlap in this window
+17:50-17:58 totals checker validation (two template builds, browser) and design/content tests during 2gb/4gb skips and 4gb-alone resume
