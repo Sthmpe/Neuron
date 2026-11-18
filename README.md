@@ -23,6 +23,18 @@ machines.
 | 6 | Owner release: installer, phone web page with secure pairing, offline, `TESTING.md` | Built and tested in a cloud Linux container; not yet on a home PC or a real phone |
 | 7 | Optional online boost; hardware bottleneck log; this README | Done: boost (off by default), `HARDWARE.md`, this README |
 
+Owner's execution plan of 2026-11-18 (backlog with evidence in [`MASTER_ROADMAP.md`](MASTER_ROADMAP.md)):
+
+| Step | State |
+|---|---|
+| 1. Master roadmap | Done |
+| 2. Usable release (clean Linux retest, Windows via WSL2) | Linux retested from a clean setup (4/4 real tasks after fixes); Windows written, **waiting for your test** |
+| 3. Scorecard (MMLU-Pro, GPQA Diamond, LiveCodeBench, BFCL) | **Running**: 2 GB model alone and full NEURON measured, 4 and 8 GB in progress ([`SCORECARD.md`](SCORECARD.md)) |
+| 4. Knowledge memory | Built (keyword + meaning search, 2 GB-friendly embedding model, fallback); no reliable effect on an easy task pair |
+| 5. New locked set, honesty, totals, C++/Go | eval2 written and **locked** before tuning; computed totals and a one-token repair search built; real-model runs queued after the scorecard |
+| 6. Offline to online | Built: waiting steps resume by themselves, crash-safe outside actions, licensed photos with sources, safe package upgrades (real pip and npm runs) |
+| 7. Creative quality | Content rules built; 3 reference sites built, **waiting for your approval** ([`docs/REFERENCE_SITES.md`](docs/REFERENCE_SITES.md)) |
+
 ## Try it
 
 Linux: tested on Ubuntu 24.04 (cloud machine, clean setup, real download and real tasks: see below).
@@ -171,14 +183,18 @@ One 1.5B model, single prompt per attempt, network off. Details in [`docs/HISTOR
 
 - **The agent sometimes claims more than it did** (3 false "verified" claims in the official locked runs, listed above).
   Every result still shows its evidence, and the examiners caught these, but the claim itself is not yet trustworthy.
-- **Compiled-language bug fixing is weak** (C++ 1 to 2 of 3, Go 0 of 2 in the locked set).
+- **Compiled-language bug fixing is weak** (C++ 1 to 2 of 3, Go 0 of 2 in the locked set). One-token bugs are now
+  fixed by a model-free search (4 of 4 on the dev set); real-model runs of the new system are still to come.
 - **The 2 GB model is weak**: it never produced a valid plan for the shop app, and fixed 7 of 20 held-out bugs.
 - **The 4 GB tier is tight**: the memory limit killed the model server once while a C++ project compiled (the
   runner now restarts it). Peak 4084 of 4096 MB.
 - **Small computers are slow.** Writing speed follows memory bandwidth: about 4 tokens per second for the
   8 GB model here, 17 to 36 for the smallest. A task can take many minutes.
-- **Web apps are simple data apps** (lists, forms, search, login, dashboard counts, linked records with one rule
-  each). No computed columns or sums yet; links use the record's name.
+- **Web apps are simple data apps** (lists, forms, search, login, dashboard counts and sums, linked records with one
+  rule each, computed totals such as quantity times price). Computed totals are not yet measured with the real models.
+  Websites are one page.
+- **Licensed photos could not be fully tested here**: Wikimedia rate-limits the cloud machine's shared address, so
+  sites show labelled "Image needed" placeholders until photos arrive (your own photos always come first).
 - **Phone traffic is plain HTTP by default** on the local network. Pairing protects access; `start.sh --https`
   encrypts it with a certificate made on your computer (the phone warns once; compare the printed fingerprint).
 - **Tested only in a cloud Linux container**, not yet on a home PC, a real phone, Windows or Mac. That machine
