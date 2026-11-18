@@ -1,0 +1,57 @@
+{
+ "rows": [
+  {
+   "task": "w01_vat_rounding",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 27.747119903564453,
+    "tokens": 133
+   },
+   "what_happened": [
+    "vat_for: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 35.9,
+   "peak_mb": 5586
+  },
+  {
+   "task": "w02_order_rollback",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 173.84989166259766,
+    "tokens": 844
+   },
+   "what_happened": [
+    "OrderService.place: tests still fail: [...]\nr_changes_nothing\n    self.svc.place(\"C1\", [(\"RICE5\", 2)",
+    "OrderService.place: tests still fail: [...]\nr_changes_nothing\n    self.svc.place(\"C1\", [(\"RICE5\", 2)",
+    "OrderService.place: tests still fail: [...]\nr_changes_nothing\n    self.svc.place(\"C1\", [(\"RICE5\", 2)"
+   ],
+   "tests_untouched": true,
+   "seconds": 174.5,
+   "peak_mb": 5602
+  }
+ ],
+ "set": "workspace",
+ "tier": "8gb",
+ "tier_limit_mb": 8192,
+ "condition": "full",
+ "models": {
+  "planner": "gemma-4-e4b-q4",
+  "reviewer": "gemma-4-e4b-q4",
+  "builder": "gemma-4-e4b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-18 02:27:21",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}
