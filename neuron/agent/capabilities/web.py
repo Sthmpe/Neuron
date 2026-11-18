@@ -1,4 +1,6 @@
 """Websites and web apps, through the step-3 builder (spec -> small tasks -> browser-checked) with the design system."""
+from pathlib import Path
+
 from ...builder.build import build_full
 from ..capability import Capability, Outcome, Verdict
 
@@ -22,9 +24,21 @@ class BuildWebApp(Capability):
         parts = [f"{k} ({mb[k]} file{'s' if mb[k] != 1 else ''})" for k in ("model", "template", "code") if mb.get(k)]
         made = " + ".join(parts) or "model"
         gaps = r.get("not_built") or []
-        out = Outcome(bool(r.get("ok")), f"app {'passes' if r.get('ok') else 'fails'} its acceptance checks; tasks {tasks}"
+        names = {"schema": "database", "dashboard": "dashboard", "home": "home page"}
+        parts = ", ".join(f"{names.get(k, k.replace('_', ' ') + ' page')} ({v.get('made_by') or v.get('status')})" for k, v in tasks.items())
+        files = ["app/"]
+        if r.get("ok"):                                    # one download for the whole app, for the phone
+            import zipfile
+            app = job.workspace / "app"
+            with zipfile.ZipFile(job.workspace / "app.zip", "w", zipfile.ZIP_DEFLATED) as z:
+                for f in sorted(app.rglob("*")):
+                    rel = f.relative_to(app)
+                    if f.is_file() and rel.parts[0] != ".neuron" and "__pycache__" not in rel.parts and not rel.name.startswith("data.db"):
+                        z.write(f, Path("app") / rel)
+            files.append("app.zip")
+        out = Outcome(bool(r.get("ok")), f"the app {'passes' if r.get('ok') else 'fails'} its checks; parts: {parts}"
                       + (f"; NOT built (asked for, not supported yet): {', '.join(gaps)}" if gaps else ""),
-                      {"builder": r}, ["app/"], made_by=made)
+                      {"builder": r}, files, made_by=made)
         return out
 
     def verify(self, job, params, outcome):
@@ -34,7 +48,9 @@ class BuildWebApp(Capability):
         checks.append({"id": "every_requested_feature_built", "pass": not gaps, "gap": True,
                        "detail": ("asked for but not supported yet: " + "; ".join(gaps)) if gaps else ""})
         if r.get("design") is not None:
-            checks.append({"id": "design_checks", "pass": r["design"].get("fails") == 0, "detail": str(r["design"].get("by_rule"))})
+            by_rule = r["design"].get("by_rule") or {}
+            checks.append({"id": "design_checks", "pass": r["design"].get("fails") == 0,
+                           "detail": "no problems found" if not by_rule else ", ".join(f"{k}: {v}" for k, v in by_rule.items())})
         return Verdict(all(c["pass"] for c in checks), checks, "HTTP acceptance checks + browser design checks")
 
 

@@ -68,7 +68,8 @@ async function jobView(id, g) {
     const ev = (await api(`/api/jobs/${id}/events?after=${after}`)).events;
     if (g !== gen) return; if (ev.length) { after = ev[ev.length - 1].seq; feed = feed.concat(ev).slice(-60); }
     const live = ['queued', 'running'].includes(j.status);
-    const outs = (j.outputs || []).filter(o => !o.path.startsWith('app/') || o.path === 'app/app.py');
+    const outs = (j.outputs || []).filter(o => !o.path.startsWith('app/'));            // the whole app comes as app.zip
+    const hasApp = (j.outputs || []).some(o => o.path === 'app/app.py');
     const earlier = (j.thread || []).filter(t => t.id !== j.id);
     view.innerHTML = `<p><a href="#/">Back</a></p>
       ${earlier.length ? `<section class="card thread"><h2>Earlier in this conversation</h2>${earlier.map(t => `<a class="said" href="#/job/${t.id}">
@@ -78,7 +79,7 @@ async function jobView(id, g) {
       ${j.kind ? `<p class="note">Understood as: ${esc(j.kind.replace('_', ' '))}</p>` : ''}
       <div class="row">${live ? `<button class="btn danger small" id="stop">Stop</button>` : ''}
       ${['paused', 'failed', 'partial'].includes(j.status) ? `<button class="btn small" id="resume">Resume</button>` : ''}
-      ${outs.some(o => o.path === 'app/app.py') ? `<button class="btn primary small" id="preview">Open the app</button>` : ''}</div></section>
+      ${hasApp ? `<button class="btn primary small" id="preview">Open the app</button>` : ''}</div></section>
       ${j.approvals.length ? `<section class="card"><h2>Needs your OK</h2>${j.approvals.map(a => `<p>${esc(a.action)} (step ${esc(a.task)})</p>
         <div class="row"><button class="btn primary small" data-ok="${esc(a.task)}|${esc(a.action)}">Approve</button>
         <button class="btn danger small" data-no="${esc(a.task)}|${esc(a.action)}">Reject</button></div>`).join('')}</section>` : ''}

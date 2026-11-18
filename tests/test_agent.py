@@ -259,3 +259,43 @@ class AnswerFactsTests(unittest.TestCase):
         self.assertTrue(f("How much does a student pay?", "150 naira.", "Students pay 150 naira, half the adult fare."))
         self.assertFalse(f("Which area uses most?", "Northbank, 31,200 litres.", "Old Town used 19,500 litres."))
         self.assertTrue(f("Which area uses most?", "Northbank.", "Northbank used the most water."))
+
+
+class WebAppOutcomeTests(unittest.TestCase):
+    def test_summary_is_plain_and_the_whole_app_is_one_download(self):
+        """Found on the real install's phone page: a raw dictionary as the summary, and only app.py to download."""
+        import zipfile
+        from neuron.agent.capabilities import web
+        ws = Path(tempfile.mkdtemp())
+        (ws / "app" / "pages").mkdir(parents=True)
+        (ws / "app" / "app.py").write_text("print(1)\n")
+        (ws / "app" / "pages" / "books.py").write_text("x = 1\n")
+        (ws / "app" / "data.db").write_text("secret rows")
+
+        def fake_build(project, request, runner, sandbox, **k):
+            return {"ok": True, "tasks": {"schema": {"status": "done", "made_by": "code"}, "books": {"status": "done", "made_by": "model"}},
+                    "made_by": {"model": 1, "code": 1}, "llm": {"calls": 2, "tokens": 10, "seconds": 1.0}, "design": {"fails": 0, "by_rule": {}}}
+
+        class J:
+            workspace, design, runner = ws, True, None
+            state = type("S", (), {"goal": lambda self: {"request": "a bookshop app"}})()
+
+            def log(self, m):
+                pass
+
+            def count(self, *a):
+                pass
+        real = web.build_full
+        web.build_full = fake_build
+        try:
+            cap = web.BuildWebApp()
+            out = cap.run(J(), {})
+            verdict = cap.verify(J(), {}, out)
+        finally:
+            web.build_full = real
+        self.assertIn("database (code), books page (model)", out.summary)
+        self.assertNotIn("{", out.summary)
+        names = zipfile.ZipFile(ws / "app.zip").namelist()
+        self.assertIn("app/pages/books.py", names)
+        self.assertNotIn("app/data.db", names)                    # the app's own data never goes into the download
+        self.assertEqual([c["detail"] for c in verdict.checks if c["id"] == "design_checks"], ["no problems found"])
