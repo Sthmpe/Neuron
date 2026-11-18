@@ -32,7 +32,10 @@ def entity_py(spec, e):
     cols = ", ".join(f["name"] for f in e["fields"])
     marks = ", ".join("?" for _ in e["fields"])
     vals = ", ".join(f'req.form.get({f["name"]!r}, "")' for f in e["fields"])
-    row = ", ".join(f'r[{f["name"]!r}]' for f in e["fields"])
+    row = ", ".join([f'r[{f["name"]!r}]' for f in e["fields"]] + [f'ui.num(r[{c["name"]!r}])' for c in e.get("computed", [])])
+    heads = [f["label"] for f in e["fields"]] + [c["label"] for c in e.get("computed", [])]
+    from .computed import select_sql
+    select = select_sql(e)
     before, after = relations.template_post(spec, e)
     fields = ", ".join(relations.ui_field_code(spec, f, INPUT_TYPE.get(f["type"], "text")) for f in e["fields"])
     return f'''from kit.web import redirect
@@ -46,9 +49,9 @@ def register(app):
 {before}            app.db.execute("INSERT INTO {e["name"]}({cols}) VALUES({marks})", [{vals}])
 {after}            return redirect("/{e["name"]}")
         q = req.query.get("q", "")
-        found = app.db.query("SELECT * FROM {e["name"]} WHERE {e["search_field"]} LIKE ? ORDER BY id DESC", ["%" + q + "%"])
+        found = app.db.query("{select} WHERE {e["search_field"]} LIKE ? ORDER BY id DESC", ["%" + q + "%"])
         rows = [[{row}] for r in found]
-        return app.page(req, {e["label"]!r}, ui.search("/{e["name"]}", q), ui.table({[f["label"] for f in e["fields"]]!r}, rows),
+        return app.page(req, {e["label"]!r}, ui.search("/{e["name"]}", q), ui.table({heads!r}, rows),
                         ui.card("Add", ui.form("/{e["name"]}", {fields}, submit="Add")))
 '''
 
@@ -57,6 +60,9 @@ def dashboard_py(spec):
     login = ", login=True" if spec["login_required"] else ""
     stats = []
     for d in spec["dashboard"]:
+        if d["kind"] == "sum":
+            stats.append(f'ui.stat({d["label"]!r}, ui.num(app.db.value("SELECT COALESCE(SUM({d["sql"]}), 0) FROM {d["entity"]}")))')
+            continue
         where = f' WHERE {d["field"]} < {d["below"]:g}' if d["kind"] == "count_below" else ""
         stats.append(f'ui.stat({d["label"]!r}, app.db.value("SELECT COUNT(*) FROM {d["entity"]}{where}"))')
     return f'''from kit import ui

@@ -69,10 +69,22 @@ class LlamaEmbedder:
             self.started = False
 
 
+_SHARED = {}
+
+
+def _close_shared():
+    e = _SHARED.pop("llama", None)
+    if e is not None:
+        e.close()
+
+
 def best_embedder():
-    """The embedding model if it is installed and llama.cpp can run it; otherwise the fallback."""
+    """The embedding model if it is installed and llama.cpp can run it; otherwise the fallback. One embedding server per
+    process, shared by every memory store, stopped when the process exits (a measurement run left several running)."""
     if os.environ.get("NEURON_EMBEDDER") == "hash":
         return HashEmbedder()
+    if "llama" in _SHARED:
+        return _SHARED["llama"]
     model_dir = Path(os.environ.get("NEURON_MODEL_DIR", str(REPO / "models")))
     f = model_dir / "store" / "bge-small-en-v1.5-q8_0.gguf"
     try:
@@ -80,6 +92,9 @@ def best_embedder():
         if f.exists() and Path(DEFAULT_BIN).exists():
             e = LlamaEmbedder(f)
             e.embed(["test"])
+            import atexit
+            _SHARED["llama"] = e
+            atexit.register(_close_shared)
             return e
     except Exception:                       # noqa: BLE001  any problem: fall back, never break the job
         pass

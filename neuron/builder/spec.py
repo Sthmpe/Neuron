@@ -169,8 +169,9 @@ def normalise(spec):
             problems.append("an app needs at least one entity (a kind of record to keep)")
         if s["login_required"] and not (s["username"] and s["password"]):
             problems.append("login_required is true but username or password is empty - copy both exactly from the request")
-    from . import relations
+    from . import computed, relations
     relations.apply(spec, s, problems)
+    computed.apply(spec, s, problems)
 
     def scrub(node):
         if isinstance(node, dict):
@@ -200,9 +201,10 @@ def _ui_fields(fs, spec=None):
 
 GAPS = [
     (r"\b(revenue|turnover|takings|income|sum of|total (sales|revenue|amount|value|cost|spent|money|takings))\b",
-     "a sum of money or amounts (the dashboard can only count records)"),
-    (r"\b(order|line|invoice|sale|basket) totals?\b|\btotal (price|cost|amount) (for|of|on) (each|every|the) (order|sale|invoice)\b|"
-     r"\bquantity\s*(x|times)\s*(the )?(unit )?price\b", "a computed total on each record (such as quantity times price)"),
+     "a sum of money or amounts on the dashboard"),
+    (r"\b(order|line|invoice|sale|basket|repair|job|booking|hire|item)(?:'s)? totals?\b|\btotal (price|cost|amount) (for|of|on) (each|every|the)\b|"
+     r"\b(each|every) \w+(?:'s)? (total|cost)\b|\bquantity\s*(x|times)\s*(the )?(unit )?price\b",
+     "a computed total on each record (such as quantity times price)"),
     (r"\b(write|add|include|with|and|has|have) (its own |some |unit |automated )?tests\b|\btest suite\b", "automated tests for the app"),
     (r"\b(charts?|graphs?)\b", "charts"),
     (r"\b(send|sends|sending|email|emails|text) (an? )?(email|sms|text message|whatsapp|reminders?)\b", "sending messages"),
@@ -211,14 +213,52 @@ GAPS = [
 ]
 
 
-def unsupported_features(request):
-    """Parts of a request this builder cannot make yet. They are reported as not built, never silently dropped (the
-    locked phase-5 run found a shop app called verified without its order totals, revenue sum or tests)."""
+def unsupported_features(request, spec=None):
+    """Parts of a request this build does not cover. They are reported as not built, never silently dropped (the
+    locked phase-5 run found a shop app called verified without its order totals, revenue sum or tests). Computed
+    totals and dashboard sums count as covered only when the plan really has them."""
+    has_computed = bool(spec) and any(e.get("computed") for e in spec.get("entities", []))
+    has_sum = bool(spec) and any(d.get("kind") == "sum" for d in spec.get("dashboard", []))
     found = []
     for pattern, what in GAPS:
-        if re.search(pattern, request or "", re.I) and what not in found:
-            found.append(what)
+        if not re.search(pattern, request or "", re.I) or what in found:
+            continue
+        if what.startswith("a computed total") and has_computed or what.startswith("a sum of money") and has_sum:
+            continue
+        found.append(what)
     return found
+
+
+def computed_checks(spec, e, auth):
+    """Each computed value must be shown, right, for records with distinctive numbers."""
+    from . import computed, relations
+    if not e.get("computed"):
+        return []
+    steps = list(auth) + relations.setup_steps(spec, e)
+    targets = {}
+    for st in steps:
+        if "post" in st:
+            targets.setdefault(st["post"].strip("/"), []).append(st["form"])
+    rows = []
+    for n, (base_a, base_b) in enumerate(((17, 23), (31, 11))):
+        row = relations.sample(spec, e, n)
+        nums = [f["name"] for f in e["fields"] if f["type"] == "number"]
+        rule = relations.rule_for(spec, e["name"])
+        for i, f in enumerate(nums):
+            row[f] = str((base_a, base_b)[i % 2] * (i + 1) + n)
+        if rule:
+            row[rule["amount_field"]] = "1"
+        rows.append(row)
+        steps.append({"post": f"/{e['name']}", "form": row})
+
+    def lookup(target, key, value, field):
+        r = next((r for r in targets.get(target, []) if r.get(key) == value), None)
+        return float(r.get(field) or 0) if r else 0.0
+    sf = e["search_field"]
+    for row in rows:
+        want = [computed.fmt(computed.evaluate(c["parts"], row, lookup)) for c in e["computed"]]
+        steps.append({"get": f"/{e['name']}?q={str(row[sf]).split()[0]}", "expect_text": [str(row[sf])] + want})
+    return [{"name": f"{e['name']}: computed {', '.join(c['label'].lower() for c in e['computed'])} shown and right", "steps": steps}]
 
 
 def _hidden_after_search(spec, e, a, b):
@@ -254,6 +294,7 @@ def _sample(fs, n):
 
 def expand(spec):
     """Spec -> (tasks, acceptance checks, file purposes). Deterministic: no model involved."""
+    from . import computed
     tasks, checks, purposes = [], [], {"app.py": "Starts the app. Generated - never edit."}
     login = spec["kind"] == "app" and spec["login_required"]
     creds = {"username": spec["username"], "password": spec["password"]}
@@ -293,14 +334,18 @@ def expand(spec):
         n, fs, sf = e["name"], e["fields"], e["search_field"]
         cols = ", ".join(f["name"] for f in fs)
         a, b = relations.sample(spec, e, 0), relations.sample(spec, e, 1)
+        comp = e.get("computed", [])
+        heads = [f["label"] for f in fs] + [c["label"] for c in comp]
         contract = "\n".join([
             f"Write pages/{n}.py. It must define register(app), which adds ONE route:",
             f'@app.route("/{n}", methods=["GET", "POST"]{flag})',
             f"- POST: insert a row into table {n} (columns: {cols}) from req.form, then return redirect(\"/{n}\").",
-            f'- GET: q = req.query.get("q", ""). Select rows from {n} where {sf} LIKE "%q%", newest first (ORDER BY id DESC).',
-            f'  Return app.page(req, "{e["label"]}", ui.search("/{n}", q), ui.table([{", ".join(repr(f["label"]) for f in fs)}], rows),',
+            (f'- GET: q = req.query.get("q", ""). found = app.db.query("{computed.select_sql(e)} WHERE {sf} LIKE ? ORDER BY id DESC", ["%" + q + "%"])'
+             if comp else f'- GET: q = req.query.get("q", ""). Select rows from {n} where {sf} LIKE "%q%", newest first (ORDER BY id DESC).'),
+            f'  Return app.page(req, "{e["label"]}", ui.search("/{n}", q), ui.table([{", ".join(repr(h) for h in heads)}], rows),',
             f'  ui.card("Add {e["label"].lower()}", ui.form("/{n}", {_ui_fields(fs, spec)}, submit="Add")))',
-            "  where rows is a list of lists with one value per column, in that order.",
+            "  where rows is a list of lists with one value per column, in that order"
+            + (f"; computed columns ({', '.join(c['name'] for c in comp)}) are shown with ui.num(r[name])." if comp else "."),
         ] + relations.contract_lines(spec, e))
         steps = ([{"get": f"/{n}", "expect_redirect": "/login"}] if login else []) + auth + relations.setup_steps(spec, e) + [
             {"get": f"/{n}", "expect_text": [e["label"]] + [f["label"] for f in fs]},
@@ -309,7 +354,7 @@ def expand(spec):
             {"get": f"/{n}?q={a[sf].split()[0]}", "expect_text": [a[sf]], "expect_no_text": _hidden_after_search(spec, e, a, b)},
             {"restart": True}, {"get": f"/{n}", "expect_text": [a[sf], b[sf]]}]
         linked = relations.links_of(e) or relations.rule_for(spec, n)
-        rule_checks = relations.rule_checks(spec, auth, on_add=n)
+        rule_checks = relations.rule_checks(spec, auth, on_add=n) + computed_checks(spec, e, auth)
         add({"id": n, "title": f"{e['label']} page: list, search, add" + (" (with its rule)" if relations.rule_for(spec, n) else ""),
              "file": f"pages/{n}.py", "must_define": "register", "contract": contract,
              "needs": ["schema.py"] + [f"pages/{f['to']}.py" for f in relations.links_of(e)], "example": "entity_link" if linked else "entity"},
@@ -322,7 +367,10 @@ def expand(spec):
         expect = []
         ents = {e["name"]: e for e in spec["entities"]}
         for d in spec["dashboard"]:
-            if d["kind"] == "count":
+            if d["kind"] == "sum":
+                lines.append(f'- "{d["label"]}": ui.num(app.db.value("SELECT COALESCE(SUM({d["sql"]}), 0) FROM {d["entity"]}"))')
+                expect.append([d["label"], None, d])
+            elif d["kind"] == "count":
                 lines.append(f'- "{d["label"]}": app.db.value("SELECT COUNT(*) FROM {d["entity"]}")')
                 expect.append([d["label"], "2"])
             else:
@@ -341,7 +389,29 @@ def expand(spec):
                     rows[0][d["field"]] = str(int(d["below"]) - 1)
                     rows[1][d["field"]] = str(int(d["below"]) + 50)
             steps += [{"post": f"/{e['name']}", "form": r} for r in rows]
-        near = [[x[0], x[1] if x[1] else "1"] for x in expect]
+        posted = {}
+        for st in steps:
+            if "post" in st:
+                posted.setdefault(st["post"].strip("/"), []).append(st["form"])
+        changed = {r["target"] for r in spec.get("rules", [])}
+
+        def lookup(target, key, value, field):
+            row = next((r for r in posted.get(target, []) if r.get(key) == value), None)
+            return float(row.get(field) or 0) if row else 0.0
+
+        near = []
+        for x in expect:
+            d = x[2] if len(x) > 2 else None
+            if d and d["kind"] == "sum":
+                if d["entity"] in changed:          # a rule changes these numbers as records are added: show the label only
+                    continue
+                ent = ents[d["entity"]]
+                comp = next((c for c in ent.get("computed", []) if c["name"] == d["field"]), None)
+                total = sum(computed.evaluate(comp["parts"], r, lookup) if comp else float(r.get(d["field"]) or 0)
+                            for r in posted.get(d["entity"], []))
+                near.append([d["label"], computed.fmt(total)])
+            else:
+                near.append([x[0], x[1] if x[1] else "1"])
         steps.append({"get": "/", "expect_text": [d["label"] for d in spec["dashboard"]], "expect_near": near})
         add({"id": "dashboard", "title": "Dashboard with the key numbers", "file": "pages/dashboard.py",
              "must_define": "register", "contract": "\n".join(lines),

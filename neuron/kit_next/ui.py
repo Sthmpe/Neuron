@@ -102,6 +102,15 @@ def stats(*items):
     return HTML(f'<div class="stats">{_join(items)}</div>', "stats")
 
 
+def num(value):
+    """A number as people read it: 20000 not 20000.0, 1250.50 with two decimals, never 1.2e+06."""
+    try:
+        v = float(value)
+    except (TypeError, ValueError):
+        return "" if value is None else str(value)
+    return str(int(v)) if v.is_integer() else f"{v:.2f}"
+
+
 def table(headers, rows, empty="Nothing here yet."):
     if not rows:
         return HTML(f'<p class="empty">{_esc(empty)}</p>', "table")

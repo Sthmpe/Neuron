@@ -23,7 +23,7 @@ ui.grid(card, card, ...)   ui.card(title, part, ...)   ui.text("words")   ui.ale
 ui.button("words", "/path")   ui.stats(ui.stat("Label", value), ...)
 ui.table(["Header", ...], rows)        rows = list of lists
 ui.form("/path", field, ..., submit="Save")   ui.field("Label", "name", type="text")
-ui.select("Label", "name", ["choice", ...])   a drop-down
+ui.select("Label", "name", ["choice", ...])   a drop-down        ui.num(value)   a number as people read it
 ui.search("/path", q)
 Never write raw HTML or CSS. Always use ? placeholders in SQL.'''
 
@@ -136,6 +136,9 @@ Rules:
   a balance goes up), add a rule: on_add (the entity being added), link_field, target_field (the number that
   changes), amount_field (the number in the added record), change "subtract" or "add", and block_if_negative
   true if the owner wants it refused when not enough is left. Add no rules that were not asked for.
+- A value worked out from other fields (a total, a cost) is a field of type "computed" with a "formula" using the
+  record's number fields and + - * / (a linked record's number field is written link.field, e.g. "days * tool.daily_rate").
+  A dashboard number that adds up a field over all records is kind "sum" with that field (it may be a computed field).
 - Labels must use the owner's own words: if they ask "how many students are under 18", the label is "Under 18".
 - Do not invent sections, forms or features that were not asked for.'''
 
@@ -166,17 +169,21 @@ PLANNER_EXAMPLE_SPEC = {
                   {"label": "Short books", "entity": "books", "kind": "count_below", "field": "pages", "below": 100}]}
 
 PLANNER_RULE_REQUEST = ("I hire out garden tools. App with login (user tools, password rake2024). Keep my tools with their "
-                        "name and how many are in store. Keep hires: which tool, how many, and the customer's name. When I add "
-                        "a hire, the number in store for that tool must go down, and the hire must be refused if not enough "
-                        "are in store. Search hires by customer.")
+                        "name, how many are in store and the daily rate. Keep hires: which tool, how many, for how many days, "
+                        "and the customer's name; show what each hire costs. When I add a hire, the number in store for that "
+                        "tool must go down, and the hire must be refused if not enough are in store. Search hires by customer. "
+                        "The dashboard shows the number of hires and the total hire income.")
 PLANNER_RULE_SPEC = {
     "app_name": "Tool Hire", "kind": "app", "login_required": True, "username": "tools", "password": "rake2024",
     "home": {"headline": "", "subheadline": "", "sections": []}, "forms": [],
-    "entities": [{"name": "tools", "fields": [{"name": "name", "type": "text"}, {"name": "in_store", "type": "number"}],
-                  "search_field": "name"},
+    "entities": [{"name": "tools", "fields": [{"name": "name", "type": "text"}, {"name": "in_store", "type": "number"},
+                                              {"name": "daily_rate", "type": "number"}], "search_field": "name"},
                  {"name": "hires", "fields": [{"name": "tool", "type": "link", "to": "tools"}, {"name": "quantity", "type": "number"},
-                                              {"name": "customer", "type": "text"}], "search_field": "customer"}],
-    "dashboard": [],
+                                              {"name": "days", "type": "number"}, {"name": "customer", "type": "text"},
+                                              {"name": "cost", "type": "computed", "formula": "quantity * days * tool.daily_rate"}],
+                  "search_field": "customer"}],
+    "dashboard": [{"label": "Hires", "entity": "hires", "kind": "count"},
+                  {"label": "Hire income", "entity": "hires", "kind": "sum", "field": "cost"}],
     "rules": [{"on_add": "hires", "link_field": "tool", "target_field": "in_store", "amount_field": "quantity",
                "change": "subtract", "block_if_negative": True}]}
 

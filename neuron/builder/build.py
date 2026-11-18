@@ -17,10 +17,10 @@ from pathlib import Path
 from ..brain.llm import LLMUnavailable
 from . import prompts
 from .checks import CheckRunner
-from . import relations, templates
+from . import computed, relations, templates
 from .spec import SPEC_SCHEMA, expand, normalise, unsupported_features
 
-PLAN_SCHEMA = relations.extend_schema(SPEC_SCHEMA)       # the planner may also give link fields and rules
+PLAN_SCHEMA = computed.extend_schema(relations.extend_schema(SPEC_SCHEMA))   # also link fields, rules, computed values, sums
 from .state import ProjectState
 
 KIT = Path(__file__).resolve().parents[1] / "kit"
@@ -227,7 +227,7 @@ def build_full(project, request, runner, sandbox, log=print, max_seconds=None, d
         if spec is None:
             return {"ok": False, "stage": "plan", "error": "; ".join(problems), "llm": vars(meter), "resumed": False}
         tasks, acceptance, purposes = expand(spec)
-        spec["not_built"] = unsupported_features(request) + relations.dropped_gaps(request, spec)
+        spec["not_built"] = unsupported_features(request, spec) + relations.dropped_gaps(request, spec)
         if spec["not_built"]:
             log(f"cannot build yet (will be reported): {spec['not_built']}")
         prepare_project(project, spec["app_name"], design)
