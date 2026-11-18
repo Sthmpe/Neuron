@@ -1,0 +1,219 @@
+{
+ "rows": [
+  {
+   "task": "w01_vat_rounding",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 27.747119903564453,
+    "tokens": 133
+   },
+   "what_happened": [
+    "vat_for: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 35.9,
+   "peak_mb": 5586
+  },
+  {
+   "task": "w02_order_rollback",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 173.84989166259766,
+    "tokens": 844
+   },
+   "what_happened": [
+    "OrderService.place: tests still fail: [...]\nr_changes_nothing\n    self.svc.place(\"C1\", [(\"RICE5\", 2)",
+    "OrderService.place: tests still fail: [...]\nr_changes_nothing\n    self.svc.place(\"C1\", [(\"RICE5\", 2)",
+    "OrderService.place: tests still fail: [...]\nr_changes_nothing\n    self.svc.place(\"C1\", [(\"RICE5\", 2)"
+   ],
+   "tests_untouched": true,
+   "seconds": 174.5,
+   "peak_mb": 5602
+  },
+  {
+   "task": "w03_due_date_weekend",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 113.10597681999207,
+    "tokens": 479
+   },
+   "what_happened": [
+    "due_date: tests still fail: [...]\neper/services/invoices.py\", line 16, in days_overdue\n   ",
+    "due_date: tests still fail: [...]\neper/services/invoices.py\", line 16, in days_overdue\n   ",
+    "due_date: tests still fail: [...]\neper/services/invoices.py\", line 16, in days_overdue\n   "
+   ],
+   "tests_untouched": true,
+   "seconds": 113.9,
+   "peak_mb": 5603
+  },
+  {
+   "task": "w04_cancelled_spelling",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 164.9251639842987,
+    "tokens": 803
+   },
+   "what_happened": [
+    "best_sellers: the rewritten function is identical to the original (no change)",
+    "best_sellers: tests still fail: [...]\ns.best_sellers(self.repo), [\"OIL1\", \"RICE5\"])\n    ~~~~~~",
+    "best_sellers: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 165.7,
+   "peak_mb": 5608
+  },
+  {
+   "task": "w05_search_case",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 128.15322542190552,
+    "tokens": 569
+   },
+   "what_happened": [
+    "Repository.search_products: tests still fail: [...]\n, in test_search_and_missing\n    self.assertEqual([p.sku",
+    "Repository.search_products: tests still fail: [...]\nrch_and_missing\n    self.assertEqual([p.sku for p in rep",
+    "Repository.search_products: tests still fail: [...]\n, in test_search_and_missing\n    self.assertEqual([p.sku"
+   ],
+   "tests_untouched": true,
+   "seconds": 128.8,
+   "peak_mb": 5650
+  },
+  {
+   "task": "w06_lunch_slots",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 86.80473494529724,
+    "tokens": 257
+   },
+   "what_happened": [
+    "day_slots: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 87.2,
+   "peak_mb": 5643
+  },
+  {
+   "task": "w07_cancelled_blocks",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 2,
+   "llm": {
+    "calls": 4,
+    "seconds": 189.57280588150024,
+    "tokens": 678
+   },
+   "what_happened": [
+    "Book.book: tests still fail: [...]\ned_slot_can_be_rebooked)\n-------------------------------",
+    "Book.for_doctor: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 190.1,
+   "peak_mb": 5649
+  },
+  {
+   "task": "w08_reminder_day",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 285.2128074169159,
+    "tokens": 1001
+   },
+   "what_happened": [
+    "reminders_for: tests still fail: [...]\n---------------------------------------\nTraceback (most ",
+    "reminders_for: tests still fail: [...]\n------\nTraceback (most recent call last):\n  File \"/works",
+    "reminders_for: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 286.0,
+   "peak_mb": 5641
+  },
+  {
+   "task": "w09_insurance_share",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 71.88286232948303,
+    "tokens": 155
+   },
+   "what_happened": [
+    "patient_pays: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 72.3,
+   "peak_mb": 5649
+  },
+  {
+   "task": "w10_child_age",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 2,
+   "llm": {
+    "calls": 4,
+    "seconds": 143.24667263031006,
+    "tokens": 413
+   },
+   "what_happened": [
+    "Patient.age_in: tests still fail: [...]\ning.FeeTests.test_child_discount)\n----------------------",
+    "Patient.is_child: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 143.8,
+   "peak_mb": 5651
+  }
+ ],
+ "set": "workspace",
+ "tier": "8gb",
+ "tier_limit_mb": 8192,
+ "condition": "full",
+ "models": {
+  "planner": "gemma-4-e4b-q4",
+  "reviewer": "gemma-4-e4b-q4",
+  "builder": "gemma-4-e4b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-18 02:27:21",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

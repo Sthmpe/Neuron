@@ -1,0 +1,219 @@
+{
+ "rows": [
+  {
+   "task": "w01_vat_rounding",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 28.185755491256714,
+    "tokens": 141
+   },
+   "what_happened": [
+    "vat_for: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 34.0,
+   "peak_mb": 3797
+  },
+  {
+   "task": "w02_order_rollback",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 310.90711522102356,
+    "tokens": 1946
+   },
+   "what_happened": [
+    "Inventory.reserve: the rewritten function is identical to the original (no change)",
+    "Inventory.reserve: the reply was not a usable OLD/NEW edit of that function",
+    "OrderService.place: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 311.5,
+   "peak_mb": 3947
+  },
+  {
+   "task": "w03_due_date_weekend",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 2,
+   "llm": {
+    "calls": 4,
+    "seconds": 114.32085537910461,
+    "tokens": 648
+   },
+   "what_happened": [
+    "due_date: tests still fail: [...]\nue\n    return max(0, days_between(due_date(order_date), ",
+    "due_date: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 115.1,
+   "peak_mb": 3863
+  },
+  {
+   "task": "w04_cancelled_spelling",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 43.367043256759644,
+    "tokens": 223
+   },
+   "what_happened": [
+    "best_sellers: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 44.0,
+   "peak_mb": 3866
+  },
+  {
+   "task": "w05_search_case",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 36.42217826843262,
+    "tokens": 172
+   },
+   "what_happened": [
+    "Repository.search_products: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 37.0,
+   "peak_mb": 3867
+  },
+  {
+   "task": "w06_lunch_slots",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 260.1424021720886,
+    "tokens": 965
+   },
+   "what_happened": [
+    "day_slots: the rewritten function is identical to the original (no change)",
+    "day_slots: tests still fail: [...]\n^^^^^^^^^^^^^\nAssertionError: Lists differ: ['08:00', '0",
+    "day_slots: tests still fail: [...]\n:30'] != ['08:00', '08:30', '09:00', '09:30', '10:30', '"
+   ],
+   "tests_untouched": true,
+   "seconds": 260.6,
+   "peak_mb": 3949
+  },
+  {
+   "task": "w07_cancelled_blocks",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 246.57204055786133,
+    "tokens": 1026
+   },
+   "what_happened": [
+    "Book.book: tests still fail: [...]\ned_slot_can_be_rebooked)\n-------------------------------",
+    "Book.book: tests still fail: [...]\ne/tests/test_book.py\", line 30, in test_cancelled_slot_c",
+    "Book.book: tests still fail: [...]\ned_slot_can_be_rebooked)\n-------------------------------"
+   ],
+   "tests_untouched": true,
+   "seconds": 247.1,
+   "peak_mb": 3909
+  },
+  {
+   "task": "w08_reminder_day",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 230.8080973625183,
+    "tokens": 776
+   },
+   "what_happened": [
+    "reminders_for: tests still fail: [...]\n------\nTraceback (most recent call last):\n  File \"/works",
+    "reminders_for: tests still fail: [...]\n------\nTraceback (most recent call last):\n  File \"/works",
+    "reminders_for: tests still fail: [...]\n------\nTraceback (most recent call last):\n  File \"/works"
+   ],
+   "tests_untouched": true,
+   "seconds": 231.4,
+   "peak_mb": 3911
+  },
+  {
+   "task": "w09_insurance_share",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 410.4226863384247,
+    "tokens": 2007
+   },
+   "what_happened": [
+    "patient_pays: the rewritten function is identical to the original (no change)",
+    "patient_pays: the reply was not a usable OLD/NEW edit of that function",
+    "patient_pays: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 410.7,
+   "peak_mb": 3960
+  },
+  {
+   "task": "w10_child_age",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 2,
+   "llm": {
+    "calls": 4,
+    "seconds": 113.00761890411377,
+    "tokens": 364
+   },
+   "what_happened": [
+    "Patient.age_in: the rewritten function is identical to the original (no change)",
+    "Patient.is_child: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 113.4,
+   "peak_mb": 3962
+  }
+ ],
+ "set": "workspace",
+ "tier": "4gb",
+ "tier_limit_mb": 4096,
+ "condition": "full",
+ "models": {
+  "planner": "qwen3.5-4b-q4",
+  "reviewer": "qwen3.5-4b-q4",
+  "builder": "qwen3.5-4b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-17 23:59:03",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

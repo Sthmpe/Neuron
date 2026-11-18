@@ -1,0 +1,866 @@
+{
+ "rows": [
+  {
+   "task": "h01_readings",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 10.949431896209717,
+    "tokens": 176
+   },
+   "what_happened": [
+    "average: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 13.5,
+   "peak_mb": 1423
+  },
+  {
+   "task": "h02_truncate",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 44.70542311668396,
+    "tokens": 656
+   },
+   "what_happened": [
+    "truncate: the rewritten function is identical to the original (no change)",
+    "truncate: the reply was not a usable OLD/NEW edit of that function",
+    "truncate: tests still fail: [...]\n (tests.test_textcut.Tests.test_small_limit)\n-----------"
+   ],
+   "tests_untouched": true,
+   "seconds": 45.0,
+   "peak_mb": 1449
+  },
+  {
+   "task": "h03_rpn",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 37.80041718482971,
+    "tokens": 503
+   },
+   "what_happened": [
+    "apply: tests still fail: [...]\n=========================\nFAIL: test_subtraction (tests.",
+    "apply: tests still fail: [...]\n=========================\nFAIL: test_subtraction (tests.",
+    "apply: tests still fail: [...]\n=========================\nFAIL: test_subtraction (tests."
+   ],
+   "tests_untouched": true,
+   "seconds": 38.4,
+   "peak_mb": 1452
+  },
+  {
+   "task": "h04_roman",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 51.948688983917236,
+    "tokens": 742
+   },
+   "what_happened": [
+    "from_roman: tests still fail: [...]\nt_subtractive_from_roman (tests.test_roman.Tests.test_su",
+    "from_roman: tests still fail: [...]\nst_subtractive_from_roman (tests.test_roman.Tests.test_s",
+    "from_roman: tests still fail: [...]\nst_subtractive_from_roman (tests.test_roman.Tests.test_s"
+   ],
+   "tests_untouched": true,
+   "seconds": 52.4,
+   "peak_mb": 1466
+  },
+  {
+   "task": "h05_priority",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 40.75918745994568,
+    "tokens": 617
+   },
+   "what_happened": [
+    "TaskQueue.next: tests still fail: [...]\ntest_most_urgent_first (tests.test_tasks.Tests.test_most",
+    "TaskQueue.next: tests still fail: [...]\ntest_most_urgent_first (tests.test_tasks.Tests.test_most",
+    "TaskQueue.next: tests still fail: [...]\ntest_most_urgent_first (tests.test_tasks.Tests.test_most"
+   ],
+   "tests_untouched": true,
+   "seconds": 41.2,
+   "peak_mb": 1462
+  },
+  {
+   "task": "h06_wrap",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 38.58753252029419,
+    "tokens": 614
+   },
+   "what_happened": [
+    "wrap: the rewritten function is identical to the original (no change)",
+    "wrap: the reply was not a usable OLD/NEW edit of that function",
+    "wrap: tests still fail: [...]\ns.test_wrap.Tests.test_no_line_is_too_long)\n------------"
+   ],
+   "tests_untouched": true,
+   "seconds": 38.8,
+   "peak_mb": 1466
+  },
+  {
+   "task": "h07_warehouse",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 11.26628041267395,
+    "tokens": 153
+   },
+   "what_happened": [
+    "Warehouse.take: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 11.7,
+   "peak_mb": 1464
+  },
+  {
+   "task": "h08_paging",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 2,
+   "llm": {
+    "calls": 4,
+    "seconds": 23.76475977897644,
+    "tokens": 351
+   },
+   "what_happened": [
+    "has_next: the rewritten function is identical to the original (no change)",
+    "total_pages: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 24.1,
+   "peak_mb": 1466
+  },
+  {
+   "task": "h09_grades",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 35.94183564186096,
+    "tokens": 447
+   },
+   "what_happened": [
+    "summary: the rewritten function is identical to the original (no change)",
+    "summary: tests still fail: [...]\n-------------------------------------\nTraceback (most re",
+    "summary: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 36.3,
+   "peak_mb": 1466
+  },
+  {
+   "task": "h10_clock",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 42.971479415893555,
+    "tokens": 592
+   },
+   "what_happened": [
+    "to_minutes: the rewritten function is identical to the original (no change)",
+    "duration: tests still fail: [...]\n==============\nFAIL: test_noon (tests.test_clock.Tests.t",
+    "to_minutes: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 43.3,
+   "peak_mb": 1462
+  },
+  {
+   "task": "h11_flatten",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 41.2670111656189,
+    "tokens": 502
+   },
+   "what_happened": [
+    "count_leaves: tests still fail: [...]\nine 11, in test_one_level\n    self.assertEqual(nested.fl",
+    "count_leaves: tests still fail: [...]\nted.py\", line 11, in test_one_level\n    self.assertEqual",
+    "flatten: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 41.8,
+   "peak_mb": 1466
+  },
+  {
+   "task": "h12_dedupe",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 10.613880634307861,
+    "tokens": 129
+   },
+   "what_happened": [
+    "dedupe: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 11.0,
+   "peak_mb": 1465
+  },
+  {
+   "task": "h13_caesar",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 25.68710470199585,
+    "tokens": 316
+   },
+   "what_happened": [
+    "decrypt: tests still fail: [...]\n: test_uppercase (tests.test_caesar.Tests.test_uppercase",
+    "decrypt: tests still fail: [...]\n: test_uppercase (tests.test_caesar.Tests.test_uppercase",
+    "decrypt: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 26.1,
+   "peak_mb": 1458
+  },
+  {
+   "task": "h14_calendar",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 32.10393571853638,
+    "tokens": 429
+   },
+   "what_happened": [
+    "Calendar.book: the rewritten function is identical to the original (no change)",
+    "Calendar.book: tests still fail: [...]\n====\nFAIL: test_overlap_is_refused (tests.test_calendar.",
+    "Calendar.book: tests still fail: [...]\nback (most recent call last):\n  File \"/workspace/tests/t"
+   ],
+   "tests_untouched": true,
+   "seconds": 32.5,
+   "peak_mb": 1461
+  },
+  {
+   "task": "h15_settings",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 43.20917105674744,
+    "tokens": 640
+   },
+   "what_happened": [
+    "get_path: the rewritten function is identical to the original (no change)",
+    "get_path: the reply was not a usable OLD/NEW edit of that function",
+    "get_path: tests still fail: [...]\neeply_nested)\n------------------------------------------"
+   ],
+   "tests_untouched": true,
+   "seconds": 43.5,
+   "peak_mb": 1467
+  },
+  {
+   "task": "h16_bill",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 49.99310612678528,
+    "tokens": 727
+   },
+   "what_happened": [
+    "split: tests still fail: [...]\n====\nFAIL: test_shares_add_up (tests.test_bill.Tests.tes",
+    "split: tests still fail: [...]\n====\nFAIL: test_shares_add_up (tests.test_bill.Tests.tes",
+    "split: tests still fail: [...]\n\nTraceback (most recent call last):\n  File \"/workspace/t"
+   ],
+   "tests_untouched": true,
+   "seconds": 50.4,
+   "peak_mb": 1459
+  },
+  {
+   "task": "h17_chain",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 2,
+   "llm": {
+    "calls": 4,
+    "seconds": 32.63690423965454,
+    "tokens": 521
+   },
+   "what_happened": [
+    "Chain.remove: the rewritten function is identical to the original (no change)",
+    "Chain.remove: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 33.1,
+   "peak_mb": 1467
+  },
+  {
+   "task": "h18_tokens",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 31.218910694122314,
+    "tokens": 356
+   },
+   "what_happened": [
+    "count_numbers: the rewritten function is identical to the original (no change)",
+    "count_numbers: tests still fail: [...]\n-----------------\nTraceback (most recent call last):\n  F",
+    "count_numbers: the rewritten function is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 31.6,
+   "peak_mb": 1460
+  },
+  {
+   "task": "h19_buckets",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 45.93977165222168,
+    "tokens": 552
+   },
+   "what_happened": [
+    "bucket_start: tests still fail: [...]\n call last):\n  File \"/workspace/tests/test_buckets.py\", ",
+    "bucket_start: tests still fail: [...]\n call last):\n  File \"/workspace/tests/test_buckets.py\", ",
+    "bucket_start: tests still fail: [...]\n call last):\n  File \"/workspace/tests/test_buckets.py\", "
+   ],
+   "tests_untouched": true,
+   "seconds": 46.5,
+   "peak_mb": 1466
+  },
+  {
+   "task": "h20_access",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 12.37721586227417,
+    "tokens": 150
+   },
+   "what_happened": [
+    "can: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 12.7,
+   "peak_mb": 1467
+  },
+  {
+   "task": "b1_bakery_landing",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 40.5,
+   "builder": {
+    "ok": true,
+    "stage": "done",
+    "error": "",
+    "design": null,
+    "tasks": {
+     "schema": {
+      "status": "done",
+      "attempts": 1
+     },
+     "home": {
+      "status": "done",
+      "attempts": 1
+     }
+    },
+    "llm": {
+     "calls": 4,
+     "seconds": 36.527925968170166,
+     "tokens": 537
+    },
+    "model_loads": 1,
+    "seconds": 39.9
+   },
+   "peak_mb_build": 1490,
+   "examiner": [
+    {
+     "id": "page_opens",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "id": "headline_has_the_name",
+     "pass": true,
+     "detail": "headlines: Welcome | Sunrise Bakery | What we sell | Opening hours | Subscribe to our newsletter"
+    },
+    {
+     "id": "shows_fresh_bread",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_birthday_cakes_",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_meat_pies_",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_7_s_am",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_monday",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "looks_right_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "form_can_be_sent_and_thanks_shown",
+     "pass": true,
+     "detail": "no thank-you message after sending"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "page_opens_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "what_was_sent_is_kept_on_disk",
+     "pass": true,
+     "detail": "not found on disk: "
+    }
+   ],
+   "passed": 13,
+   "total": 13,
+   "score": 1.0,
+   "solved": true,
+   "screenshots": [
+    "home-desktop.png",
+    "home-phone.png",
+    "after-form-desktop.png"
+   ],
+   "examine_seconds": 2.4,
+   "peak_mb_examine": 165,
+   "seconds": 42.9,
+   "peak_mb": 1490
+  },
+  {
+   "task": "b2_shop_app",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 69.0,
+   "builder": {
+    "ok": true,
+    "stage": "done",
+    "error": "",
+    "design": null,
+    "tasks": {
+     "schema": {
+      "status": "done",
+      "attempts": 1
+     },
+     "customers": {
+      "status": "done",
+      "attempts": 1
+     },
+     "products": {
+      "status": "done",
+      "attempts": 1
+     },
+     "dashboard": {
+      "status": "done",
+      "attempts": 1
+     }
+    },
+    "llm": {
+     "calls": 5,
+     "seconds": 63.37211322784424,
+     "tokens": 1087
+    },
+    "model_loads": 1,
+    "seconds": 68.6
+   },
+   "peak_mb_build": 1510,
+   "examiner": [
+    {
+     "id": "app_opens",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "id": "login_is_required",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "wrong_password_is_rejected",
+     "pass": true,
+     "detail": "got in with a wrong password"
+    },
+    {
+     "id": "login_works",
+     "pass": true,
+     "detail": "still on the login form"
+    },
+    {
+     "id": "dashboard_shows_the_requested_numbers",
+     "pass": true,
+     "detail": "no sign of: "
+    },
+    {
+     "id": "customers_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:38709/customers"
+    },
+    {
+     "id": "customers_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "customers_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "products_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:38709/products"
+    },
+    {
+     "id": "products_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "products_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "dashboard_counts_are_right",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "works_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "login_still_works_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "records_survive_a_restart",
+     "pass": true,
+     "detail": "gone after restart: "
+    },
+    {
+     "id": "dashboard_right_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "logout_works",
+     "pass": true,
+     "detail": "records page still open after logging out"
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "passed": 19,
+   "total": 19,
+   "score": 1.0,
+   "solved": true,
+   "screenshots": [
+    "login-desktop.png",
+    "customers-desktop.png",
+    "products-desktop.png",
+    "dashboard-desktop.png",
+    "dashboard-phone.png",
+    "customers-phone.png",
+    "products-phone.png"
+   ],
+   "examine_seconds": 5.1,
+   "peak_mb_examine": 243,
+   "seconds": 74.1,
+   "peak_mb": 1510
+  },
+  {
+   "task": "b3_shop_app_resumed",
+   "type": "build",
+   "sessions": 2,
+   "killed": true,
+   "killed_after_seconds": 52.0,
+   "state_at_kill": {
+    "schema": [
+     "done",
+     1
+    ],
+    "customers": [
+     "done",
+     1
+    ],
+    "products": [
+     "in_progress",
+     0
+    ],
+    "dashboard": [
+     "pending",
+     0
+    ]
+   },
+   "finished_work_redone_after_resume": false,
+   "tasks_done_before_kill": [
+    "schema",
+    "customers"
+   ],
+   "build_seconds": 80.6,
+   "builder": {
+    "ok": true,
+    "stage": "done",
+    "error": "",
+    "design": null,
+    "tasks": {
+     "schema": {
+      "status": "done",
+      "attempts": 1
+     },
+     "customers": {
+      "status": "done",
+      "attempts": 1
+     },
+     "products": {
+      "status": "done",
+      "attempts": 1
+     },
+     "dashboard": {
+      "status": "done",
+      "attempts": 1
+     }
+    },
+    "llm": {
+     "calls": 2,
+     "seconds": 22.304819107055664,
+     "tokens": 350
+    },
+    "model_loads": 1,
+    "seconds": 26.9
+   },
+   "peak_mb_build": 1492,
+   "examiner": [
+    {
+     "id": "app_opens",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "id": "login_is_required",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "wrong_password_is_rejected",
+     "pass": true,
+     "detail": "got in with a wrong password"
+    },
+    {
+     "id": "login_works",
+     "pass": true,
+     "detail": "still on the login form"
+    },
+    {
+     "id": "dashboard_shows_the_requested_numbers",
+     "pass": true,
+     "detail": "no sign of: "
+    },
+    {
+     "id": "customers_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:34767/customers"
+    },
+    {
+     "id": "customers_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "customers_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "products_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:34767/products"
+    },
+    {
+     "id": "products_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "products_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "dashboard_counts_are_right",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "works_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "login_still_works_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "records_survive_a_restart",
+     "pass": true,
+     "detail": "gone after restart: "
+    },
+    {
+     "id": "dashboard_right_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "logout_works",
+     "pass": true,
+     "detail": "records page still open after logging out"
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "passed": 19,
+   "total": 19,
+   "score": 1.0,
+   "solved": true,
+   "screenshots": [
+    "login-desktop.png",
+    "customers-desktop.png",
+    "products-desktop.png",
+    "dashboard-desktop.png",
+    "dashboard-phone.png",
+    "customers-phone.png",
+    "products-phone.png"
+   ],
+   "examine_seconds": 5.0,
+   "peak_mb_examine": 248,
+   "seconds": 85.5,
+   "peak_mb": 1492
+  }
+ ],
+ "set": "heldout",
+ "tier": "2gb",
+ "tier_limit_mb": 2048,
+ "condition": "full",
+ "models": {
+  "planner": "qwen2.5-coder-1.5b-q4",
+  "reviewer": "qwen2.5-coder-1.5b-q4",
+  "builder": "qwen2.5-coder-1.5b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-17 21:57:37",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

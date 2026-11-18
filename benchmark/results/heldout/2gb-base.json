@@ -688,6 +688,166 @@
    "peak_mb_examine": 175,
    "seconds": 303.5,
    "peak_mb": 1467
+  },
+  {
+   "task": "b3_shop_app_resumed",
+   "type": "build",
+   "sessions": 2,
+   "killed": true,
+   "killed_after_seconds": 75.0,
+   "state_at_kill": {},
+   "build_seconds": 235.1,
+   "builder": {
+    "ok": false,
+    "stage": "done",
+    "error": "The reply did not contain schema.py as 'FILE: schema.py' followed by a python block.",
+    "rounds": [
+     {
+      "n": 1,
+      "files": [
+       "pages/customers.py",
+       "pages/products.py",
+       "schema.py"
+      ],
+      "ok": false,
+      "problem": "Check 'home page opens' failed: step 1 (GET /): expected HTTP [200], got 404. "
+     },
+     {
+      "n": 2,
+      "files": [],
+      "ok": false,
+      "problem": "The reply did not contain schema.py as 'FILE: schema.py' followed by a python block."
+     },
+     {
+      "n": 3,
+      "files": [],
+      "ok": false,
+      "problem": "The reply did not contain schema.py as 'FILE: schema.py' followed by a python block."
+     }
+    ],
+    "llm": {
+     "calls": 3,
+     "seconds": 155.94661402702332,
+     "tokens": 1943
+    },
+    "model_loads": 1,
+    "seconds": 158.6
+   },
+   "peak_mb_build": 1461,
+   "examiner": [
+    {
+     "id": "app_opens",
+     "pass": true,
+     "detail": "404"
+    },
+    {
+     "id": "login_is_required",
+     "pass": true,
+     "detail": "the records page opened without logging in"
+    },
+    {
+     "id": "wrong_password_is_rejected",
+     "pass": false,
+     "detail": "locator.fill: Timeout 30000ms exceeded."
+    },
+    {
+     "id": "login_works",
+     "pass": false,
+     "detail": "locator.fill: Timeout 30000ms exceeded."
+    },
+    {
+     "id": "dashboard_shows_the_requested_numbers",
+     "pass": false,
+     "detail": "no sign of: low"
+    },
+    {
+     "id": "customers_page_opens",
+     "pass": false,
+     "detail": "http://127.0.0.1:38203/login"
+    },
+    {
+     "id": "customers_can_be_added",
+     "pass": false,
+     "detail": "no field for \"Phone\""
+    },
+    {
+     "id": "customers_search_works",
+     "pass": false,
+     "detail": "no search box"
+    },
+    {
+     "id": "products_page_opens",
+     "pass": false,
+     "detail": "http://127.0.0.1:38203/login"
+    },
+    {
+     "id": "products_can_be_added",
+     "pass": false,
+     "detail": "no field for \"Price\""
+    },
+    {
+     "id": "products_search_works",
+     "pass": false,
+     "detail": "no search box"
+    },
+    {
+     "id": "dashboard_counts_are_right",
+     "pass": false,
+     "detail": "customers should be 3; products should be 4; low should be 2"
+    },
+    {
+     "id": "works_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "login_still_works_after_restart",
+     "pass": false,
+     "detail": "locator.fill: Timeout 30000ms exceeded."
+    },
+    {
+     "id": "records_survive_a_restart",
+     "pass": false,
+     "detail": "gone after restart: Ada Obi, Bola Adeyemi, Chuka Nwosu, Rice 5kg, Palm Oil 1L, Sugar 1kg, Tin Tomato"
+    },
+    {
+     "id": "dashboard_right_after_restart",
+     "pass": false,
+     "detail": "customers should be 3; products should be 4; low should be 2"
+    },
+    {
+     "id": "logout_works",
+     "pass": false,
+     "detail": "no log out control"
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "passed": 5,
+   "total": 19,
+   "score": 0.263,
+   "solved": false,
+   "screenshots": [
+    "login-desktop.png",
+    "customers-desktop.png",
+    "products-desktop.png",
+    "dashboard-desktop.png",
+    "dashboard-phone.png",
+    "customers-phone.png",
+    "products-phone.png"
+   ],
+   "examine_seconds": 93.3,
+   "peak_mb_examine": 176,
+   "seconds": 328.4,
+   "peak_mb": 1461
   }
  ],
  "set": "heldout",

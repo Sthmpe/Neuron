@@ -1,0 +1,227 @@
+{
+ "rows": [
+  {
+   "task": "w01_vat_rounding",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 104.7,
+    "tokens": 444
+   },
+   "what_happened": [
+    "tests still failing",
+    "tests still failing",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 107.4,
+   "peak_mb": 1443
+  },
+  {
+   "task": "w02_order_rollback",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 155.2,
+    "tokens": 1025
+   },
+   "what_happened": [
+    "tests still failing",
+    "tests still failing",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 155.8,
+   "peak_mb": 1443
+  },
+  {
+   "task": "w03_due_date_weekend",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 124.3,
+    "tokens": 457
+   },
+   "what_happened": [
+    "tests still failing",
+    "tests still failing",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 124.9,
+   "peak_mb": 1444
+  },
+  {
+   "task": "w04_cancelled_spelling",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 95.0,
+    "tokens": 651
+   },
+   "what_happened": [
+    "rejected: the proposed file is identical to the original (no change)",
+    "tests still failing",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 95.4,
+   "peak_mb": 1441
+  },
+  {
+   "task": "w05_search_case",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 140.4,
+    "tokens": 981
+   },
+   "what_happened": [
+    "tests still failing",
+    "tests still failing",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 141.0,
+   "peak_mb": 1447
+  },
+  {
+   "task": "w06_lunch_slots",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 108.0,
+    "tokens": 909
+   },
+   "what_happened": [
+    "tests still failing",
+    "rejected: the proposed file is identical to the original (no change)",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 71.2,
+   "peak_mb": 1442
+  },
+  {
+   "task": "w07_cancelled_blocks",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 181.2,
+    "tokens": 1824
+   },
+   "what_happened": [
+    "tests still failing",
+    "tests still failing",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 181.7,
+   "peak_mb": 1443
+  },
+  {
+   "task": "w08_reminder_day",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 125.1,
+    "tokens": 1634
+   },
+   "what_happened": [
+    "tests still failing",
+    "tests still failing",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 125.6,
+   "peak_mb": 1446
+  },
+  {
+   "task": "w09_insurance_share",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 209.2,
+    "tokens": 1997
+   },
+   "what_happened": [
+    "tests still failing",
+    "tests still failing",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 209.6,
+   "peak_mb": 1447
+  },
+  {
+   "task": "w10_child_age",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 104.1,
+    "tokens": 462
+   },
+   "what_happened": [
+    "tests still failing",
+    "tests still failing",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 104.6,
+   "peak_mb": 1443
+  }
+ ],
+ "set": "workspace",
+ "tier": "2gb",
+ "tier_limit_mb": 2048,
+ "condition": "base",
+ "models": {
+  "planner": "qwen2.5-coder-1.5b-q4",
+  "reviewer": "qwen2.5-coder-1.5b-q4",
+  "builder": "qwen2.5-coder-1.5b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-17 20:28:36",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

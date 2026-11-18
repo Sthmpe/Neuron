@@ -1,0 +1,840 @@
+{
+ "rows": [
+  {
+   "task": "h01_readings",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 27.072795391082764,
+    "tokens": 126
+   },
+   "what_happened": [
+    "average: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 36.7,
+   "peak_mb": 5576
+  },
+  {
+   "task": "h02_truncate",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 37.943094968795776,
+    "tokens": 182
+   },
+   "what_happened": [
+    "truncate: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 38.4,
+   "peak_mb": 5596
+  },
+  {
+   "task": "h03_rpn",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 6,
+    "seconds": 137.65677070617676,
+    "tokens": 605
+   },
+   "what_happened": [
+    "apply: tests still fail: [...]\n====================================\nFAIL: test_division",
+    "apply: tests still fail: [...]\n=========================\nFAIL: test_subtraction (tests.",
+    "apply: tests still fail: [...]\n====================================\nFAIL: test_division"
+   ],
+   "tests_untouched": true,
+   "seconds": 138.1,
+   "peak_mb": 5602
+  },
+  {
+   "task": "h04_roman",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 45.91036128997803,
+    "tokens": 206
+   },
+   "what_happened": [
+    "from_roman: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 46.3,
+   "peak_mb": 5604
+  },
+  {
+   "task": "h05_priority",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 46.76490330696106,
+    "tokens": 228
+   },
+   "what_happened": [
+    "TaskQueue.next: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 47.1,
+   "peak_mb": 5603
+  },
+  {
+   "task": "h06_wrap",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 2,
+   "llm": {
+    "calls": 4,
+    "seconds": 94.38181662559509,
+    "tokens": 482
+   },
+   "what_happened": [
+    "wrap: tests still fail: [...]\ninarily\", \"b\"])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^",
+    "wrap: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 94.9,
+   "peak_mb": 5604
+  },
+  {
+   "task": "h07_warehouse",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 37.346736907958984,
+    "tokens": 161
+   },
+   "what_happened": [
+    "Warehouse.take: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 37.7,
+   "peak_mb": 5604
+  },
+  {
+   "task": "h08_paging",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 38.24165081977844,
+    "tokens": 188
+   },
+   "what_happened": [
+    "total_pages: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 38.6,
+   "peak_mb": 5602
+  },
+  {
+   "task": "h09_grades",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 41.674599409103394,
+    "tokens": 183
+   },
+   "what_happened": [
+    "letter: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 42.0,
+   "peak_mb": 5609
+  },
+  {
+   "task": "h10_clock",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 58.55593752861023,
+    "tokens": 302
+   },
+   "what_happened": [
+    "to_minutes: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 58.9,
+   "peak_mb": 5602
+  },
+  {
+   "task": "h11_flatten",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 41.363200426101685,
+    "tokens": 162
+   },
+   "what_happened": [
+    "flatten: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 41.7,
+   "peak_mb": 5604
+  },
+  {
+   "task": "h12_dedupe",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 30.348060369491577,
+    "tokens": 101
+   },
+   "what_happened": [
+    "dedupe: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 30.7,
+   "peak_mb": 5609
+  },
+  {
+   "task": "h13_caesar",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 38.636884927749634,
+    "tokens": 187
+   },
+   "what_happened": [
+    "shift_char: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 39.0,
+   "peak_mb": 5609
+  },
+  {
+   "task": "h14_calendar",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 34.535475730895996,
+    "tokens": 150
+   },
+   "what_happened": [
+    "overlaps: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 34.9,
+   "peak_mb": 5601
+  },
+  {
+   "task": "h15_settings",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 55.66362452507019,
+    "tokens": 275
+   },
+   "what_happened": [
+    "merge: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 56.0,
+   "peak_mb": 5609
+  },
+  {
+   "task": "h16_bill",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 51.036052227020264,
+    "tokens": 254
+   },
+   "what_happened": [
+    "split: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 51.4,
+   "peak_mb": 5605
+  },
+  {
+   "task": "h17_chain",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 38.01663947105408,
+    "tokens": 185
+   },
+   "what_happened": [
+    "Chain.remove: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 38.4,
+   "peak_mb": 5609
+  },
+  {
+   "task": "h18_tokens",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 2,
+   "llm": {
+    "calls": 4,
+    "seconds": 81.01604318618774,
+    "tokens": 299
+   },
+   "what_happened": [
+    "count_numbers: tests still fail: [...]\n---------------------------\nTraceback (most recent call ",
+    "tokenize: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 81.5,
+   "peak_mb": 5609
+  },
+  {
+   "task": "h19_buckets",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 45.81254816055298,
+    "tokens": 194
+   },
+   "what_happened": [
+    "bucket_start: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 46.2,
+   "peak_mb": 5604
+  },
+  {
+   "task": "h20_access",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 2,
+    "seconds": 38.767319679260254,
+    "tokens": 146
+   },
+   "what_happened": [
+    "can: tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 39.1,
+   "peak_mb": 5604
+  },
+  {
+   "task": "b1_bakery_landing",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 147.1,
+   "builder": {
+    "ok": true,
+    "stage": "done",
+    "error": "",
+    "design": null,
+    "tasks": {
+     "schema": {
+      "status": "done",
+      "attempts": 1
+     },
+     "home": {
+      "status": "done",
+      "attempts": 1
+     }
+    },
+    "llm": {
+     "calls": 4,
+     "seconds": 138.50162029266357,
+     "tokens": 725
+    },
+    "model_loads": 1,
+    "seconds": 146.2
+   },
+   "peak_mb_build": 5715,
+   "examiner": [
+    {
+     "id": "page_opens",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "id": "headline_has_the_name",
+     "pass": true,
+     "detail": "headlines: Welcome | Sunrise Bakery | What we sell | Opening Hours | Get new offers"
+    },
+    {
+     "id": "shows_fresh_bread",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_birthday_cakes_",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_meat_pies_",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_7_s_am",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_monday",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "looks_right_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "form_can_be_sent_and_thanks_shown",
+     "pass": true,
+     "detail": "no thank-you message after sending"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "page_opens_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "what_was_sent_is_kept_on_disk",
+     "pass": true,
+     "detail": "not found on disk: "
+    }
+   ],
+   "passed": 13,
+   "total": 13,
+   "score": 1.0,
+   "solved": true,
+   "screenshots": [
+    "home-desktop.png",
+    "home-phone.png",
+    "after-form-desktop.png"
+   ],
+   "examine_seconds": 2.4,
+   "peak_mb_examine": 166,
+   "seconds": 149.5,
+   "peak_mb": 5715
+  },
+  {
+   "task": "b2_shop_app",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 216.6,
+   "builder": {
+    "ok": true,
+    "stage": "done",
+    "error": "",
+    "design": null,
+    "tasks": {
+     "schema": {
+      "status": "done",
+      "attempts": 1
+     },
+     "customers": {
+      "status": "done",
+      "attempts": 1
+     },
+     "products": {
+      "status": "done",
+      "attempts": 1
+     },
+     "dashboard": {
+      "status": "done",
+      "attempts": 1
+     }
+    },
+    "llm": {
+     "calls": 5,
+     "seconds": 205.88237118721008,
+     "tokens": 1186
+    },
+    "model_loads": 1,
+    "seconds": 215.7
+   },
+   "peak_mb_build": 5735,
+   "examiner": [
+    {
+     "id": "app_opens",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "id": "login_is_required",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "wrong_password_is_rejected",
+     "pass": true,
+     "detail": "got in with a wrong password"
+    },
+    {
+     "id": "login_works",
+     "pass": true,
+     "detail": "still on the login form"
+    },
+    {
+     "id": "dashboard_shows_the_requested_numbers",
+     "pass": true,
+     "detail": "no sign of: "
+    },
+    {
+     "id": "customers_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:44295/customers"
+    },
+    {
+     "id": "customers_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "customers_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "products_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:44295/products"
+    },
+    {
+     "id": "products_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "products_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "dashboard_counts_are_right",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "works_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "login_still_works_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "records_survive_a_restart",
+     "pass": true,
+     "detail": "gone after restart: "
+    },
+    {
+     "id": "dashboard_right_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "logout_works",
+     "pass": true,
+     "detail": "records page still open after logging out"
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "passed": 19,
+   "total": 19,
+   "score": 1.0,
+   "solved": true,
+   "screenshots": [
+    "login-desktop.png",
+    "customers-desktop.png",
+    "products-desktop.png",
+    "dashboard-desktop.png",
+    "dashboard-phone.png",
+    "customers-phone.png",
+    "products-phone.png"
+   ],
+   "examine_seconds": 5.1,
+   "peak_mb_examine": 260,
+   "seconds": 221.7,
+   "peak_mb": 5735
+  },
+  {
+   "task": "b3_shop_app_resumed",
+   "type": "build",
+   "sessions": 2,
+   "killed": true,
+   "killed_after_seconds": 146.6,
+   "state_at_kill": {
+    "schema": [
+     "done",
+     1
+    ],
+    "customers": [
+     "done",
+     1
+    ],
+    "products": [
+     "in_progress",
+     0
+    ],
+    "dashboard": [
+     "pending",
+     0
+    ]
+   },
+   "finished_work_redone_after_resume": false,
+   "tasks_done_before_kill": [
+    "schema",
+    "customers"
+   ],
+   "build_seconds": 242.2,
+   "builder": {
+    "ok": true,
+    "stage": "done",
+    "error": "",
+    "design": null,
+    "tasks": {
+     "schema": {
+      "status": "done",
+      "attempts": 1
+     },
+     "customers": {
+      "status": "done",
+      "attempts": 1
+     },
+     "products": {
+      "status": "done",
+      "attempts": 1
+     },
+     "dashboard": {
+      "status": "done",
+      "attempts": 1
+     }
+    },
+    "llm": {
+     "calls": 2,
+     "seconds": 84.92013502120972,
+     "tokens": 446
+    },
+    "model_loads": 1,
+    "seconds": 94.1
+   },
+   "peak_mb_build": 5717,
+   "examiner": [
+    {
+     "id": "app_opens",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "id": "login_is_required",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "wrong_password_is_rejected",
+     "pass": true,
+     "detail": "got in with a wrong password"
+    },
+    {
+     "id": "login_works",
+     "pass": true,
+     "detail": "still on the login form"
+    },
+    {
+     "id": "dashboard_shows_the_requested_numbers",
+     "pass": true,
+     "detail": "no sign of: "
+    },
+    {
+     "id": "customers_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:35577/customers"
+    },
+    {
+     "id": "customers_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "customers_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "products_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:35577/products"
+    },
+    {
+     "id": "products_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "products_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "dashboard_counts_are_right",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "works_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "login_still_works_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "records_survive_a_restart",
+     "pass": true,
+     "detail": "gone after restart: "
+    },
+    {
+     "id": "dashboard_right_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "logout_works",
+     "pass": true,
+     "detail": "records page still open after logging out"
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "passed": 19,
+   "total": 19,
+   "score": 1.0,
+   "solved": true,
+   "screenshots": [
+    "login-desktop.png",
+    "customers-desktop.png",
+    "products-desktop.png",
+    "dashboard-desktop.png",
+    "dashboard-phone.png",
+    "customers-phone.png",
+    "products-phone.png"
+   ],
+   "examine_seconds": 5.1,
+   "peak_mb_examine": 258,
+   "seconds": 247.3,
+   "peak_mb": 5717
+  }
+ ],
+ "set": "heldout",
+ "tier": "8gb",
+ "tier_limit_mb": 8192,
+ "condition": "full",
+ "models": {
+  "planner": "gemma-4-e4b-q4",
+  "reviewer": "gemma-4-e4b-q4",
+  "builder": "gemma-4-e4b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-18 01:59:42",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

@@ -21,3 +21,204 @@
 2gb-base b1_bakery_landing: not solved | 0/13 checks | 134.4s | peak 1449 MB
 2gb-base b2_shop_app: not solved | 5/19 checks | 303.5s | peak 1467 MB
 -- machine restarted about 20:22 while b3_shop_app_resumed was running; held-out resumed at 20:23, b3 rerun from a clean folder --
+2gb-base b3_shop_app_resumed: not solved | 5/19 checks | 328.4s | peak 1461 MB
+2gb-base: solved 5/23; mean score 0.24
+2gb-base w01_vat_rounding: not solved | attempts 3 | 107.4s | peak 1443 MB
+2gb-base w02_order_rollback: not solved | attempts 3 | 155.8s | peak 1443 MB
+2gb-base w03_due_date_weekend: not solved | attempts 3 | 124.9s | peak 1444 MB
+2gb-base w04_cancelled_spelling: not solved | attempts 3 | 95.4s | peak 1441 MB
+2gb-base w05_search_case: not solved | attempts 3 | 141.0s | peak 1447 MB
+-- machine restarted again about 20:40 (the session had gone idle) after 2gb-base w05; resumed at 21:46; the interrupted task reruns from a clean copy --
+2gb-base: solved 5/23; mean score 0.24
+2gb-base w06_lunch_slots: not solved | attempts 3 | 71.2s | peak 1442 MB
+2gb-base w07_cancelled_blocks: not solved | attempts 3 | 181.7s | peak 1443 MB
+2gb-base w08_reminder_day: not solved | attempts 3 | 125.6s | peak 1446 MB
+2gb-base w09_insurance_share: not solved | attempts 3 | 209.6s | peak 1447 MB
+2gb-base w10_child_age: not solved | attempts 3 | 104.6s | peak 1443 MB
+2gb-base: solved 0/10; mean score 0.00
+2gb-full h01_readings: SOLVED | attempts 1 | 13.5s | peak 1423 MB
+2gb-full h02_truncate: not solved | attempts 3 | 45.0s | peak 1449 MB
+2gb-full h03_rpn: not solved | attempts 3 | 38.4s | peak 1452 MB
+2gb-full h04_roman: not solved | attempts 3 | 52.4s | peak 1466 MB
+2gb-full h05_priority: not solved | attempts 3 | 41.2s | peak 1462 MB
+2gb-full h06_wrap: not solved | attempts 3 | 38.8s | peak 1466 MB
+2gb-full h07_warehouse: SOLVED | attempts 1 | 11.7s | peak 1464 MB
+2gb-full h08_paging: SOLVED | attempts 2 | 24.1s | peak 1466 MB
+2gb-full h09_grades: not solved | attempts 3 | 36.3s | peak 1466 MB
+2gb-full h10_clock: not solved | attempts 3 | 43.3s | peak 1462 MB
+2gb-full h11_flatten: SOLVED | attempts 3 | 41.8s | peak 1466 MB
+2gb-full h12_dedupe: SOLVED | attempts 1 | 11.0s | peak 1465 MB
+2gb-full h13_caesar: not solved | attempts 3 | 26.1s | peak 1458 MB
+2gb-full h14_calendar: not solved | attempts 3 | 32.5s | peak 1461 MB
+2gb-full h15_settings: not solved | attempts 3 | 43.5s | peak 1467 MB
+2gb-full h16_bill: not solved | attempts 3 | 50.4s | peak 1459 MB
+2gb-full h17_chain: SOLVED | attempts 2 | 33.1s | peak 1467 MB
+2gb-full h18_tokens: not solved | attempts 3 | 31.6s | peak 1460 MB
+2gb-full h19_buckets: not solved | attempts 3 | 46.5s | peak 1466 MB
+2gb-full h20_access: SOLVED | attempts 1 | 12.7s | peak 1467 MB
+2gb-full b1_bakery_landing: SOLVED | 13/13 checks | 42.9s | peak 1490 MB
+2gb-full b2_shop_app: SOLVED | 19/19 checks | 74.1s | peak 1510 MB
+2gb-full b3_shop_app_resumed: SOLVED | 19/19 checks | 85.5s | peak 1492 MB
+2gb-full: solved 10/23; mean score 0.43
+2gb-full w01_vat_rounding: SOLVED | attempts 1 | 12.0s | peak 1432 MB
+2gb-full w02_order_rollback: not solved | attempts 3 | 46.8s | peak 1463 MB
+2gb-full w03_due_date_weekend: SOLVED | attempts 3 | 35.8s | peak 1469 MB
+2gb-full w04_cancelled_spelling: not solved | attempts 3 | 46.5s | peak 1470 MB
+2gb-full w05_search_case: SOLVED | attempts 2 | 22.3s | peak 1461 MB
+2gb-full w06_lunch_slots: not solved | attempts 3 | 72.0s | peak 1462 MB
+2gb-full w07_cancelled_blocks: not solved | attempts 3 | 84.6s | peak 1467 MB
+2gb-full w08_reminder_day: not solved | attempts 3 | 64.8s | peak 1470 MB
+2gb-full w09_insurance_share: not solved | attempts 3 | 63.5s | peak 1471 MB
+2gb-full w10_child_age: not solved | attempts 3 | 61.1s | peak 1471 MB
+2gb-full: solved 3/10; mean score 0.30
+4gb-base h01_readings: SOLVED | attempts 1 | 123.7s | peak 3807 MB
+4gb-base h02_truncate: SOLVED | attempts 1 | 30.7s | peak 3858 MB
+4gb-base h03_rpn: SOLVED | attempts 1 | 38.3s | peak 3860 MB
+4gb-base h04_roman: not solved | attempts 3 | 182.0s | peak 3859 MB
+4gb-base h05_priority: SOLVED | attempts 1 | 38.4s | peak 3866 MB
+4gb-base h06_wrap: SOLVED | attempts 1 | 31.0s | peak 3867 MB
+4gb-base h07_warehouse: SOLVED | attempts 1 | 39.0s | peak 3866 MB
+4gb-base h08_paging: SOLVED | attempts 1 | 31.7s | peak 3859 MB
+4gb-base h09_grades: SOLVED | attempts 1 | 39.3s | peak 3862 MB
+4gb-base h10_clock: SOLVED | attempts 1 | 44.2s | peak 3866 MB
+4gb-base h11_flatten: SOLVED | attempts 1 | 37.9s | peak 3864 MB
+4gb-base h12_dedupe: SOLVED | attempts 1 | 44.9s | peak 3860 MB
+4gb-base h13_caesar: SOLVED | attempts 1 | 27.7s | peak 3860 MB
+4gb-base h14_calendar: SOLVED | attempts 1 | 35.7s | peak 3867 MB
+4gb-base h15_settings: SOLVED | attempts 1 | 38.4s | peak 3864 MB
+4gb-base h16_bill: SOLVED | attempts 1 | 38.2s | peak 3867 MB
+4gb-base h17_chain: SOLVED | attempts 1 | 44.1s | peak 3862 MB
+4gb-base h18_tokens: SOLVED | attempts 1 | 40.3s | peak 3863 MB
+4gb-base h19_buckets: SOLVED | attempts 1 | 44.1s | peak 3860 MB
+4gb-base h20_access: SOLVED | attempts 1 | 41.5s | peak 3861 MB
+4gb-base b1_bakery_landing: not solved | 0/13 checks | 198.1s | peak 3924 MB
+4gb-base b2_shop_app: not solved | 5/19 checks | 517.7s | peak 3996 MB
+4gb-base b3_shop_app_resumed: SOLVED | 19/19 checks | 221.9s | peak 3837 MB
+4gb-base: solved 20/23; mean score 0.88
+4gb-base w01_vat_rounding: SOLVED | attempts 1 | 97.2s | peak 3815 MB
+4gb-base w02_order_rollback: SOLVED | attempts 1 | 138.0s | peak 3813 MB
+4gb-base w03_due_date_weekend: not solved | attempts 3 | 166.8s | peak 3911 MB
+4gb-base w04_cancelled_spelling: not solved | attempts 3 | 220.5s | peak 3920 MB
+4gb-base w05_search_case: not solved | attempts 3 | 474.4s | peak 3913 MB
+4gb-base w06_lunch_slots: not solved | attempts 3 | 230.5s | peak 3913 MB
+4gb-base w07_cancelled_blocks: not solved | attempts 3 | 362.0s | peak 3913 MB
+4gb-base w08_reminder_day: not solved | attempts 3 | 302.0s | peak 3863 MB
+4gb-base w09_insurance_share: not solved | attempts 3 | 211.1s | peak 3913 MB
+4gb-base w10_child_age: SOLVED | attempts 1 | 77.8s | peak 3918 MB
+4gb-base: solved 3/10; mean score 0.30
+4gb-full h01_readings: SOLVED | attempts 1 | 34.4s | peak 3801 MB
+4gb-full h02_truncate: SOLVED | attempts 1 | 39.1s | peak 3856 MB
+4gb-full h03_rpn: SOLVED | attempts 1 | 45.4s | peak 3857 MB
+4gb-full h04_roman: SOLVED | attempts 1 | 47.6s | peak 3857 MB
+4gb-full h05_priority: SOLVED | attempts 1 | 37.4s | peak 3857 MB
+4gb-full h06_wrap: SOLVED | attempts 1 | 68.3s | peak 3857 MB
+4gb-full h07_warehouse: SOLVED | attempts 1 | 39.7s | peak 3862 MB
+4gb-full h08_paging: SOLVED | attempts 1 | 38.5s | peak 3857 MB
+4gb-full h09_grades: SOLVED | attempts 1 | 42.7s | peak 3857 MB
+4gb-full h10_clock: SOLVED | attempts 3 | 202.8s | peak 3858 MB
+4gb-full h11_flatten: SOLVED | attempts 1 | 39.4s | peak 3859 MB
+4gb-full h12_dedupe: SOLVED | attempts 1 | 41.7s | peak 3859 MB
+4gb-full h13_caesar: SOLVED | attempts 1 | 40.2s | peak 3949 MB
+4gb-full h14_calendar: SOLVED | attempts 1 | 38.8s | peak 3860 MB
+4gb-full h15_settings: SOLVED | attempts 1 | 52.2s | peak 3860 MB
+4gb-full h16_bill: SOLVED | attempts 1 | 41.8s | peak 3860 MB
+4gb-full h17_chain: SOLVED | attempts 1 | 63.8s | peak 3860 MB
+4gb-full h18_tokens: SOLVED | attempts 1 | 49.9s | peak 3860 MB
+4gb-full h19_buckets: SOLVED | attempts 1 | 54.8s | peak 3860 MB
+4gb-full h20_access: SOLVED | attempts 1 | 34.7s | peak 3860 MB
+4gb-full b1_bakery_landing: SOLVED | 13/13 checks | 237.4s | peak 3996 MB
+4gb-full b2_shop_app: SOLVED | 19/19 checks | 189.2s | peak 3913 MB
+4gb-full b3_shop_app_resumed: SOLVED | 19/19 checks | 200.6s | peak 3900 MB
+4gb-full: solved 23/23; mean score 1.00
+4gb-full w01_vat_rounding: SOLVED | attempts 1 | 34.0s | peak 3797 MB
+4gb-full w02_order_rollback: SOLVED | attempts 3 | 311.5s | peak 3947 MB
+4gb-full w03_due_date_weekend: SOLVED | attempts 2 | 115.1s | peak 3863 MB
+4gb-full w04_cancelled_spelling: SOLVED | attempts 1 | 44.0s | peak 3866 MB
+4gb-full w05_search_case: SOLVED | attempts 1 | 37.0s | peak 3867 MB
+4gb-full w06_lunch_slots: not solved | attempts 3 | 260.6s | peak 3949 MB
+4gb-full w07_cancelled_blocks: not solved | attempts 3 | 247.1s | peak 3909 MB
+4gb-full w08_reminder_day: not solved | attempts 3 | 231.4s | peak 3911 MB
+4gb-full w09_insurance_share: not solved | attempts 3 | 410.7s | peak 3960 MB
+4gb-full w10_child_age: SOLVED | attempts 2 | 113.4s | peak 3962 MB
+4gb-full: solved 6/10; mean score 0.60
+8gb-base h01_readings: SOLVED | attempts 1 | 169.1s | peak 5592 MB
+8gb-base h02_truncate: SOLVED | attempts 1 | 32.7s | peak 5602 MB
+8gb-base h03_rpn: SOLVED | attempts 1 | 40.4s | peak 5609 MB
+8gb-base h04_roman: not solved | attempts 3 | 174.0s | peak 5632 MB
+8gb-base h05_priority: SOLVED | attempts 1 | 40.5s | peak 5625 MB
+8gb-base h06_wrap: SOLVED | attempts 1 | 33.7s | peak 5607 MB
+8gb-base h07_warehouse: SOLVED | attempts 1 | 44.5s | peak 5606 MB
+8gb-base h08_paging: SOLVED | attempts 1 | 35.7s | peak 5606 MB
+8gb-base h09_grades: SOLVED | attempts 1 | 41.0s | peak 5606 MB
+8gb-base h10_clock: SOLVED | attempts 1 | 47.4s | peak 5609 MB
+8gb-base h11_flatten: SOLVED | attempts 1 | 40.4s | peak 5614 MB
+8gb-base h12_dedupe: SOLVED | attempts 1 | 57.7s | peak 5614 MB
+8gb-base h13_caesar: SOLVED | attempts 1 | 32.0s | peak 5606 MB
+8gb-base h14_calendar: SOLVED | attempts 1 | 43.8s | peak 5606 MB
+8gb-base h15_settings: SOLVED | attempts 1 | 44.0s | peak 5606 MB
+8gb-base h16_bill: SOLVED | attempts 1 | 40.3s | peak 5606 MB
+8gb-base h17_chain: SOLVED | attempts 1 | 48.5s | peak 5613 MB
+8gb-base h18_tokens: SOLVED | attempts 1 | 41.6s | peak 5606 MB
+8gb-base h19_buckets: SOLVED | attempts 1 | 44.0s | peak 5607 MB
+8gb-base h20_access: SOLVED | attempts 1 | 41.7s | peak 5608 MB
+8gb-base b1_bakery_landing: not solved | 12/13 checks | 106.9s | peak 5618 MB
+8gb-base b2_shop_app: SOLVED | 19/19 checks | 152.8s | peak 5618 MB
+8gb-base b3_shop_app_resumed: SOLVED | 19/19 checks | 219.6s | peak 5633 MB
+8gb-base: solved 21/23; mean score 0.95
+8gb-base w01_vat_rounding: SOLVED | attempts 1 | 103.7s | peak 5603 MB
+8gb-base w02_order_rollback: SOLVED | attempts 1 | 145.6s | peak 5603 MB
+-- machine restarted again about 01:00 during 8gb-base workspace (after w02); resumed at 01:05; the interrupted task reruns from a clean copy --
+2gb-base: solved 5/23; mean score 0.24
+2gb-base: solved 0/10; mean score 0.00
+2gb-full: solved 10/23; mean score 0.43
+2gb-full: solved 3/10; mean score 0.30
+4gb-base: solved 20/23; mean score 0.88
+4gb-base: solved 3/10; mean score 0.30
+4gb-full: solved 23/23; mean score 1.00
+4gb-full: solved 6/10; mean score 0.60
+8gb-base: solved 21/23; mean score 0.95
+8gb-base w03_due_date_weekend: not solved | attempts 3 | 389.9s | peak 5624 MB
+8gb-base w04_cancelled_spelling: not solved | attempts 3 | 575.1s | peak 5632 MB
+8gb-base w05_search_case: not solved | attempts 3 | 777.8s | peak 5647 MB
+8gb-base w06_lunch_slots: SOLVED | attempts 1 | 133.3s | peak 5647 MB
+8gb-base w07_cancelled_blocks: not solved | attempts 3 | 507.1s | peak 5647 MB
+8gb-base w08_reminder_day: SOLVED | attempts 1 | 99.3s | peak 5655 MB
+8gb-base w09_insurance_share: SOLVED | attempts 2 | 534.0s | peak 5636 MB
+8gb-base w10_child_age: not solved | attempts 3 | 239.3s | peak 5628 MB
+8gb-base: solved 5/10; mean score 0.50
+8gb-full h01_readings: SOLVED | attempts 1 | 36.7s | peak 5576 MB
+8gb-full h02_truncate: SOLVED | attempts 1 | 38.4s | peak 5596 MB
+8gb-full h03_rpn: not solved | attempts 3 | 138.1s | peak 5602 MB
+8gb-full h04_roman: SOLVED | attempts 1 | 46.3s | peak 5604 MB
+8gb-full h05_priority: SOLVED | attempts 1 | 47.1s | peak 5603 MB
+8gb-full h06_wrap: SOLVED | attempts 2 | 94.9s | peak 5604 MB
+8gb-full h07_warehouse: SOLVED | attempts 1 | 37.7s | peak 5604 MB
+8gb-full h08_paging: SOLVED | attempts 1 | 38.6s | peak 5602 MB
+8gb-full h09_grades: SOLVED | attempts 1 | 42.0s | peak 5609 MB
+8gb-full h10_clock: SOLVED | attempts 1 | 58.9s | peak 5602 MB
+8gb-full h11_flatten: SOLVED | attempts 1 | 41.7s | peak 5604 MB
+8gb-full h12_dedupe: SOLVED | attempts 1 | 30.7s | peak 5609 MB
+8gb-full h13_caesar: SOLVED | attempts 1 | 39.0s | peak 5609 MB
+8gb-full h14_calendar: SOLVED | attempts 1 | 34.9s | peak 5601 MB
+8gb-full h15_settings: SOLVED | attempts 1 | 56.0s | peak 5609 MB
+8gb-full h16_bill: SOLVED | attempts 1 | 51.4s | peak 5605 MB
+8gb-full h17_chain: SOLVED | attempts 1 | 38.4s | peak 5609 MB
+8gb-full h18_tokens: SOLVED | attempts 2 | 81.5s | peak 5609 MB
+8gb-full h19_buckets: SOLVED | attempts 1 | 46.2s | peak 5604 MB
+8gb-full h20_access: SOLVED | attempts 1 | 39.1s | peak 5604 MB
+8gb-full b1_bakery_landing: SOLVED | 13/13 checks | 149.5s | peak 5715 MB
+8gb-full b2_shop_app: SOLVED | 19/19 checks | 221.7s | peak 5735 MB
+8gb-full b3_shop_app_resumed: SOLVED | 19/19 checks | 247.3s | peak 5717 MB
+8gb-full: solved 22/23; mean score 0.96
+8gb-full w01_vat_rounding: SOLVED | attempts 1 | 35.9s | peak 5586 MB
+8gb-full w02_order_rollback: not solved | attempts 3 | 174.5s | peak 5602 MB
+8gb-full w03_due_date_weekend: not solved | attempts 3 | 113.9s | peak 5603 MB
+8gb-full w04_cancelled_spelling: SOLVED | attempts 3 | 165.7s | peak 5608 MB
+8gb-full w05_search_case: not solved | attempts 3 | 128.8s | peak 5650 MB
+8gb-full w06_lunch_slots: SOLVED | attempts 1 | 87.2s | peak 5643 MB
+8gb-full w07_cancelled_blocks: SOLVED | attempts 2 | 190.1s | peak 5649 MB
+8gb-full w08_reminder_day: SOLVED | attempts 3 | 286.0s | peak 5641 MB
+8gb-full w09_insurance_share: SOLVED | attempts 1 | 72.3s | peak 5649 MB
+8gb-full w10_child_age: SOLVED | attempts 2 | 143.8s | peak 5651 MB
+8gb-full: solved 7/10; mean score 0.70
+HELDOUT-DONE
