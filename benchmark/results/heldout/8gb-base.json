@@ -1,0 +1,804 @@
+{
+ "rows": [
+  {
+   "task": "h01_readings",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 26.9,
+    "tokens": 149
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 169.1,
+   "peak_mb": 5592
+  },
+  {
+   "task": "h02_truncate",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 32.5,
+    "tokens": 177
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 32.7,
+   "peak_mb": 5602
+  },
+  {
+   "task": "h03_rpn",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 40.1,
+    "tokens": 226
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 40.4,
+   "peak_mb": 5609
+  },
+  {
+   "task": "h04_roman",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 173.6,
+    "tokens": 1025
+   },
+   "what_happened": [
+    "tests still failing",
+    "tests still failing",
+    "tests still failing"
+   ],
+   "tests_untouched": true,
+   "seconds": 174.0,
+   "peak_mb": 5632
+  },
+  {
+   "task": "h05_priority",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 40.2,
+    "tokens": 222
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 40.5,
+   "peak_mb": 5625
+  },
+  {
+   "task": "h06_wrap",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 33.5,
+    "tokens": 177
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 33.7,
+   "peak_mb": 5607
+  },
+  {
+   "task": "h07_warehouse",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 44.2,
+    "tokens": 237
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 44.5,
+   "peak_mb": 5606
+  },
+  {
+   "task": "h08_paging",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 35.4,
+    "tokens": 196
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 35.7,
+   "peak_mb": 5606
+  },
+  {
+   "task": "h09_grades",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 40.8,
+    "tokens": 215
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 41.0,
+   "peak_mb": 5606
+  },
+  {
+   "task": "h10_clock",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 47.1,
+    "tokens": 259
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 47.4,
+   "peak_mb": 5609
+  },
+  {
+   "task": "h11_flatten",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 40.1,
+    "tokens": 195
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 40.4,
+   "peak_mb": 5614
+  },
+  {
+   "task": "h12_dedupe",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 57.4,
+    "tokens": 322
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 57.7,
+   "peak_mb": 5614
+  },
+  {
+   "task": "h13_caesar",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 31.7,
+    "tokens": 151
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 32.0,
+   "peak_mb": 5606
+  },
+  {
+   "task": "h14_calendar",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 43.5,
+    "tokens": 210
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 43.8,
+   "peak_mb": 5606
+  },
+  {
+   "task": "h15_settings",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 43.8,
+    "tokens": 225
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 44.0,
+   "peak_mb": 5606
+  },
+  {
+   "task": "h16_bill",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 40.0,
+    "tokens": 203
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 40.3,
+   "peak_mb": 5606
+  },
+  {
+   "task": "h17_chain",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 48.2,
+    "tokens": 277
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 48.5,
+   "peak_mb": 5613
+  },
+  {
+   "task": "h18_tokens",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 41.3,
+    "tokens": 216
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 41.6,
+   "peak_mb": 5606
+  },
+  {
+   "task": "h19_buckets",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 43.6,
+    "tokens": 220
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 44.0,
+   "peak_mb": 5607
+  },
+  {
+   "task": "h20_access",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 41.4,
+    "tokens": 207
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 41.7,
+   "peak_mb": 5608
+  },
+  {
+   "task": "b1_bakery_landing",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 105.0,
+   "builder": {
+    "ok": true,
+    "stage": "done",
+    "error": "",
+    "rounds": [
+     {
+      "n": 1,
+      "files": [
+       "pages/home.py",
+       "schema.py"
+      ],
+      "ok": true,
+      "problem": ""
+     }
+    ],
+    "llm": {
+     "calls": 1,
+     "seconds": 96.7132797241211,
+     "tokens": 595
+    },
+    "model_loads": 1,
+    "seconds": 104.1
+   },
+   "peak_mb_build": 5618,
+   "examiner": [
+    {
+     "id": "page_opens",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "id": "headline_has_the_name",
+     "pass": true,
+     "detail": "headlines: Sunrise Bakery | Sunrise Bakery | What We Offer | Our Hours | Stay Updated"
+    },
+    {
+     "id": "shows_fresh_bread",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_birthday_cakes_",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_meat_pies_",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_7_s_am",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_monday",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "looks_right_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "form_can_be_sent_and_thanks_shown",
+     "pass": false,
+     "detail": "no thank-you message after sending"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "page_opens_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "what_was_sent_is_kept_on_disk",
+     "pass": true,
+     "detail": "not found on disk: "
+    }
+   ],
+   "passed": 12,
+   "total": 13,
+   "score": 0.923,
+   "solved": false,
+   "screenshots": [
+    "home-desktop.png",
+    "home-phone.png",
+    "after-form-desktop.png"
+   ],
+   "examine_seconds": 1.9,
+   "peak_mb_examine": 165,
+   "seconds": 106.9,
+   "peak_mb": 5618
+  },
+  {
+   "task": "b2_shop_app",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 148.0,
+   "builder": {
+    "ok": true,
+    "stage": "done",
+    "error": "",
+    "rounds": [
+     {
+      "n": 1,
+      "files": [
+       "pages/customers.py",
+       "pages/dashboard.py",
+       "pages/products.py",
+       "schema.py"
+      ],
+      "ok": true,
+      "problem": ""
+     }
+    ],
+    "llm": {
+     "calls": 1,
+     "seconds": 140.5675036907196,
+     "tokens": 962
+    },
+    "model_loads": 1,
+    "seconds": 147.4
+   },
+   "peak_mb_build": 5618,
+   "examiner": [
+    {
+     "id": "app_opens",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "id": "login_is_required",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "wrong_password_is_rejected",
+     "pass": true,
+     "detail": "got in with a wrong password"
+    },
+    {
+     "id": "login_works",
+     "pass": true,
+     "detail": "still on the login form"
+    },
+    {
+     "id": "dashboard_shows_the_requested_numbers",
+     "pass": true,
+     "detail": "no sign of: "
+    },
+    {
+     "id": "customers_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:44875/customers"
+    },
+    {
+     "id": "customers_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "customers_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "products_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:44875/products"
+    },
+    {
+     "id": "products_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "products_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "dashboard_counts_are_right",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "works_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "login_still_works_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "records_survive_a_restart",
+     "pass": true,
+     "detail": "gone after restart: "
+    },
+    {
+     "id": "dashboard_right_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "logout_works",
+     "pass": true,
+     "detail": "records page still open after logging out"
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "passed": 19,
+   "total": 19,
+   "score": 1.0,
+   "solved": true,
+   "screenshots": [
+    "login-desktop.png",
+    "customers-desktop.png",
+    "products-desktop.png",
+    "dashboard-desktop.png",
+    "dashboard-phone.png",
+    "customers-phone.png",
+    "products-phone.png"
+   ],
+   "examine_seconds": 4.7,
+   "peak_mb_examine": 256,
+   "seconds": 152.8,
+   "peak_mb": 5618
+  },
+  {
+   "task": "b3_shop_app_resumed",
+   "type": "build",
+   "sessions": 2,
+   "killed": true,
+   "killed_after_seconds": 75.0,
+   "state_at_kill": {},
+   "build_seconds": 215.1,
+   "builder": {
+    "ok": true,
+    "stage": "done",
+    "error": "",
+    "rounds": [
+     {
+      "n": 1,
+      "files": [
+       "pages/customers.py",
+       "pages/dashboard.py",
+       "pages/products.py",
+       "schema.py"
+      ],
+      "ok": true,
+      "problem": ""
+     }
+    ],
+    "llm": {
+     "calls": 1,
+     "seconds": 131.75364446640015,
+     "tokens": 929
+    },
+    "model_loads": 1,
+    "seconds": 138.6
+   },
+   "peak_mb_build": 5633,
+   "examiner": [
+    {
+     "id": "app_opens",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "id": "login_is_required",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "wrong_password_is_rejected",
+     "pass": true,
+     "detail": "got in with a wrong password"
+    },
+    {
+     "id": "login_works",
+     "pass": true,
+     "detail": "still on the login form"
+    },
+    {
+     "id": "dashboard_shows_the_requested_numbers",
+     "pass": true,
+     "detail": "no sign of: "
+    },
+    {
+     "id": "customers_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:39025/customers"
+    },
+    {
+     "id": "customers_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "customers_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "products_page_opens",
+     "pass": true,
+     "detail": "http://127.0.0.1:39025/products"
+    },
+    {
+     "id": "products_can_be_added",
+     "pass": true,
+     "detail": "not listed after adding: "
+    },
+    {
+     "id": "products_search_works",
+     "pass": true,
+     "detail": "hit shown: true, other record hidden: true"
+    },
+    {
+     "id": "dashboard_counts_are_right",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "works_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "login_still_works_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "records_survive_a_restart",
+     "pass": true,
+     "detail": "gone after restart: "
+    },
+    {
+     "id": "dashboard_right_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "logout_works",
+     "pass": true,
+     "detail": "records page still open after logging out"
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "passed": 19,
+   "total": 19,
+   "score": 1.0,
+   "solved": true,
+   "screenshots": [
+    "login-desktop.png",
+    "customers-desktop.png",
+    "products-desktop.png",
+    "dashboard-desktop.png",
+    "dashboard-phone.png",
+    "customers-phone.png",
+    "products-phone.png"
+   ],
+   "examine_seconds": 4.5,
+   "peak_mb_examine": 258,
+   "seconds": 219.6,
+   "peak_mb": 5633
+  }
+ ],
+ "set": "heldout",
+ "tier": "8gb",
+ "tier_limit_mb": 8192,
+ "condition": "base",
+ "models": {
+  "planner": "gemma-4-e4b-q4",
+  "reviewer": "gemma-4-e4b-q4",
+  "builder": "gemma-4-e4b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-18 00:29:09",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

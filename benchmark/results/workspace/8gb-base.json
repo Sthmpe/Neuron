@@ -1,0 +1,36 @@
+{
+ "rows": [
+  {
+   "task": "w01_vat_rounding",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 97.0,
+    "tokens": 283
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 103.7,
+   "peak_mb": 5603
+  }
+ ],
+ "set": "workspace",
+ "tier": "8gb",
+ "tier_limit_mb": 8192,
+ "condition": "base",
+ "models": {
+  "planner": "gemma-4-e4b-q4",
+  "reviewer": "gemma-4-e4b-q4",
+  "builder": "gemma-4-e4b-q4"
+ },
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-18 00:55:24",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

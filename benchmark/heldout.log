@@ -141,3 +141,28 @@
 4gb-full w09_insurance_share: not solved | attempts 3 | 410.7s | peak 3960 MB
 4gb-full w10_child_age: SOLVED | attempts 2 | 113.4s | peak 3962 MB
 4gb-full: solved 6/10; mean score 0.60
+8gb-base h01_readings: SOLVED | attempts 1 | 169.1s | peak 5592 MB
+8gb-base h02_truncate: SOLVED | attempts 1 | 32.7s | peak 5602 MB
+8gb-base h03_rpn: SOLVED | attempts 1 | 40.4s | peak 5609 MB
+8gb-base h04_roman: not solved | attempts 3 | 174.0s | peak 5632 MB
+8gb-base h05_priority: SOLVED | attempts 1 | 40.5s | peak 5625 MB
+8gb-base h06_wrap: SOLVED | attempts 1 | 33.7s | peak 5607 MB
+8gb-base h07_warehouse: SOLVED | attempts 1 | 44.5s | peak 5606 MB
+8gb-base h08_paging: SOLVED | attempts 1 | 35.7s | peak 5606 MB
+8gb-base h09_grades: SOLVED | attempts 1 | 41.0s | peak 5606 MB
+8gb-base h10_clock: SOLVED | attempts 1 | 47.4s | peak 5609 MB
+8gb-base h11_flatten: SOLVED | attempts 1 | 40.4s | peak 5614 MB
+8gb-base h12_dedupe: SOLVED | attempts 1 | 57.7s | peak 5614 MB
+8gb-base h13_caesar: SOLVED | attempts 1 | 32.0s | peak 5606 MB
+8gb-base h14_calendar: SOLVED | attempts 1 | 43.8s | peak 5606 MB
+8gb-base h15_settings: SOLVED | attempts 1 | 44.0s | peak 5606 MB
+8gb-base h16_bill: SOLVED | attempts 1 | 40.3s | peak 5606 MB
+8gb-base h17_chain: SOLVED | attempts 1 | 48.5s | peak 5613 MB
+8gb-base h18_tokens: SOLVED | attempts 1 | 41.6s | peak 5606 MB
+8gb-base h19_buckets: SOLVED | attempts 1 | 44.0s | peak 5607 MB
+8gb-base h20_access: SOLVED | attempts 1 | 41.7s | peak 5608 MB
+8gb-base b1_bakery_landing: not solved | 12/13 checks | 106.9s | peak 5618 MB
+8gb-base b2_shop_app: SOLVED | 19/19 checks | 152.8s | peak 5618 MB
+8gb-base b3_shop_app_resumed: SOLVED | 19/19 checks | 219.6s | peak 5633 MB
+8gb-base: solved 21/23; mean score 0.95
+8gb-base w01_vat_rounding: SOLVED | attempts 1 | 103.7s | peak 5603 MB
