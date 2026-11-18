@@ -64,6 +64,15 @@ class StoreTests(unittest.TestCase):
 
 @unittest.skipUnless(Sandbox().available(), "needs bubblewrap")
 class AgentMemoryTests(unittest.TestCase):
+    """Memory in front of the model. The small-change search would fix this one-token bug without asking the model,
+    so it is switched off here (it has its own tests in tests/test_repair_search.py)."""
+
+    def setUp(self):
+        os.environ["NEURON_REPAIR_SEARCH"] = "0"
+
+    def tearDown(self):
+        os.environ.pop("NEURON_REPAIR_SEARCH", None)
+
     def test_verified_fix_is_saved_and_offered_to_the_next_similar_job(self):
         m = mem()
         src = ROOT / "benchmark" / "phase5" / "dev" / "workspaces" / "cpp_grades"

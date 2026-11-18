@@ -20,3 +20,4 @@
 13:40-13:50 content, online and repair-search tests (Go and C++ builds), the small-change search on the dev set (~2 min)
 13:51-17:49 scorecard paused by hand (reference-site builds); 16:49 machine restart; no overlap in this window
 17:50-17:58 totals checker validation (two template builds, browser) and design/content tests during 2gb/4gb skips and 4gb-alone resume
+2026-11-18 17:54 full test suite before moving main (~3 min) during 4gb-alone (multiple-choice items; scores unaffected)
