@@ -50,6 +50,18 @@ class RouterTests(unittest.TestCase):
         self.assertEqual(g("Build a landing page for my bakery"), "web_app")
         self.assertEqual(g("Why is the sky blue?"), "answer")
 
+    def test_named_output_file_decides(self):
+        """Found by the clean-setup release retest: 'Write letter.docx ... asking to fix the leaking roof' became a code fix."""
+        from neuron.agent.router import understand
+
+        class J:
+            workspace = None
+
+            def ask_json(self, *a, **k):
+                raise AssertionError("the model must not be asked when the file is named")
+        self.assertEqual(understand(J(), "Write letter.docx to the landlord asking to fix the leaking roof.")[0], "word")
+        self.assertEqual(understand(J(), "Fix the totals and save fixed.xlsx")[0], "excel")
+
 
 @unittest.skipUnless(HAS_LO, "LibreOffice is not installed")
 class DocumentJobTests(unittest.TestCase):

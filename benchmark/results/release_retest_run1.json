@@ -1,0 +1,138 @@
+{
+ "started": "2026-11-18 10:36:13",
+ "paired": true,
+ "rows": [
+  {
+   "task": "excel",
+   "status": "done",
+   "seconds": 50,
+   "outputs": [
+    "shop_sales.xlsx"
+   ],
+   "report": {
+    "verdict": "VERIFIED",
+    "model_calls": 1,
+    "not_done": {},
+    "made_by": {
+     "deterministic": 2,
+     "model": 1,
+     "template": 1
+    }
+   },
+   "checks": [
+    {
+     "id": "sheets_data_and_summary",
+     "pass": true
+    },
+    {
+     "id": "summary_has_formulas",
+     "pass": true,
+     "detail": 8
+    }
+   ],
+   "follow_up": {
+    "status": "done",
+    "thread": 2
+   },
+   "solved": true
+  },
+  {
+   "task": "word",
+   "status": "partial",
+   "seconds": 10,
+   "outputs": [],
+   "report": {
+    "verdict": "PARTIAL",
+    "model_calls": 0,
+    "not_done": {},
+    "made_by": {
+     "deterministic": 1
+    }
+   },
+   "checks": [],
+   "solved": false
+  },
+  {
+   "task": "answer",
+   "status": "done",
+   "seconds": 30,
+   "outputs": [
+    "answer.md"
+   ],
+   "report": {
+    "verdict": "VERIFIED",
+    "model_calls": 1,
+    "not_done": {},
+    "made_by": {
+     "model": 1
+    }
+   },
+   "checks": [
+    {
+     "id": "answer_shown",
+     "pass": true,
+     "detail": "Bread goes stale primarily due to a process called staling, which is a form of retrogradation. This occurs when the starch molecules within the bread, specifica"
+    }
+   ],
+   "solved": true
+  },
+  {
+   "task": "app",
+   "status": "done",
+   "seconds": 310,
+   "outputs": [
+    "app/.neuron/acceptance.json",
+    "app/.neuron/decisions.jsonl",
+    "app/.neuron/design.json",
+    "app/.neuron/journal.jsonl",
+    "app/.neuron/map.json",
+    "app/.neuron/spec.json",
+    "app/.neuron/tasks.json",
+    "app/.neuron/test_results.jsonl",
+    "app/app.py",
+    "app/pages/__init__.py",
+    "app/pages/books.py",
+    "app/pages/sales.py"
+   ],
+   "report": {
+    "verdict": "VERIFIED",
+    "model_calls": 3,
+    "not_done": {},
+    "made_by": {
+     "model (2 files) + code (1 file)": 1
+    }
+   },
+   "checks": [
+    {
+     "id": "preview_opens_login",
+     "pass": false,
+     "detail": ""
+    }
+   ],
+   "solved": false
+  }
+ ],
+ "status": {
+  "memory": {
+   "total_mb": 16087,
+   "available_mb": 15343
+  },
+  "load": {
+   "load_1min": 0.0,
+   "cpus": 4
+  },
+  "online": false,
+  "uptime_s": 6,
+  "models": {
+   "tier": "8gb",
+   "builder": "gemma-4-e4b-q4",
+   "online_boost": {
+    "on": false,
+    "why": "not turned on"
+   }
+  },
+  "loaded_model": null,
+  "current_job": null,
+  "queue": []
+ }
+}

@@ -243,7 +243,7 @@ def main(argv=None):
     if failed:
         say("Install finished with problems: " + ", ".join(failed) + " self-test failed. See above.")
         return 2
-    say("Install finished. Start NEURON with: python3 -m neuron.server")
+    say("Install finished.")
     return 0
 
 

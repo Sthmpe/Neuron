@@ -168,6 +168,8 @@ class App:
             if STATIC in f.parents and f.is_file():
                 return Response(f.read_bytes(), content_type=mimetypes.guess_type(f.name)[0] or "application/octet-stream")
             return Response("Not found", 404)
+        if path == "/" and "/" not in self.routes and self.nav:      # no home page: open the first page of the menu
+            return redirect(self.nav[0][1])
         if path not in self.routes:
             return Response(ui.page("Not found", ui.alert("This page does not exist.", "error"),
                                     brand=self.name, nav=self.nav, user=req.user), 404)

@@ -39,6 +39,43 @@ If the install stops, it says why in one sentence. Send that sentence to the dev
 
 Want to see what it would pick before installing? `bash scripts/install.sh --plan`
 
+## 1b. Install on Windows 10 or 11 (UNVERIFIED: please test and report back)
+
+NEURON runs inside Ubuntu on WSL2 (Windows' built-in Linux). This path has **not been run on a Windows computer yet**;
+your report decides whether it works. Note anything that differs from what is written here.
+
+You need: Windows 10 version 2004 or newer (or Windows 11), virtualisation switched on in the BIOS, at least 8 GB of
+memory (6 GB works only for the smallest tier), 15 GB free on drive C, and the internet for the install.
+
+1. Download the repository as a ZIP from GitHub (green **Code** button, **Download ZIP**) and unzip it, or copy
+   `scripts\install-windows.ps1` from it to your Desktop.
+2. Open **PowerShell** (Start menu, type PowerShell, normal window, not "Run as administrator").
+3. Go to the folder and allow this one script for this window only:
+   ```
+   cd $HOME\Desktop
+   Set-ExecutionPolicy -Scope Process Bypass
+   .\install-windows.ps1 -Plan
+   ```
+   **Check:** it prints your Windows version and build, memory, free disk, "hardware virtualisation: on", the WSL memory
+   limit (it keeps max(3 GB, 30%) for Windows), the expected tier, and either "mirrored networking" (Windows 11 22H2
+   or newer) or "port forwarding". Nothing is changed by `-Plan`. Send me these lines.
+4. Run it for real: `.\install-windows.ps1`. It asks before each of these, and you can say no:
+   - installing WSL2 and Ubuntu 24.04 (Windows asks for administrator approval; then a restart is usually needed:
+     restart, open **Ubuntu** once from the Start menu, choose an Ubuntu user name and password, run the script again);
+   - writing `C:\Users\<you>\.wslconfig` with the memory limit (your old file is kept as `.wslconfig.neuron-backup`)
+     and restarting WSL;
+   - inside Ubuntu: your Ubuntu password for system packages, and a GitHub sign-in because the repository is private
+     (use your GitHub user name and a personal access token as the password);
+   - a Windows Firewall rule for port 8642 on private (home) networks only (administrator approval).
+5. **Check:** the Ubuntu part prints the same numbered steps as the Linux install (memory, tier, download, checksum,
+   self-test 42, sandbox passed). The tier should match what `-Plan` predicted.
+6. Start NEURON: answer yes at the end, or later run `C:\Users\<you>\NEURON\Start-NEURON.ps1`. With port forwarding,
+   Windows asks for administrator approval at each start (WSL's address changes after a restart).
+7. On the phone (same Wi-Fi) open the address it prints, which is your **Windows** address, and pair as in step 2 below.
+
+Report back: the `-Plan` lines, where it stopped if it did (copy the message), whether the phone connected, and
+whether one task from section 3 finished. Until then Windows stays marked **not verified**.
+
 ## 2. Pair your phone (once)
 
 1. On the phone, open the address it printed (for example `http://192.168.1.20:8642`).
@@ -117,4 +154,6 @@ Send the one-sentence error and the job id to the developer.
 | Download resume and wrong-checksum refusal | Automatic test with a server that cuts the connection | same |
 | Pairing, security, jobs, uploads, downloads, approvals, follow-ups, previews, HTTPS, restart | Automatic tests | same |
 | Phone page | Automatic test in a real browser at phone size: pair, goal with a file, finished job, download, status | same (Chromium, not a real phone yet) |
-| Windows, Mac | Not tested | Not supported yet |
+| Windows 10/11 (WSL2) | Installer written; decision rules unit-tested; **never run on Windows** | Waiting for your test (section 1b) |
+| Stock Ubuntu desktop (cgroup v2, AppArmor) | Memory limits through systemd and the AppArmor offer are written; this test machine uses older cgroups as root, so they were not exercised | Waiting for a real Ubuntu PC |
+| Mac | Not tested | Not supported yet |

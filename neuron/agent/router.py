@@ -48,6 +48,9 @@ def rule_guess(request, attachments=(), workspace=None):
 def understand(job, request, attachments=()):
     kind, hits = rule_guess(request, attachments, job.workspace)
     how = "rules"
+    named = re.search(r"\b[\w-]+\.(xlsx|docx|pptx)\b", request, re.I)
+    if named:                  # the owner named the file to make: that decides ("write letter.docx ... fix the roof" is a letter)
+        return {"xlsx": "excel", "docx": "word", "pptx": "pptx"}[named.group(1).lower()], "rules (named output file)"
     if kind is None or len(set(hits)) > 1 and kind not in ("fix_bug", "document_code", "excel"):
         options = sorted(KINDS)
         data = job.ask_json("planner", "You classify a request into exactly one kind of job.",

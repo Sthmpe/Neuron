@@ -276,3 +276,20 @@ class SearchByLinkTests(unittest.TestCase):
         raw["entities"][1]["search_field"] = "product"
         summary, project = BuildWithRules.build(self, False, True, raw=raw)
         self.assertTrue(summary["ok"], summary)
+
+
+class HomePageTests(unittest.TestCase):
+    def test_app_without_a_home_page_opens_its_first_menu_page(self):
+        """Found by the release retest: an app with no dashboard showed 'Not found' when opened from the phone."""
+        import importlib
+        import sys as _sys
+        _sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "neuron"))
+        try:
+            web = importlib.import_module("kit_next.web")
+        finally:
+            _sys.path.pop(0)
+        app = web.App("Shop", db=str(Path(tempfile.mkdtemp()) / "d.db"))
+        app.nav = [("Books", "/books")]
+        res = app.handle("GET", "/")
+        self.assertEqual(res.status, 303)
+        self.assertEqual(res.headers["Location"], "/books")
