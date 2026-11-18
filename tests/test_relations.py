@@ -188,13 +188,13 @@ class BuildWithRules(unittest.TestCase):
     def test_model_written_shop_passes_rule_checks(self):
         summary, project = self.build(True, True)
         self.assertTrue(summary["ok"], summary)
-        self.assertEqual(summary["made_by"], {"model": 3, "template": 0})
+        self.assertEqual(summary["made_by"], {"model": 2, "template": 0, "code": 1})   # the database file is plain code
         self.assertEqual(list(summary["tasks"]), ["schema", "product", "sale"])     # product before the sale that links to it
 
     def test_templates_finish_when_the_model_cannot_and_say_so(self):
         summary, project = self.build(False, True)
         self.assertTrue(summary["ok"], summary)
-        self.assertEqual(summary["made_by"], {"model": 0, "template": 3})
+        self.assertEqual(summary["made_by"], {"model": 0, "template": 2, "code": 1})
         decisions = (project / ".neuron" / "decisions.jsonl").read_text() if (project / ".neuron" / "decisions.jsonl").exists() else \
             "".join(p.read_text() for p in project.rglob("decisions*.jsonl"))
         self.assertIn("fixed template", decisions)
@@ -202,4 +202,48 @@ class BuildWithRules(unittest.TestCase):
     def test_without_templates_a_failing_model_fails_honestly(self):
         summary, _ = self.build(False, False)
         self.assertFalse(summary["ok"])
-        self.assertEqual(summary["made_by"], {"model": 0, "template": 0})
+        self.assertEqual(summary["made_by"], {"model": 0, "template": 0, "code": 0})
+
+
+class NamingAndSchemaTests(unittest.TestCase):
+    def test_sql_keywords_are_renamed(self):
+        raw = {"app_name": "Pay", "kind": "site", "login_required": False, "username": "", "password": "",
+               "home": {"headline": "Pay", "subheadline": "x", "sections": []}, "entities": [], "dashboard": [],
+               "forms": [{"name": "join", "title": "Join", "fields": [{"name": "name", "type": "text"}, {"name": "order", "type": "number"}],
+                          "button": "Join", "thanks": "Thanks"}]}
+        s, problems = normalise(raw)
+        self.assertEqual(problems, [])
+        self.assertEqual(s["forms"][0]["name"], "join_list")
+        self.assertEqual([f["name"] for f in s["forms"][0]["fields"]], ["name", "order_value"])
+        self.assertEqual(s["forms"][0]["fields"][1]["label"], "Order")
+
+
+@unittest.skipUnless(__import__("neuron.brain.sandbox", fromlist=["Sandbox"]).Sandbox().available(), "needs bubblewrap")
+class SchemaByCodeTests(unittest.TestCase):
+    def test_model_cannot_replace_the_database_file_with_an_example(self):
+        """The design proof found a model copying the example schema (a books table and a librarian login) into a
+        public shop site. The database file now comes from the spec, never from the model."""
+        import json
+        import re
+        from neuron.brain.sandbox import Sandbox
+        from neuron.builder.build import build_full
+        from tests.fakes import ScriptedLLM
+        from neuron.builder import prompts
+        s, _ = spec_of(RAW)
+        files = templates.reference_files(s)
+
+        def reply(messages):
+            if messages[0]["content"].startswith("You turn a plain-language request"):
+                return json.dumps(RAW)
+            m = re.search(r"# Your task: (\\S+)", messages[-1]["content"])
+            if m and m.group(1) == "schema.py":
+                return "```python\n" + prompts.EXAMPLES["schema"].split("\n", 1)[1] + "```"      # the wrong, copied schema
+            return "```python\n" + files[m.group(1)] + "```" if m else "ok"
+        project = Path(tempfile.mkdtemp(prefix="shop-")) / "app"
+        summary = build_full(project, "shop", Scripted(ScriptedLLM([reply] * 60)), Sandbox(timeout=60, mem_mb=256),
+                             log=lambda *_: None, design=False, templates_allowed=True)
+        self.assertTrue(summary["ok"], summary)
+        schema = (project / "schema.py").read_text()
+        self.assertNotIn("librarian", schema)
+        self.assertIn("CREATE TABLE IF NOT EXISTS product", schema)
+        self.assertEqual(summary["tasks"]["schema"]["made_by"], "code")

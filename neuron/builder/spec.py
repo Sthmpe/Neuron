@@ -55,6 +55,22 @@ SAMPLES = {"text": ["Zed Alpha", "Kay Omega"], "email": ["zed@example.com", "kay
            "phone": ["0801 111 2222", "0802 333 4444"], "number": ["2", "70"], "date": ["2026-01-15", "2026-02-20"]}
 
 
+# Words SQLite reserves: a table or column with one of these names breaks the app (a form called "join", a field
+# called "order"). Such names get a suffix.
+SQL_RESERVED = set("""abort action add after all alter analyze and as asc attach autoincrement before begin between by cascade case
+cast check collate column commit conflict constraint create cross current current_date current_time current_timestamp database
+default deferrable deferred delete desc detach distinct do drop each else end escape except exclude exclusive exists explain fail
+filter first following for foreign from full generated glob group groups having if ignore immediate in index indexed initially
+inner insert instead intersect into is isnull join key last left like limit match natural no not nothing notnull null nulls of
+offset on or order others outer over partition plan pragma preceding primary query raise range recursive references regexp
+reindex release rename replace restrict returning right rollback row rows savepoint select set table temp temporary then ties to
+transaction trigger unbounded union unique update using vacuum values view virtual when where window with without""".split())
+
+
+def safe_name(name, suffix):
+    return f"{name}_{suffix}" if name in SQL_RESERVED else name
+
+
 def slug(text):
     return re.sub(r"[^a-z0-9]+", "_", str(text).lower()).strip("_") or "item"
 
@@ -90,7 +106,7 @@ def normalise(spec):
         for f in raw if isinstance(raw, list) else []:
             if not isinstance(f, dict) or not f.get("name"):
                 continue
-            name = slug(f["name"])
+            name = safe_name(slug(f["name"]), "value")
             if name in seen or name == "id":
                 continue
             seen.add(name)
@@ -112,7 +128,7 @@ def normalise(spec):
     s["forms"] = []
     for f in spec.get("forms") if isinstance(spec.get("forms"), list) else []:
         if isinstance(f, dict) and f.get("name"):
-            name = slug(f["name"])
+            name = safe_name(slug(f["name"]), "list")
             s["forms"].append({"name": name, "title": str(f.get("title") or label(name)).strip(),
                                "fields": fields(f.get("fields"), f"form '{name}'"),
                                "button": str(f.get("button") or "Send").strip(),
@@ -120,10 +136,10 @@ def normalise(spec):
     s["entities"] = []
     for e in spec.get("entities") if isinstance(spec.get("entities"), list) else []:
         if isinstance(e, dict) and e.get("name"):
-            name = slug(e["name"])
+            name = safe_name(slug(e["name"]), "list")
             fs = fields(e.get("fields"), f"'{name}'")
             names = [f["name"] for f in fs]
-            search = slug(e.get("search_field") or "")
+            search = safe_name(slug(e.get("search_field") or ""), "value")
             s["entities"].append({"name": name, "label": label(name), "fields": fs,
                                   "search_field": search if search in names else (names[0] if names else "")})
     ents = {e["name"]: e for e in s["entities"]}
@@ -131,13 +147,13 @@ def normalise(spec):
     for d in spec.get("dashboard") if isinstance(spec.get("dashboard"), list) else []:
         if not isinstance(d, dict) or not d.get("label"):
             continue
-        ent = slug(d.get("entity") or "")
+        ent = safe_name(slug(d.get("entity") or ""), "list")
         if ent not in ents:
             problems.append(f"dashboard item '{d['label']}' refers to unknown entity '{d.get('entity')}'")
             continue
         item = {"label": str(d["label"]).strip(), "entity": ent, "kind": d.get("kind") if d.get("kind") in ("count", "count_below") else "count"}
         if item["kind"] == "count_below":
-            f = slug(d.get("field") or "")
+            f = safe_name(slug(d.get("field") or ""), "value")
             numeric = [x["name"] for x in ents[ent]["fields"] if x["type"] == "number"]
             if f not in numeric or not isinstance(d.get("below"), (int, float)) or isinstance(d.get("below"), bool):
                 problems.append(f"dashboard item '{item['label']}' needs a number field of {ent} and a 'below' number")
@@ -223,7 +239,8 @@ def expand(spec):
     lines.append(f"- app.nav = {nav!r}")
     lines.append("Use these exact table and column names. Do not add routes here.")
     add({"id": "schema", "title": "Database tables" + (", first user and login" if login else "") + ", menu",
-         "file": "schema.py", "must_define": "setup", "contract": "\n".join(lines), "needs": [], "example": "schema"},
+         "file": "schema.py", "must_define": "setup", "contract": "\n".join(lines), "needs": [], "example": "schema",
+         "deterministic": True},     # fully fixed by the spec: plain code writes it, no model needed
         [{"name": "app starts", "steps": ([{"get": "/login", "expect_text": ["Log in"]}, {"login": creds}] if login
                                           else [{"get": "/static/neuron.css"}])}])
 

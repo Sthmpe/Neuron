@@ -19,7 +19,7 @@ told apart; one rule per added record type; amounts come from one number field.
 """
 import copy
 
-from .spec import SAMPLES, label, slug
+from .spec import SAMPLES, label, safe_name, slug
 
 RULE = {"type": "object", "required": ["on_add", "link_field", "target_field", "amount_field", "change", "block_if_negative"],
         "properties": {"on_add": {"type": "string"}, "link_field": {"type": "string"}, "target_field": {"type": "string"},
@@ -42,14 +42,14 @@ def apply(raw, s, problems):
     """Add link fields and rules from the planner's raw spec to the normalised spec `s` (in place)."""
     ents = {e["name"]: e for e in s.get("entities", [])}
     for re_ in raw.get("entities") if isinstance(raw.get("entities"), list) else []:
-        if not isinstance(re_, dict) or slug(re_.get("name") or "") not in ents:
+        if not isinstance(re_, dict) or safe_name(slug(re_.get("name") or ""), "list") not in ents:
             continue
-        e = ents[slug(re_["name"])]
+        e = ents[safe_name(slug(re_["name"]), "list")]
         for rf in re_.get("fields") if isinstance(re_.get("fields"), list) else []:
             if not isinstance(rf, dict) or rf.get("type") != "link":
                 continue
-            f = next((x for x in e["fields"] if x["name"] == slug(rf.get("name") or "")), None)
-            to = slug(rf.get("to") or rf.get("name") or "")
+            f = next((x for x in e["fields"] if x["name"] == safe_name(slug(rf.get("name") or ""), "value")), None)
+            to = safe_name(slug(rf.get("to") or rf.get("name") or ""), "list")
             if f is None:
                 continue
             if to not in ents or to == e["name"]:
@@ -60,7 +60,8 @@ def apply(raw, s, problems):
     for r in raw.get("rules") if isinstance(raw.get("rules"), list) else []:
         if not isinstance(r, dict):
             continue
-        on, lf, tf, af = (slug(r.get(k) or "") for k in ("on_add", "link_field", "target_field", "amount_field"))
+        on = safe_name(slug(r.get("on_add") or ""), "list")
+        lf, tf, af = (safe_name(slug(r.get(k) or ""), "value") for k in ("link_field", "target_field", "amount_field"))
         where = f"rule on adding '{r.get('on_add')}'"
         if on not in ents:
             problems.append(f"{where}: unknown entity")

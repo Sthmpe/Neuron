@@ -246,6 +246,19 @@ def build_full(project, request, runner, sandbox, log=print, max_seconds=None, d
         state.update_task(task["id"], status="in_progress")
         checks = [c for c in acceptance if c["task"] == task["id"]]
         passed = False
+        if task.get("deterministic") and templates_allowed and not task["attempts"]:      # off in step-3 reproduction
+            code = templates.file_for(state.spec()["spec"], task)
+            ok, why = TrialRun(project, sandbox, scratch, {task["file"]: code}).run_checks(checks)
+            state.record_test(task["id"], 1, ok, "written by plain code: passed" if ok else why.splitlines()[0], why)
+            state.add_attempt(task["id"], {"n": 1, "passed": ok, "made_by": "code", **({} if ok else {"failure": why})})
+            task = state.task(task["id"])
+            if ok:
+                (project / task["file"]).parent.mkdir(parents=True, exist_ok=True)
+                (project / task["file"]).write_text(code)
+                state.update_task(task["id"], status="done", made_by="code")
+                state.refresh_map()
+                log(f"  task {task['id']}: written by plain code, checks passed")
+                continue
         while len(task["attempts"]) < MAX_ATTEMPTS and not passed and not out_of_time():
             n = len(task["attempts"]) + 1
             attempt = {"n": n, "passed": False}
@@ -331,7 +344,7 @@ def build_full(project, request, runner, sandbox, log=print, max_seconds=None, d
     return {"ok": final_ok, "stage": "done" if state.finished() else "out of time", "error": "" if final_ok else final_why,
             "design": design_result["final"] if design_result else None,
             "tasks": {t["id"]: {"status": t["status"], "attempts": len(t["attempts"]), "made_by": t.get("made_by")} for t in tasks},
-            "made_by": {"model": sum(t.get("made_by") == "model" for t in tasks), "template": sum(t.get("made_by") == "template" for t in tasks)},
+            "made_by": {k: sum(t.get("made_by") == k for t in tasks) for k in ("model", "template", "code")},
             "llm": vars(meter), "model_loads": runner.loads, "seconds": round(time.time() - t0, 1)}
 
 

@@ -18,8 +18,9 @@ class BuildWebApp(Capability):
         tasks = r.get("tasks", {})
         llm = r.get("llm") or {}
         job.count(llm.get("calls", 0), llm.get("tokens", 0), llm.get("seconds", 0.0))   # the builder calls the model itself
-        m, t = (r.get("made_by") or {}).get("model", 0), (r.get("made_by") or {}).get("template", 0)
-        made = "template" if t and not m else f"model ({m} files) + template ({t} files)" if t else "model"
+        mb = r.get("made_by") or {}
+        parts = [f"{k} ({mb[k]} file{'s' if mb[k] != 1 else ''})" for k in ("model", "template", "code") if mb.get(k)]
+        made = " + ".join(parts) or "model"
         return Outcome(bool(r.get("ok")), f"app {'passes' if r.get('ok') else 'fails'} its acceptance checks; tasks {tasks}",
                        {"builder": r}, ["app/"], made_by=made)
 
