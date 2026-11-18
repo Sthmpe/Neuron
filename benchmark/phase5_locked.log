@@ -53,3 +53,5 @@ Traceback (most recent call last):
          ~~~~~~~~~~^^^^^
 FileNotFoundError: [Errno 2] No such file or directory: '/home/user/neuron/benchmark/run/phase5/locked-2gb/L11_business_app/app'
 -- examiner crashed on 2gb L11 (no app folder delivered); lock amendment 3; L11 scored from the delivered folder without rerunning the agent; run resumed at 06:41 --
+locked-2gb L12_long_docstrings: SOLVED | 4/4 checks | 76.0s | peak 1407 MB | calls 31 | agent says VERIFIED
+PHASE5-DONE locked-2gb

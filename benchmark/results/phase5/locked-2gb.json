@@ -366,6 +366,48 @@
    "agent_verdict": "FAILED",
    "false_claim": false,
    "note": "examined from the delivered folder after an examiner crash (lock amendment 3); agent not rerun; peak memory not measured"
+  },
+  {
+   "task": "L12_long_docstrings",
+   "kind": "long_task",
+   "solved": true,
+   "checks_passed": 4,
+   "checks_total": 4,
+   "failed_checks": [],
+   "seconds": 76.0,
+   "peak_mb": 1407,
+   "sessions": [
+    {
+     "ended": "killed",
+     "seconds": 38.0
+    },
+    {
+     "ended": "exited",
+     "seconds": 38.0,
+     "resumed": true
+    }
+   ],
+   "model_calls": 31,
+   "tokens": 1727,
+   "model_seconds": 71.4,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": {
+    "killed_halfway": true,
+    "resumed_and_finished": true,
+    "resume_notes": [
+     "{\"at\": 1794984155.752613, \"event\": \"resumed\", \"interrupted\": [\"document\"], \"done\": [\"inspect\"]}"
+    ]
+   },
+   "made_by": {
+    "deterministic": 2,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
   }
  ],
  "set": "locked",
@@ -379,7 +421,7 @@
  },
  "bug_request": "The tests of this project fail. Find the bug in the source code and fix it so the tests pass. Do not change the tests.",
  "started": "2026-11-18 06:03:39",
- "code_commit": "01ae51986eeb1679ff89c8af4eb25b767ec06385",
+ "code_commit": "08d449fc96b7c5057dfd8d285844f4daeb291270",
  "tier_limit_hits": 0,
  "oom_kills": 0
 }
