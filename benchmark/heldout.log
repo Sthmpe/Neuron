@@ -166,3 +166,5 @@
 8gb-base b3_shop_app_resumed: SOLVED | 19/19 checks | 219.6s | peak 5633 MB
 8gb-base: solved 21/23; mean score 0.95
 8gb-base w01_vat_rounding: SOLVED | attempts 1 | 103.7s | peak 5603 MB
+8gb-base w02_order_rollback: SOLVED | attempts 1 | 145.6s | peak 5603 MB
+-- machine restarted again about 01:00 during 8gb-base workspace (after w02); resumed at 01:05; the interrupted task reruns from a clean copy --

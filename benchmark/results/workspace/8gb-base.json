@@ -18,6 +18,25 @@
    "tests_untouched": true,
    "seconds": 103.7,
    "peak_mb": 5603
+  },
+  {
+   "task": "w02_order_rollback",
+   "type": "bug",
+   "solved": true,
+   "score": 1.0,
+   "claimed": true,
+   "attempts": 1,
+   "llm": {
+    "calls": 1,
+    "seconds": 145.2,
+    "tokens": 592
+   },
+   "what_happened": [
+    "tests passed"
+   ],
+   "tests_untouched": true,
+   "seconds": 145.6,
+   "peak_mb": 5603
   }
  ],
  "set": "workspace",
