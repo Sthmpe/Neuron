@@ -200,3 +200,8 @@ SCORECARD-DONE 2gb neuron {"mmlu_pro": {"n": 28, "correct": 4, "score": 0.143, "
 [2026-11-18 17:48:38] resumed after the reference-site builds (no model run overlapped)
 SCORECARD-DONE 2gb alone {"mmlu_pro": {"n": 28, "correct": 5, "score": 0.179, "ci95": [0.079, 0.356], "seconds": 314, "tokens": 4803, "calls": 28, "peak_mb": 1583}, "gpqa": {"n": 20, "correct": 2, "score": 0.1, "ci95": [0.028, 0.301], "seconds": 514, "tokens": 5529, "calls": 20, "peak_mb": 1585}, "lcb": {"n": 10, "correct": 0, "score": 0.0, "ci95": [0, 0.278], "seconds": 128, "tokens": 1485, "calls": 10, "peak_mb": 1640}, "bfcl": {"n": 30, "correct": 26, "score": 0.867, "ci95": [0.703, 0.947], "seconds": 146, "tokens": 1513, "calls": 30, "peak_mb": 1635}}
 SCORECARD-DONE 2gb neuron {"mmlu_pro": {"n": 28, "correct": 4, "score": 0.143, "ci95": [0.057, 0.315], "seconds": 427, "tokens": 5012, "calls": 57, "peak_mb": 1597}, "gpqa": {"n": 20, "correct": 2, "score": 0.1, "ci95": [0.028, 0.301], "seconds": 582, "tokens": 7729, "calls": 40, "peak_mb": 1598}, "lcb": {"n": 10, "correct": 0, "score": 0.0, "ci95": [0, 0.278], "seconds": 336, "tokens": 4185, "calls": 28, "peak_mb": 1625}, "bfcl": {"n": 30, "correct": 26, "score": 0.867, "ci95": [0.703, 0.947], "seconds": 215, "tokens": 1513, "calls": 30, "peak_mb": 1620}}
+4gb-alone mmlu_pro-1487: right 169.7s
+4gb-alone mmlu_pro-1491: right 55.4s
+4gb-alone mmlu_pro-8783: wrong 75.7s
+4gb-alone mmlu_pro-8841: wrong 132.5s
+4gb-alone mmlu_pro-5669: wrong 138.9s
