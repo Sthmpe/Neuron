@@ -29,6 +29,27 @@ class LlamaServer:
         self.extra_args = list(extra_args)      # per-model settings from the model's manifest
         self.url = f"http://127.0.0.1:{port}"
 
+    @staticmethod
+    def _port_free(port):
+        """Can a server bind this port right now? Tested WITHOUT SO_REUSEADDR, like llama-server: after a crash the
+        old server's connections keep the port reserved for about a minute (TIME_WAIT)."""
+        import socket
+        with socket.socket() as s:
+            try:
+                s.bind(("127.0.0.1", port))
+                return True
+            except OSError:
+                return False
+
+    def _choose_port(self):
+        if self._port_free(self.port):
+            return
+        import socket
+        with socket.socket() as s:                 # the usual port is still held: take any free one
+            s.bind(("127.0.0.1", 0))
+            self.port = s.getsockname()[1]
+        self.url = f"http://127.0.0.1:{self.port}"
+
     def start(self, wait=600):     # a big model's first load from a cold disk can take several minutes
         if not Path(self.binary).exists():
             raise FileNotFoundError(f"llama-server not found at {self.binary}")
@@ -36,6 +57,7 @@ class LlamaServer:
             raise FileNotFoundError(f"model file not found: {self.model}")
         if self.log:
             Path(self.log).parent.mkdir(parents=True, exist_ok=True)
+        self._choose_port()
         out = open(self.log, "ab") if self.log else subprocess.DEVNULL
         self.proc = subprocess.Popen(
             [self.binary, "-m", str(self.model), "--host", "127.0.0.1", "--port", str(self.port),

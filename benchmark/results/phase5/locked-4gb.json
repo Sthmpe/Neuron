@@ -255,6 +255,164 @@
    },
    "agent_verdict": "PARTIAL",
    "false_claim": false
+  },
+  {
+   "task": "L09_go_bug_rate",
+   "kind": "workspace_bug",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "original_tests_pass: --- FAIL: TestRates (0.00s)\n    ledger_test.go:31: 15000 NGN = 2250000000 USD cents, want 1000\nFAIL\nFAIL\texample.com/ledger/ledger\t0.002s\nFAIL\n"
+   ],
+   "seconds": 353.1,
+   "peak_mb": 4076,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 353.1
+    }
+   ],
+   "model_calls": 8,
+   "tokens": 1472,
+   "model_seconds": 239.6,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1
+   },
+   "agent_verdict": "PARTIAL",
+   "false_claim": false
+  },
+  {
+   "task": "L10_go_bug_round",
+   "kind": "workspace_bug",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "original_tests_pass: --- FAIL: TestRoundDiv (0.00s)\n    ledger_test.go:9: RoundDiv(10,4)=2 want 3\n    ledger_test.go:9: RoundDiv(-10,4)=-2 want -3\n    ledger_test.go:9: RoundDiv(7,2"
+   ],
+   "seconds": 229.0,
+   "peak_mb": 4079,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 229.0
+    }
+   ],
+   "model_calls": 5,
+   "tokens": 803,
+   "model_seconds": 135.8,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1
+   },
+   "agent_verdict": "PARTIAL",
+   "false_claim": false
+  },
+  {
+   "task": "L11_business_app",
+   "kind": "web_app",
+   "solved": false,
+   "checks_passed": 5,
+   "checks_total": 17,
+   "failed_checks": [
+    "login_works: Cannot read properties of null (reading 'fill')",
+    "add_products: no field for Price",
+    "product_search: locator.fill: Timeout 30000ms exceeded.",
+    "add_customers: no field for Phone",
+    "order_reduces_stock: no field for Customer",
+    "second_order: no field for Customer",
+    "oversized_order_refused: no field for Customer",
+    "orders_list_shows_totals: needs 6000 and 18000",
+    "dashboard_numbers: Skip to content\nM\nMama Ngozi Provisions\nDashboard\nProducts\nCustomers\nOrders\nNot found\nThis page does not exist.\nMama Ngozi Provisions\nDashboard\nProducts\nCustome",
+    "data_survives_restart: Cannot read properties of null (reading 'fill')",
+    "own_tests_exist: 0 tests in 0 files",
+    "own_tests_pass: \n----------------------------------------------------------------------\nRan 0 tests in 0.000s\n\nNO TESTS RAN\n"
+   ],
+   "seconds": 152.1,
+   "peak_mb": 3923,
+   "sessions": [
+    {
+     "ended": "killed",
+     "seconds": 151.1
+    },
+    {
+     "ended": "exited",
+     "seconds": 1.0,
+     "resumed": true
+    }
+   ],
+   "model_calls": null,
+   "tokens": null,
+   "model_seconds": null,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": {
+    "killed_halfway": true,
+    "resumed_and_finished": true,
+    "resume_notes": [
+     "{\"at\": 1794979240.2931595, \"event\": \"resumed\", \"interrupted\": [\"build\"], \"done\": []}"
+    ]
+   },
+   "made_by": null,
+   "agent_verdict": "no report (crashed or killed)",
+   "false_claim": false
+  },
+  {
+   "task": "L12_long_docstrings",
+   "kind": "long_task",
+   "solved": false,
+   "checks_passed": 2,
+   "checks_total": 4,
+   "failed_checks": [
+    "every_function_documented: 35 of 50; missing ['shopkeeper/services/reports.py:customers_by_tier', 'shopkeeper/storage/repository.py:__init__', 'shopkeeper/storage/repository.py:add_produc",
+    "docstrings_say_something: ['shopkeeper/util/money.py:format_naira']"
+   ],
+   "seconds": 96.0,
+   "peak_mb": 3749,
+   "sessions": [
+    {
+     "ended": "killed",
+     "seconds": 95.0
+    },
+    {
+     "ended": "exited",
+     "seconds": 1.0,
+     "resumed": true
+    }
+   ],
+   "model_calls": null,
+   "tokens": null,
+   "model_seconds": null,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": {
+    "killed_halfway": true,
+    "resumed_and_finished": true,
+    "resume_notes": [
+     "{\"at\": 1794979370.3505912, \"event\": \"resumed\", \"interrupted\": [\"document\"], \"done\": [\"inspect\"]}"
+    ]
+   },
+   "made_by": null,
+   "agent_verdict": "no report (crashed or killed)",
+   "false_claim": false
   }
  ],
  "set": "locked",
@@ -268,7 +426,7 @@
  },
  "bug_request": "The tests of this project fail. Find the bug in the source code and fix it so the tests pass. Do not change the tests.",
  "started": "2026-11-18 04:16:36",
- "code_commit": "ee749502a6b2362d0533446dc52ca4a6dd1abb52",
- "tier_limit_hits": 0,
+ "code_commit": "c8fd549b0ccc4de75d0dc4bd0aa9aa351c282153",
+ "tier_limit_hits": 2,
  "oom_kills": 1
 }

@@ -124,3 +124,22 @@ class FailClosedTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ModelServerPortTests(unittest.TestCase):
+    def test_busy_port_is_replaced_by_a_free_one(self):
+        """Found by the locked phase-5 run: a job resumed right after a crash could not start its model server,
+        because the crashed server's port was still reserved."""
+        import socket
+        from neuron.brain.llama_server import LlamaServer
+        with socket.socket() as hold:
+            hold.bind(("127.0.0.1", 0))
+            hold.listen(1)
+            busy = hold.getsockname()[1]
+            srv = LlamaServer("/nonexistent.gguf", port=busy)
+            srv._choose_port()
+            self.assertNotEqual(srv.port, busy)
+            self.assertTrue(srv.url.endswith(str(srv.port)))
+        srv2 = LlamaServer("/nonexistent.gguf", port=srv.port)
+        srv2._choose_port()
+        self.assertEqual(srv2.port, srv.port)                  # a free port is kept as it is

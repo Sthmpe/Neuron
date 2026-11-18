@@ -7,3 +7,8 @@ locked-4gb L06_cpp_bug_stock: not solved | 0/1 checks | 209.1s | peak 4002 MB | 
 locked-4gb L07_cpp_bug_discount: SOLVED | 1/1 checks | 149.0s | peak 3993 MB | calls 5 | agent says VERIFIED
 locked-4gb L08_cpp_bug_parse: not solved | 0/1 checks | 89.0s | peak 4084 MB | calls 1 | agent says PARTIAL
 -- machine restarted about 05:07 after L08; resumed at 05:08; the interrupted task restarts from a clean job folder --
+locked-4gb L09_go_bug_rate: not solved | 0/1 checks | 353.1s | peak 4076 MB | calls 8 | agent says PARTIAL
+locked-4gb L10_go_bug_round: not solved | 0/1 checks | 229.0s | peak 4079 MB | calls 5 | agent says PARTIAL
+locked-4gb L11_business_app: not solved | 5/17 checks | 152.1s | peak 3923 MB | calls None | agent says no report (crashed or killed)
+locked-4gb L12_long_docstrings: not solved | 2/4 checks | 96.0s | peak 3749 MB | calls None | agent says no report (crashed or killed)
+PHASE5-DONE locked-4gb
