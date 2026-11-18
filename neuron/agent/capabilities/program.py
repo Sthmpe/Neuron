@@ -26,6 +26,14 @@ def binary_of(req):
     return m.group(1) if m else "app"
 
 
+def program_args(args, binary):
+    """Example arguments without the program's own name (planners often write ['wc2', 'file.txt'])."""
+    args = [str(a) for a in args]
+    while args and args[0].lstrip("./") in (binary, binary + ".exe"):
+        args = args[1:]
+    return args
+
+
 class PlanProgram(Capability):
     name = "plan_program"
     purpose = "Plan a new program: language, files and what each file must do, plus example runs to test it"
@@ -40,7 +48,7 @@ class PlanProgram(Capability):
         ext = LANGS[lang]["ext"]
         data = job.ask_json("planner", "You plan small, correct programs. Keep it to as few files as possible.",
                             f"Request:\n{req}\n\nLanguage: {lang}. Plan the source files (paths like src/main{ext}) with one sentence each, "
-                            "and 3 example runs that follow the request exactly: the command-line arguments, the input files to create "
+                            "and 3 example runs that follow the request exactly: the command-line arguments (without the program's own name), the input files to create "
                             "(name and full content) and the exact output expected on standard output.",
                             {"type": "object", "required": ["files", "examples"],
                              "properties": {"files": {"type": "array", "minItems": 1, "maxItems": 4, "items": {
@@ -104,11 +112,12 @@ class WriteProgram(Capability):
                     (ws / f["path"]).parent.mkdir(parents=True, exist_ok=True)
                     (ws / f["path"]).write_text(code)
             report = self._build_and_try(job, plan)
-            if report["built"] and report["examples_passed"] == len(plan["examples"]):
+            if report["built"] and report["examples_passed"] + report.get("examples_agreed", 0) == len(plan["examples"]):
                 break
             feedback = report["feedback"]
         ok = report["built"]
-        return Outcome(ok, f"built: {report['built']}; examples passed {report['examples_passed']} of {len(plan['examples'])}", report,
+        return Outcome(ok, f"built: {report['built']}; examples matched as written {report['examples_passed']} of {len(plan['examples'])}"
+                       + (f"; {report['examples_agreed']} settled by an independent Python version" if report.get("examples_agreed") else ""), report,
                        [f["path"] for f in plan["files"]] + ["Makefile"], made_by="model")
 
     def _build_and_try(self, job, plan):
@@ -124,25 +133,64 @@ class WriteProgram(Capability):
             blame = [f["path"] for f in plan["files"] if Path(f["path"]).name in out] or [f["path"] for f in plan["files"]]
             shutil.rmtree(work, ignore_errors=True)
             return {"built": False, "examples_passed": 0, "feedback": "Compiler errors:\n" + clip(out, 2000), "blame": blame}
-        passed, fails = 0, []
+        passed, fails, outs = 0, [], {}
         for i, ex in enumerate(plan["examples"]):
             for fl in ex.get("files", []):
                 (work / Path(fl["name"]).name).write_text(fl["content"])
-            argv = ([f"./{plan['binary']}"] if plan["language"] != "python" else ["python3", plan["files"][0]["path"]]) + list(ex["args"])
+            args = program_args(ex["args"], plan["binary"])
+            argv = ([f"./{plan['binary']}"] if plan["language"] != "python" else ["python3", plan["files"][0]["path"]]) + args
             r = job.sandbox.run(argv, work, timeout=20)
-            if r.output.strip() == ex["stdout"].strip():
+            outs[i] = r.output.strip()
+            if outs[i] == ex["stdout"].strip():
                 passed += 1
             else:
-                fails.append(f"Example {i + 1}: args {ex['args']}\nexpected:\n{ex['stdout'].strip()}\ngot:\n{r.output.strip()[:600]}")
+                fails.append(i)
+        agreed, notes, wrong = [], [], []
+        if fails:
+            ref = self._reference(job, plan)
+            for i in fails:
+                ex = plan["examples"][i]
+                got_ref = None
+                if ref:
+                    (work / "_reference.py").write_text(ref)
+                    rr = job.sandbox.run(["python3", "_reference.py"] + program_args(ex["args"], plan["binary"]), work, timeout=20)
+                    got_ref = rr.output.strip() if rr.ok else None
+                if got_ref is not None and got_ref == outs[i]:
+                    agreed.append(i)
+                    notes.append(f"example {i + 1}: the planner expected {ex['stdout'].strip()!r} but the program and an independent "
+                                 f"Python version both give {outs[i]!r}; the hand-written expectation is taken as wrong")
+                else:
+                    wrong.append(f"Example {i + 1}: args {program_args(ex['args'], plan['binary'])}\nexpected:\n{ex['stdout'].strip()}\n"
+                                 f"got:\n{outs[i][:600]}" + (f"\nan independent Python version of the same request gives:\n{got_ref[:600]}" if got_ref else ""))
         shutil.rmtree(work, ignore_errors=True)
-        return {"built": True, "examples_passed": passed, "feedback": "Wrong output:\n" + "\n\n".join(fails), "blame": [f["path"] for f in plan["files"]]}
+        return {"built": True, "examples_passed": passed, "examples_agreed": len(agreed), "notes": notes,
+                "feedback": "Wrong output:\n" + "\n\n".join(wrong), "blame": [f["path"] for f in plan["files"]]}
+
+    def _reference(self, job, plan):
+        """An independent Python version of the same request, written once and kept in the job folder. When the
+        program and the planner's example disagree, this settles which one is wrong (models miscount by hand)."""
+        f = job.state.dir / "reference.py"
+        if f.exists():
+            return f.read_text()
+        req = job.state.goal()["request"]
+        code = extract_code(job.ask_text("builder", "You write correct, complete Python 3 programs using only the standard library. "
+                                         "Reply with one code block.",
+                                         f"Request:\n{req}\n\nWrite it as one Python 3 program. Read the command-line arguments from "
+                                         f"sys.argv[1:] (as if the program were called '{plan['binary']}') and print exactly what the request says.",
+                                         max_tokens=1600, temperature=0.1))
+        if code:
+            f.write_text(code)
+        return code
 
     def verify(self, job, params, outcome):
         r, plan = outcome.result, job.state.task("design")["result"]
+        good = r["examples_passed"] + r.get("examples_agreed", 0)
         checks = [{"id": "builds", "pass": r["built"], "detail": ""},
-                  {"id": "example_runs_match", "pass": r["examples_passed"] == len(plan["examples"]),
-                   "detail": f"{r['examples_passed']} of {len(plan['examples'])} (examples written by the planner; " + clip(r.get("feedback", ""), 500) + ")"}]
-        return Verdict(all(c["pass"] for c in checks), checks, "sandbox build + example runs")
+                  {"id": "example_runs_match", "pass": good == len(plan["examples"]),
+                   "detail": f"{r['examples_passed']} of {len(plan['examples'])} as written by the planner"
+                             + (f", {r['examples_agreed']} more where the program and an independent Python version agree and the planner's "
+                                "expectation was wrong" if r.get("examples_agreed") else "") + "; " + clip(r.get("feedback", ""), 400)}]
+        return Verdict(all(c["pass"] for c in checks), checks, "sandbox build + example runs; disputed examples settled by an independent Python version")
 
 
 CAPABILITIES = [PlanProgram(), WriteProgram()]

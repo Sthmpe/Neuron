@@ -151,3 +151,37 @@ class HonestyTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+@unittest.skipUnless(shutil.which("g++"), "needs g++")
+class NewProgramTests(unittest.TestCase):
+    CPP = r'''#include <fstream>
+#include <iostream>
+#include <string>
+int main(int argc, char** argv) {
+    if (argc < 2) return 1;
+    std::ifstream f(argv[1]); std::string line; int n = 0;
+    while (std::getline(f, line)) n++;
+    std::cout << "lines: " << n << std::endl;
+}
+'''
+    REF = "import sys\nprint('lines:', sum(1 for _ in open(sys.argv[1])))\n"
+
+    def plan(self, wrong_expectation):
+        return json.dumps({"files": [{"path": "src/main.cpp", "purpose": "count lines"}], "examples": [
+            {"args": ["lc", "a.txt"], "files": [{"name": "a.txt", "content": "x\ny\nz\n"}], "stdout": "lines: 3"},          # program name included
+            {"args": ["b.txt"], "files": [{"name": "b.txt", "content": "1\n2\n3\n4\n5\n"}], "stdout": wrong_expectation}]})
+
+    def test_wrong_hand_written_example_is_settled_by_an_independent_version(self):
+        rep, job, _ = run("Write a C++17 program called lc that prints 'lines: N' for the text file given as the first argument.",
+                          [self.plan("lines: 4"), "```cpp\n" + self.CPP + "```", "```python\n" + self.REF + "```"])
+        self.assertEqual(rep["verdict"], "VERIFIED", rep)
+        r = job.state.task("write")["result"]
+        self.assertEqual((r["examples_passed"], r["examples_agreed"]), (1, 1))
+        self.assertIn("taken as wrong", r["notes"][0])
+
+    def test_program_wrong_and_reference_disagrees_is_not_verified(self):
+        bad = self.CPP.replace("n++", "n += 2")
+        rep, job, _ = run("Write a C++17 program called lc that prints 'lines: N' for the text file given as the first argument.",
+                          [self.plan("lines: 5"), "```cpp\n" + bad + "```", "```python\n" + self.REF + "```"] + ["```cpp\n" + bad + "```"] * 12)
+        self.assertNotEqual(rep["verdict"], "VERIFIED")
