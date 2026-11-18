@@ -299,3 +299,23 @@ class WebAppOutcomeTests(unittest.TestCase):
         self.assertIn("app/pages/books.py", names)
         self.assertNotIn("app/data.db", names)                    # the app's own data never goes into the download
         self.assertEqual([c["detail"] for c in verdict.checks if c["id"] == "design_checks"], ["no problems found"])
+
+
+class ThinkingTests(unittest.TestCase):
+    def test_numeric_question_is_computed_in_the_sandbox_and_checked(self):
+        replies = ["Let me compute.\n```python\nprint(17 * 23 + 4)\n```",
+                   "The program printed 395.\nAnswer: 395",
+                   "The arithmetic is right.\nAnswer: 395"]
+        rep, job, llm = run("How much is 17 times 23 plus 4?", replies)
+        self.assertEqual(rep["verdict"], "VERIFIED", rep)
+        text = (job.workspace / "answer.md").read_text()
+        self.assertIn("395", text)
+        self.assertIn("1 Python run", text)
+        self.assertIn("Output of your program:\n395", llm.calls[1]["messages"][-1]["content"])   # the real result was fed back
+
+    def test_check_pass_can_correct_the_first_answer(self):
+        from neuron.agent.thinking import solve
+        from tests.fakes import ScriptedLLM
+        llm = ScriptedLLM(["12 + 30 = 41. Answer: 41", "12 + 30 is 42, not 41. Answer: 42"])
+        s = solve(lambda m, n: llm.chat(m, max_tokens=n), None, "What is 12 + 30?")
+        self.assertEqual((s["first_answer"], s["answer"], s["calls"]), ("41", "42", 2))

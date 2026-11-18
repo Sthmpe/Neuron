@@ -143,6 +143,9 @@ class AnswerFromDocuments(Capability):
         return Verdict(all(c["pass"] for c in checks), checks, "quote found on the cited page and the answer's numbers in the quote (deterministic)")
 
 
+COMPUTE = re.compile(r"\d|\b(calculate|compute|how (much|many)|percent|average|total|sum|probability|solve)\b", re.I)
+
+
 class AnswerQuestion(Capability):
     name = "answer_question"
     purpose = "Answer a general question with the local model (not independently checkable)"
@@ -152,8 +155,16 @@ class AnswerQuestion(Capability):
     domains = ("research",)
 
     def run(self, job, params):
+        q = job.state.goal()["request"]
+        if COMPUTE.search(q):                  # numbers involved: think, compute with real Python in the sandbox, check once
+            from ..thinking import solve
+            s = solve(lambda m, n: job.chat("builder", m, max_tokens=n, temperature=0.1), job.sandbox, q)
+            text = s["answer"] + (f"\n\n(Worked out with {s['tool_runs']} Python run(s) in the sandbox and checked once.)" if s["tool_runs"]
+                                  else "\n\n(Checked once by a second pass.)")
+            (job.workspace / "answer.md").write_text(clean(text) + "\n")
+            return Outcome(True, clean(text)[:300], {"answer": clean(text), "tool_runs": s["tool_runs"]}, ["answer.md"], made_by="model")
         text = job.ask_text("builder", "You are NEURON, an offline assistant. Answer clearly. Say so if you are not sure. No em dashes.",
-                            job.state.goal()["request"], max_tokens=700)
+                            q, max_tokens=700)
         if not text:
             return Outcome(False, "no answer from the local model")
         (job.workspace / "answer.md").write_text(clean(text) + "\n")
