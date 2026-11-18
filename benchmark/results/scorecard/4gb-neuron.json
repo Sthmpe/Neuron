@@ -1,0 +1,87 @@
+{
+ "rows": [
+  {
+   "correct": true,
+   "given": "B",
+   "first_given": "B",
+   "calls": 2,
+   "tokens": 488,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-3017",
+   "bench": "mmlu_pro",
+   "seconds": 88.5,
+   "peak_mb": 3970
+  },
+  {
+   "correct": true,
+   "given": "E",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 527,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-3295",
+   "bench": "mmlu_pro",
+   "seconds": 88.4,
+   "peak_mb": 3971
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-390",
+   "bench": "mmlu_pro",
+   "seconds": 127.0,
+   "peak_mb": 3971
+  },
+  {
+   "correct": true,
+   "given": "A",
+   "first_given": "A",
+   "calls": 2,
+   "tokens": 452,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-462",
+   "bench": "mmlu_pro",
+   "seconds": 77.4,
+   "peak_mb": 3971
+  },
+  {
+   "correct": true,
+   "given": "E",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 614,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-4062",
+   "bench": "mmlu_pro",
+   "seconds": 96.8,
+   "peak_mb": 3971
+  }
+ ],
+ "summary": {},
+ "tier": "4gb",
+ "condition": "neuron",
+ "model": "qwen3.5-4b-q4",
+ "model_file": "Qwen3.5-4B-Q4_K_M.gguf",
+ "network": "new empty network namespace (loopback only)",
+ "seed": 20261118,
+ "started": "2026-11-18 22:43:09"
+}
