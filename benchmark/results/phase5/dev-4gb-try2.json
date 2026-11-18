@@ -1,0 +1,77 @@
+{
+ "rows": [
+  {
+   "task": "D05_cpp_wordcount",
+   "kind": "cpp_build",
+   "solved": true,
+   "checks_passed": 4,
+   "checks_total": 4,
+   "failed_checks": [],
+   "seconds": 161.0,
+   "peak_mb": 3836,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 161.0
+    }
+   ],
+   "model_calls": 3,
+   "tokens": 1040,
+   "model_seconds": 154.5,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 2
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "D06_app_classes",
+   "kind": "web_app",
+   "solved": true,
+   "checks_passed": 19,
+   "checks_total": 19,
+   "failed_checks": [],
+   "seconds": 181.0,
+   "peak_mb": 4044,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 181.0
+    }
+   ],
+   "model_calls": 4,
+   "tokens": 850,
+   "model_seconds": 163.0,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  }
+ ],
+ "set": "dev",
+ "tier": "4gb",
+ "tier_limit_mb": 4096,
+ "network": "new empty network namespace (loopback only)",
+ "model": {
+  "planner": "qwen3.5-4b-q4",
+  "reviewer": "qwen3.5-4b-q4",
+  "builder": "qwen3.5-4b-q4"
+ },
+ "bug_request": "The tests of this project fail. Find the bug in the source code and fix it so the tests pass. Do not change the tests.",
+ "started": "2026-11-18 04:06:55",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

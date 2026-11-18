@@ -167,7 +167,8 @@ def main(argv=None):
     mgr = ModelManager()
     results.update(set=a.set, tier=a.tier, tier_limit_mb=round(tier.limit / MB), network=net["method"],
                    model={r: mgr.active(a.tier, r) for r in ("planner", "reviewer", "builder")},
-                   bug_request=BUG_REQUEST, started=results.get("started") or time.strftime("%Y-%m-%d %H:%M:%S"))
+                   bug_request=BUG_REQUEST, started=results.get("started") or time.strftime("%Y-%m-%d %H:%M:%S"),
+                   code_commit=subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout.strip())
     done = {r["task"] for r in results["rows"]}
     only = set(a.only.split(",")) if a.only else None
     try:

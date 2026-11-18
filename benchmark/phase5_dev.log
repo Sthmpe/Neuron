@@ -6,3 +6,6 @@ dev-4gb-try1 D05_cpp_wordcount: SOLVED | 4/4 checks | 631.1s | peak 4007 MB | ca
 dev-4gb-try1 D06_app_classes: not solved | 18/19 checks | 193.1s | peak 4064 MB | calls 4 | agent says VERIFIED
 dev-4gb-try1 D07_long_docstrings: SOLVED | 4/4 checks | 96.0s | peak 3787 MB | calls 12 | agent says VERIFIED
 PHASE5-DONE dev-4gb-try1
+dev-4gb-try2 D05_cpp_wordcount: SOLVED | 4/4 checks | 161.0s | peak 3836 MB | calls 3 | agent says VERIFIED
+dev-4gb-try2 D06_app_classes: SOLVED | 19/19 checks | 181.0s | peak 4044 MB | calls 4 | agent says VERIFIED
+PHASE5-DONE dev-4gb-try2
