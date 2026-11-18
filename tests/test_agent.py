@@ -133,6 +133,29 @@ class CodeJobTests(unittest.TestCase):
         self.assertEqual(len(done_after), len(set(done_after)))
 
 
+class DocstringPlaceholderTests(unittest.TestCase):
+    def test_placeholder_docstrings_are_reported_not_verified(self):
+        """Found by the locked L12 rerun: a placeholder docstring (model reply too short, twice) was called VERIFIED."""
+        ws = Path(tempfile.mkdtemp()) / "ws"
+        shutil.copytree(ROOT / "benchmark" / "workspaces" / "clinic", ws)
+        doc = "Explains what this function does with its inputs and returns the result."
+        replies = ["ok", "fine"] + [doc] * 80                     # the first function gets two useless replies
+        rep, job, llm = run("Add a clear docstring to every function in the source code (not the tests). Do not change behaviour; tests must pass.",
+                            replies, workspace=ws)
+        self.assertNotEqual(rep["verdict"], "VERIFIED", rep)
+        ph = json.loads((ws / ".neuron" / "job" / "placeholders.json").read_text())
+        self.assertEqual(len(ph), 1)
+
+    def test_one_short_reply_is_retried(self):
+        ws = Path(tempfile.mkdtemp()) / "ws"
+        shutil.copytree(ROOT / "benchmark" / "workspaces" / "clinic", ws)
+        doc = "Explains what this function does with its inputs and returns the result."
+        rep, job, llm = run("Add a clear docstring to every function in the source code (not the tests). Do not change behaviour; tests must pass.",
+                            ["ok"] + [doc] * 80, workspace=ws)
+        self.assertEqual(rep["verdict"], "VERIFIED", rep)
+        self.assertFalse((ws / ".neuron" / "job" / "placeholders.json").exists())
+
+
 class HonestyTests(unittest.TestCase):
     def test_missing_tool_is_reported_not_faked(self):
         class NeedsFlutter(Capability):
