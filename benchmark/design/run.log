@@ -1,0 +1,119 @@
+  law_firm: design: trust / Your colours: navy, gold / hero editorial
+  law_firm: planned 2 tasks: ['schema', 'home']
+  law_firm:   task schema attempt 1: passed
+  law_firm:   task home attempt 1: failed - A reviewer compared the page with the request. Missing: form for booking consultation
+  law_firm:   task home attempt 2: passed
+law_firm: built=True checks={'fails': 0, 'warnings': 0, 'by_rule': {}, 'colour_share': {'share': {'action': 0.5, 'strong': 0.3, 'bg': 96.9, 'surface': 0, 'tone2': 0.9}, 'calm': 53.1}} colours=[{'word': 'navy', 'hex': '#1b2a4a', 'kept': True}, {'word': 'gold', 'hex': '#c9a227', 'kept': True}] 121.1s
+  bakery: design: warmth / Caramel and espresso / hero card
+  bakery: planned 2 tasks: ['schema', 'home']
+  bakery:   task schema attempt 1: failed - The file does not define setup(app).
+  bakery:   task schema attempt 2: passed
+  bakery:   task home attempt 1: passed
+bakery: built=True checks={'fails': 0, 'warnings': 0, 'by_rule': {}, 'colour_share': {'share': {'action': 0.4, 'strong': 0.2, 'bg': 82.6, 'surface': 0, 'tone2': 13.8}, 'calm': 39.4}} colours=[] 60.6s
+  payments_app: design: clarity / Ink and coral / hero split
+  payments_app: planned 2 tasks: ['schema', 'home']
+  payments_app:   task schema attempt 1: failed - The app did not start:
+  payments_app:   task schema attempt 2: passed
+  payments_app:   task home attempt 1: failed - Check 'home page content and form' failed: step 2 (POST /join): expected HTTP [200], got 500. Error | Kobo Pay     Skip 
+  payments_app:   task home attempt 2: failed - Check 'home page content and form' failed: step 1 (GET /): the page does not show 'Benefits'
+  payments_app:   task home attempt 3: failed - Check 'home page content and form' failed: step 2 (POST /join): expected HTTP [200], got 500. Error | Kobo Pay     Skip 
+  payments_app:   task home template: failed
+payments_app: built=False checks={'fails': 0, 'warnings': 0, 'by_rule': {}, 'colour_share': {'share': {'action': 0, 'strong': 0.3, 'bg': 75, 'surface': 0, 'tone2': 0.3}, 'calm': 79}} colours=[] 122.4s
+  yoga: design: calm / Your colours: sage green / hero editorial
+  yoga: planned 2 tasks: ['schema', 'home']
+  yoga:   task schema attempt 1: passed
+  yoga:   task home attempt 1: passed
+yoga: built=True checks={'fails': 0, 'warnings': 0, 'by_rule': {}, 'colour_share': {'share': {'action': 0.5, 'strong': 0.3, 'bg': 92.5, 'surface': 0, 'tone2': 4.4}, 'calm': 56.8}} colours=[{'word': 'sage green', 'hex': '#8fa98a', 'kept': True}] 48.4s
+  boxing_gym: design: energy / Your colours: black, bright orange / hero editorial
+  boxing_gym: planned 2 tasks: ['schema', 'home']
+  boxing_gym:   task schema attempt 1: passed
+  boxing_gym:   task home attempt 1: passed
+boxing_gym: built=True checks={'fails': 0, 'warnings': 1, 'by_rule': {}, 'colour_share': {'share': {'action': 0.5, 'strong': 0.1, 'bg': 89.2, 'surface': 0, 'tone2': 4.3}, 'calm': 48}} colours=[{'word': 'black', 'hex': '#111111', 'kept': True}, {'word': 'bright orange', 'hex': '#ff8217', 'kept': True}] 49.7s
+  bridal: design: elegance / Ivory and plum / hero centered
+  bridal: planned 2 tasks: ['schema', 'home']
+  bridal:   task schema attempt 1: passed
+  bridal:   task home attempt 1: passed
+bridal: built=True checks={'fails': 0, 'warnings': 0, 'by_rule': {}, 'colour_share': {'share': {'action': 0.6, 'strong': 0, 'bg': 96.2, 'surface': 0, 'tone2': 2.1}, 'calm': 59.2}} colours=[] 52.6s
+  kids_party: design: playful / Coral and teal / hero centered
+  kids_party: planned 2 tasks: ['schema', 'home']
+  kids_party:   task schema attempt 1: passed
+  kids_party:   task home attempt 1: passed
+kids_party: built=True checks={'fails': 0, 'warnings': 0, 'by_rule': {}, 'colour_share': {'share': {'action': 0.4, 'strong': 18.8, 'bg': 78.8, 'surface': 0, 'tone2': 0.6}, 'calm': 52.6}} colours=[] 47.9s
+  farm_shop: design: natural / Your colours: moss green, terracotta / hero split
+  farm_shop: planned 2 tasks: ['schema', 'home']
+  farm_shop:   task schema attempt 1: failed - The file does not define setup(app).
+  farm_shop:   task schema attempt 2: passed
+  farm_shop:   task home attempt 1: failed - Check 'home page content and form' failed: step 2 (POST /join_list): expected HTTP [200], got 500. Error | Green Acres O
+  farm_shop:   task home attempt 2: passed
+farm_shop: built=True checks={'fails': 0, 'warnings': 0, 'by_rule': {}, 'colour_share': {'share': {'action': 0.5, 'strong': 0, 'bg': 87.6, 'surface': 0, 'tone2': 7.2}, 'calm': 36}} colours=[{'word': 'moss green', 'hex': '#5a6e3a', 'kept': True}, {'word': 'terracotta', 'hex': '#c2603e', 'kept': True}] 97.5s
+  plumber: design: dependable / Safety orange / hero split
+  plumber: planned 2 tasks: ['schema', 'home']
+  plumber:   task schema attempt 1: failed - The file does not define setup(app).
+  plumber:   task schema attempt 2: passed
+  plumber:   task home attempt 1: passed
+plumber: built=True checks={'fails': 0, 'warnings': 0, 'by_rule': {}, 'colour_share': {'share': {'action': 0.5, 'strong': 21.9, 'bg': 74.6, 'surface': 0, 'tone2': 0.8}, 'calm': 46}} colours=[] 59.7s
+  tutoring: design: bright / Your colours: royal blue, yellow / hero card
+  tutoring: planned 2 tasks: ['schema', 'home']
+  tutoring:   task schema attempt 1: passed
+  tutoring:   task home attempt 1: passed
+tutoring: built=True checks={'fails': 0, 'warnings': 0, 'by_rule': {}, 'colour_share': {'share': {'action': 0.5, 'strong': 0, 'bg': 55.6, 'surface': 0, 'tone2': 40.1}, 'calm': 41.4}} colours=[{'word': 'royal blue', 'hex': '#2747c4', 'kept': True}, {'word': 'yellow', 'hex': '#f4c430', 'kept': True}] 58.3s
+  dentist: design: calm / Linen and stone / hero centered
+  dentist: planned 2 tasks: ['schema', 'home']
+  dentist:   task schema attempt 1: passed
+  dentist:   task home attempt 1: passed
+dentist: built=True checks={'fails': 0, 'warnings': 0, 'by_rule': {}, 'colour_share': {'share': {'action': 0.5, 'strong': 0.1, 'bg': 97.2, 'surface': 0, 'tone2': 1.1}, 'calm': 55.3}} colours=[] 53.8s
+  coffee: design: warmth / Your colours: #6f4e37, cream / hero card
+  coffee: planned 2 tasks: ['schema', 'home']
+  coffee:   task schema attempt 1: passed
+  coffee:   task home attempt 1: passed
+coffee: built=True checks={'fails': 0, 'warnings': 0, 'by_rule': {}, 'colour_share': {'share': {'action': 0.7, 'strong': 15.5, 'bg': 73.8, 'surface': 0, 'tone2': 6.2}, 'calm': 41}} colours=[{'word': '#6f4e37', 'hex': '#6f4e37', 'kept': True}, {'word': 'cream', 'hex': '#f3ead8', 'kept': True}] 51.8s
+  photographer: design: elegance / Emerald and gilt / hero centered
+  photographer: planned 2 tasks: ['schema', 'home']
+  photographer:   task schema attempt 1: passed
+  photographer:   task home attempt 1: passed
+photographer: built=True checks={'fails': 0, 'warnings': 0, 'by_rule': {}, 'colour_share': {'share': {'action': 0.3, 'strong': 0.1, 'bg': 98, 'surface': 0, 'tone2': 0.4}, 'calm': 61.6}} colours=[] 56.6s
+  accountant: design: trust / Your colours: dark green / hero editorial
+  accountant: planned 2 tasks: ['schema', 'home']
+  accountant:   task schema attempt 1: passed
+  accountant:   task home attempt 1: passed
+accountant: built=True checks={'fails': 0, 'warnings': 0, 'by_rule': {}, 'colour_share': {'share': {'action': 0.5, 'strong': 0, 'bg': 87, 'surface': 0, 'tone2': 10.7}, 'calm': 48.9}} colours=[{'word': 'dark green', 'hex': '#005d29', 'kept': True}] 52.4s
+  florist: design: elegance / Your colours: dusty pink, olive green / hero banner
+  florist: planned 2 tasks: ['schema', 'home']
+  florist:   task schema attempt 1: passed
+  florist:   task home attempt 1: passed
+  florist:   design review round 1: {'contrast': 9} -> ['made ink-soft text darker for contrast', 'made link text darker for contrast', 'made accent-ink text darker for contrast', 'made support-ink text darker for contrast', 'made on-strong-muted text darker for contrast']
+  florist:   design review round 2: {'contrast': 9} -> ['contrast problem found that tokens cannot fix (reported)']
+florist: built=True checks={'fails': 9, 'warnings': 0, 'by_rule': {'contrast': 9}, 'colour_share': {'share': {'action': 0.1, 'strong': 19.2, 'bg': 68.7, 'surface': 0, 'tone2': 0.4}, 'calm': 55}} colours=[{'word': 'dusty pink', 'hex': '#d4a5a5', 'kept': True}, {'word': 'olive green', 'hex': '#6b7a2e', 'kept': True}] 53.0s
+  garage_app: design: dependable / Cobalt and yellow / hero banner
+  garage_app: planned 3 tasks: ['schema', 'jobs', 'dashboard']
+  garage_app:   task schema attempt 1: passed
+  garage_app:   task jobs attempt 1: passed
+  garage_app:   task dashboard attempt 1: passed
+garage_app: built=True checks={'fails': 0, 'warnings': 0, 'by_rule': {}, 'colour_share': {'share': {'action': 0.4, 'strong': 0.2, 'bg': 97.2, 'surface': 0, 'tone2': 1.1}, 'calm': 42}} colours=[] 55.1s
+  music_school: design: bright / Royal and sunflower / hero card
+  music_school: planned 2 tasks: ['schema', 'home']
+  music_school:   task schema attempt 1: failed - The file does not define setup(app).
+  music_school:   task schema attempt 2: passed
+  music_school:   task home attempt 1: passed
+music_school: built=True checks={'fails': 0, 'warnings': 0, 'by_rule': {}, 'colour_share': {'share': {'action': 0.4, 'strong': 0.8, 'bg': 91.7, 'surface': 0, 'tone2': 4}, 'calm': 39.5}} colours=[] 64.5s
+  guesthouse: design: warmth / Your colours: burgundy, champagne / hero split
+  guesthouse: planned 2 tasks: ['schema', 'home']
+  guesthouse:   task schema attempt 1: passed
+  guesthouse:   task home attempt 1: passed
+guesthouse: built=True checks={'fails': 0, 'warnings': 0, 'by_rule': {}, 'colour_share': {'share': {'action': 0.5, 'strong': 11.5, 'bg': 84, 'surface': 0, 'tone2': 2.3}, 'calm': 36.7}} colours=[{'word': 'burgundy', 'hex': '#7a1f2b', 'kept': True}, {'word': 'champagne', 'hex': '#e9d8b4', 'kept': True}] 50.7s
+  software_agency: design: clarity / Graphite and azure / hero editorial
+  software_agency: planned 2 tasks: ['schema', 'home']
+  software_agency:   task schema attempt 1: failed - The file does not define setup(app).
+  software_agency:   task schema attempt 2: passed
+  software_agency:   task home attempt 1: passed
+software_agency: built=True checks={'fails': 0, 'warnings': 0, 'by_rule': {}, 'colour_share': {'share': {'action': 0.5, 'strong': 0.7, 'bg': 96.4, 'surface': 0, 'tone2': 0.9}, 'calm': 55.8}} colours=[] 58.8s
+  salon_app: design: elegance / Your colours: plum / hero banner
+  salon_app: planned 3 tasks: ['schema', 'clients', 'dashboard']
+  salon_app:   task schema attempt 1: passed
+  salon_app:   task clients attempt 1: passed
+  salon_app:   task dashboard attempt 1: failed - Check 'dashboard numbers' failed: step 5 (GET /): expected HTTP [200], got 500. Error | Plum Hair Salon     Skip to cont
+  salon_app:   task dashboard attempt 2: failed - Check 'dashboard numbers' failed: step 5 (GET /): expected HTTP [200], got 500. Error | Plum Hair Salon     Skip to cont
+  salon_app:   task dashboard attempt 3: failed - Check 'dashboard numbers' failed: step 5 (GET /): expected HTTP [200], got 500. Error | Plum Hair Salon     Skip to cont
+  salon_app:   task dashboard template: passed
+  salon_app:   design review round 1: {'accent_overuse': 1} -> []
+salon_app: built=True checks={'fails': 1, 'warnings': 0, 'by_rule': {'accent_overuse': 1}, 'colour_share': {'share': {'action': 0.5, 'strong': 0, 'bg': 98.2, 'surface': 0, 'tone2': 0.6}, 'calm': 43}} colours=[{'word': 'plum', 'hex': '#6a2c5a', 'kept': True}] 86.2s
