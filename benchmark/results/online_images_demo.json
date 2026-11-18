@@ -1,0 +1,42 @@
+{
+ "offline": {
+  "needed": 3
+ },
+ "online": {
+  "needed": 3
+ },
+ "seconds": 0.5,
+ "not_found": [],
+ "rate_limited_retry_after_s": 600,
+ "run_at": "2026-11-18 13:19 UTC",
+ "chosen": [
+  {
+   "slot": "hero",
+   "title": null,
+   "author": null,
+   "licence": null,
+   "licence_url": null,
+   "page": null,
+   "bytes": 883
+  },
+  {
+   "slot": "pastries",
+   "title": null,
+   "author": null,
+   "licence": null,
+   "licence_url": null,
+   "page": null,
+   "bytes": 867
+  },
+  {
+   "slot": "baker",
+   "title": null,
+   "author": null,
+   "licence": null,
+   "licence_url": null,
+   "page": null,
+   "bytes": 873
+  }
+ ],
+ "credits": "# Image credits\n\n- hero: IMAGE NEEDED (fresh bread on the counter); a labelled placeholder is shown until a photo is added\n- pastries: IMAGE NEEDED (a tray of pastries); a labelled placeholder is shown until a photo is added\n- baker: IMAGE NEEDED (a baker shaping dough); a labelled placeholder is shown until a photo is added\n"
+}

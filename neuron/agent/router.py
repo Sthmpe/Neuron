@@ -12,12 +12,14 @@ KINDS = {
     "document_code": "adding documentation (docstrings, comments) to existing code without changing behaviour",
     "build_program": "writing a new command-line program in a compiled or scripting language",
     "web_app": "building a website or web app",
+    "upgrade_packages": "updating an existing project's packages or dependencies to newer versions, safely",
     "answer": "answering a question or explaining something",
 }
 RULES = [
     ("excel", r"\bexcel\b|spreadsheet|workbook|\.xlsx\b"),
     ("pptx", r"powerpoint|presentation|slide deck|\bslides?\b|\.pptx\b|\bdeck\b"),
     ("word", r"word document|\.docx\b|\bmemo\b|\bproposal\b|\bletter\b(?! of)"),
+    ("upgrade_packages", r"\b(update|upgrade|bump)\b.{0,30}\b(packages?|dependenc(y|ies)|libraries|requirements)\b|outdated (packages|dependencies)"),
     ("document_code", r"docstring|add comments|document (the|this|every) (code|function)|type hints"),
     ("fix_bug", r"\bfix\b|\bbug\b|failing tests?|tests? (are )?fail|broken|doesn't work|does not work"),
     ("build_program", r"command[- ]line|\bcli\b|\bc\+\+|\brust\b|\bgolang\b|\bgo program|\bjava program|makefile"),
@@ -38,6 +40,9 @@ def rule_guess(request, attachments=(), workspace=None):
         return "fix_bug", hits
     if "document_code" in hits and has_code:
         return "document_code", hits
+    if "upgrade_packages" in hits and workspace is not None and \
+            any((Path(workspace) / f).exists() for f in ("requirements.txt", "package.json")):
+        return "upgrade_packages", hits
     order = ["excel", "pptx", "word", "pdf_qa", "build_program", "web_app", "fix_bug", "document_code"]
     for k in order:
         if k in hits:

@@ -33,6 +33,8 @@ class JobManager:
                 self.queue.append(meta["id"])
                 self._meta(meta["id"], status="queued", note="resumed after a restart")
         self.memory = None                              # created on the first job (default: <home>/memory/knowledge.db)
+        from . import sysinfo
+        self.online_check = sysinfo.online              # replaceable in tests
         self.thread = threading.Thread(target=self._work, daemon=True)
         self.thread.start()
 
@@ -151,6 +153,8 @@ class JobManager:
             with self.lock:
                 jid = self.queue.popleft() if self.queue else None
             if jid is None:
+                self._resume_waiting()
+                self._maintain()
                 self.wake.wait(1.0)
                 self.wake.clear()
                 continue
@@ -162,6 +166,18 @@ class JobManager:
             finally:
                 self.current, self.current_job = None, None
 
+    def _resume_waiting(self, every=30):
+        """Jobs that stopped only because they needed the internet start again by themselves once it is back."""
+        if time.time() - getattr(self, "_net_checked", 0) < every:
+            return
+        self._net_checked = time.time()
+        waiting = [m["id"] for m in self.all() if m.get("status") == "waiting_network"
+                   and (m.get("report") or {}).get("retry_at", 0) <= time.time()]          # a service asked us to wait: respect it
+        if waiting and self.online_check():
+            for jid in waiting:
+                self.log(f"[{jid}] the internet is back: resuming")
+                self.start(jid)
+
     def _run(self, jid):
         m = self._meta(jid, status="running", started=time.time())
         ws = self._path(jid) / "workspace"
@@ -170,6 +186,18 @@ class JobManager:
             self.runner = self.runner_factory()
         if hasattr(self.runner, "boost"):
             self.runner.boost.new_job()
+        self._open_memory()
+        job = Job(ws, self.runner, self.sandbox_factory(), registry=self.registry, log=lambda msg: self.log(f"[{jid}] {msg}"),
+                  memory=self.memory or None)
+        job.online = self.online_check()
+        self.current_job = job
+        rep = Agent(job).run(m["goal"], attachments)
+        status = "waiting_approval" if rep.get("waiting_approval") else ("paused" if getattr(job, "stop_requested", False)
+                  else "waiting_network" if rep.get("waiting_network")
+                  else {"VERIFIED": "done", "PARTIAL": "partial", "FAILED": "failed"}[rep["verdict"]])
+        self._meta(jid, status=status, report=rep, finished=time.time())
+
+    def _open_memory(self):
         if self.memory is None:
             from ..memory import Memory, memory_enabled
             try:
@@ -177,13 +205,43 @@ class JobManager:
             except Exception as e:                       # noqa: BLE001  NEURON works without memory
                 self.log(f"knowledge memory unavailable: {e}")
                 self.memory = False
-        job = Job(ws, self.runner, self.sandbox_factory(), registry=self.registry, log=lambda msg: self.log(f"[{jid}] {msg}"),
-                  memory=self.memory or None)
-        self.current_job = job
-        rep = Agent(job).run(m["goal"], attachments)
-        status = "waiting_approval" if rep.get("waiting_approval") else ("paused" if getattr(job, "stop_requested", False)
-                  else {"VERIFIED": "done", "PARTIAL": "partial", "FAILED": "failed"}[rep["verdict"]])
-        self._meta(jid, status=status, report=rep, finished=time.time())
+
+    def _maintain(self, every=86400):
+        """Once a day, when idle and online: recheck old memory notes, and keep finished projects' packages current
+        (isolated copy, the project's tests, swap in only what passes, backup kept). Results go into the job's record."""
+        if not hasattr(self, "_maintained"):
+            self._maintained = time.time() - every + 600                # first pass ten minutes after NEURON starts
+        if self.queue or self.current or time.time() - self._maintained < every:
+            return
+        self._maintained = time.time()
+        if not self.online_check():
+            self._maintained = time.time() - every + 1800           # offline: try again in half an hour
+            return
+        self._open_memory()
+        if self.memory:
+            from ..memory.recheck import recheck
+            r = recheck(self.memory, log=self.log)
+            if r["checked"]:
+                self.log(f"memory recheck: {r}")
+        from ..online import packages
+        from ..agent.capabilities.workspace import detect_test_command
+        from ..agent.effects import Effects
+        for meta in self.all():
+            if self.queue or self.stopping:                         # the owner asked for something: that comes first
+                return
+            ws = self._path(meta["id"]) / "workspace"
+            if meta.get("status") not in ("done", "partial") or not packages.pins(ws):
+                continue
+            try:
+                rep = packages.upgrade(ws, self.sandbox_factory(), detect_test_command(ws),
+                                       effects=Effects(ws / ".neuron" / "job" / "effects.jsonl"), log=self.log)
+                self._meta(meta["id"], maintenance={"at": time.time(), "summary": rep["summary"],
+                                                    "upgraded": rep["upgraded"], "kept_back": rep["kept_back"]})
+                if self.memory:
+                    for n in packages.memory_notes(rep):
+                        self.memory.add(n["kind"], n["text"], n["source"], version=n["version"], verified=True, tags=n["tags"])
+            except Exception as e:                                  # noqa: BLE001  maintenance never breaks NEURON
+                self.log(f"[{meta['id']}] package check failed: {type(e).__name__}: {e}")
 
     # ---- views for the phone -----------------------------------------------------------------------------
     def detail(self, jid):

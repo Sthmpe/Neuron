@@ -126,8 +126,8 @@ class JobState:
     def record_evidence(self, task, verdict):
         self._append("evidence.jsonl", {"task": task, "passed": verdict.passed, "how": verdict.how, "checks": verdict.checks})
 
-    def ask_approval(self, task, action):
-        self._append("approvals.jsonl", {"task": task, "action": action, "status": "pending"})
+    def ask_approval(self, task, action, question=""):
+        self._append("approvals.jsonl", {"task": task, "action": action, "status": "pending", "question": question})
 
     def approvals(self):
         latest = {}

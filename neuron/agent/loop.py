@@ -11,6 +11,7 @@ from pathlib import Path
 from ..brain.llm import LLMUnavailable
 from . import router
 from .capability import Missing, Outcome, Verdict, default_registry
+from .effects import Effects, Uncertain
 from .state import JobState
 
 MAX_TRIES = 3          # per task, across strategies
@@ -31,6 +32,8 @@ WORKFLOWS = {
                       ("check", "run_tests", "Run the tests to prove behaviour is unchanged")],
     "build_program": [("design", "plan_program", "Decide the files and what each must do"), ("write", "write_program", "Write the files, build them, test them against examples")],
     "web_app": [("build", "build_web_app", "Plan, build and test the web app")],
+    "upgrade_packages": [("inspect", "inspect_workspace", "Look at the project: packages and test command"),
+                         ("upgrade", "upgrade_packages", "Check for newer packages, upgrade in an isolated copy, test, keep only what passes")],
     "answer": [("answer", "answer_question", "Answer with the local model")],
 }
 
@@ -44,6 +47,8 @@ class Job:
         self.workspace = Path(workspace)
         self.workspace.mkdir(parents=True, exist_ok=True)
         self.state = JobState(self.workspace)
+        self.effects = Effects(self.workspace / ".neuron" / "job" / "effects.jsonl")    # outside actions, each at most once
+        self.online = False                # set by whoever starts the job (sysinfo.online()); steps needing the internet wait
         self.runner, self.sandbox, self.log = runner, sandbox, log
         self.registry = registry or default_registry()
         self.design = design
@@ -120,6 +125,10 @@ class Agent:
         else:
             s.create(request, attachments)
         s.journal("session", models={r: job.runner.model_for(r) for r in ("planner", "reviewer", "builder")})
+        if getattr(job, "online", False):                                # back online: steps that waited for it run now
+            for t in s.plan():
+                if t["status"] == "waiting_network" and t.get("not_before", 0) <= time.time():
+                    s.update_task(t["id"], status="pending", summary="the internet is back")
         if job.memory is not None:                                       # memory first, before any reasoning
             try:
                 job.memory_notes = job.memory.search(s.goal()["request"], k=4)
@@ -165,6 +174,15 @@ class Agent:
         for nid in (out.result or {}).get("memory_helped", []) if isinstance(out.result, dict) else []:
             job.memory.mark(nid, helped=True)
 
+    def _follow_ups(self, tid, out):
+        """A step can add work it found to be needed, such as fetching photos for 'Image needed' placeholders."""
+        extra = (out.result or {}).get("add_tasks", []) if isinstance(out.result, dict) else []
+        have = {t["id"] for t in self.s.plan()}
+        new = [dict(t, depends=[tid]) for t in extra if t["id"] not in have]
+        if new:
+            self.s.add_tasks(new)
+            self.s.decide(tid, "follow_up", "added: " + ", ".join(t["title"] for t in new))
+
     def plan(self, goal):
         kind = goal["kind"]
         steps = WORKFLOWS.get(kind, WORKFLOWS["answer"])
@@ -205,9 +223,14 @@ class Agent:
             if answer["status"] == "rejected":
                 s.update_task(tid, status="skipped", summary="the owner rejected this action")
                 return
+        for a in s.approvals():                # the owner answered about an interrupted outside action
+            if a["task"] == tid and a["action"].startswith("repeat:") and a["status"] != "pending":
+                job.effects.resolve(a["action"][len("repeat:"):], happened=a["status"] == "rejected")
         if cap.needs_internet and not getattr(job, "online", False):
-            s.update_task(tid, status="pending", summary="waiting for the internet")
+            # not 'pending': the loop would pick it again at once. It waits; the job resumes it when the internet is back.
+            s.update_task(tid, status="waiting_network", summary="waiting for the internet")
             s.set_progress(state="waiting_network", task=tid)
+            job.log(f"  {tid}: needs the internet; it will run when the connection is back")
             return
         s.update_task(tid, status="in_progress")
         s.set_progress(state="working", task=tid, title=task["title"])
@@ -220,10 +243,29 @@ class Agent:
             t0 = time.time()
             try:
                 out = cap.run(job, params)
+            except Uncertain as e:
+                # NEURON stopped in the middle of an outside action last time. Repeating it could do it twice: ask.
+                action = f"repeat:{e.key}"
+                if not any(a["task"] == tid and a["action"] == action and a["status"] == "pending" for a in s.approvals()):
+                    s.ask_approval(tid, action, question=f"NEURON stopped in the middle of: {e.what}. It may already have "
+                                                         "happened. Approve to do it again, or reject if it already happened.")
+                s.update_task(tid, status="waiting_approval", summary=f"may already have happened, asking the owner: {e.what}")
+                s.set_progress(state="waiting_approval", task=tid)
+                return
             except Missing as e:
                 out = Outcome(False, f"not installed: {e}")
             except LLMUnavailable as e:
                 out = Outcome(False, f"the local model could not be used: {e}")
+            if out.evidence.get("retry_later"):
+                # an outside service asked NEURON to wait: stop asking, keep what was done, try again later by itself
+                waits = task.get("waits", 0) + 1
+                delay = max(out.evidence["retry_later"], min(600 * 3 ** (waits - 1), 6 * 3600))   # 10 min, 30 min, 1.5 h ... 6 h
+                s.update_task(tid, status="waiting_network", waits=waits, not_before=time.time() + delay,
+                              summary=f"{out.evidence.get('why', 'the service asked NEURON to wait')}; tries again by itself in "
+                                      f"{round(delay / 60)} minutes ({out.summary})")
+                s.set_progress(state="waiting_network", task=tid)
+                job.log(f"  {tid}: asked to wait; tries again in {round(delay / 60)} minutes")
+                return
             verdict = cap.verify(job, params, out) if out.ok else Verdict(False, [{"id": "ran", "pass": False, "detail": out.summary}], "the step itself failed")
             s.record_evidence(tid, verdict)
             attempt = {"n": n, "passed": verdict.passed, "summary": out.summary, "files": out.files, "made_by": out.made_by,
@@ -235,11 +277,13 @@ class Agent:
                 s.update_task(tid, status="done", summary=out.summary, result=out.result, files=out.files, made_by=out.made_by,
                               verification=verdict.how)
                 self._remember(tid, out)
+                self._follow_ups(tid, out)
                 return
             if out.ok and verdict.failures and all(c.get("gap") for c in verdict.failures):
                 # what was built passes its checks; the rest cannot be built yet: deliver it and say so, retrying cannot help
                 s.update_task(tid, status="partial", summary=out.summary, result=out.result, files=out.files, made_by=out.made_by,
                               verification=verdict.how, gaps=[c["detail"] for c in verdict.failures])
+                self._follow_ups(tid, out)
                 return
             if verdict.rework and self._rework(task, verdict, attempt["failure"]):
                 return
@@ -297,10 +341,15 @@ class Agent:
         files = sorted({f for t in done + partial for f in t.get("files", [])})
         rep = {"verdict": verdict, "kind": self.s.goal().get("kind"), "tasks": {t["id"]: t["status"] for t in plan},
                "failed": {t["id"]: t.get("summary", "") for t in failed}, "files": files, "made_by": made,
-               "not_done": {t["id"]: t.get("gaps", []) for t in partial},
+               "not_done": {**{t["id"]: t.get("gaps", []) for t in partial},
+                            **{t["id"]: [t.get("summary") if t.get("not_before") else f"{t['title']}: waiting for the internet, resumes by itself"]
+                               for t in plan if t["status"] == "waiting_network"}},
                "model_calls": self.job.calls, "online_calls": self.job.online_calls, "model_seconds": round(self.job.model_seconds, 1), "tokens": self.job.tokens,
                "usage_all_sessions": self.job.usage_total(),
-               "seconds": round(seconds, 1), "pending": [t["id"] for t in plan if t["status"] in ("pending", "waiting_approval")],
+               "seconds": round(seconds, 1), "pending": [t["id"] for t in plan if t["status"] in ("pending", "waiting_approval", "waiting_network")],
+               "waiting_network": [t["id"] for t in plan if t["status"] == "waiting_network"],
+               "retry_at": min([t.get("not_before", 0) for t in plan if t["status"] == "waiting_network"] or [0]),
+               "outside_actions": self.job.effects.summary(),
                "waiting_approval": [t["id"] for t in plan if t["status"] == "waiting_approval"]}
         self.s.set_progress(state="finished" if not rep["pending"] else "paused", verdict=verdict)
         (self.s.dir / "report.json").write_text(json.dumps(rep, indent=1))

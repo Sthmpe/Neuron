@@ -119,7 +119,7 @@ class Memory:
         """Notes from outside sources (web pages, package docs) not checked for `days`: to check again when online."""
         cutoff = time.time() - days * 86400
         return [dict(r) for r in self.db.execute(
-            "SELECT id, kind, text, source, version, status FROM notes WHERE last_checked < ? AND (source LIKE 'http%' OR version != '')"
+            "SELECT id, kind, text, source, version, status, tags FROM notes WHERE last_checked < ? AND (source LIKE 'http%' OR version != '')"
             " AND status != 'outdated'", (cutoff,))]
 
     def stats(self):

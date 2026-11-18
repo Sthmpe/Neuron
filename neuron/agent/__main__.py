@@ -45,6 +45,8 @@ def main(argv=None):
     memory = default_memory() if memory_enabled() else None          # evaluations run with NEURON_MEMORY=off
     job = Job(ws, runner, Sandbox(timeout=120, mem_mb=1024, toolchains=True), registry=reg, log=lambda m: print(m, flush=True),
               memory=memory)
+    from ..server import sysinfo
+    job.online = sysinfo.online()             # steps that need the internet wait when it is missing
     try:
         rep = Agent(job).run(a.goal or "", attached, max_seconds=a.max_seconds)
     finally:

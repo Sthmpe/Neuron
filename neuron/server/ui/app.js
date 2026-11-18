@@ -3,8 +3,8 @@ const $ = (s, el = document) => el.querySelector(s);
 const view = $('#view');
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const LABEL = { draft: 'Draft', queued: 'Waiting to start', running: 'Working', done: 'Done and checked', partial: 'Partly done', failed: 'Not done',
-  waiting_approval: 'Needs your OK', paused: 'Paused' };
-const STEP = { pending: '', in_progress: '·', done: '✓', partial: '~', failed: '!', skipped: '-', waiting_approval: '?' };
+  waiting_approval: 'Needs your OK', paused: 'Paused', waiting_network: 'Waiting for the internet' };
+const STEP = { pending: '', in_progress: '·', done: '✓', partial: '~', failed: '!', skipped: '-', waiting_approval: '?', waiting_network: '…' };
 let timer = null;
 let gen = 0;       // only the newest screen may draw: an older one that finishes loading later is dropped
 
@@ -80,7 +80,7 @@ async function jobView(id, g) {
       <div class="row">${live ? `<button class="btn danger small" id="stop">Stop</button>` : ''}
       ${['paused', 'failed', 'partial'].includes(j.status) ? `<button class="btn small" id="resume">Resume</button>` : ''}
       ${hasApp ? `<button class="btn primary small" id="preview">Open the app</button>` : ''}</div></section>
-      ${j.approvals.length ? `<section class="card"><h2>Needs your OK</h2>${j.approvals.map(a => `<p>${esc(a.action)} (step ${esc(a.task)})</p>
+      ${j.approvals.length ? `<section class="card"><h2>Needs your OK</h2>${j.approvals.map(a => `<p>${esc(a.question || a.action)} (step ${esc(a.task)})</p>
         <div class="row"><button class="btn primary small" data-ok="${esc(a.task)}|${esc(a.action)}">Approve</button>
         <button class="btn danger small" data-no="${esc(a.task)}|${esc(a.action)}">Reject</button></div>`).join('')}</section>` : ''}
       ${j.answer ? `<section class="card"><h2>Answer</h2><div class="answer">${esc(j.answer)}</div></section>` : ''}

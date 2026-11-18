@@ -1,0 +1,55 @@
+{
+ "checked": "2026-11-18 13:07",
+ "outdated": [
+  {
+   "manager": "pip",
+   "name": "six",
+   "current": "1.15.0",
+   "latest": "1.17.0",
+   "docs": {
+    "Homepage": "https://github.com/benjaminp/six"
+   },
+   "released": "2024-12-04"
+  },
+  {
+   "manager": "pip",
+   "name": "packaging",
+   "current": "21.3",
+   "latest": "26.3",
+   "docs": {
+    "Documentation": "https://packaging.pypa.io/",
+    "Source": "https://github.com/pypa/packaging"
+   },
+   "released": "2026-08-04"
+  }
+ ],
+ "upgraded": [
+  {
+   "name": "six",
+   "from": "1.15.0",
+   "to": "1.17.0",
+   "docs": {
+    "Homepage": "https://github.com/benjaminp/six"
+   },
+   "backup": ".neuron/upgrades/20261118-130757"
+  }
+ ],
+ "kept_back": [
+  {
+   "name": "packaging",
+   "from": "21.3",
+   "to": "26.3",
+   "why": "tests fail: om packaging.version import LegacyVersion, Version\nImportError: cannot import name 'LegacyVersion' from 'packaging.version' (/usr/local/lib/python3.13/site-packages/packaging/version.py)\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n"
+  }
+ ],
+ "baseline": {
+  "passed": true,
+  "detail": "/workspace/.venv/lib/python3.13/site-packages/packaging/version.py:111: DeprecationWarning: Creating a LegacyVersion has been deprecated and will be removed in the next major release\n  warnings.warn(\n.\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n"
+ },
+ "errors": [],
+ "summary": "1 package(s) upgraded after the tests passed, 1 kept at their current version",
+ "seconds": 17.5,
+ "requirements_after": "six==1.17.0\npackaging==21.3\n",
+ "expected": "six upgraded; packaging kept back (22+ removed LegacyVersion)",
+ "as_expected": true
+}
