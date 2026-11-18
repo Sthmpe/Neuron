@@ -74,9 +74,458 @@
    "bench": "mmlu_pro",
    "seconds": 96.8,
    "peak_mb": 3971
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-4383",
+   "bench": "mmlu_pro",
+   "seconds": 126.3,
+   "peak_mb": 3971
+  },
+  {
+   "correct": true,
+   "given": "E",
+   "first_given": "E",
+   "calls": 2,
+   "tokens": 378,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-10706",
+   "bench": "mmlu_pro",
+   "seconds": 63.5,
+   "peak_mb": 3971
+  },
+  {
+   "correct": true,
+   "given": "A",
+   "first_given": "A",
+   "calls": 2,
+   "tokens": 325,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-10366",
+   "bench": "mmlu_pro",
+   "seconds": 51.7,
+   "peak_mb": 3971
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-7346",
+   "bench": "mmlu_pro",
+   "seconds": 130.1,
+   "peak_mb": 3971
+  },
+  {
+   "correct": true,
+   "given": "A",
+   "first_given": "A",
+   "calls": 2,
+   "tokens": 533,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-7036",
+   "bench": "mmlu_pro",
+   "seconds": 88.1,
+   "peak_mb": 3971
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-11688",
+   "bench": "mmlu_pro",
+   "seconds": 127.2,
+   "peak_mb": 3971
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-12214",
+   "bench": "mmlu_pro",
+   "seconds": 123.1,
+   "peak_mb": 3971
+  },
+  {
+   "correct": true,
+   "given": "B",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 576,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-6516",
+   "bench": "mmlu_pro",
+   "seconds": 91.1,
+   "peak_mb": 3971
+  },
+  {
+   "correct": true,
+   "given": "B",
+   "first_given": "B",
+   "calls": 2,
+   "tokens": 417,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-6638",
+   "bench": "mmlu_pro",
+   "seconds": 64.7,
+   "peak_mb": 3971
+  },
+  {
+   "correct": true,
+   "given": "H",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 518,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-4698",
+   "bench": "mmlu_pro",
+   "seconds": 83.5,
+   "peak_mb": 3971
+  },
+  {
+   "correct": false,
+   "given": "B",
+   "first_given": "B",
+   "calls": 2,
+   "tokens": 418,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-4779",
+   "bench": "mmlu_pro",
+   "seconds": 65.8,
+   "peak_mb": 3971
+  },
+  {
+   "correct": true,
+   "given": "D",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 570,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-1487",
+   "bench": "mmlu_pro",
+   "seconds": 89.2,
+   "peak_mb": 3971
+  },
+  {
+   "correct": true,
+   "given": "H",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 489,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-1491",
+   "bench": "mmlu_pro",
+   "seconds": 84.3,
+   "peak_mb": 3971
+  },
+  {
+   "correct": true,
+   "given": "A",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 562,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-8783",
+   "bench": "mmlu_pro",
+   "seconds": 93.0,
+   "peak_mb": 3971
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-8841",
+   "bench": "mmlu_pro",
+   "seconds": 122.2,
+   "peak_mb": 3971
+  },
+  {
+   "correct": false,
+   "given": "D",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 765,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-5669",
+   "bench": "mmlu_pro",
+   "seconds": 121.4,
+   "peak_mb": 3971
+  },
+  {
+   "correct": true,
+   "given": "B",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 649,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-5919",
+   "bench": "mmlu_pro",
+   "seconds": 102.4,
+   "peak_mb": 3971
+  },
+  {
+   "correct": false,
+   "given": "B",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 495,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-10964",
+   "bench": "mmlu_pro",
+   "seconds": 78.7,
+   "peak_mb": 3971
+  },
+  {
+   "correct": false,
+   "given": "E",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 726,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-10981",
+   "bench": "mmlu_pro",
+   "seconds": 116.2,
+   "peak_mb": 3971
+  },
+  {
+   "correct": true,
+   "given": "A",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 709,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-9610",
+   "bench": "mmlu_pro",
+   "seconds": 111.3,
+   "peak_mb": 3971
+  },
+  {
+   "correct": true,
+   "given": "H",
+   "first_given": "H",
+   "calls": 2,
+   "tokens": 397,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-9320",
+   "bench": "mmlu_pro",
+   "seconds": 60.5,
+   "peak_mb": 3971
+  },
+  {
+   "correct": true,
+   "given": "I",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 541,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-2182",
+   "bench": "mmlu_pro",
+   "seconds": 89.2,
+   "peak_mb": 3971
+  },
+  {
+   "correct": true,
+   "given": "G",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 473,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-2273",
+   "bench": "mmlu_pro",
+   "seconds": 74.0,
+   "peak_mb": 3971
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "gpqa-0",
+   "bench": "gpqa",
+   "seconds": 121.5,
+   "peak_mb": 3973
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "gpqa-4",
+   "bench": "gpqa",
+   "seconds": 129.8,
+   "peak_mb": 3973
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "gpqa-11",
+   "bench": "gpqa",
+   "seconds": 126.1,
+   "peak_mb": 3973
+  },
+  {
+   "correct": true,
+   "given": "A",
+   "first_given": "A",
+   "calls": 2,
+   "tokens": 619,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "gpqa-19",
+   "bench": "gpqa",
+   "seconds": 98.7,
+   "peak_mb": 3973
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "gpqa-42",
+   "bench": "gpqa",
+   "seconds": 122.5,
+   "peak_mb": 3973
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "gpqa-52",
+   "bench": "gpqa",
+   "seconds": 119.0,
+   "peak_mb": 3973
   }
  ],
- "summary": {},
+ "summary": {
+  "mmlu_pro": {
+   "n": 28,
+   "correct": 18,
+   "score": 0.643,
+   "ci95": [
+    0.458,
+    0.793
+   ],
+   "seconds": 2636,
+   "tokens": 16422,
+   "calls": 56,
+   "peak_mb": 3971
+  }
+ },
  "tier": "4gb",
  "condition": "neuron",
  "model": "qwen3.5-4b-q4",
