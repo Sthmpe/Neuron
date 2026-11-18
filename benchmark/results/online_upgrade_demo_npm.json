@@ -1,0 +1,60 @@
+{
+ "checked": "2026-11-18 13:23",
+ "outdated": [
+  {
+   "manager": "npm",
+   "name": "ms",
+   "current": "2.0.0",
+   "latest": "2.1.3",
+   "docs": {
+    "Homepage": "https://github.com/vercel/ms#readme",
+    "Source": "git+https://github.com/vercel/ms.git"
+   },
+   "released": ""
+  },
+  {
+   "manager": "npm",
+   "name": "uuid",
+   "current": "3.4.0",
+   "latest": "14.0.3",
+   "docs": {
+    "Homepage": "https://github.com/uuidjs/uuid#readme",
+    "Source": "git+https://github.com/uuidjs/uuid.git"
+   },
+   "released": ""
+  }
+ ],
+ "upgraded": [
+  {
+   "name": "ms",
+   "from": "2.0.0",
+   "to": "2.1.3",
+   "docs": {
+    "Homepage": "https://github.com/vercel/ms#readme",
+    "Source": "git+https://github.com/vercel/ms.git"
+   },
+   "backup": ".neuron/upgrades/20261118-132400"
+  }
+ ],
+ "kept_back": [
+  {
+   "name": "uuid",
+   "from": "3.4.0",
+   "to": "14.0.3",
+   "why": "tests fail:  (node:internal/modules/cjs/loader:1045:22)\n    at Function._load (node:internal/modules/cjs/loader:1216:25)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)\n    at Module.require (node:internal/modules/cjs/loader:1527:12) {\n  code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'\n}\n\nNode.js v22.23.4\n"
+  }
+ ],
+ "baseline": {
+  "passed": true,
+  "detail": "ok\n"
+ },
+ "errors": [],
+ "summary": "1 package(s) upgraded after the tests passed, 1 kept at their current version",
+ "seconds": 13.0,
+ "package_json_after": {
+  "ms": "2.1.3",
+  "uuid": "3.4.0"
+ },
+ "expected": "ms upgraded; uuid kept back (newer versions removed require('uuid/v4'))",
+ "as_expected": true
+}

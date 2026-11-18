@@ -258,6 +258,9 @@ def upgrade(project, sandbox, test_cmd, fetch=fetch_json, effects=None, installe
             def swap():
                 b = backup(project, files)
                 write_pins(project, good)
+                if manager == "npm" and (project / "package-lock.json").exists():     # keep the lock file in step
+                    subprocess.run(["npm", "install", "--package-lock-only", "--ignore-scripts", "--no-audit", "--no-fund",
+                                    "--loglevel=error"], cwd=project, capture_output=True, timeout=600)
                 return {"backup": str(b.relative_to(project))}
 
             res = effects.once(key, f"swap in {len(good)} upgraded {manager} package(s)", swap, repeat_safe=True) if effects else swap()

@@ -30,7 +30,38 @@ def make_project():
     return p
 
 
+def make_npm_project():
+    """ms 2.0.0 -> newer keeps working; uuid 3.4.0 -> newest removed require('uuid/v4'), which the test uses."""
+    p = Path(tempfile.mkdtemp(prefix="upgrade-demo-npm-")) / "shop_ids"
+    p.mkdir(parents=True)
+    (p / "package.json").write_text(json.dumps({"name": "shop-ids", "version": "1.0.0", "private": True,
+                                                "scripts": {"test": "node test.js"},
+                                                "dependencies": {"ms": "2.0.0", "uuid": "3.4.0"}}, indent=2))
+    (p / "test.js").write_text("const assert = require('assert');\nconst ms = require('ms');\nconst v4 = require('uuid/v4');\n"
+                               "assert.strictEqual(ms('2h'), 7200000);\nassert.match(v4(), /^[0-9a-f-]{36}$/);\nconsole.log('ok');\n")
+    return p
+
+
+def run_npm():
+    p = make_npm_project()
+    t0 = time.time()
+    rep = packages.upgrade(p, Sandbox(timeout=300, mem_mb=1024, toolchains=True), detect_test_command(p),
+                           effects=Effects(p / ".neuron" / "e.jsonl"))
+    rep["seconds"] = round(time.time() - t0, 1)
+    rep["package_json_after"] = json.loads((p / "package.json").read_text())["dependencies"]
+    rep["expected"] = "ms upgraded; uuid kept back (newer versions removed require('uuid/v4'))"
+    rep["as_expected"] = [u["name"] for u in rep["upgraded"]] == ["ms"] and [k["name"] for k in rep["kept_back"]] == ["uuid"]
+    shutil.rmtree(p.parent, ignore_errors=True)
+    return rep
+
+
 def main():
+    import sys
+    if "--npm" in sys.argv:
+        rep = run_npm()
+        (ROOT / "benchmark" / "results" / "online_upgrade_demo_npm.json").write_text(json.dumps(rep, indent=1))
+        print(json.dumps({k: rep[k] for k in ("summary", "upgraded", "kept_back", "seconds", "as_expected")}, indent=1)[:3000])
+        return
     p = make_project()
     t0 = time.time()
     rep = packages.upgrade(p, Sandbox(timeout=300, mem_mb=1024), detect_test_command(p), effects=Effects(p / ".neuron" / "e.jsonl"))
