@@ -1,6 +1,6 @@
 {
  "locked_at": "2026-11-17 14:37:45",
- "whole": "20e5fa0a39cfadcc85314244f8d427d2e60f08d62d72efbf53cff70116927fe7",
+ "whole": "acd637db90683f5b7ed811375dc7ae632a542382e77245ec7985ab883a352d33",
  "files": {
   "../workspaces/shopkeeper/shopkeeper/__init__.py": "e58173c0fec50c156aed94d09add9fff65ff81e875e57fb09406525c8ab0a96c",
   "../workspaces/shopkeeper/shopkeeper/models/__init__.py": "b52ccd18dbf806ae66683f1e73cfd31b0810c45aa1b76940aebb1d6028f0237d",
@@ -26,7 +26,7 @@
   "../workspaces/shopkeeper/tests/test_orders.py": "47ba4663622f914f9394aea2d0701f01d5f4cc449d5b6d487662a247fb1afa89",
   "../workspaces/shopkeeper/tests/test_util.py": "1627861a639661e62c7c5bf401a42ff594f8623772c5354a27ec34df78d2e7a8",
   "examine.py": "e44e9f406bf5467b85835f30140bb8f801863db55598925c0a7f27894c8cacd5",
-  "examiners/code.py": "2c21b694f60d0021e339887a85cee1b340f8cdea6b6bda41c97351e59cfecb1f",
+  "examiners/code.py": "e229ceb01e08fce1c43835596ebec662e3f87623ba826b67c4d3e70ac9f75417",
   "examiners/docs.py": "162dda1b01d0d1296543dd2f3b152794348834539471555fdc133b1d2ce301b9",
   "examiners/shop_app.js": "b3be5819e322903b379a50037ac2cb9488d94b387dc8340ade95509050ca5fef",
   "locked/tasks.json": "578db678c1b5462af9b96d4c221a58a69435452c340552edeba753db63f6b54d",
@@ -108,6 +108,14 @@
    "before": "58c9d515c4f189686786acdc21ad8489b1095e0f725f82e21c6e3c8e2b063f2b",
    "after": "20e5fa0a39cfadcc85314244f8d427d2e60f08d62d72efbf53cff70116927fe7",
    "why": "Excel checkers took ANY row with a cell starting 'Total' as the totals row, so a column header named 'Total' fooled them (false failure). Now the totals row is the row whose first cell starts with 'Total'. Found by a dev-set test; no locked task had been run."
+  },
+  {
+   "n": 2,
+   "date": "2026-11-18",
+   "file": "examiners/code.py",
+   "why": "the docstring examiner marked short docstrings that were already in the original project; the task says to document functions that do not already have one",
+   "old_whole": "20e5fa0a39cfadcc85314244f8d427d2e60f08d62d72efbf53cff70116927fe7",
+   "new_whole": "acd637db90683f5b7ed811375dc7ae632a542382e77245ec7985ab883a352d33"
   }
  ]
 }

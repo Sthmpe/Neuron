@@ -15,3 +15,8 @@ Fingerprint of every task, input, checker and workspace file: `58c9d515c4f189686
 1. 2026-11-17: `examiners/docs.py` totals-row detection fixed (a column header named "Total" was
    mistaken for the totals row, which would have failed correct workbooks). Found by a dev-set test before any
    locked task was run. New fingerprint `20e5fa0a39cfadcc85314244f8d427d2e60f08d62d72efbf53cff70116927fe7` (old `58c9d515c4f189686786acdc21ad8489b1095e0f725f82e21c6e3c8e2b063f2b`).
+2. 2026-11-18: `examiners/code.py` docstring check fixed: it marked short docstrings that were already in the
+   original project (`format_naira`), although the task asks only for functions that do not already have one.
+   Found AFTER locked runs (4 GB L12 official run and two labelled reruns). No agent was rerun for this: the files
+   already delivered were examined again with the fixed checker, and both scores are kept in the results.
+   New fingerprint `acd637db90683f5b7ed811375dc7ae632a542382e77245ec7985ab883a352d33` (old `20e5fa0a39cfadcc85314244f8d427d2e60f08d62d72efbf53cff70116927fe7`).

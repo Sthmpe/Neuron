@@ -116,6 +116,8 @@ def docstrings(project, original):
         if not new.exists():
             changed.append(f"{rel} (missing)")
             continue
+        had_doc = {f"{rel}:{n.name}" for n in ast.walk(ast.parse(src.read_text()))
+                   if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and ast.get_docstring(n)}   # left alone, as asked
         try:
             t_new = ast.parse(new.read_text())
         except SyntaxError as e:
@@ -128,8 +130,8 @@ def docstrings(project, original):
                 doc = ast.get_docstring(node)
                 if not doc:
                     missing.append(f"{rel}:{node.name}")
-                elif len(doc.split()) < 5:
-                    short.append(f"{rel}:{node.name}")
+                elif len(doc.split()) < 5 and f"{rel}:{node.name}" not in had_doc:
+                    short.append(f"{rel}:{node.name}")          # only docstrings NEURON added (amendment 2)
     total = sum(1 for src in original.rglob("*.py") if not is_test(src.relative_to(original))
                 for n in ast.walk(ast.parse(src.read_text())) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)))
     checks.append({"id": "every_function_documented", "pass": not missing, "detail": f"{total - len(missing)} of {total}; missing {missing[:6]}"})

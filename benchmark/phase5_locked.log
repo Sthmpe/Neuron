@@ -15,3 +15,6 @@ PHASE5-DONE locked-4gb
 locked-4gb-rerun-after-portfix L11_business_app: not solved | 5/17 checks | 649.2s | peak 3933 MB | calls 10 | agent says FAILED
 locked-4gb-rerun-after-portfix L12_long_docstrings: not solved | 3/4 checks | 188.1s | peak 3749 MB | calls 31 | agent says VERIFIED
 PHASE5-DONE locked-4gb-rerun-after-portfix
+locked-4gb-rerun2-after-fixes L11_business_app: not solved | 13/17 checks | 289.1s | peak 4055 MB | calls 2 | agent says VERIFIED
+locked-4gb-rerun2-after-fixes L12_long_docstrings: not solved | 3/4 checks | 181.1s | peak 3748 MB | calls 31 | agent says VERIFIED
+PHASE5-DONE locked-4gb-rerun2-after-fixes

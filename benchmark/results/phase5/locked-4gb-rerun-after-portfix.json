@@ -94,7 +94,13 @@
     "model": 1
    },
    "agent_verdict": "VERIFIED",
-   "false_claim": true
+   "false_claim": true,
+   "after_amendment_2": {
+    "solved": true,
+    "checks_passed": 4,
+    "checks_total": 4,
+    "failed_checks": []
+   }
   }
  ],
  "set": "locked",

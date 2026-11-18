@@ -412,7 +412,15 @@
    },
    "made_by": null,
    "agent_verdict": "no report (crashed or killed)",
-   "false_claim": false
+   "false_claim": false,
+   "after_amendment_2": {
+    "solved": false,
+    "checks_passed": 3,
+    "checks_total": 4,
+    "failed_checks": [
+     "every_function_documented: 35 of 50; missing ['shopkeeper/services/reports.py:customers_by_tier', 'shopkeeper/storage/repository.py:__init__', 'shopkeeper/storage/repository.py:add_produc"
+    ]
+   }
   }
  ],
  "set": "locked",
