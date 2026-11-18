@@ -76,6 +76,10 @@ Then, in order: full suite, merge, fast-forward main; design proof (20 requests)
 
 ## Events
 
+- 2026-11-18 morning: labelled rerun of the held-out builds with the current system found a regression (invented
+  rules rejected 2 GB plans, 0/19); fixed (invalid rules and links are dropped and recorded); rerun: 9 of 9 builds
+  pass on all tiers, all pages model-written, 0 design failures.
+
 - 2026-11-18: held-out scoring finished (three machine restarts; interrupted tasks rerun from clean copies). Builder
   integration merged (links and rules, template fallback, code-written schema, design system on). Phase-5 dev runs
   found and fixed: example args with the program name, wrong hand-written examples (settled by an independent

@@ -126,6 +126,11 @@ Details: [`benchmark/results/heldout_summary.md`](benchmark/results/heldout_summ
 The loop matters most for the weak model and for app builds (every tier built all three apps with it), and it was
 faster at every tier. The 4 GB model is the best value on this machine.
 
+Labelled rerun of the 3 builds with the system as it runs now (design system on, template fallback, links and rules):
+first it exposed a regression (the 2 GB model invented rules and its plans were rejected: 0/19 on both shop apps);
+after the fix, **9 of 9 builds pass on all tiers**, every page written by the model (no template needed), 0 design
+check failures. (`benchmark/heldout_current.log`)
+
 ### Design system proof (20 requests, 2 GB model)
 
 19 of 20 sites built; 20 different palettes, 5 hero layouts, any two designs share at most 4 of 8 main choices,

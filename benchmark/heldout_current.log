@@ -3,3 +3,16 @@
 2gb-full-rerun-current b3_shop_app_resumed: not solved | 0/19 checks | 181.1s | peak 1448 MB
 2gb-full-rerun-current: solved 1/3; mean score 0.33
 -- stopped after 2 GB: a regression found (invented rules rejected the plan); fixed; all tiers rerun under tag rerun-current2 from 08:32 --
+2gb-full-rerun-current2 b1_bakery_landing: SOLVED | 13/13 checks | 100.8s | peak 1659 MB
+2gb-full-rerun-current2 b2_shop_app: SOLVED | 19/19 checks | 104.7s | peak 1684 MB
+2gb-full-rerun-current2 b3_shop_app_resumed: SOLVED | 19/19 checks | 117.0s | peak 1664 MB
+2gb-full-rerun-current2: solved 3/3; mean score 1.00
+4gb-full-rerun-current2 b1_bakery_landing: SOLVED | 13/13 checks | 232.9s | peak 4030 MB
+4gb-full-rerun-current2 b2_shop_app: SOLVED | 19/19 checks | 281.0s | peak 4077 MB
+4gb-full-rerun-current2 b3_shop_app_resumed: SOLVED | 19/19 checks | 279.0s | peak 4065 MB
+4gb-full-rerun-current2: solved 3/3; mean score 1.00
+8gb-full-rerun-current2 b1_bakery_landing: SOLVED | 13/13 checks | 202.8s | peak 5882 MB
+8gb-full-rerun-current2 b2_shop_app: SOLVED | 19/19 checks | 310.4s | peak 5921 MB
+8gb-full-rerun-current2 b3_shop_app_resumed: SOLVED | 19/19 checks | 288.9s | peak 5835 MB
+8gb-full-rerun-current2: solved 3/3; mean score 1.00
+BUILDS-CURRENT2-DONE
