@@ -7,3 +7,4 @@ demo/run_data/
 *.db-shm
 benchmark/run/
 /models/
+benchmark/design/run/
