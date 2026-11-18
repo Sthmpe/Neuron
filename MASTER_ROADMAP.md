@@ -92,7 +92,7 @@ Status words: **done** (built and measured), **built** (built, tested with scrip
 | Computed totals and sums in apps | **built, not yet measured with a real model** | Computed fields (formula over own and linked number fields) and dashboard sums, worked out in the database query; template builds pass their checks. Locked shop app had failed only on totals, revenue sum and own tests (13/17). Next: measure on a dev app with the real 2/4/8 GB models |
 | New programs (C++, Go, Python, ...) | **built** | locked C++ program: only 8 GB built it (7/7) |
 | Bug fixing: Python | **done** | held-out 4 GB 20/20 bugs, workspaces 6/10 |
-| Bug fixing: C++ / Go | **weak** | locked: C++ 1-2 of 3, Go 0 of 2 at every tier. Step 5 improves on dev tasks |
+| Bug fixing: C++ / Go | **improved, not yet measured with real models** | locked phase 5: C++ 1-2 of 3, Go 0 of 2 at every tier (the model found the right function but wrote wrong fixes). Built: one-token changes tried before the model (`neuron/agent/repair_search.py`), failing test lines shown to the model, two candidate edits per try, Go tab indentation handled. Dev set `benchmark/repair_dev` (6 projects, not locked): the search alone fixes all 4 one-token bugs in 1 to 14 s with no model. Next: `benchmark.repair_dev.run` on 2/4/8 GB with the search on and off |
 | Mobile, desktop, games, Flutter | **later** | not built; reported as missing |
 
 ## W9. Documents and data
@@ -116,8 +116,8 @@ Status words: **done** (built and measured), **built** (built, tested with scrip
 
 | | |
 |---|---|
-| Status | Design system **done** (20-request proof run 1: 19/20 built); content quality **planned, step 7** |
-| Evidence | `benchmark/design/results.md`; fixes after run 1 (hero repetition, gaps, keyword names, schema by code) |
+| Status | Design system **done** (20-request proof run 1: 19/20 built); content quality **built** (2026-11-18); reference sites **being built** |
+| Evidence | `benchmark/design/results.md`; fixes after run 1 (hero repetition, gaps, keyword names, schema by code). Content rules (`neuron/design/content.py`): leftover template text, filler, repetition, duplicated sections, invented testimonials/statistics/credentials/hours/contact details, owner facts missing from the page, empty cards. The site planner is told and must fix them; invented facts that survive are removed and recorded; anything else is reported and the job says PARTIAL. Sites get pictures (owner photos first, labelled placeholders offline, licensed photos online). First real build (law firm, 8 GB) found three problems, all fixed: facts left out, empty cards, a section repeated beside the form. 9 tests in `tests/test_content.py` |
 | Acceptance | 3 reference sites (law firm, bakery, salon) at paying-client standard with phone, tablet and desktop screenshots; no invented testimonials, statistics, credentials, hours or contacts; then **stop for the owner's approval** before documents, slides and the 20-request rerun |
 
 ## W12. Security and isolation
