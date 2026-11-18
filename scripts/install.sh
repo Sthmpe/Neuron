@@ -5,6 +5,8 @@
 #   bash scripts/install.sh --plan     show the memory tier and model it would pick, change nothing
 # Options after these are passed to the Python installer (for example --tier 4gb).
 # Needs the internet once (system packages, Python libraries, llama.cpp source, the model).
+# llama.cpp is built without its web UI and never downloads UI files (NEURON has its own phone page; the UI
+# download comes from a bucket that changes over time and broke a clean build on 2026-11-18).
 # After that NEURON works offline.
 set -euo pipefail
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
@@ -49,7 +51,7 @@ else
     "$NEURON_HOME/venv/bin/pip" download -q --no-deps --no-binary :all: llama-cpp-python==0.3.36 -d "$LLAMA/sdist"
     tar xzf "$LLAMA/sdist/llama_cpp_python-0.3.36.tar.gz" -C "$LLAMA/sdist"
     cmake -S "$LLAMA/sdist/llama_cpp_python-0.3.36/vendor/llama.cpp" -B "$LLAMA/build" -DCMAKE_BUILD_TYPE=Release \
-      -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_EXAMPLES=OFF -DLLAMA_BUILD_SERVER=ON -DLLAMA_BUILD_UI=OFF \
+      -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_EXAMPLES=OFF -DLLAMA_BUILD_SERVER=ON -DLLAMA_BUILD_UI=OFF -DLLAMA_USE_PREBUILT_UI=OFF \
       -DLLAMA_OPENSSL=OFF -DGGML_NATIVE=ON -DBUILD_SHARED_LIBS=OFF > "$LLAMA/cmake.log"
     cmake --build "$LLAMA/build" --target llama-server -j"$(nproc)" > "$LLAMA/build.log"
   fi

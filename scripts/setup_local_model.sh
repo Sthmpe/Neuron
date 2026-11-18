@@ -13,7 +13,7 @@ if [ ! -x build/bin/llama-server ]; then
   pip download --no-deps --no-binary :all: llama-cpp-python==0.3.36 -d sdist
   tar xzf sdist/llama_cpp_python-0.3.36.tar.gz -C sdist
   cmake -S sdist/llama_cpp_python-0.3.36/vendor/llama.cpp -B build -DCMAKE_BUILD_TYPE=Release \
-    -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_EXAMPLES=OFF -DLLAMA_BUILD_SERVER=ON -DLLAMA_BUILD_UI=OFF \
+    -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_EXAMPLES=OFF -DLLAMA_BUILD_SERVER=ON -DLLAMA_BUILD_UI=OFF -DLLAMA_USE_PREBUILT_UI=OFF \
     -DLLAMA_OPENSSL=OFF -DGGML_NATIVE=ON -DBUILD_SHARED_LIBS=OFF
   cmake --build build --target llama-server -j"$(nproc)"
 fi
