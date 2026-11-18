@@ -93,12 +93,15 @@ class FixBug(Capability):
         srcs = [f for f in files(ws) if Path(f).suffix in C_LIKE and not re.search(r"(^|/)tests?/|_test\.|test_", f)]
         tests = [f for f in files(ws) if Path(f).suffix in C_LIKE and f not in srcs]
         idents = set(re.findall(r"[A-Za-z_]\w{2,}", output))
+        failing_lines = []
         for t in tests:                                     # names on the failing test lines
             text = (ws / t).read_text(errors="replace").splitlines()
             for ln in re.findall(rf"{re.escape(Path(t).name)}:(\d+)|line (\d+)", output):
                 n = int(ln[0] or ln[1])
                 if 0 < n <= len(text):
                     idents |= set(re.findall(r"[A-Za-z_]\w{2,}", text[n - 1]))
+                    failing_lines.append(f"{t}:{n}: {text[n - 1].strip()}")
+        failing_lines = list(dict.fromkeys(failing_lines))[:8]
         cands = []
         for f in srcs:
             text = (ws / f).read_text(errors="replace")
@@ -108,6 +111,20 @@ class FixBug(Capability):
                 score = (5 if short in idents else 0) + sum(1 for i in idents if re.search(rf"\b{re.escape(i)}\b", body)) * 0.2
                 cands.append((score, f, name, a, b, body))
         cands.sort(key=lambda c: -c[0])
+        import os
+        if not params.get("strategy") and cands and cands[0][0] > 0 and os.environ.get("NEURON_REPAIR_SEARCH", "1") != "0":
+            # first, small one-token changes to the functions the failing tests point at (no model needed)
+            from ..repair_search import search
+            win = search(ws, [(c[1], c[2], c[3], c[4]) for c in cands[:3] if c[0] > 0], cmd, job.sandbox,
+                         lambda r: r.ok and not r.timed_out, log=job.log)
+            if win:
+                lang = {".go": "go", ".rs": "rust", ".java": "java", ".js": "javascript", ".ts": "typescript"}.get(Path(win["file"]).suffix, "c++")
+                problem = f"line {win['line']} had {win['change'].split(' -> ')[0]} where {win['change'].split(' -> ')[1]} was needed"
+                job.state.decide("fix", "small change", f"{win['file']}:{win['line']} {win['old']} -> {win['new']} ({win['tries']} tries)")
+                return Outcome(True, f"fixed {win['file']}::{win['function']} with a one-token change ({win['change']}), found by "
+                                     f"trying small changes ({win['tries']} tries); the project's tests pass",
+                               {**win, **fix_note(job, lang, win["function"], problem, f"changed '{win['old']}' to '{win['new']}'", win["file"])},
+                               [win["file"]], made_by="search")
         wide = params.get("strategy") == "look at more functions"
         top = cands[: 8 if wide else 5]
         if not top:
@@ -116,7 +133,9 @@ class FixBug(Capability):
         ctx = "\n\n".join(f"// {c[1]} lines {c[3]}-{c[4]}\n{clip(c[5], 1500)}" for c in top)
         tried = params.get("feedback", "")
         diag = job.ask_json("reviewer", "You find the one bug that makes the tests fail. The tests are correct.",
-                            f"Test output:\n{clip(output, 2500)}\n\nCandidate functions:\n{ctx}\n\n" + (f"Earlier attempt failed: {clip(tried, 800)}\n" if tried else "")
+                            f"Test output:\n{clip(output, 2500)}\n\n"
+                            + (("The failing test lines (what the correct code must produce):\n" + "\n".join(failing_lines) + "\n\n") if failing_lines else "")
+                            + f"Candidate functions:\n{ctx}\n\n" + (f"Earlier attempt failed: {clip(tried, 800)}\n" if tried else "")
                             + (f"{job.memory_context(kinds=('fix',))}\n" if hasattr(job, "memory_context") and job.memory_context(kinds=("fix",)) else "")
                             + "Which function has the bug, what is wrong, and what is the fix?",
                             {"type": "object", "required": ["function", "problem", "fix"],
@@ -134,18 +153,32 @@ class FixBug(Capability):
             new_fn = extract_code(reply)
             new = full.replace(body, new_fn.rstrip("\n")) if new_fn and body in full else None
         else:
-            reply = job.ask_text("builder", "You fix a bug by changing as few lines as possible. Reply with two code blocks: the exact old line(s), then the new line(s).",
-                                 f"Bug: {diag['problem']}\nFix: {diag['fix']}\n\nFunction:\n```\n{body}\n```\n\nOLD:\n```\n<line(s) copied exactly>\n```\nNEW:\n```\n<corrected line(s)>\n```",
-                                 max_tokens=500)
-            new = apply_edit(full, body, reply)
-        if not new or new == full:
-            return Outcome(False, f"the change to {name} could not be applied or changed nothing")
-        backup = full
-        (ws / f).write_text(new)
-        passed, res = run_project_tests(job)
-        if not passed:
+            new = None
+        edit_prompt = (f"Bug: {diag['problem']}\nFix: {diag['fix']}\n\nFunction:\n```\n{body}\n```\n\n"
+                       + (("The failing test lines:\n" + "\n".join(failing_lines) + "\n\n") if failing_lines else "")
+                       + "OLD:\n```\n<line(s) copied exactly>\n```\nNEW:\n```\n<corrected line(s)>\n```")
+        backup, res, tried_any = full, None, False
+        # up to two candidate changes per try (the second asked more freely); the tests decide, a failed one is undone
+        for temp in ((None,) if params.get("strategy") == "rewrite the whole suspect function" else (0.2, 0.7)):
+            if temp is not None:
+                reply = job.ask_text("builder", "You fix a bug by changing as few lines as possible. Reply with two code blocks: "
+                                     "the exact old line(s), then the new line(s).", edit_prompt, max_tokens=500, temperature=temp)
+                new = apply_edit(full, body, reply.replace("    ", "\t") if "\t" in body and "\t" not in reply else reply) \
+                    or apply_edit(full, body, reply)
+            if not new or new == full:
+                continue
+            tried_any = True
+            (ws / f).write_text(new)
+            passed, res = run_project_tests(job)
+            if passed:
+                break
             (ws / f).write_text(backup)                       # never leave a failed change behind
-            return Outcome(False, f"changed {f}::{name} but the tests still fail: {clip(res.output, 600)}")
+        else:
+            if not tried_any:
+                return Outcome(False, f"the change to {name} could not be applied or changed nothing")
+            return Outcome(False, f"changed {f}::{name} but the tests still fail: {clip(res.output if res else '', 600)}")
+        if not passed:
+            return Outcome(False, f"the change to {name} could not be applied or changed nothing")
         lang = {".go": "go", ".rs": "rust", ".java": "java", ".js": "javascript", ".ts": "typescript"}.get(Path(f).suffix, "c++")
         return Outcome(True, f"fixed {f}::{name}: {diag['problem']}",
                        {"file": f, "function": name, **fix_note(job, lang, name, diag["problem"], diag["fix"], f)}, [f], made_by="model")
