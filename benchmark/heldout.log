@@ -168,3 +168,15 @@
 8gb-base w01_vat_rounding: SOLVED | attempts 1 | 103.7s | peak 5603 MB
 8gb-base w02_order_rollback: SOLVED | attempts 1 | 145.6s | peak 5603 MB
 -- machine restarted again about 01:00 during 8gb-base workspace (after w02); resumed at 01:05; the interrupted task reruns from a clean copy --
+2gb-base: solved 5/23; mean score 0.24
+2gb-base: solved 0/10; mean score 0.00
+2gb-full: solved 10/23; mean score 0.43
+2gb-full: solved 3/10; mean score 0.30
+4gb-base: solved 20/23; mean score 0.88
+4gb-base: solved 3/10; mean score 0.30
+4gb-full: solved 23/23; mean score 1.00
+4gb-full: solved 6/10; mean score 0.60
+8gb-base: solved 21/23; mean score 0.95
+8gb-base w03_due_date_weekend: not solved | attempts 3 | 389.9s | peak 5624 MB
+8gb-base w04_cancelled_spelling: not solved | attempts 3 | 575.1s | peak 5632 MB
+8gb-base w05_search_case: not solved | attempts 3 | 777.8s | peak 5647 MB

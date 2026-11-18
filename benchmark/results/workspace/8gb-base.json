@@ -37,6 +37,69 @@
    "tests_untouched": true,
    "seconds": 145.6,
    "peak_mb": 5603
+  },
+  {
+   "task": "w03_due_date_weekend",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 411.1,
+    "tokens": 1840
+   },
+   "what_happened": [
+    "tests still failing",
+    "rejected: the proposed file is identical to the original (no change)",
+    "rejected: the proposed file is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 389.9,
+   "peak_mb": 5624
+  },
+  {
+   "task": "w04_cancelled_spelling",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 574.8,
+    "tokens": 2698
+   },
+   "what_happened": [
+    "tests still failing",
+    "rejected: the proposed file is identical to the original (no change)",
+    "rejected: the proposed file is identical to the original (no change)"
+   ],
+   "tests_untouched": true,
+   "seconds": 575.1,
+   "peak_mb": 5632
+  },
+  {
+   "task": "w05_search_case",
+   "type": "bug",
+   "solved": false,
+   "score": 0.0,
+   "claimed": false,
+   "attempts": 3,
+   "llm": {
+    "calls": 3,
+    "seconds": 777.7,
+    "tokens": 4579
+   },
+   "what_happened": [
+    "rejected: the reply names 'tests/helpers.py', which is not an editable source fi",
+    "rejected: the proposed code is not valid Python: unexpected indent (line 1)",
+    "rejected: the reply names 'tests/helpers.py', which is not an editable source fi"
+   ],
+   "tests_untouched": true,
+   "seconds": 777.8,
+   "peak_mb": 5647
   }
  ],
  "set": "workspace",
