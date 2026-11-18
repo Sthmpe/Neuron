@@ -131,3 +131,13 @@
 4gb-full b3_shop_app_resumed: SOLVED | 19/19 checks | 200.6s | peak 3900 MB
 4gb-full: solved 23/23; mean score 1.00
 4gb-full w01_vat_rounding: SOLVED | attempts 1 | 34.0s | peak 3797 MB
+4gb-full w02_order_rollback: SOLVED | attempts 3 | 311.5s | peak 3947 MB
+4gb-full w03_due_date_weekend: SOLVED | attempts 2 | 115.1s | peak 3863 MB
+4gb-full w04_cancelled_spelling: SOLVED | attempts 1 | 44.0s | peak 3866 MB
+4gb-full w05_search_case: SOLVED | attempts 1 | 37.0s | peak 3867 MB
+4gb-full w06_lunch_slots: not solved | attempts 3 | 260.6s | peak 3949 MB
+4gb-full w07_cancelled_blocks: not solved | attempts 3 | 247.1s | peak 3909 MB
+4gb-full w08_reminder_day: not solved | attempts 3 | 231.4s | peak 3911 MB
+4gb-full w09_insurance_share: not solved | attempts 3 | 410.7s | peak 3960 MB
+4gb-full w10_child_age: SOLVED | attempts 2 | 113.4s | peak 3962 MB
+4gb-full: solved 6/10; mean score 0.60
