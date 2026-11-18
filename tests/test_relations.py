@@ -88,10 +88,13 @@ class RelationsTests(unittest.TestCase):
         raw["entities"][1]["fields"].append({"name": "shelf", "type": "link", "to": "warehouse"})
         s, problems = spec_of(raw)
         self.assertEqual(s["rules"], [])
-        self.assertEqual(len(problems), 3, problems)
-        self.assertTrue(any("not a link field" in p for p in problems))
-        self.assertTrue(any("not a number field" in p for p in problems))
-        self.assertTrue(any("unknown entity 'warehouse'" in p for p in problems))
+        self.assertEqual(problems, [])                       # invalid rules and links never block the plan any more
+        self.assertEqual(len(s["dropped"]), 3, s["dropped"])
+        self.assertTrue(any("not a link field" in p for p in s["dropped"]))
+        self.assertTrue(any("not a number field" in p for p in s["dropped"]))
+        self.assertTrue(any("unknown entity 'warehouse'" in p for p in s["dropped"]))
+        self.assertEqual(relations.dropped_gaps("A shop app with products and customers.", s), [])        # invented rule
+        self.assertEqual(len(relations.dropped_gaps("An order must reduce the stock of its product.", s)), 1)  # asked for
 
     def test_template_app_passes_its_rule_and_page_checks(self):
         s, _ = spec_of(RAW)

@@ -227,7 +227,7 @@ def build_full(project, request, runner, sandbox, log=print, max_seconds=None, d
         if spec is None:
             return {"ok": False, "stage": "plan", "error": "; ".join(problems), "llm": vars(meter), "resumed": False}
         tasks, acceptance, purposes = expand(spec)
-        spec["not_built"] = unsupported_features(request)
+        spec["not_built"] = unsupported_features(request) + relations.dropped_gaps(request, spec)
         if spec["not_built"]:
             log(f"cannot build yet (will be reported): {spec['not_built']}")
         prepare_project(project, spec["app_name"], design)
@@ -236,6 +236,8 @@ def build_full(project, request, runner, sandbox, log=print, max_seconds=None, d
             from . import design_step
             look = design_step.choose_and_save(project, request, spec, state)
             log(f"design: {look['mood']} / {look['palette']['name']} / hero {look['variants']['hero']}")
+        for d in spec.get("dropped", []):
+            state.decide("plan", "dropped", d)
         state.decide("plan", "spec", f"planned a {spec['kind']} called {spec['app_name']} with tasks: "
                      + ", ".join(t["id"] for t in tasks))
         log(f"planned {len(tasks)} tasks: {[t['id'] for t in tasks]}")

@@ -53,7 +53,7 @@ def apply(raw, s, problems):
             if f is None:
                 continue
             if to not in ents or to == e["name"]:
-                problems.append(f"'{e['name']}.{f['name']}' links to unknown entity '{rf.get('to')}'")
+                s.setdefault("dropped", []).append(f"'{e['name']}.{f['name']}' links to unknown entity '{rf.get('to')}'; kept as text")
                 continue
             f.update(type="link", to=to)
     s["rules"] = []
@@ -64,26 +64,40 @@ def apply(raw, s, problems):
         lf, tf, af = (safe_name(slug(r.get(k) or ""), "value") for k in ("link_field", "target_field", "amount_field"))
         where = f"rule on adding '{r.get('on_add')}'"
         if on not in ents:
-            problems.append(f"{where}: unknown entity")
+            s.setdefault("dropped", []).append(f"{where}: unknown entity")
             continue
         link = next((f for f in ents[on]["fields"] if f["name"] == lf and f["type"] == "link"), None)
         if not link:
-            problems.append(f"{where}: '{r.get('link_field')}' is not a link field of {on}")
+            s.setdefault("dropped", []).append(f"{where}: '{r.get('link_field')}' is not a link field of {on}")
             continue
         target = ents[link["to"]]
         if not any(f["name"] == tf and f["type"] == "number" for f in target["fields"]):
-            problems.append(f"{where}: '{r.get('target_field')}' is not a number field of {target['name']}")
+            s.setdefault("dropped", []).append(f"{where}: '{r.get('target_field')}' is not a number field of {target['name']}")
             continue
         if not any(f["name"] == af and f["type"] == "number" for f in ents[on]["fields"]):
-            problems.append(f"{where}: '{r.get('amount_field')}' is not a number field of {on}")
+            s.setdefault("dropped", []).append(f"{where}: '{r.get('amount_field')}' is not a number field of {on}")
             continue
         if any(x["on_add"] == on for x in s["rules"]):
-            problems.append(f"{where}: only one rule per kind of record")
+            s.setdefault("dropped", []).append(f"{where}: only one rule per kind of record")
             continue
         s["rules"].append({"on_add": on, "link_field": lf, "target": target["name"], "target_key": target["search_field"],
                            "target_field": tf, "amount_field": af, "change": r.get("change") if r.get("change") in ("subtract", "add") else "subtract",
                            "block_if_negative": bool(r.get("block_if_negative"))})
     return s
+
+
+CHANGE_WORDS = r"\b(go(es)? down|go(es)? up|reduc\w*|decreas\w*|lower\w*|increas\w*|subtract\w*|deduct\w*|take\w* (off|away|from)|add\w* to the|balance|in stock|left in|remaining)\b"
+
+
+def dropped_gaps(request, spec):
+    """Invalid links or rules are dropped instead of rejecting the whole plan (small models invent rules nobody asked
+    for: the 2 GB rerun of the held-out shop builds failed at planning this way). If the request does ask for a number
+    to change, a dropped rule is reported as not built."""
+    import re
+    dropped = [d for d in spec.get("dropped", []) if d.startswith("rule")]
+    if dropped and re.search(CHANGE_WORDS, request or "", re.I) and not spec.get("rules"):
+        return ["a rule that changes one record when another is added (it could not be set up from the plan)"]
+    return []
 
 
 def rule_for(spec, entity_name):

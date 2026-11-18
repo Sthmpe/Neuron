@@ -1,0 +1,401 @@
+{
+ "rows": [
+  {
+   "task": "b1_bakery_landing",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 96.5,
+   "builder": {
+    "ok": true,
+    "stage": "done",
+    "error": "",
+    "design": {
+     "fails": 0,
+     "warnings": 0,
+     "by_rule": {},
+     "colour_share": {
+      "share": {
+       "action": 0.8,
+       "strong": 18,
+       "bg": 77.2,
+       "surface": 0,
+       "tone2": 2.6
+      },
+      "calm": 47.8
+     }
+    },
+    "tasks": {
+     "schema": {
+      "status": "done",
+      "attempts": 1,
+      "made_by": "code"
+     },
+     "home": {
+      "status": "done",
+      "attempts": 1,
+      "made_by": "model"
+     }
+    },
+    "made_by": {
+     "model": 1,
+     "template": 0,
+     "code": 1
+    },
+    "not_built": [],
+    "llm": {
+     "calls": 3,
+     "seconds": 53.81548237800598,
+     "tokens": 503
+    },
+    "model_loads": 1,
+    "seconds": 95.8
+   },
+   "peak_mb_build": 1642,
+   "examiner": [
+    {
+     "id": "page_opens",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "id": "headline_has_the_name",
+     "pass": true,
+     "detail": "headlines: Sunrise Bakery | What we sell | Monday to Saturday, 7am to 7pm. | Subscribe to our newsletter"
+    },
+    {
+     "id": "shows_fresh_bread",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_birthday_cakes_",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_meat_pies_",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_7_s_am",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "shows_monday",
+     "pass": true,
+     "detail": "not found on the page"
+    },
+    {
+     "id": "looks_right_on_a_phone",
+     "pass": true,
+     "detail": "no viewport setting"
+    },
+    {
+     "id": "form_can_be_sent_and_thanks_shown",
+     "pass": true,
+     "detail": "no thank-you message after sending"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "page_opens_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "id": "what_was_sent_is_kept_on_disk",
+     "pass": true,
+     "detail": "not found on disk: "
+    }
+   ],
+   "passed": 13,
+   "total": 13,
+   "score": 1.0,
+   "solved": true,
+   "screenshots": [
+    "home-desktop.png",
+    "home-phone.png",
+    "after-form-desktop.png"
+   ],
+   "examine_seconds": 4.4,
+   "peak_mb_examine": 169,
+   "seconds": 100.9,
+   "peak_mb": 1642
+  },
+  {
+   "task": "b2_shop_app",
+   "type": "build",
+   "sessions": 1,
+   "build_seconds": 95.5,
+   "builder": {
+    "ok": false,
+    "stage": "plan",
+    "error": "rule on adding 'customers': 'name' is not a link field of customers; rule on adding 'products': 'name' is not a link field of products",
+    "llm": {
+     "calls": 3,
+     "seconds": 92.40189290046692,
+     "tokens": 1005
+    },
+    "resumed": false
+   },
+   "peak_mb_build": 1448,
+   "examiner": [
+    {
+     "id": "app_opens",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "login_is_required",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "wrong_password_is_rejected",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "login_works",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "dashboard_shows_the_requested_numbers",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "customers_page_opens",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "customers_can_be_added",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "customers_search_works",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "products_page_opens",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "products_can_be_added",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "products_search_works",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "dashboard_counts_are_right",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "works_on_a_phone",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "login_still_works_after_restart",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "records_survive_a_restart",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "dashboard_right_after_restart",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "logout_works",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    }
+   ],
+   "passed": 0,
+   "total": 19,
+   "score": 0.0,
+   "solved": false,
+   "screenshots": [],
+   "examine_seconds": 0.0,
+   "peak_mb_examine": 3,
+   "seconds": 95.5,
+   "peak_mb": 1448
+  },
+  {
+   "task": "b3_shop_app_resumed",
+   "type": "build",
+   "sessions": 2,
+   "killed": false,
+   "killed_after_seconds": 95.1,
+   "state_at_kill": {},
+   "build_seconds": 181.1,
+   "builder": {
+    "ok": false,
+    "stage": "plan",
+    "error": "rule on adding 'customers': 'name' is not a link field of customers; rule on adding 'products': 'name' is not a link field of products",
+    "llm": {
+     "calls": 3,
+     "seconds": 81.81137108802795,
+     "tokens": 1005
+    },
+    "resumed": false
+   },
+   "peak_mb_build": 1448,
+   "examiner": [
+    {
+     "id": "app_opens",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "login_is_required",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "wrong_password_is_rejected",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "login_works",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "dashboard_shows_the_requested_numbers",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "customers_page_opens",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "customers_can_be_added",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "customers_search_works",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "products_page_opens",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "products_can_be_added",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "products_search_works",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "dashboard_counts_are_right",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "works_on_a_phone",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "no_server_errors",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "login_still_works_after_restart",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "records_survive_a_restart",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "dashboard_right_after_restart",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "logout_works",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    },
+    {
+     "id": "no_server_errors_after_restart",
+     "pass": false,
+     "detail": "the app was not running, or the examiner could not get this far"
+    }
+   ],
+   "passed": 0,
+   "total": 19,
+   "score": 0.0,
+   "solved": false,
+   "screenshots": [],
+   "examine_seconds": 0.0,
+   "peak_mb_examine": 3,
+   "seconds": 181.1,
+   "peak_mb": 1448
+  }
+ ],
+ "set": "heldout",
+ "tier": "2gb",
+ "tier_limit_mb": 2048,
+ "condition": "full",
+ "models": {
+  "planner": "qwen2.5-coder-1.5b-q4",
+  "reviewer": "qwen2.5-coder-1.5b-q4",
+  "builder": "qwen2.5-coder-1.5b-q4"
+ },
+ "system": "current",
+ "network": "new empty network namespace (loopback only)",
+ "started": "2026-11-18 08:20:03",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

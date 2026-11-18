@@ -1,0 +1,5 @@
+2gb-full-rerun-current b1_bakery_landing: SOLVED | 13/13 checks | 100.9s | peak 1642 MB
+2gb-full-rerun-current b2_shop_app: not solved | 0/19 checks | 95.5s | peak 1448 MB
+2gb-full-rerun-current b3_shop_app_resumed: not solved | 0/19 checks | 181.1s | peak 1448 MB
+2gb-full-rerun-current: solved 1/3; mean score 0.33
+-- stopped after 2 GB: a regression found (invented rules rejected the plan); fixed; all tiers rerun under tag rerun-current2 from 08:32 --
