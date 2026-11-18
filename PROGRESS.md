@@ -9,7 +9,14 @@ session, or a new model, to continue. Update this file after every meaningful st
 - `dev`: all work in progress (created 2026-11-17). Frozen evaluations run from this working copy; new
   code goes into new files until those runs finish, so the evaluations measure a fixed system.
 
-## Master plan (owner, 2026-11-17), in dependency order
+## Owner's execution plan (2026-11-18), the current one
+
+Backlog with status, evidence and acceptance criteria: **`MASTER_ROADMAP.md`**. Order: (1) roadmap, (2) usable release
+(clean Linux retest, Windows via WSL2), (3) `SCORECARD.md`, (4) knowledge memory, (5) new locked tasks, zero false
+claims, totals, C++/Go, (6) offline to online, (7) creative quality with 3 reference sites, then stop that track for
+approval. Fixed: one frozen model per tier; external AI recorded as a later phase, nothing built for it.
+
+## Master plan (owner, 2026-11-17), in dependency order (finished)
 
 | Phase | What | Status |
 |---|---|---|
