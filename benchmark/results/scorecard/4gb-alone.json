@@ -230,9 +230,144 @@
    "bench": "mmlu_pro",
    "seconds": 138.9,
    "peak_mb": 3906
+  },
+  {
+   "correct": false,
+   "given": "I",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "mmlu_pro-5919",
+   "bench": "mmlu_pro",
+   "seconds": 76.0,
+   "peak_mb": 3906
+  },
+  {
+   "correct": false,
+   "given": "E",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "mmlu_pro-10964",
+   "bench": "mmlu_pro",
+   "seconds": 71.2,
+   "peak_mb": 3906
+  },
+  {
+   "correct": false,
+   "given": "E",
+   "calls": 1,
+   "tokens": 220,
+   "tools": {},
+   "id": "mmlu_pro-10981",
+   "bench": "mmlu_pro",
+   "seconds": 39.4,
+   "peak_mb": 3906
+  },
+  {
+   "correct": false,
+   "given": "F",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "mmlu_pro-9610",
+   "bench": "mmlu_pro",
+   "seconds": 70.6,
+   "peak_mb": 3906
+  },
+  {
+   "correct": true,
+   "given": "H",
+   "calls": 1,
+   "tokens": 269,
+   "tools": {},
+   "id": "mmlu_pro-9320",
+   "bench": "mmlu_pro",
+   "seconds": 49.7,
+   "peak_mb": 3906
+  },
+  {
+   "correct": false,
+   "given": "B",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "mmlu_pro-2182",
+   "bench": "mmlu_pro",
+   "seconds": 91.5,
+   "peak_mb": 3906
+  },
+  {
+   "correct": true,
+   "given": "G",
+   "calls": 1,
+   "tokens": 301,
+   "tools": {},
+   "id": "mmlu_pro-2273",
+   "bench": "mmlu_pro",
+   "seconds": 59.9,
+   "peak_mb": 3906
+  },
+  {
+   "correct": false,
+   "given": "A",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "gpqa-0",
+   "bench": "gpqa",
+   "seconds": 84.6,
+   "peak_mb": 3907
+  },
+  {
+   "correct": false,
+   "given": "",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "gpqa-4",
+   "bench": "gpqa",
+   "seconds": 86.2,
+   "peak_mb": 3914
+  },
+  {
+   "correct": false,
+   "given": "",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "gpqa-11",
+   "bench": "gpqa",
+   "seconds": 83.3,
+   "peak_mb": 3914
+  },
+  {
+   "correct": false,
+   "given": "",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "gpqa-19",
+   "bench": "gpqa",
+   "seconds": 199.0,
+   "peak_mb": 3890
   }
  ],
- "summary": {},
+ "summary": {
+  "mmlu_pro": {
+   "n": 28,
+   "correct": 10,
+   "score": 0.357,
+   "ci95": [
+    0.207,
+    0.542
+   ],
+   "seconds": 2700,
+   "tokens": 9349,
+   "calls": 28,
+   "peak_mb": 3911
+  }
+ },
  "tier": "4gb",
  "condition": "alone",
  "model": "qwen3.5-4b-q4",

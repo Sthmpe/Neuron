@@ -7,9 +7,9 @@ address on the pages comes from the request; no phone numbers were given, so non
 
 | Site | Build time | Model calls | Words checked on the finished page | Owner facts on the page | Sideways scrolling (phone, tablet, desktop) | Photos |
 |---|---|---|---|---|---|---|
-| Law firm (Okafor & Bello) | 501 s | 6 | no problems | all | 0, 0, 0 px | 1 of 3 licensed (hero), 2 placeholders |
-| Bakery (Iya Bisi's) | 342 s | 4 | no problems | all | 0, 0, 0 px | 3 placeholders |
-| Salon (Glow Hair Studio) | 327 s | 4 | no problems | all | 0, 0, 0 px | 3 placeholders |
+| Law firm (Okafor & Bello) | 501 s | 6 | no problems | all | 0, 0, 0 px | 1 of 3 licensed (hero: law library shelves), 2 placeholders |
+| Bakery (Iya Bisi's) | 342 s | 4 | no problems | all | 0, 0, 0 px | 1 of 3 licensed (hero: artisan loaves, CC0), 2 placeholders |
+| Salon (Glow Hair Studio) | 327 s | 4 | no problems | all | 0, 0, 0 px | **3 of 3 licensed**; the job is fully VERIFIED |
 
 Screenshots (phone 390 px, tablet 820 px, desktop 1440 px wide, full page):
 `docs/screens/reference/<law_firm|bakery|salon>-<phone|tablet|desktop>.png`
@@ -36,7 +36,7 @@ Screenshots (phone 390 px, tablet 820 px, desktop 1440 px wide, full page):
 ## Honest limits
 
 - **Photos.** Wikimedia Commons rate-limits this shared cloud machine's address as a whole ("too many requests"),
-  so only one licensed photo arrived. NEURON backs off and retries by itself (a polite retry runs every 15 minutes
+  so photos arrive slowly: 5 of 9 so far, found by NEURON's own retries (sources in each site's `IMAGE_CREDITS.md`). NEURON backs off and retries by itself (a polite retry runs every 15 minutes
   and retakes the screenshots when photos arrive); it never tries to get around the limit. Until then the pages show
   on-brand placeholders that say "Image needed". On a home connection this step is expected to work but is not yet
   verified. The owner's own photos always come first (attach them to the job).
