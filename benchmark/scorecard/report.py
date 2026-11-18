@@ -84,6 +84,22 @@ def main():
                        + f" | {secs / 60:.0f} min | {peak} MB | {toks:,} | {calls} | {tools(rows) if cond == 'neuron' else 'none'} |")
             status.append(f"{tier} {cond}: finished ({d.get('started', '')})")
     out += ["", "Run status: " + "; ".join(status) + ".", ""]
+    out += ["### Answers with no letter found (multiple choice)", "",
+            "Every multiple-choice answer may use at most 400 tokens (the same limit for every model and condition). An answer "
+            "cut off before it names a letter counts as wrong. These counts show how much of a low score is that limit "
+            "rather than the model's knowledge:", "",
+            "| Run | MMLU-Pro: no letter | GPQA Diamond: no letter |", "|---|---|---|"]
+    for tier, _ in TIERS:
+        for cond in ("alone", "neuron"):
+            d = load(tier, cond)
+            if not d or not d.get("summary"):
+                continue
+            rows = d.get("rows", [])
+            nol = {b: sum(1 for r in rows if r["bench"] == b and not r.get("given")) for b in ("mmlu_pro", "gpqa")}
+            tot = {b: sum(1 for r in rows if r["bench"] == b) for b in ("mmlu_pro", "gpqa")}
+            out.append(f"| {tier.upper()} {'full NEURON' if cond == 'neuron' else 'model alone'} | {nol['mmlu_pro']} of {tot['mmlu_pro']} "
+                       f"| {nol['gpqa']} of {tot['gpqa']} |")
+    out += ["", "A second pass with a larger answer limit, recorded as a separate protocol next to this one, is planned.", ""]
     out += ["## Comparison with published scores", "",
             "Not made. Published scores for these benchmarks use the full test sets, other prompts, other answer extraction "
             "and often GPUs with long thinking budgets; ours are small fixed samples with our own prompts on a CPU. Putting "

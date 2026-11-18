@@ -30,6 +30,18 @@ Real measured scores of NEURON's three frozen reasoning models on four public be
 
 Run status: 2gb alone: finished (2026-11-18 11:41:19); 2gb neuron: finished (2026-11-18 12:11:06); 4gb alone: finished (2026-11-18 13:23:08); 4gb neuron: running (5 of 88 items); 8gb alone: not started; 8gb neuron: not started.
 
+### Answers with no letter found (multiple choice)
+
+Every multiple-choice answer may use at most 400 tokens (the same limit for every model and condition). An answer cut off before it names a letter counts as wrong. These counts show how much of a low score is that limit rather than the model's knowledge:
+
+| Run | MMLU-Pro: no letter | GPQA Diamond: no letter |
+|---|---|---|
+| 2GB model alone | 4 of 28 | 8 of 20 |
+| 2GB full NEURON | 2 of 28 | 3 of 20 |
+| 4GB model alone | 3 of 28 | 11 of 20 |
+
+A second pass with a larger answer limit, recorded as a separate protocol next to this one, is planned.
+
 ## Comparison with published scores
 
 Not made. Published scores for these benchmarks use the full test sets, other prompts, other answer extraction and often GPUs with long thinking budgets; ours are small fixed samples with our own prompts on a CPU. Putting them side by side would compare different measurements. A comparison will be added only for a run under matching conditions (same full set, same protocol).
