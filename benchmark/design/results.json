@@ -1,0 +1,1474 @@
+{
+ "rows": [
+  {
+   "name": "law_firm",
+   "built": true,
+   "build_seconds": 121.1,
+   "peak_mb": 1626,
+   "builder_error": "",
+   "mood": "trust",
+   "palette": "Your colours: navy, gold",
+   "colour_source": "user",
+   "fonts": [
+    "cormorant-garamond",
+    "manrope"
+   ],
+   "variants": {
+    "hero": "editorial",
+    "features": "cards",
+    "fact": "inline",
+    "form": "panel",
+    "nav": "minimal",
+    "rhythm": "flow"
+   },
+   "fingerprint": [
+    "trust",
+    "user:#1b2a4a+#c9a227",
+    "cormorant-garamond",
+    "editorial",
+    "cards",
+    "panel",
+    "minimal",
+    "flow"
+   ],
+   "reason": "The request mentions \"law\", \"firm\", \"property\": this is professional services where people hand over something important, so the design should give trust and calm confidence. You asked for navy, gold. Navy carries most of the page (its tints form the background and its deep tone the bands and headings); gold is kept for buttons and small highlights so it stays special. Headings use Cormorant Garamond and text uses Manrope, a pairing chosen for trust and calm confidence. Corners are softly rounded and depth comes from crisp shadows and background tone, not lines. The page opens with a editorial hero, shows the main points as cards, and puts the form in a panel layout. Every text and background pair passes the contrast check (lowest ratio 4.5:1).",
+   "colours": [
+    {
+     "word": "navy",
+     "hex": "#1b2a4a",
+     "kept": true
+    },
+    {
+     "word": "gold",
+     "hex": "#c9a227",
+     "kept": true
+    }
+   ],
+   "review": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0.3,
+      "bg": 96.9,
+      "surface": 0,
+      "tone2": 0.9
+     },
+     "calm": 53.1
+    }
+   },
+   "checks": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0.3,
+      "bg": 96.9,
+      "surface": 0,
+      "tone2": 0.9
+     },
+     "calm": 53.1
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "bakery",
+   "built": true,
+   "build_seconds": 60.6,
+   "peak_mb": 1617,
+   "builder_error": "",
+   "mood": "warmth",
+   "palette": "Caramel and espresso",
+   "colour_source": "mood",
+   "fonts": [
+    "dm-sans",
+    "instrument-serif"
+   ],
+   "variants": {
+    "hero": "card",
+    "features": "tiles",
+    "fact": "callout",
+    "form": "panel",
+    "nav": "floating",
+    "rhythm": "alternate"
+   },
+   "fingerprint": [
+    "warmth",
+    "Caramel and espresso",
+    "instrument-serif",
+    "card",
+    "tiles",
+    "panel",
+    "floating",
+    "alternate"
+   ],
+   "reason": "The request mentions \"bakery\", \"bread\", \"cake\": this is food and hospitality, where people should feel at home, so the design should give warmth, appetite and welcome. No colours were named, so the palette 'Caramel and espresso' was picked at random from 5 palettes that suit this mood. Headings use Instrument Serif and text uses DM Sans, a pairing chosen for warmth. Corners are generously rounded and depth comes from soft shadows and background tone, not lines. The page opens with a card hero, shows the main points as tiles, and puts the form in a panel layout. Every text and background pair passes the contrast check (lowest ratio 4.52:1).",
+   "colours": [],
+   "review": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.4,
+      "strong": 0.2,
+      "bg": 82.6,
+      "surface": 0,
+      "tone2": 13.8
+     },
+     "calm": 39.4
+    }
+   },
+   "checks": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.4,
+      "strong": 0.2,
+      "bg": 82.6,
+      "surface": 0,
+      "tone2": 13.8
+     },
+     "calm": 39.4
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "payments_app",
+   "built": false,
+   "build_seconds": 122.4,
+   "peak_mb": 1462,
+   "builder_error": "not all tasks are done",
+   "mood": "clarity",
+   "palette": "Ink and coral",
+   "colour_source": "mood",
+   "fonts": [
+    "inter"
+   ],
+   "variants": {
+    "hero": "split",
+    "features": "cards",
+    "fact": "callout",
+    "form": "panel",
+    "nav": "bar",
+    "rhythm": "flow"
+   },
+   "fingerprint": [
+    "clarity",
+    "Ink and coral",
+    "inter",
+    "split",
+    "cards",
+    "panel",
+    "bar",
+    "flow"
+   ],
+   "reason": "The request mentions \"app\", \"payments\": this is technology and finance products, where people must understand fast, so the design should give clarity, precision and momentum. No colours were named, so the palette 'Ink and coral' was picked at random from 5 palettes that suit this mood. Headings use Inter and text uses Inter, a pairing chosen for clarity. Corners are softly rounded and depth comes from crisp shadows and background tone, not lines. The page opens with a split hero, shows the main points as cards, and puts the form in a panel layout. Every text and background pair passes the contrast check (lowest ratio 4.5:1).",
+   "colours": [],
+   "review": null,
+   "checks": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0,
+      "strong": 0.3,
+      "bg": 75,
+      "surface": 0,
+      "tone2": 0.3
+     },
+     "calm": 79
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "yoga",
+   "built": true,
+   "build_seconds": 48.4,
+   "peak_mb": 1619,
+   "builder_error": "",
+   "mood": "calm",
+   "palette": "Your colours: sage green",
+   "colour_source": "user",
+   "fonts": [
+    "cormorant-garamond",
+    "manrope"
+   ],
+   "variants": {
+    "hero": "editorial",
+    "features": "list",
+    "fact": "inline",
+    "form": "panel",
+    "nav": "floating",
+    "rhythm": "alternate"
+   },
+   "fingerprint": [
+    "calm",
+    "user:#8fa98a",
+    "cormorant-garamond",
+    "editorial",
+    "list",
+    "panel",
+    "floating",
+    "alternate"
+   ],
+   "reason": "The request mentions \"yoga\": this is health and wellbeing, where people arrive anxious and should relax, so the design should give calm, care and reassurance. You asked for sage green. Its soft tints form the background, a deep shade of it carries headings and bands, and the colour itself is kept for buttons and highlights. Headings use Cormorant Garamond and text uses Manrope, a pairing chosen for calm. Corners are generously rounded and depth comes from soft shadows and background tone, not lines. The page opens with a editorial hero, shows the main points as list, and puts the form in a panel layout. Every text and background pair passes the contrast check (lowest ratio 4.51:1).",
+   "colours": [
+    {
+     "word": "sage green",
+     "hex": "#8fa98a",
+     "kept": true
+    }
+   ],
+   "review": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0.3,
+      "bg": 92.5,
+      "surface": 0,
+      "tone2": 4.4
+     },
+     "calm": 56.8
+    }
+   },
+   "checks": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0.3,
+      "bg": 92.5,
+      "surface": 0,
+      "tone2": 4.4
+     },
+     "calm": 56.8
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "boxing_gym",
+   "built": true,
+   "build_seconds": 49.7,
+   "peak_mb": 1625,
+   "builder_error": "",
+   "mood": "energy",
+   "palette": "Your colours: black, bright orange",
+   "colour_source": "user",
+   "fonts": [
+    "inter",
+    "outfit"
+   ],
+   "variants": {
+    "hero": "editorial",
+    "features": "cards",
+    "fact": "inline",
+    "form": "split",
+    "nav": "minimal",
+    "rhythm": "alternate"
+   },
+   "fingerprint": [
+    "energy",
+    "user:#111111+#ff8217",
+    "outfit",
+    "editorial",
+    "cards",
+    "split",
+    "minimal",
+    "alternate"
+   ],
+   "reason": "The request mentions \"gym\", \"training\", \"boxing\": this is sport, fitness and events, where people should feel ready to move, so the design should give energy, drive and excitement. You asked for black, bright orange. Black carries most of the page (its tints form the background and its deep tone the bands and headings); bright orange is kept for buttons and small highlights so it stays special. Headings use Outfit and text uses Inter, a pairing chosen for energy. Corners are softly rounded and depth comes from lifted shadows and background tone, not lines. The page opens with a editorial hero, shows the main points as cards, and puts the form in a split layout. Every text and background pair passes the contrast check (lowest ratio 4.5:1).",
+   "colours": [
+    {
+     "word": "black",
+     "hex": "#111111",
+     "kept": true
+    },
+    {
+     "word": "bright orange",
+     "hex": "#ff8217",
+     "kept": true
+    }
+   ],
+   "review": {
+    "fails": 0,
+    "warnings": 1,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0.1,
+      "bg": 89.2,
+      "surface": 0,
+      "tone2": 4.3
+     },
+     "calm": 48
+    }
+   },
+   "checks": {
+    "fails": 0,
+    "warnings": 1,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0.1,
+      "bg": 89.2,
+      "surface": 0,
+      "tone2": 4.3
+     },
+     "calm": 48
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "bridal",
+   "built": true,
+   "build_seconds": 52.6,
+   "peak_mb": 1641,
+   "builder_error": "",
+   "mood": "elegance",
+   "palette": "Ivory and plum",
+   "colour_source": "mood",
+   "fonts": [
+    "cormorant-garamond",
+    "figtree"
+   ],
+   "variants": {
+    "hero": "centered",
+    "features": "list",
+    "fact": "callout",
+    "form": "split",
+    "nav": "bar",
+    "rhythm": "alternate"
+   },
+   "fingerprint": [
+    "elegance",
+    "Ivory and plum",
+    "cormorant-garamond",
+    "centered",
+    "list",
+    "split",
+    "bar",
+    "alternate"
+   ],
+   "reason": "The request mentions \"boutique\", \"bridal\": this is beauty, fashion and luxury, where restraint signals quality, so the design should give elegance, exclusivity and quiet luxury. No colours were named, so the palette 'Ivory and plum' was picked at random from 4 palettes that suit this mood. Headings use Cormorant Garamond and text uses Figtree, a pairing chosen for elegance. Corners are square and depth comes from whisper shadows and background tone, not lines. The page opens with a centered hero, shows the main points as list, and puts the form in a split layout. Every text and background pair passes the contrast check (lowest ratio 4.73:1).",
+   "colours": [],
+   "review": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.6,
+      "strong": 0,
+      "bg": 96.2,
+      "surface": 0,
+      "tone2": 2.1
+     },
+     "calm": 59.2
+    }
+   },
+   "checks": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.6,
+      "strong": 0,
+      "bg": 96.2,
+      "surface": 0,
+      "tone2": 2.1
+     },
+     "calm": 59.2
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "kids_party",
+   "built": true,
+   "build_seconds": 47.9,
+   "peak_mb": 1640,
+   "builder_error": "",
+   "mood": "playful",
+   "palette": "Coral and teal",
+   "colour_source": "mood",
+   "fonts": [
+    "bricolage-grotesque",
+    "nunito"
+   ],
+   "variants": {
+    "hero": "centered",
+    "features": "tiles",
+    "fact": "callout",
+    "form": "band",
+    "nav": "floating",
+    "rhythm": "alternate"
+   },
+   "fingerprint": [
+    "playful",
+    "Coral and teal",
+    "bricolage-grotesque",
+    "centered",
+    "tiles",
+    "band",
+    "floating",
+    "alternate"
+   ],
+   "reason": "The request mentions \"kids\", \"party\": this is children, pets and parties, where joy is the point, so the design should give fun, friendliness and delight. No colours were named, so the palette 'Coral and teal' was picked at random from 4 palettes that suit this mood. Headings use Bricolage Grotesque and text uses Nunito, a pairing chosen for fun. Corners are generously rounded and depth comes from soft shadows and background tone, not lines. The page opens with a centered hero, shows the main points as tiles, and puts the form in a band layout. Every text and background pair passes the contrast check (lowest ratio 4.5:1).",
+   "colours": [],
+   "review": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.4,
+      "strong": 18.8,
+      "bg": 78.8,
+      "surface": 0,
+      "tone2": 0.6
+     },
+     "calm": 52.6
+    }
+   },
+   "checks": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.4,
+      "strong": 18.8,
+      "bg": 78.8,
+      "surface": 0,
+      "tone2": 0.6
+     },
+     "calm": 52.6
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "farm_shop",
+   "built": true,
+   "build_seconds": 97.5,
+   "peak_mb": 1642,
+   "builder_error": "",
+   "mood": "natural",
+   "palette": "Your colours: moss green, terracotta",
+   "colour_source": "user",
+   "fonts": [
+    "dm-sans",
+    "fraunces"
+   ],
+   "variants": {
+    "hero": "split",
+    "features": "cards",
+    "fact": "panel",
+    "form": "split",
+    "nav": "floating",
+    "rhythm": "alternate"
+   },
+   "fingerprint": [
+    "natural",
+    "user:#5a6e3a+#c2603e",
+    "fraunces",
+    "split",
+    "cards",
+    "split",
+    "floating",
+    "alternate"
+   ],
+   "reason": "The request mentions \"farm\", \"organic\", \"green\": this is gardens, farms and the outdoors, where people want something real, so the design should give freshness, honesty and growth. You asked for moss green, terracotta. Moss green carries most of the page (its tints form the background and its deep tone the bands and headings); terracotta is kept for buttons and small highlights so it stays special. Headings use Fraunces and text uses DM Sans, a pairing chosen for freshness. Corners are generously rounded and depth comes from soft shadows and background tone, not lines. The page opens with a split hero, shows the main points as cards, and puts the form in a split layout. Every text and background pair passes the contrast check (lowest ratio 4.52:1).",
+   "colours": [
+    {
+     "word": "moss green",
+     "hex": "#5a6e3a",
+     "kept": true
+    },
+    {
+     "word": "terracotta",
+     "hex": "#c2603e",
+     "kept": true
+    }
+   ],
+   "review": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0,
+      "bg": 87.6,
+      "surface": 0,
+      "tone2": 7.2
+     },
+     "calm": 36
+    }
+   },
+   "checks": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0,
+      "bg": 87.6,
+      "surface": 0,
+      "tone2": 7.2
+     },
+     "calm": 36
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "plumber",
+   "built": true,
+   "build_seconds": 59.7,
+   "peak_mb": 1648,
+   "builder_error": "",
+   "mood": "dependable",
+   "palette": "Safety orange",
+   "colour_source": "mood",
+   "fonts": [
+    "inter",
+    "outfit"
+   ],
+   "variants": {
+    "hero": "split",
+    "features": "steps",
+    "fact": "panel",
+    "form": "band",
+    "nav": "bar",
+    "rhythm": "alternate"
+   },
+   "fingerprint": [
+    "dependable",
+    "Safety orange",
+    "outfit",
+    "split",
+    "steps",
+    "band",
+    "bar",
+    "alternate"
+   ],
+   "reason": "The request mentions \"plumbing\", \"repairs\": this is trades and home services, where people need it done right, today, so the design should give reliability, competence and straight talk. No colours were named, so the palette 'Safety orange' was picked at random from 3 palettes that suit this mood. Headings use Outfit and text uses Inter, a pairing chosen for reliability. Corners are softly rounded and depth comes from crisp shadows and background tone, not lines. The page opens with a split hero, shows the main points as steps, and puts the form in a band layout. Every text and background pair passes the contrast check (lowest ratio 4.52:1).",
+   "colours": [],
+   "review": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 21.9,
+      "bg": 74.6,
+      "surface": 0,
+      "tone2": 0.8
+     },
+     "calm": 46
+    }
+   },
+   "checks": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 21.9,
+      "bg": 74.6,
+      "surface": 0,
+      "tone2": 0.8
+     },
+     "calm": 46
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "tutoring",
+   "built": true,
+   "build_seconds": 58.3,
+   "peak_mb": 1630,
+   "builder_error": "",
+   "mood": "bright",
+   "palette": "Your colours: royal blue, yellow",
+   "colour_source": "user",
+   "fonts": [
+    "bricolage-grotesque",
+    "figtree"
+   ],
+   "variants": {
+    "hero": "card",
+    "features": "cards",
+    "fact": "callout",
+    "form": "split",
+    "nav": "bar",
+    "rhythm": "alternate"
+   },
+   "fingerprint": [
+    "bright",
+    "user:#2747c4+#f4c430",
+    "bricolage-grotesque",
+    "card",
+    "cards",
+    "split",
+    "bar",
+    "alternate"
+   ],
+   "reason": "The request mentions \"tutoring\", \"lessons\", \"maths\": this is learning and coaching, where people want to grow, so the design should give encouragement, curiosity and progress. You asked for royal blue, yellow. Yellow carries most of the page (its tints form the background and its deep tone the bands and headings); royal blue is kept for buttons and small highlights so it stays special. Headings use Bricolage Grotesque and text uses Figtree, a pairing chosen for encouragement. Corners are generously rounded and depth comes from soft shadows and background tone, not lines. The page opens with a card hero, shows the main points as cards, and puts the form in a split layout. Every text and background pair passes the contrast check (lowest ratio 4.5:1).",
+   "colours": [
+    {
+     "word": "royal blue",
+     "hex": "#2747c4",
+     "kept": true
+    },
+    {
+     "word": "yellow",
+     "hex": "#f4c430",
+     "kept": true
+    }
+   ],
+   "review": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0,
+      "bg": 55.6,
+      "surface": 0,
+      "tone2": 40.1
+     },
+     "calm": 41.4
+    }
+   },
+   "checks": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0,
+      "bg": 55.6,
+      "surface": 0,
+      "tone2": 40.1
+     },
+     "calm": 41.4
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "dentist",
+   "built": true,
+   "build_seconds": 53.8,
+   "peak_mb": 1633,
+   "builder_error": "",
+   "mood": "calm",
+   "palette": "Linen and stone",
+   "colour_source": "mood",
+   "fonts": [
+    "cormorant-garamond",
+    "manrope"
+   ],
+   "variants": {
+    "hero": "centered",
+    "features": "list",
+    "fact": "callout",
+    "form": "panel",
+    "nav": "minimal",
+    "rhythm": "flow"
+   },
+   "fingerprint": [
+    "calm",
+    "Linen and stone",
+    "cormorant-garamond",
+    "centered",
+    "list",
+    "panel",
+    "minimal",
+    "flow"
+   ],
+   "reason": "The request mentions \"clinic\", \"dental\": this is health and wellbeing, where people arrive anxious and should relax, so the design should give calm, care and reassurance. No colours were named, so the palette 'Linen and stone' was picked at random from 4 palettes that suit this mood. Headings use Cormorant Garamond and text uses Manrope, a pairing chosen for calm. Corners are generously rounded and depth comes from soft shadows and background tone, not lines. The page opens with a centered hero, shows the main points as list, and puts the form in a panel layout. Every text and background pair passes the contrast check (lowest ratio 4.73:1).",
+   "colours": [],
+   "review": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0.1,
+      "bg": 97.2,
+      "surface": 0,
+      "tone2": 1.1
+     },
+     "calm": 55.3
+    }
+   },
+   "checks": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0.1,
+      "bg": 97.2,
+      "surface": 0,
+      "tone2": 1.1
+     },
+     "calm": 55.3
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "coffee",
+   "built": true,
+   "build_seconds": 51.8,
+   "peak_mb": 1631,
+   "builder_error": "",
+   "mood": "warmth",
+   "palette": "Your colours: #6f4e37, cream",
+   "colour_source": "user",
+   "fonts": [
+    "dm-sans",
+    "lora"
+   ],
+   "variants": {
+    "hero": "card",
+    "features": "rows",
+    "fact": "callout",
+    "form": "panel",
+    "nav": "bar",
+    "rhythm": "bands"
+   },
+   "fingerprint": [
+    "warmth",
+    "user:#6f4e37+#f3ead8",
+    "lora",
+    "card",
+    "rows",
+    "panel",
+    "bar",
+    "bands"
+   ],
+   "reason": "The request mentions \"coffee\", \"cream\": this is food and hospitality, where people should feel at home, so the design should give warmth, appetite and welcome. You asked for #6f4e37, cream. Cream carries most of the page (its tints form the background); #6f4e37 is kept for buttons and small highlights so it stays special. Headings use Lora and text uses DM Sans, a pairing chosen for warmth. Corners are generously rounded and depth comes from soft shadows and background tone, not lines. The page opens with a card hero, shows the main points as rows, and puts the form in a panel layout. Every text and background pair passes the contrast check (lowest ratio 4.73:1).",
+   "colours": [
+    {
+     "word": "#6f4e37",
+     "hex": "#6f4e37",
+     "kept": true
+    },
+    {
+     "word": "cream",
+     "hex": "#f3ead8",
+     "kept": true
+    }
+   ],
+   "review": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.7,
+      "strong": 15.5,
+      "bg": 73.8,
+      "surface": 0,
+      "tone2": 6.2
+     },
+     "calm": 41
+    }
+   },
+   "checks": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.7,
+      "strong": 15.5,
+      "bg": 73.8,
+      "surface": 0,
+      "tone2": 6.2
+     },
+     "calm": 41
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "photographer",
+   "built": true,
+   "build_seconds": 56.6,
+   "peak_mb": 1649,
+   "builder_error": "",
+   "mood": "elegance",
+   "palette": "Emerald and gilt",
+   "colour_source": "mood",
+   "fonts": [
+    "instrument-serif",
+    "manrope"
+   ],
+   "variants": {
+    "hero": "centered",
+    "features": "list",
+    "fact": "inline",
+    "form": "panel",
+    "nav": "bar",
+    "rhythm": "flow"
+   },
+   "fingerprint": [
+    "elegance",
+    "Emerald and gilt",
+    "instrument-serif",
+    "centered",
+    "list",
+    "panel",
+    "bar",
+    "flow"
+   ],
+   "reason": "The request mentions \"weddings\", \"photography\": this is beauty, fashion and luxury, where restraint signals quality, so the design should give elegance, exclusivity and quiet luxury. No colours were named, so the palette 'Emerald and gilt' was picked at random from 4 palettes that suit this mood. Headings use Instrument Serif and text uses Manrope, a pairing chosen for elegance. Corners are square and depth comes from whisper shadows and background tone, not lines. The page opens with a centered hero, shows the main points as list, and puts the form in a panel layout. Every text and background pair passes the contrast check (lowest ratio 4.52:1).",
+   "colours": [],
+   "review": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.3,
+      "strong": 0.1,
+      "bg": 98,
+      "surface": 0,
+      "tone2": 0.4
+     },
+     "calm": 61.6
+    }
+   },
+   "checks": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.3,
+      "strong": 0.1,
+      "bg": 98,
+      "surface": 0,
+      "tone2": 0.4
+     },
+     "calm": 61.6
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "accountant",
+   "built": true,
+   "build_seconds": 52.4,
+   "peak_mb": 1648,
+   "builder_error": "",
+   "mood": "trust",
+   "palette": "Your colours: dark green",
+   "colour_source": "user",
+   "fonts": [
+    "libre-franklin",
+    "playfair-display"
+   ],
+   "variants": {
+    "hero": "editorial",
+    "features": "rows",
+    "fact": "panel",
+    "form": "split",
+    "nav": "minimal",
+    "rhythm": "flow"
+   },
+   "fingerprint": [
+    "trust",
+    "user:#005d29",
+    "playfair-display",
+    "editorial",
+    "rows",
+    "split",
+    "minimal",
+    "flow"
+   ],
+   "reason": "The request mentions \"tax\": this is professional services where people hand over something important, so the design should give trust and calm confidence. You asked for dark green. It is deep enough to hold white text, so it carries the bands and the buttons, and very light tints of it form the background. One colour, used with restraint. Headings use Playfair Display and text uses Libre Franklin, a pairing chosen for trust and calm confidence. Corners are softly rounded and depth comes from crisp shadows and background tone, not lines. The page opens with a editorial hero, shows the main points as rows, and puts the form in a split layout. Every text and background pair passes the contrast check (lowest ratio 4.73:1).",
+   "colours": [
+    {
+     "word": "dark green",
+     "hex": "#005d29",
+     "kept": true
+    }
+   ],
+   "review": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0,
+      "bg": 87,
+      "surface": 0,
+      "tone2": 10.7
+     },
+     "calm": 48.9
+    }
+   },
+   "checks": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0,
+      "bg": 87,
+      "surface": 0,
+      "tone2": 10.7
+     },
+     "calm": 48.9
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "florist",
+   "built": true,
+   "build_seconds": 53.0,
+   "peak_mb": 1647,
+   "builder_error": "",
+   "mood": "elegance",
+   "palette": "Your colours: dusty pink, olive green",
+   "colour_source": "user",
+   "fonts": [
+    "cormorant-garamond",
+    "figtree"
+   ],
+   "variants": {
+    "hero": "banner",
+    "features": "tiles",
+    "fact": "inline",
+    "form": "panel",
+    "nav": "bar",
+    "rhythm": "flow"
+   },
+   "fingerprint": [
+    "elegance",
+    "user:#d4a5a5+#6b7a2e",
+    "cormorant-garamond",
+    "banner",
+    "tiles",
+    "panel",
+    "bar",
+    "flow"
+   ],
+   "reason": "The request mentions \"wedding\", \"florist\": this is beauty, fashion and luxury, where restraint signals quality, so the design should give elegance, exclusivity and quiet luxury. You asked for dusty pink, olive green. Dusty pink carries most of the page (its tints form the background and its deep tone the bands and headings); olive green is kept for buttons and small highlights so it stays special. Headings use Cormorant Garamond and text uses Figtree, a pairing chosen for elegance. Corners are square and depth comes from whisper shadows and background tone, not lines. The page opens with a banner hero, shows the main points as tiles, and puts the form in a panel layout. Every text and background pair passes the contrast check (lowest ratio 4.51:1).",
+   "colours": [
+    {
+     "word": "dusty pink",
+     "hex": "#d4a5a5",
+     "kept": true
+    },
+    {
+     "word": "olive green",
+     "hex": "#6b7a2e",
+     "kept": true
+    }
+   ],
+   "review": {
+    "fails": 9,
+    "warnings": 0,
+    "by_rule": {
+     "contrast": 9
+    },
+    "colour_share": {
+     "share": {
+      "action": 0.1,
+      "strong": 19.2,
+      "bg": 68.7,
+      "surface": 0,
+      "tone2": 0.4
+     },
+     "calm": 55
+    }
+   },
+   "checks": {
+    "fails": 9,
+    "warnings": 0,
+    "by_rule": {
+     "contrast": 9
+    },
+    "colour_share": {
+     "share": {
+      "action": 0.1,
+      "strong": 19.2,
+      "bg": 68.7,
+      "surface": 0,
+      "tone2": 0.4
+     },
+     "calm": 55
+    }
+   },
+   "failed_checks": [
+    {
+     "rule": "contrast",
+     "severity": "fail",
+     "detail": "span \"Delivered same day.\" 4.45:1, needs 4.5:1",
+     "width": "phone",
+     "path": "/"
+    },
+    {
+     "rule": "contrast",
+     "severity": "fail",
+     "detail": "span \"Delivered same day.\" 4.45:1, needs 4.5:1",
+     "width": "phone",
+     "path": "/"
+    },
+    {
+     "rule": "contrast",
+     "severity": "fail",
+     "detail": "span \"Delivered same day.\" 4.45:1, needs 4.5:1",
+     "width": "phone",
+     "path": "/"
+    },
+    {
+     "rule": "contrast",
+     "severity": "fail",
+     "detail": "span \"Delivered same day.\" 4.45:1, needs 4.5:1",
+     "width": "tablet",
+     "path": "/"
+    },
+    {
+     "rule": "contrast",
+     "severity": "fail",
+     "detail": "span \"Delivered same day.\" 4.45:1, needs 4.5:1",
+     "width": "tablet",
+     "path": "/"
+    },
+    {
+     "rule": "contrast",
+     "severity": "fail",
+     "detail": "span \"Delivered same day.\" 4.45:1, needs 4.5:1",
+     "width": "tablet",
+     "path": "/"
+    },
+    {
+     "rule": "contrast",
+     "severity": "fail",
+     "detail": "span \"Delivered same day.\" 4.45:1, needs 4.5:1",
+     "width": "desktop",
+     "path": "/"
+    },
+    {
+     "rule": "contrast",
+     "severity": "fail",
+     "detail": "span \"Delivered same day.\" 4.45:1, needs 4.5:1",
+     "width": "desktop",
+     "path": "/"
+    },
+    {
+     "rule": "contrast",
+     "severity": "fail",
+     "detail": "span \"Delivered same day.\" 4.45:1, needs 4.5:1",
+     "width": "desktop",
+     "path": "/"
+    }
+   ]
+  },
+  {
+   "name": "garage_app",
+   "built": true,
+   "build_seconds": 55.1,
+   "peak_mb": 1647,
+   "builder_error": "",
+   "mood": "dependable",
+   "palette": "Cobalt and yellow",
+   "colour_source": "mood",
+   "fonts": [
+    "inter",
+    "outfit"
+   ],
+   "variants": {
+    "hero": "banner",
+    "features": "list",
+    "fact": "inline",
+    "form": "split",
+    "nav": "bar",
+    "rhythm": "alternate"
+   },
+   "fingerprint": [
+    "dependable",
+    "Cobalt and yellow",
+    "outfit",
+    "banner",
+    "list",
+    "split",
+    "bar",
+    "alternate"
+   ],
+   "reason": "The request mentions \"mechanic\", \"garage\", \"repair\": this is trades and home services, where people need it done right, today, so the design should give reliability, competence and straight talk. No colours were named, so the palette 'Cobalt and yellow' was picked at random from 3 palettes that suit this mood. Headings use Outfit and text uses Inter, a pairing chosen for reliability. Corners are softly rounded and depth comes from crisp shadows and background tone, not lines. The page opens with a banner hero, shows the main points as list, and puts the form in a split layout. Every text and background pair passes the contrast check (lowest ratio 4.51:1).",
+   "colours": [],
+   "review": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.4,
+      "strong": 0.2,
+      "bg": 97.2,
+      "surface": 0,
+      "tone2": 1.1
+     },
+     "calm": 42
+    }
+   },
+   "checks": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.4,
+      "strong": 0.2,
+      "bg": 97.2,
+      "surface": 0,
+      "tone2": 1.1
+     },
+     "calm": 42
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "music_school",
+   "built": true,
+   "build_seconds": 64.5,
+   "peak_mb": 1648,
+   "builder_error": "",
+   "mood": "bright",
+   "palette": "Royal and sunflower",
+   "colour_source": "mood",
+   "fonts": [
+    "bricolage-grotesque",
+    "figtree"
+   ],
+   "variants": {
+    "hero": "card",
+    "features": "list",
+    "fact": "callout",
+    "form": "panel",
+    "nav": "floating",
+    "rhythm": "flow"
+   },
+   "fingerprint": [
+    "bright",
+    "Royal and sunflower",
+    "bricolage-grotesque",
+    "card",
+    "list",
+    "panel",
+    "floating",
+    "flow"
+   ],
+   "reason": "The request mentions \"lesson\", \"school\", \"classes\": this is learning and coaching, where people want to grow, so the design should give encouragement, curiosity and progress. No colours were named, so the palette 'Royal and sunflower' was picked at random from 4 palettes that suit this mood. Headings use Bricolage Grotesque and text uses Figtree, a pairing chosen for encouragement. Corners are generously rounded and depth comes from soft shadows and background tone, not lines. The page opens with a card hero, shows the main points as list, and puts the form in a panel layout. Every text and background pair passes the contrast check (lowest ratio 4.73:1).",
+   "colours": [],
+   "review": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.4,
+      "strong": 0.8,
+      "bg": 91.7,
+      "surface": 0,
+      "tone2": 4
+     },
+     "calm": 39.5
+    }
+   },
+   "checks": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.4,
+      "strong": 0.8,
+      "bg": 91.7,
+      "surface": 0,
+      "tone2": 4
+     },
+     "calm": 39.5
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "guesthouse",
+   "built": true,
+   "build_seconds": 50.7,
+   "peak_mb": 1653,
+   "builder_error": "",
+   "mood": "warmth",
+   "palette": "Your colours: burgundy, champagne",
+   "colour_source": "user",
+   "fonts": [
+    "dm-sans",
+    "instrument-serif"
+   ],
+   "variants": {
+    "hero": "split",
+    "features": "tiles",
+    "fact": "panel",
+    "form": "band",
+    "nav": "floating",
+    "rhythm": "bands"
+   },
+   "fingerprint": [
+    "warmth",
+    "user:#7a1f2b+#e9d8b4",
+    "instrument-serif",
+    "split",
+    "tiles",
+    "band",
+    "floating",
+    "bands"
+   ],
+   "reason": "The request mentions \"breakfast\": this is food and hospitality, where people should feel at home, so the design should give warmth, appetite and welcome. You asked for burgundy, champagne. Champagne carries most of the page (its tints form the background); burgundy is kept for buttons and small highlights so it stays special. Headings use Instrument Serif and text uses DM Sans, a pairing chosen for warmth. Corners are generously rounded and depth comes from soft shadows and background tone, not lines. The page opens with a split hero, shows the main points as tiles, and puts the form in a band layout. Every text and background pair passes the contrast check (lowest ratio 4.73:1).",
+   "colours": [
+    {
+     "word": "burgundy",
+     "hex": "#7a1f2b",
+     "kept": true
+    },
+    {
+     "word": "champagne",
+     "hex": "#e9d8b4",
+     "kept": true
+    }
+   ],
+   "review": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 11.5,
+      "bg": 84,
+      "surface": 0,
+      "tone2": 2.3
+     },
+     "calm": 36.7
+    }
+   },
+   "checks": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 11.5,
+      "bg": 84,
+      "surface": 0,
+      "tone2": 2.3
+     },
+     "calm": 36.7
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "software_agency",
+   "built": true,
+   "build_seconds": 58.8,
+   "peak_mb": 1640,
+   "builder_error": "",
+   "mood": "clarity",
+   "palette": "Graphite and azure",
+   "colour_source": "mood",
+   "fonts": [
+    "inter",
+    "manrope"
+   ],
+   "variants": {
+    "hero": "editorial",
+    "features": "list",
+    "fact": "callout",
+    "form": "split",
+    "nav": "bar",
+    "rhythm": "flow"
+   },
+   "fingerprint": [
+    "clarity",
+    "Graphite and azure",
+    "manrope",
+    "editorial",
+    "list",
+    "split",
+    "bar",
+    "flow"
+   ],
+   "reason": "The request mentions \"apps\": this is technology and finance products, where people must understand fast, so the design should give clarity, precision and momentum. No colours were named, so the palette 'Graphite and azure' was picked at random from 5 palettes that suit this mood. Headings use Manrope and text uses Inter, a pairing chosen for clarity. Corners are softly rounded and depth comes from crisp shadows and background tone, not lines. The page opens with a editorial hero, shows the main points as list, and puts the form in a split layout. Every text and background pair passes the contrast check (lowest ratio 4.54:1).",
+   "colours": [],
+   "review": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0.7,
+      "bg": 96.4,
+      "surface": 0,
+      "tone2": 0.9
+     },
+     "calm": 55.8
+    }
+   },
+   "checks": {
+    "fails": 0,
+    "warnings": 0,
+    "by_rule": {},
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0.7,
+      "bg": 96.4,
+      "surface": 0,
+      "tone2": 0.9
+     },
+     "calm": 55.8
+    }
+   },
+   "failed_checks": []
+  },
+  {
+   "name": "salon_app",
+   "built": true,
+   "build_seconds": 86.2,
+   "peak_mb": 1657,
+   "builder_error": "",
+   "mood": "elegance",
+   "palette": "Your colours: plum",
+   "colour_source": "user",
+   "fonts": [
+    "instrument-serif",
+    "manrope"
+   ],
+   "variants": {
+    "hero": "banner",
+    "features": "rows",
+    "fact": "callout",
+    "form": "split",
+    "nav": "minimal",
+    "rhythm": "flow"
+   },
+   "fingerprint": [
+    "elegance",
+    "user:#6a2c5a",
+    "instrument-serif",
+    "banner",
+    "rows",
+    "split",
+    "minimal",
+    "flow"
+   ],
+   "reason": "The request mentions \"salon\": this is beauty, fashion and luxury, where restraint signals quality, so the design should give elegance, exclusivity and quiet luxury. You asked for plum. It is deep enough to hold white text, so it carries the bands and the buttons, and very light tints of it form the background. One colour, used with restraint. Headings use Instrument Serif and text uses Manrope, a pairing chosen for elegance. Corners are square and depth comes from whisper shadows and background tone, not lines. The page opens with a banner hero, shows the main points as rows, and puts the form in a split layout. Every text and background pair passes the contrast check (lowest ratio 4.73:1).",
+   "colours": [
+    {
+     "word": "plum",
+     "hex": "#6a2c5a",
+     "kept": true
+    }
+   ],
+   "review": {
+    "fails": 1,
+    "warnings": 0,
+    "by_rule": {
+     "accent_overuse": 1
+    },
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0,
+      "bg": 98.2,
+      "surface": 0,
+      "tone2": 0.6
+     },
+     "calm": 43
+    }
+   },
+   "checks": {
+    "fails": 1,
+    "warnings": 0,
+    "by_rule": {
+     "accent_overuse": 1
+    },
+    "colour_share": {
+     "share": {
+      "action": 0.5,
+      "strong": 0,
+      "bg": 98.2,
+      "surface": 0,
+      "tone2": 0.6
+     },
+     "calm": 43
+    }
+   },
+   "failed_checks": [
+    {
+     "rule": "accent_overuse",
+     "severity": "fail",
+     "width": "desktop",
+     "path": "/",
+     "detail": "the action colour covers 16.9% of the page; it should stay small"
+    }
+   ]
+  }
+ ],
+ "tier": "2gb",
+ "model": "qwen2.5-coder-1.5b-q4",
+ "network": "new empty network namespace (loopback only)",
+ "variety": {
+  "designs": 20,
+  "max_shared_choices_of_8": 4,
+  "mean_shared_choices_of_8": 1.62,
+  "distinct_palettes": 20,
+  "distinct_heroes": 5
+ }
+}
