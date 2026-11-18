@@ -509,6 +509,156 @@
    "bench": "gpqa",
    "seconds": 119.0,
    "peak_mb": 3973
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "gpqa-55",
+   "bench": "gpqa",
+   "seconds": 120.3,
+   "peak_mb": 3973
+  },
+  {
+   "correct": true,
+   "given": "D",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 666,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "gpqa-57",
+   "bench": "gpqa",
+   "seconds": 94.0,
+   "peak_mb": 3973
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "gpqa-58",
+   "bench": "gpqa",
+   "seconds": 109.5,
+   "peak_mb": 3973
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "gpqa-80",
+   "bench": "gpqa",
+   "seconds": 112.8,
+   "peak_mb": 3973
+  },
+  {
+   "correct": true,
+   "given": "A",
+   "first_given": "A",
+   "calls": 2,
+   "tokens": 544,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "gpqa-87",
+   "bench": "gpqa",
+   "seconds": 79.0,
+   "peak_mb": 3973
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "gpqa-97",
+   "bench": "gpqa",
+   "seconds": 110.7,
+   "peak_mb": 3973
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "gpqa-108",
+   "bench": "gpqa",
+   "seconds": 111.0,
+   "peak_mb": 3973
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "gpqa-126",
+   "bench": "gpqa",
+   "seconds": 107.4,
+   "peak_mb": 3973
+  },
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "gpqa-139",
+   "bench": "gpqa",
+   "seconds": 105.9,
+   "peak_mb": 3973
+  },
+  {
+   "correct": false,
+   "given": "B",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 711,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "gpqa-167",
+   "bench": "gpqa",
+   "seconds": 92.4,
+   "peak_mb": 3973
   }
  ],
  "summary": {

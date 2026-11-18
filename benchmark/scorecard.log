@@ -313,3 +313,14 @@ SCORECARD-DONE 4gb alone {"mmlu_pro": {"n": 28, "correct": 10, "score": 0.357, "
 4gb-neuron gpqa-19: right 98.7s
 4gb-neuron gpqa-42: wrong 122.5s
 4gb-neuron gpqa-52: wrong 119.0s
+4gb-neuron gpqa-55: wrong 120.3s
+4gb-neuron gpqa-57: right 94.0s
+4gb-neuron gpqa-58: wrong 109.5s
+4gb-neuron gpqa-80: wrong 112.8s
+4gb-neuron gpqa-87: right 79.0s
+4gb-neuron gpqa-97: wrong 110.7s
+4gb-neuron gpqa-108: wrong 111.0s
+4gb-neuron gpqa-126: wrong 107.4s
+4gb-neuron gpqa-139: wrong 105.9s
+4gb-neuron gpqa-167: wrong 92.4s
+[2026-11-18 23:58:36] machine restarted during an active session; resuming (finished items kept)
