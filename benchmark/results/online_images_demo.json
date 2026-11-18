@@ -5,10 +5,10 @@
  "online": {
   "needed": 3
  },
- "seconds": 0.5,
+ "seconds": 0.1,
  "not_found": [],
  "rate_limited_retry_after_s": 600,
- "run_at": "2026-11-18 13:19 UTC",
+ "run_at": "2026-11-18 16:54 UTC",
  "chosen": [
   {
    "slot": "hero",

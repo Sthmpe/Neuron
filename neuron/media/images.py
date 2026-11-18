@@ -184,18 +184,23 @@ class CommonsProvider:
 
     def _get(self, url, binary=False):
         """One polite request. A 'too many requests' answer is never retried in a loop: NEURON stops and comes back later."""
-        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-        try:
-            with self.opener.open(req, timeout=60) as r:
-                data = r.read()
-        except urllib.error.HTTPError as e:
-            if e.code == 429:
+        for attempt in range(3):
+            req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+            try:
+                with self.opener.open(req, timeout=60) as r:
+                    data = r.read()
+                break
+            except urllib.error.HTTPError as e:
+                if e.code != 429:
+                    raise
                 try:
                     wait = int(e.headers.get("Retry-After") or 600)
                 except ValueError:
                     wait = 600
+                if wait <= 10 and attempt < 2:      # "wait a second": do exactly that, then ask once more
+                    time.sleep(wait + 1)
+                    continue
                 raise RateLimited("Wikimedia Commons asked NEURON to slow down", max(wait, 600)) from e
-            raise
         time.sleep(self.pause)            # a short pause between requests, so one site is never hammered
         return data if binary else json.loads(data)
 
@@ -218,16 +223,15 @@ class CommonsProvider:
         return out
 
     def download(self, cand):
-        """The original file (upload.wikimedia.org) unless it is huge; then the ready-made smaller copy. Shrunk locally."""
-        urls = ([cand["url"]] if cand.get("bytes", 0) <= 25_000_000 else []) + [u for u in (cand.get("thumb"),) if u]
+        """The ready-made copy at the size the page needs (thumb.wikimedia.org, what Wikimedia asks clients to use);
+        the original file only if there is none or it fails. Shrunk locally either way."""
+        urls = [u for u in (cand.get("thumb"),) if u] + ([cand["url"]] if cand.get("bytes", 0) <= 25_000_000 else [])
         last = None
         for url in urls:
             try:
                 return self._get(url, binary=True)
-            except RateLimited:
-                raise
-            except (urllib.error.URLError, OSError) as e:
-                last = e
+            except (RateLimited, urllib.error.URLError, OSError) as e:
+                last = e                   # the other copy lives on another server: try it before giving up
         raise last or OSError("no download link")
 
 

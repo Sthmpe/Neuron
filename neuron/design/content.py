@@ -84,6 +84,20 @@ def missing_facts(request, pieces):
             for k, f in owner_facts(request) if not _shown(f, k, text)]
 
 
+STOP = set("this that with from have will your their they them were what when where which about into over make made website "
+           "page site want need please also only each every them show give like just very more most some such than then".split())
+
+
+def vague_hero(spec, request):
+    """The line under the headline must name something of this business (what it sells or does, or where)."""
+    sub = ((spec.get("home") or {}).get("subheadline") or "").lower()
+    req = {w[:5] for w in re.findall(r"[a-z]{4,}", (request or "").lower()) if w not in STOP}
+    words = {w[:5] for w in re.findall(r"[a-z]{4,}", sub) if w not in STOP}
+    if sub and not (words & req):
+        return [{"kind": "vague", "where": "hero:text", "detail": f"the line under the headline ('{sub[:60]}') names nothing from the request"}]
+    return []
+
+
 def thin_items(spec):
     out = []
     for sec in (spec.get("home") or {}).get("sections") or []:
@@ -139,7 +153,7 @@ def check(pieces, request=""):
                                      "detail": f"{kind} '{m.group(0).strip()}' was not given by the owner"})
         for s in sentences(text):
             key = _norm(re.sub(r"[^\w\s]", "", s))
-            if len(key.split()) >= 4:
+            if len(key.split()) >= 6:               # short headings and button words may repeat; sentences may not
                 if key in seen_sentences and seen_sentences[key] != where:
                     problems.append({"kind": "repetition", "where": where, "detail": f"sentence repeated from {seen_sentences[key]}: '{s[:80]}'"})
                 seen_sentences.setdefault(key, where)
@@ -239,6 +253,8 @@ def feedback(problems, limit=8):
     for p in problems[:limit]:
         if p["kind"] == "missing":
             lines.append(f"- add the owner's {p['type']} \"{p['fact']}\" exactly as given (in a section's text or an item).")
+        elif p["kind"] == "vague":
+            lines.append(f"- {p['detail']}: say what this business sells or does, or where, using the owner's words.")
         elif p["kind"] == "thin":
             lines.append(f"- {p['detail']}: give each item one short, specific line about this business.")
         elif p["kind"] == "invented":

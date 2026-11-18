@@ -239,6 +239,10 @@ def section(title, *content, id=""):
     forms = [p for p in content if isinstance(p, HTML) and p.kind == "form"]
     texts = [p for p in content if isinstance(p, HTML) and p.kind == "text"]
     others = [p for p in content if not (isinstance(p, HTML) and p.kind in ("grid", "form", "text"))]
+    if grids and not forms and not texts and sum(len(g.meta["items"]) for g in grids) == 1 and not others:
+        # a list of one thing looks broken ("01" alone): it is a single fact, shown like one
+        t, x = next(it for g in grids for it in g.meta["items"])
+        return section(title, text(f"{t}: {x}" if x else t), id=id)
     if grids and not forms:
         items = [it for g in grids for it in g.meta["items"]]
         intro = "".join(f'<p class="lead">{_esc(t.meta["words"])}</p>' for t in texts)
@@ -295,7 +299,20 @@ def _form_side(sec, facts):
     return HTML(f'<section class="{cls}"{m["sid"]}{tone}><div class="wrap">{inner}{m["others"]}</div></section>', "section", **m)
 
 
+PRICE = re.compile(r"(?:₦|\$|£|€)\s?\d|\b\d[\d,]*(?:\.\d+)?\s*(?:naira|kobo|dollars?|pounds?|euros?)\b", re.I)
+
+
+def _is_price_list(items):
+    """Things with a short price each (a menu, a list of services): shown as a compact price list, not as cards."""
+    priced = [x for _, x in items if x and PRICE.search(x) and len(x) <= 48]
+    return len(items) >= 2 and len(priced) >= max(2, round(len(items) * 0.75))
+
+
 def _features(items, variant):
+    if _is_price_list(items):
+        body = "".join(f'<div class="pl-row"><span class="pl-name">{_esc(t)}</span><span class="pl-price">{_esc(x)}</span></div>'
+                       for t, x in items)
+        return f'<div class="price-list">{body}</div>'
     if variant == "list":
         body = "".join(f'<div class="fl-item">{_icon(t, x, i + 1)}<div><h3>{_esc(t)}</h3><p>{_esc(x)}</p></div></div>'
                        for i, (t, x) in enumerate(items))

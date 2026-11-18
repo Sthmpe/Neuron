@@ -143,6 +143,10 @@ main{display:block}
 @media(min-width:700px){.photos-2{grid-template-columns:repeat(2,minmax(0,1fr))}.photos-3{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .photo{margin:0;border-radius:var(--radius-lg);overflow:hidden;background:var(--color-support-soft);box-shadow:var(--shadow-sm)}
 .photo img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+.price-list{display:grid;gap:6px;max-width:760px}
+.pl-row{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding:16px 22px;border-radius:var(--radius);background:var(--color-surface);box-shadow:var(--shadow-sm)}
+.pl-name{font-weight:620;min-width:0}.pl-price{font-weight:650;color:var(--color-ink-muted);text-align:right;white-space:nowrap}
+@media(max-width:480px){.pl-row{padding:14px 16px;gap:12px}.pl-price{white-space:normal}}
 @media(min-width:900px){.hero-card .hc-grid:has(>.hero-photo),.hero-banner .hero-grid:has(>.hero-photo){grid-template-columns:1fr 1fr}}
 .hero-centered{text-align:center}.hero-centered h1,.hero-centered .lead{margin-inline:auto;max-width:18ch}.hero-centered .lead{max-width:46ch}
 .hero-centered .hero-actions{justify-content:center}

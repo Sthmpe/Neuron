@@ -194,7 +194,7 @@ def plan(request, client, meter, content_rules=False):
             spec, problems = normalise(raw)
             if not problems and content_rules and spec["kind"] == "site":
                 issues = content.check(content.spec_pieces(spec), request) + \
-                    content.missing_facts(request, content.spec_pieces(spec)) + content.thin_items(spec)
+                    content.missing_facts(request, content.spec_pieces(spec)) + content.thin_items(spec) + content.vague_hero(spec, request)
                 if issues and rnd < 2:
                     messages += [{"role": "assistant", "content": reply.text},
                                  {"role": "user", "content": "The words of that page have problems:\n" + content.feedback(issues)

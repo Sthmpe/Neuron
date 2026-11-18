@@ -69,6 +69,18 @@ class CoverageTests(unittest.TestCase):
         spec = {"home": {"sections": [{"title": "What we handle", "text": "", "items": [{"title": "Divorce", "text": ""}]}]}}
         self.assertEqual(C.thin_items(spec)[0]["kind"], "thin")
 
+    def test_vague_line_under_the_headline_is_reported(self):
+        self.assertEqual(C.vague_hero({"home": {"subheadline": "We are here for you."}}, REQ)[0]["kind"], "vague")
+        self.assertEqual(C.vague_hero({"home": {"subheadline": "Divorce and custody advice in Ikeja."}}, REQ), [])
+
+    def test_prices_show_as_a_compact_list_and_one_item_as_a_fact(self):
+        from neuron.kit_next import ui
+        menu = ui.section("What we bake", ui.grid(ui.card("Agege bread", ui.text("1,200 naira")), ui.card("Meat pie", ui.text("800 naira"))))
+        self.assertIn('class="price-list"', menu)
+        one = ui.section("Consultation", ui.grid(ui.card("First consultation", ui.text("30 minutes, 20,000 naira."))))
+        self.assertEqual(one.meta["role"], "fact")
+        self.assertIn("First consultation: 30 minutes, 20,000 naira.", one)
+
     def test_facts_beside_the_form_are_moved_not_repeated(self):
         from neuron.kit_next import ui
         page = ui.page("Welcome", ui.hero("Adeyemi & Co", "Family law."), ui.section("Visit us", ui.text("14 Allen Avenue, Ikeja.")),
