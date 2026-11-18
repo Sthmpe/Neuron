@@ -160,6 +160,101 @@
    },
    "agent_verdict": "PARTIAL",
    "false_claim": false
+  },
+  {
+   "task": "L06_cpp_bug_stock",
+   "kind": "workspace_bug",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "original_tests_pass: FAIL line 27: inv.get(\"RICE\").stock == 10\nFAIL line 29: inv.get(\"RICE\").stock == 15\nmake: *** [Makefile:9: test] Error 2\n"
+   ],
+   "seconds": 209.1,
+   "peak_mb": 4002,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 209.1
+    }
+   ],
+   "model_calls": 7,
+   "tokens": 1126,
+   "model_seconds": 195.6,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1
+   },
+   "agent_verdict": "PARTIAL",
+   "false_claim": false
+  },
+  {
+   "task": "L07_cpp_bug_discount",
+   "kind": "workspace_bug",
+   "solved": true,
+   "checks_passed": 1,
+   "checks_total": 1,
+   "failed_checks": [],
+   "seconds": 149.0,
+   "peak_mb": 3993,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 149.0
+    }
+   ],
+   "model_calls": 5,
+   "tokens": 814,
+   "model_seconds": 137.9,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "L08_cpp_bug_parse",
+   "kind": "workspace_bug",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "original_tests_pass: FAIL line 56: parse_cents(\"12.5\") == 1250\nmake: *** [Makefile:9: test] Error 1\n"
+   ],
+   "seconds": 89.0,
+   "peak_mb": 4084,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 89.0
+    }
+   ],
+   "model_calls": 1,
+   "tokens": 300,
+   "model_seconds": 49.0,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1
+   },
+   "agent_verdict": "PARTIAL",
+   "false_claim": false
   }
  ],
  "set": "locked",
@@ -175,5 +270,5 @@
  "started": "2026-11-18 04:16:36",
  "code_commit": "ee749502a6b2362d0533446dc52ca4a6dd1abb52",
  "tier_limit_hits": 0,
- "oom_kills": 0
+ "oom_kills": 1
 }

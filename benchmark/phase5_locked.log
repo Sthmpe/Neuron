@@ -3,3 +3,7 @@ locked-4gb L02_excel_summary: SOLVED | 14/14 checks | 45.0s | peak 3932 MB | cal
 locked-4gb L03_word_proposal: SOLVED | 5/5 checks | 465.1s | peak 3911 MB | calls 11 | agent says VERIFIED
 locked-4gb L04_pptx_pitch: SOLVED | 9/9 checks | 82.0s | peak 3876 MB | calls 1 | agent says VERIFIED
 locked-4gb L05_cpp_budget_cli: not solved | 0/1 checks | 1890.3s | peak 3974 MB | calls 10 | agent says PARTIAL
+locked-4gb L06_cpp_bug_stock: not solved | 0/1 checks | 209.1s | peak 4002 MB | calls 7 | agent says PARTIAL
+locked-4gb L07_cpp_bug_discount: SOLVED | 1/1 checks | 149.0s | peak 3993 MB | calls 5 | agent says VERIFIED
+locked-4gb L08_cpp_bug_parse: not solved | 0/1 checks | 89.0s | peak 4084 MB | calls 1 | agent says PARTIAL
+-- machine restarted about 05:07 after L08; resumed at 05:08; the interrupted task restarts from a clean job folder --
