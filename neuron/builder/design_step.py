@@ -22,6 +22,35 @@ def paths_for(spec):
     return ["/"]
 
 
+LONG = {"text": " Okonkwo-Bello Enterprises", "email": "adaeze.okonkwobello.enterprises@example.com", "phone": "+234 803 555 0101 ext 22"}
+
+
+def seed_steps(spec):
+    """Two records per kind of record, with long realistic values: pages are judged with data in them (an empty
+    list hid a table that pushed a phone page sideways). Linked names and rule amounts stay consistent."""
+    from . import relations
+    from .spec import _ordered
+    if spec.get("kind") != "app":
+        return []
+    keys = {e["search_field"] for e in spec["entities"] if relations._is_target(spec, e["name"])}
+    steps = []
+    for e in _ordered(spec["entities"]):
+        rule = relations.rule_for(spec, e["name"])
+        for n in (0, 1):
+            row = relations.sample(spec, e, n)
+            for f in e["fields"]:
+                if f["type"] == "link" or (f["name"] in keys and relations._is_target(spec, e["name"])):
+                    continue
+                if f["type"] == "text":
+                    row[f["name"]] += LONG["text"]
+                elif f["type"] in ("email", "phone"):
+                    row[f["name"]] = LONG[f["type"]]
+            if rule:
+                row[rule["amount_field"]] = "1"
+            steps.append({"post": f"/{e['name']}", "form": row})
+    return steps
+
+
 def login_for(spec):
     return [spec["username"], spec["password"]] if spec.get("kind") == "app" and spec.get("login_required") else None
 
@@ -57,6 +86,12 @@ def review(project, spec, sandbox, state=None, rounds=2, shots_dir=None, log=pri
             shots = (Path(shots_dir) / f"r{n}") if shots_dir else None
             if shots:
                 shots.parent.mkdir(parents=True, exist_ok=True)
+            seed = seed_steps(spec)
+            if seed:
+                from .checks import CheckRunner
+                creds = login_for(spec)
+                auth = [{"login": {"username": creds[0], "password": creds[1]}}] if creds else []
+                CheckRunner(url).run({"name": "sample records for the design review", "steps": auth + seed})
             findings = check.run(url, paths_for(spec), login_for(spec), shots=shots, design=design)
         finally:
             trial.stop()
