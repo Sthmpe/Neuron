@@ -79,5 +79,27 @@ class InstallTests(unittest.TestCase):
         self.assertFalse((d / "home").exists())
 
 
+class WindowsPlanTests(unittest.TestCase):
+    def test_memory_limit_leaves_room_for_windows_and_picks_the_tier(self):
+        w = install.windows_plan
+        self.assertEqual(w(8, 19045)["wsl_memory_gb"], 5)            # Windows 10 laptop with 8 GB
+        self.assertEqual(w(8, 19045)["tier"], "4gb")
+        self.assertEqual(w(8, 19045)["networking"], "port forwarding")
+        self.assertEqual(w(16, 22631, "2.3.26")["tier"], "8gb")       # Windows 11 23H2, 16 GB
+        self.assertEqual(w(16, 22631, "2.3.26")["networking"], "mirrored")
+        self.assertEqual(w(16, 22000, "2.3.26")["networking"], "port forwarding")   # Windows 11 21H2: no mirrored mode
+        self.assertEqual(w(16, 22631, "1.2.5")["networking"], "port forwarding")    # old WSL
+        self.assertEqual(w(6, 22631)["tier"], "2gb")
+        self.assertFalse(w(4, 22631)["ok"])                             # 4 GB: not enough beside Windows
+        self.assertFalse(w(16, 18363)["ok"])                            # too old for WSL2
+
+    def test_powershell_script_uses_the_same_numbers(self):
+        text = (Path(__file__).resolve().parents[1] / "scripts" / "install-windows.ps1").read_text()
+        for needle in ("[math]::Max(3, [math]::Ceiling($ramGB * 0.30))", "$wslGB * 0.15", "$build -ge 22621", "$wslMajor -ge 2",
+                       "-lt 19041", "$wslGB -lt 3"):
+            self.assertIn(needle, text)
+        self.assertNotIn("\u2014", text)
+
+
 if __name__ == "__main__":
     unittest.main()

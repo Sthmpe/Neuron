@@ -14,6 +14,7 @@ Nothing is marked as working unless it was actually run here.
 import argparse
 import hashlib
 import json
+import math
 import os
 import shutil
 import sys
@@ -55,6 +56,23 @@ def choose_tier(total, tiers):
                            "Use --tier 2gb to try anyway (it may run out of memory).")
     best = max(fitting, key=lambda t: TIER_BYTES[t])
     return best, usable
+
+
+def windows_plan(ram_gb, build, wsl_version=""):
+    """The decisions scripts/install-windows.ps1 makes (keep both the same). Windows keeps max(3 GB, 30%) of memory;
+    WSL gets the rest as its limit; inside WSL the usual rule (keep max(1 GB, 15%) for Ubuntu) picks the tier.
+    Mirrored networking needs Windows 11 22H2 (build 22621) and WSL 2.0 or newer; otherwise port forwarding."""
+    if build < 19041:
+        return {"ok": False, "why": "WSL2 needs Windows 10 version 2004 (build 19041) or newer"}
+    reserve = max(3, math.ceil(ram_gb * 0.30))
+    wsl_gb = math.floor(ram_gb - reserve)
+    if wsl_gb < 3:
+        return {"ok": False, "why": f"after keeping {reserve} GB for Windows, less than 3 GB is left for NEURON", "reserve_gb": reserve}
+    usable = wsl_gb - max(1, wsl_gb * 0.15)
+    tier = "8gb" if usable >= 8 else "4gb" if usable >= 4 else "2gb"
+    major = int(wsl_version.split(".")[0]) if wsl_version and wsl_version.split(".")[0].isdigit() else 0
+    return {"ok": True, "reserve_gb": reserve, "wsl_memory_gb": wsl_gb, "tier": tier,
+            "networking": "mirrored" if build >= 22621 and major >= 2 else "port forwarding"}
 
 
 def sha256_file(path):

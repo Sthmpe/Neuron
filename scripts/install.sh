@@ -40,6 +40,24 @@ mkdir -p "$NEURON_HOME"
 "$NEURON_HOME/venv/bin/pip" install -q --disable-pip-version-check -r "$REPO/requirements.txt"
 PY="$NEURON_HOME/venv/bin/python"; echo "ok"
 
+say "Sandbox (bubblewrap) for running code safely"
+if bwrap --unshare-user --ro-bind / / true 2>/dev/null; then
+  echo "ok"
+else
+  if [ "$(cat /proc/sys/kernel/apparmor_restrict_unprivileged_userns 2>/dev/null)" = "1" ]; then
+    echo "Ubuntu blocks the sandbox's user namespaces by default. NEURON can add the standard AppArmor"
+    echo "permission for bubblewrap only (file /etc/apparmor.d/bwrap-neuron)."
+    yn=""; read -r -p "   Add it now (asks for your password)? [y/N] " yn || true
+    if [[ "$yn" =~ ^[Yy] ]]; then
+      printf '%s\n' 'abi <abi/4.0>,' 'include <tunables/global>' 'profile bwrap /usr/bin/bwrap flags=(unconfined) {' \
+        '  userns,' '  include if exists <local/bwrap>' '}' | $SUDO tee /etc/apparmor.d/bwrap-neuron >/dev/null
+      $SUDO apparmor_parser -r /etc/apparmor.d/bwrap-neuron
+    fi
+  fi
+  if bwrap --unshare-user --ro-bind / / true 2>/dev/null; then echo "ok"
+  else echo "The sandbox cannot start here, so NEURON will refuse to run code (documents and answers still work)."; fi
+fi
+
 say "llama.cpp (the program that runs the model on this computer's processor)"
 LLAMA="${NEURON_LLAMA_DIR:-$NEURON_HOME/llama}"
 if [ -n "${NEURON_LLAMA_BIN:-}" ] && [ -x "$NEURON_LLAMA_BIN" ]; then

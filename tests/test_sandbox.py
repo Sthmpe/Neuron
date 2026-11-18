@@ -194,3 +194,30 @@ class ModelRestartTests(unittest.TestCase):
             self.assertEqual(r.restarts, 1)
         finally:
             LS.LlamaServer = real
+
+
+class CgroupV2Tests(unittest.TestCase):
+    """Stock Ubuntu 24.04 and WSL2 use cgroup v2; this test machine uses v1, so the v2 path is checked by construction."""
+
+    def test_limits_choose_cgroup_then_systemd_scope_then_address_space(self):
+        from neuron.brain import sandbox as S
+
+        class CG:
+            def __init__(self, dirs):
+                self.dirs = dirs
+        sb = S.Sandbox(mem_mb=512, max_procs=32, toolchains=True)
+        self.assertEqual(sb._limits(CG({"memory": "x"}), 512 << 20), ([], None))
+        saved = dict(S._SCOPE)
+        try:
+            S._SCOPE["ok"] = True
+            prefix, as_limit = sb._limits(CG({}), 512 << 20)
+            self.assertEqual(prefix[:3], ["systemd-run", "--user", "--scope"])
+            self.assertIn(f"MemoryMax={512 << 20}", prefix)
+            self.assertIn("TasksMax=32", prefix)
+            self.assertIsNone(as_limit)
+            S._SCOPE["ok"] = False
+            self.assertEqual(sb._limits(CG({}), 512 << 20), ([], 4 << 30))           # compilers: roomier address space
+            self.assertEqual(S.Sandbox(mem_mb=512)._limits(CG({}), 512 << 20), ([], 512 << 20))
+        finally:
+            S._SCOPE.clear()
+            S._SCOPE.update(saved)

@@ -77,7 +77,8 @@ def main(argv=None):
                   lambda: Sandbox(timeout=120, mem_mb=1024, toolchains=True), default_registry(), models_status,
                   log=lambda m: print(m, flush=True), tls=tls_ctx)
     code = httpd.neuron["pairing"].new_code()
-    addrs = sysinfo.lan_addresses() or ["<this computer's address>"]
+    # NEURON_PUBLIC_HOST: the address the phone should use when this runs inside WSL behind port forwarding
+    addrs = [os.environ["NEURON_PUBLIC_HOST"]] if os.environ.get("NEURON_PUBLIC_HOST") else (sysinfo.lan_addresses() or ["<this computer's address>"])
     scheme = "https" if tls_ctx else "http"
     print(f"NEURON is running. On your phone (same Wi-Fi) open: " + ", ".join(f"{scheme}://{ip}:{port}" for ip in addrs))
     if fp:

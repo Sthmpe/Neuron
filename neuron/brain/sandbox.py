@@ -58,6 +58,28 @@ def _own_cgroup(controller):
     return CGROUP_ROOT / controller
 
 
+_SCOPE = {}
+
+
+def systemd_scope_available():
+    """cgroup v2 machines (stock Ubuntu 24.04, WSL2) do not let an ordinary process make its own memory cgroup, but
+    the user's systemd can: `systemd-run --user --scope -p MemoryMax=...`. Checked once."""
+    if "ok" not in _SCOPE:
+        ok = (CGROUP_ROOT / "cgroup.controllers").exists() and shutil.which("systemd-run") is not None
+        if ok:
+            try:
+                ok = subprocess.run(["systemctl", "--user", "show-environment"], capture_output=True, timeout=5).returncode == 0
+            except (OSError, subprocess.TimeoutExpired):
+                ok = False
+        _SCOPE["ok"] = ok
+    return _SCOPE["ok"]
+
+
+def scope_prefix(mem_bytes, max_procs):
+    return ["systemd-run", "--user", "--scope", "--quiet", "--collect", "-p", f"MemoryMax={mem_bytes}", "-p", "MemorySwapMax=0",
+            "-p", f"TasksMax={max_procs}", "--"]
+
+
 class SandboxUnavailable(Exception):
     pass
 
@@ -211,7 +233,8 @@ class Sandbox:
             "processes": "own PID namespace",
             "time_limit_s": self.timeout,
             "memory_limit_mb": self.mem_mb,
-            "memory_limit_by": "memory cgroup" if self.has_memcg else "address-space rlimit (weaker)",
+            "memory_limit_by": "memory cgroup" if self.has_memcg else ("systemd scope (cgroup v2)" if systemd_scope_available()
+                                                                         else "address-space rlimit (weaker)"),
             "process_limit": self.max_procs if self.has_pidcg else "not enforced (no pids cgroup)",
             "seccomp_filter": self.has_seccomp,
         }
@@ -231,6 +254,16 @@ class Sandbox:
                "--setenv", "LANG", "C.UTF-8", "--setenv", "PYTHONDONTWRITEBYTECODE", "1",
                "--setenv", "PYTHONHASHSEED", "0"] + tc + list(extra)
 
+    def _limits(self, cg, mem_bytes):
+        """(command prefix, address-space limit or None). Memory cgroup v1 if writable; else a systemd scope (cgroup v2);
+        else only an address-space limit, which is weaker and breaks compilers that reserve a lot of virtual memory
+        (Go, Java), so it is set higher when compilers are mounted."""
+        if "memory" in cg.dirs:
+            return [], None
+        if systemd_scope_available():
+            return scope_prefix(mem_bytes, self.max_procs), None
+        return [], (max(4 * mem_bytes, 4 << 30) if self.toolchains else mem_bytes)
+
     def run(self, argv, workspace, timeout=None):
         timeout = timeout or self.timeout
         mem_bytes = self.mem_mb * 1024 * 1024
@@ -242,7 +275,9 @@ class Sandbox:
             pass_fds = (sfd,)
         cmd += ["--"] + list(argv)
         cg = _Cgroup(mem_bytes, self.max_procs)
-        use_rlimit_as = "memory" not in cg.dirs
+        prefix, as_limit = self._limits(cg, mem_bytes)
+        cmd = prefix + cmd
+        use_rlimit_as = as_limit is not None
 
         def preexec():
             cg.enter()
@@ -251,7 +286,7 @@ class Sandbox:
             resource.setrlimit(resource.RLIMIT_FSIZE, (fs, fs))
             resource.setrlimit(resource.RLIMIT_CPU, (int(timeout) + 5, int(timeout) + 5))
             if use_rlimit_as:
-                resource.setrlimit(resource.RLIMIT_AS, (mem_bytes, mem_bytes))
+                resource.setrlimit(resource.RLIMIT_AS, (as_limit, as_limit))
 
         start = time.time()
         timed_out = False
@@ -295,12 +330,16 @@ class Sandbox:
         cmd += ["--", "python3", "/neuron_relay.py", "/run/neuron/app.sock", str(port), "--"] + list(argv)
         mem_bytes = self.mem_mb * 1024 * 1024
         cg = _Cgroup(mem_bytes, self.max_procs)
+        prefix, as_limit = self._limits(cg, mem_bytes)
+        cmd = prefix + cmd
 
         def preexec():
             cg.enter()
             resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
             fs = self.max_file_mb * 1024 * 1024
             resource.setrlimit(resource.RLIMIT_FSIZE, (fs, fs))
+            if as_limit is not None:
+                resource.setrlimit(resource.RLIMIT_AS, (as_limit, as_limit))
 
         out = tempfile.TemporaryFile()
         try:
