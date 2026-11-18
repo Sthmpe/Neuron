@@ -351,6 +351,50 @@
    "bench": "gpqa",
    "seconds": 199.0,
    "peak_mb": 3890
+  },
+  {
+   "correct": false,
+   "given": "",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "gpqa-42",
+   "bench": "gpqa",
+   "seconds": 91.6,
+   "peak_mb": 3895
+  },
+  {
+   "correct": false,
+   "given": "C",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "gpqa-52",
+   "bench": "gpqa",
+   "seconds": 74.8,
+   "peak_mb": 3895
+  },
+  {
+   "correct": false,
+   "given": "",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "gpqa-55",
+   "bench": "gpqa",
+   "seconds": 79.4,
+   "peak_mb": 3895
+  },
+  {
+   "correct": false,
+   "given": "C",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "gpqa-57",
+   "bench": "gpqa",
+   "seconds": 75.4,
+   "peak_mb": 3895
   }
  ],
  "summary": {
