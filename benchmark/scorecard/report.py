@@ -30,6 +30,18 @@ def cell(s):
     return f"**{s['correct']}/{s['n']}** ({pct(s['score'])}, 95% CI {pct(s['ci95'][0])}-{pct(s['ci95'][1])})"
 
 
+def mcnemar(a_rows, n_rows, bench):
+    """Paired exact test on the same items: (alone wrong & NEURON right, alone right & NEURON wrong, two-sided p)."""
+    from math import comb
+    a = {r["id"]: r["correct"] for r in a_rows if r["bench"] == bench}
+    n = {r["id"]: r["correct"] for r in n_rows if r["bench"] == bench}
+    b = sum(1 for i in a if i in n and not a[i] and n[i])
+    c = sum(1 for i in a if i in n and a[i] and not n[i])
+    k, m = min(b, c), b + c
+    p = min(1.0, 2 * sum(comb(m, j) for j in range(k + 1)) / 2 ** m) if m else 1.0
+    return b, c, p
+
+
 def tools(rows):
     t = {}
     for r in rows:
@@ -84,6 +96,23 @@ def main():
                        + f" | {secs / 60:.0f} min | {peak} MB | {toks:,} | {calls} | {tools(rows) if cond == 'neuron' else 'none'} |")
             status.append(f"{tier} {cond}: finished ({d.get('started', '')})")
     out += ["", "Run status: " + "; ".join(status) + ".", ""]
+    lines = []
+    for tier, model in TIERS:
+        a, n = load(tier, "alone"), load(tier, "neuron")
+        if not (a and n and a.get("summary") and n.get("summary")):
+            continue
+        parts = []
+        for b, name, _ in BENCH:
+            x, y = a["summary"][b], n["summary"][b]
+            d = y["correct"] - x["correct"]
+            gain, loss, pv = mcnemar(a["rows"], n["rows"], b)
+            verdict = "" if not d else (f" (paired test p = {pv:.3f}: shown)" if pv < 0.05 else f" (paired test p = {pv:.2f}: not shown)")
+            parts.append(f"{name} {x['correct']} -> {y['correct']} of {x['n']}{verdict}")
+        lines.append(f"- {tier.upper()} ({model}), model alone -> full NEURON: " + "; ".join(parts) + ".")
+    if lines:
+        out += ["### Reading the results", "", "Correct answers, model alone -> full NEURON, on the same items:", ""] + lines + [
+            "", "Both conditions answered the same items, so differences are judged with a paired exact test (McNemar): "
+            "a difference counts as shown only when p < 0.05. With samples this small, most differences are not shown.", ""]
     out += ["### Answers with no letter found (multiple choice)", "",
             "Every multiple-choice answer may use at most 400 tokens (the same limit for every model and condition). An answer "
             "cut off before it names a letter counts as wrong. These counts show how much of a low score is that limit "

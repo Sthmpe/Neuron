@@ -29,7 +29,7 @@ Owner's execution plan of 2026-11-18 (backlog with evidence in [`MASTER_ROADMAP.
 |---|---|
 | 1. Master roadmap | Done |
 | 2. Usable release (clean Linux retest, Windows via WSL2) | Linux retested from a clean setup (4/4 real tasks after fixes); Windows written, **waiting for your test** |
-| 3. Scorecard (MMLU-Pro, GPQA Diamond, LiveCodeBench, BFCL) | **Running**: 2 GB model alone and full NEURON measured, 4 and 8 GB in progress ([`SCORECARD.md`](SCORECARD.md)) |
+| 3. Scorecard (MMLU-Pro, GPQA Diamond, LiveCodeBench, BFCL) | **Done** ([`SCORECARD.md`](SCORECARD.md)): full NEURON beats the model alone on MMLU-Pro for 4 GB (10 to 18 of 28) and 8 GB (9 to 17), both shown by a paired test; no shown difference elsewhere; samples, not full runs |
 | 4. Knowledge memory | Built (keyword + meaning search, 2 GB-friendly embedding model, fallback); no reliable effect on an easy task pair |
 | 5. New locked set, honesty, totals, C++/Go | eval2 written and **locked** before tuning; computed totals and a one-token repair search built; real-model runs queued after the scorecard |
 | 6. Offline to online | Built: waiting steps resume by themselves, crash-safe outside actions, licensed photos with sources, safe package upgrades (real pip and npm runs) |

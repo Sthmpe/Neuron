@@ -83,6 +83,12 @@ Then, in order: full suite, merge, fast-forward main; design proof (20 requests)
 
 ## Events
 
+- 2026-11-19 04:02: scorecard finished (step 3): six runs, 88 fixed sampled items each. Full NEURON beats the model
+  alone on MMLU-Pro for 4 GB (10 to 18 of 28, paired p = 0.008) and 8 GB (9 to 17, p = 0.021); nothing else shown; the
+  2 GB model gains nothing. GPQA results are mostly limited by the 400-token answer limit (answers with no letter are
+  counted in SCORECARD.md). The cloud machine restarted three times during the runs and is suspended when the session
+  is idle; every resume is logged in benchmark/scorecard.log; no finished item was rerun.
+
 - 2026-11-18 evening: step 7 reference sites (law firm, bakery, salon) built by NEURON on the 8 GB model after four
   rounds of fixes found by real builds (see `docs/REFERENCE_SITES.md`). Words clean, all owner facts present, 0 design
   failures, no sideways scrolling; photos: 1 of 9 licensed (Wikimedia rate-limits this cloud address; not worked

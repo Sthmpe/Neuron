@@ -26,9 +26,19 @@ Real measured scores of NEURON's three frozen reasoning models on four public be
 | 4GB, Qwen3.5-4B (Q4_K_M) `Qwen3.5-4B-Q4_K_M.gguf` | model alone | **10/28** (36%, 95% CI 21%-54%) | **0/20** (0%, 95% CI 0%-16%) | **4/10** (40%, 95% CI 17%-69%) | **29/30** (97%, 95% CI 83%-99%) | 98 min | 4011 MB | 26,646 | 88 | none |
 | 4GB, Qwen3.5-4B (Q4_K_M) `Qwen3.5-4B-Q4_K_M.gguf` | full NEURON | **18/28** (64%, 95% CI 46%-79%) | **4/20** (20%, 95% CI 8%-42%) | **4/10** (40%, 95% CI 17%-69%) | **29/30** (97%, 95% CI 83%-99%) | 110 min | 4059 MB | 33,753 | 130 | check pass 48, public example runs 4, python runs 0, repairs 0, schema constrained 30, validation retry 0 |
 | 8GB, gemma-4-E4B (Q4) `gemma-4-E4B-it-Q4_K_M.gguf` | model alone | **9/28** (32%, 95% CI 18%-51%) | **2/20** (10%, 95% CI 3%-30%) | **5/10** (50%, 95% CI 24%-76%) | **30/30** (100%, 95% CI 89%-100%) | 68 min | 5781 MB | 26,992 | 88 | none |
-| 8GB, gemma-4-E4B (Q4) `gemma-4-E4B-it-Q4_K_M.gguf` | neuron | running | running | running | running | 1/88 items so far | | | | |
+| 8GB, gemma-4-E4B (Q4) `gemma-4-E4B-it-Q4_K_M.gguf` | full NEURON | **17/28** (61%, 95% CI 42%-76%) | **1/20** (5%, 95% CI 1%-24%) | **6/10** (60%, 95% CI 31%-83%) | **30/30** (100%, 95% CI 89%-100%) | 138 min | 5888 MB | 53,005 | 146 | check pass 48, public example runs 19, python runs 1, repairs 9, schema constrained 30, validation retry 0 |
 
-Run status: 2gb alone: finished (2026-11-18 11:41:19); 2gb neuron: finished (2026-11-18 12:11:06); 4gb alone: finished (2026-11-18 13:23:08); 4gb neuron: finished (2026-11-18 22:43:09); 8gb alone: finished (2026-11-19 00:35:54); 8gb neuron: running (1 of 88 items).
+Run status: 2gb alone: finished (2026-11-18 11:41:19); 2gb neuron: finished (2026-11-18 12:11:06); 4gb alone: finished (2026-11-18 13:23:08); 4gb neuron: finished (2026-11-18 22:43:09); 8gb alone: finished (2026-11-19 00:35:54); 8gb neuron: finished (2026-11-19 01:44:03).
+
+### Reading the results
+
+Correct answers, model alone -> full NEURON, on the same items:
+
+- 2GB (qwen2.5-coder-1.5b (Q4_K_M)), model alone -> full NEURON: MMLU-Pro 5 -> 4 of 28 (paired test p = 1.00: not shown); GPQA Diamond 2 -> 2 of 20; LiveCodeBench v6 0 -> 0 of 10; BFCL v3 26 -> 26 of 30.
+- 4GB (Qwen3.5-4B (Q4_K_M)), model alone -> full NEURON: MMLU-Pro 10 -> 18 of 28 (paired test p = 0.008: shown); GPQA Diamond 0 -> 4 of 20 (paired test p = 0.12: not shown); LiveCodeBench v6 4 -> 4 of 10; BFCL v3 29 -> 29 of 30.
+- 8GB (gemma-4-E4B (Q4)), model alone -> full NEURON: MMLU-Pro 9 -> 17 of 28 (paired test p = 0.021: shown); GPQA Diamond 2 -> 1 of 20 (paired test p = 1.00: not shown); LiveCodeBench v6 5 -> 6 of 10 (paired test p = 1.00: not shown); BFCL v3 30 -> 30 of 30.
+
+Both conditions answered the same items, so differences are judged with a paired exact test (McNemar): a difference counts as shown only when p < 0.05. With samples this small, most differences are not shown.
 
 ### Answers with no letter found (multiple choice)
 
@@ -41,6 +51,7 @@ Every multiple-choice answer may use at most 400 tokens (the same limit for ever
 | 4GB model alone | 3 of 28 | 11 of 20 |
 | 4GB full NEURON | 6 of 28 | 15 of 20 |
 | 8GB model alone | 3 of 28 | 7 of 20 |
+| 8GB full NEURON | 9 of 28 | 16 of 20 |
 
 A second pass with a larger answer limit, recorded as a separate protocol next to this one, is planned.
 
