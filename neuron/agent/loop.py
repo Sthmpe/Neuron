@@ -275,7 +275,7 @@ class Agent:
             job.log(f"  {tid} try {n}: {'verified' if verdict.passed else 'failed - ' + attempt['failure'][:140]}")
             if verdict.passed:
                 s.update_task(tid, status="done", summary=out.summary, result=out.result, files=out.files, made_by=out.made_by,
-                              verification=verdict.how)
+                              verification=verdict.how, unverified=verdict.unverified)
                 self._remember(tid, out)
                 self._follow_ups(tid, out)
                 return
@@ -338,6 +338,9 @@ class Agent:
         for t in done:
             made[t.get("made_by", "deterministic")] = made.get(t.get("made_by", "deterministic"), 0) + 1
         verdict = "VERIFIED" if plan and len(done) == len(plan) else "PARTIAL" if done or partial else "FAILED"
+        unchecked = [t["id"] for t in done if t.get("unverified")]
+        if verdict == "VERIFIED" and unchecked:       # everything ran, but part of it nothing independent could check
+            verdict = "UNVERIFIED"
         files = sorted({f for t in done + partial for f in t.get("files", [])})
         rep = {"verdict": verdict, "kind": self.s.goal().get("kind"), "tasks": {t["id"]: t["status"] for t in plan},
                "failed": {t["id"]: t.get("summary", "") for t in failed}, "files": files, "made_by": made,
@@ -350,7 +353,8 @@ class Agent:
                "waiting_network": [t["id"] for t in plan if t["status"] == "waiting_network"],
                "retry_at": min([t.get("not_before", 0) for t in plan if t["status"] == "waiting_network"] or [0]),
                "outside_actions": self.job.effects.summary(),
-               "waiting_approval": [t["id"] for t in plan if t["status"] == "waiting_approval"]}
+               "waiting_approval": [t["id"] for t in plan if t["status"] == "waiting_approval"],
+               "unverified": unchecked}
         self.s.set_progress(state="finished" if not rep["pending"] else "paused", verdict=verdict)
         (self.s.dir / "report.json").write_text(json.dumps(rep, indent=1))
         return rep

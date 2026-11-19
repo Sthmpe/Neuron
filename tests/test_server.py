@@ -174,7 +174,7 @@ class ServerTests(unittest.TestCase):
         httpd2, base2 = start(self.home, ["The sky scatters blue light most."])
         self.addCleanup(httpd2.shutdown)
         c.base = base2
-        d = wait_for(c, jid, ("done",))
+        d = wait_for(c, jid, ("answered",))                       # a plain model answer: "answered, not checked", never "done and checked"
         self.assertIn("answer.md", [o["path"] for o in d["outputs"]])
         self.assertIn("scatters blue light", d["answer"])            # shown on the phone directly
 
@@ -224,12 +224,12 @@ class FollowUpTests(unittest.TestCase):
         s, d = c.call("POST", "/api/jobs", {"goal": "Why is the sky blue?"})
         first = d["id"]
         c.call("POST", f"/api/jobs/{first}/start")
-        wait_for(c, first, ("done",))
+        wait_for(c, first, ("answered",))
         self.assertEqual(c.call("POST", f"/api/jobs/{first}/followup", {"text": ""})[0], 400)
         s, d = c.call("POST", f"/api/jobs/{first}/followup", {"text": "And why are sunsets red?"})
         self.assertEqual(s, 201)
         second = d["id"]
-        d = wait_for(c, second, ("done",))
+        d = wait_for(c, second, ("answered",))
         self.assertEqual([t["id"] for t in d["thread"]], [first, second])
         self.assertEqual(d["thread"][1]["said"], "And why are sunsets red?")
         self.assertEqual(d["title"], "And why are sunsets red?")
@@ -237,7 +237,7 @@ class FollowUpTests(unittest.TestCase):
         self.assertIn("Why is the sky blue?", meta["goal"])                   # the new job knows what came before
         self.assertIn("sunsets look red", d["answer"].lower())
         old = json.loads((home / "jobs" / first / "meta.json").read_text())
-        self.assertEqual(old["status"], "done")                                # the earlier job is untouched
+        self.assertEqual(old["status"], "answered")                            # the earlier job is untouched
         self.assertEqual(c.call("POST", "/api/jobs/nope-123/followup", {"text": "x"})[0], 404)
 
 

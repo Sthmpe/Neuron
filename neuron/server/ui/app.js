@@ -2,7 +2,7 @@
 const $ = (s, el = document) => el.querySelector(s);
 const view = $('#view');
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const LABEL = { draft: 'Draft', queued: 'Waiting to start', running: 'Working', done: 'Done and checked', partial: 'Partly done', failed: 'Not done',
+const LABEL = { draft: 'Draft', queued: 'Waiting to start', running: 'Working', done: 'Done and checked', answered: 'Answered, not checked', partial: 'Partly done', failed: 'Not done',
   waiting_approval: 'Needs your OK', paused: 'Paused', waiting_network: 'Waiting for the internet' };
 const STEP = { pending: '', in_progress: '·', done: '✓', partial: '~', failed: '!', skipped: '-', waiting_approval: '?', waiting_network: '…' };
 let timer = null;

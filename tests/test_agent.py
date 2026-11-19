@@ -310,13 +310,28 @@ class WebAppOutcomeTests(unittest.TestCase):
         self.assertEqual([c["detail"] for c in verdict.checks if c["id"] == "design_checks"], ["no problems found"])
 
 
+class NotFoundTests(unittest.TestCase):
+    def test_not_found_answer_is_never_confirmed_and_ends_partial(self):
+        """eval2 (2 GB) found a job that said VERIFIED while one PDF question was answered 'not found'."""
+        req = "Answer from the attached PDF with page numbers.\nHow many items may a member borrow at once?\nWho founded the library?"
+        good = json.dumps({"answer": "8 items", "doc": "dev_library_rules", "page": 1, "quote": "Members may borrow up to 8 items at a time"})
+        nf = json.dumps({"answer": "not found", "doc": "dev_library_rules", "page": 1, "quote": "Members may borrow up to 8 items at a time"})
+        rep, job, _ = run(req, [good, nf] * 3, [str(P5 / "sources" / "dev_library_rules.pdf")])     # a retry asks both again
+        self.assertEqual(rep["verdict"], "PARTIAL", rep)
+        self.assertIn("not found in the documents: Who founded the library?", rep["not_done"]["answer"][0])
+        answers = json.loads((job.workspace / "answers.json").read_text())
+        self.assertEqual([a["verified"] for a in answers], [True, False])
+
+
 class ThinkingTests(unittest.TestCase):
     def test_numeric_question_is_computed_in_the_sandbox_and_checked(self):
         replies = ["Let me compute.\n```python\nprint(17 * 23 + 4)\n```",
                    "The program printed 395.\nAnswer: 395",
                    "The arithmetic is right.\nAnswer: 395"]
         rep, job, llm = run("How much is 17 times 23 plus 4?", replies)
-        self.assertEqual(rep["verdict"], "VERIFIED", rep)
+        # computed and checked once, but nothing independent confirmed it: never "VERIFIED" (eval2 found false claims here)
+        self.assertEqual(rep["verdict"], "UNVERIFIED", rep)
+        self.assertEqual(rep["unverified"], ["answer"])
         text = (job.workspace / "answer.md").read_text()
         self.assertIn("395", text)
         self.assertIn("1 Python run", text)

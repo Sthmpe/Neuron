@@ -194,7 +194,7 @@ class JobManager:
         rep = Agent(job).run(m["goal"], attachments)
         status = "waiting_approval" if rep.get("waiting_approval") else ("paused" if getattr(job, "stop_requested", False)
                   else "waiting_network" if rep.get("waiting_network")
-                  else {"VERIFIED": "done", "PARTIAL": "partial", "FAILED": "failed"}[rep["verdict"]])
+                  else {"VERIFIED": "done", "UNVERIFIED": "answered", "PARTIAL": "partial", "FAILED": "failed"}[rep["verdict"]])
         self._meta(jid, status=status, report=rep, finished=time.time())
 
     def _open_memory(self):

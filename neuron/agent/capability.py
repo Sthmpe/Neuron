@@ -28,6 +28,7 @@ class Verdict:
     checks: list = field(default_factory=list)
     how: str = ""
     rework: str = None        # id of an earlier task that must be redone (with these failures as feedback)
+    unverified: bool = False  # the step did its work but nothing independent could check it: never reported as VERIFIED
 
     @property
     def failures(self):

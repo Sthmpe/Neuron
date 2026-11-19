@@ -48,6 +48,10 @@ def numbers_in(text):
     return {n.replace(",", "").rstrip(".") for n in re.findall(r"\d[\d,]*(?:\.\d+)?", text or "")}
 
 
+NOT_FOUND = re.compile(r"^\W*(not found|not (stated|given|mentioned|in the (document|pages?))|unknown|no (answer|information)|"
+                       r"the (document|pages?) (does|do) not (say|state|mention))\b", re.I)
+
+
 def facts_backed(question, answer, quote):
     """An answer counts as backed only if every number it states is in the quote, and a question that asks for a
     number gets one. (The locked run found answers whose quote was on the page while the answer itself said
@@ -119,13 +123,14 @@ class AnswerFromDocuments(Capability):
                                  "properties": {"answer": {"type": "string"}, "doc": {"type": "string", "enum": sorted({h['doc'] for h in hits}) or ["none"]},
                                                 "page": {"type": "integer"}, "quote": {"type": "string"}}}, max_tokens=300)
             if not data:
-                answers.append({"question": q, "answer": "not found", "verified": False})
+                answers.append({"question": q, "answer": "not found", "verified": False, "not_found": True})
                 continue
             page = next((p for p in idx.pages if p["doc"] == data["doc"] and p["page"] == data["page"]), None)
-            verified = page is not None and len(norm(data["quote"])) > 8 and norm(data["quote"]) in norm(page["text"]) \
+            not_found = bool(NOT_FOUND.search(data["answer"] or ""))       # honest, but not an answer: never confirmed
+            verified = not not_found and page is not None and len(norm(data["quote"])) > 8 and norm(data["quote"]) in norm(page["text"]) \
                 and facts_backed(q, data["answer"], data["quote"])
             answers.append({"question": q, "answer": clean(data["answer"]), "doc": data["doc"], "page": data["page"], "quote": data["quote"],
-                            "verified": verified})
+                            "verified": verified, "not_found": not_found})
         md = ["# Answers", ""] + [f"{i}. **{a['question']}**  \n{a['answer']} ({a.get('doc', '?')}, page {a.get('page', '?')})"
                                   + (f"  \n> {a['quote']}" if a.get("quote") else "") + ("" if a["verified"] else "  \n_(not confirmed: the quote is not on that page, or the answer says more than the quote)_")
                                   for i, a in enumerate(answers, 1)]
@@ -138,8 +143,15 @@ class AnswerFromDocuments(Capability):
                        ["answers.md", "answers.json"], made_by="model")
 
     def verify(self, job, params, outcome):
-        checks = [{"id": f"q{i}_quote_on_cited_page", "pass": a["verified"], "detail": f"{a['question'][:60]} -> {a.get('doc')} p{a.get('page')}"}
-                  for i, a in enumerate(outcome.result["answers"], 1)]
+        retried = bool(params.get("strategy"))
+        checks = []
+        for i, a in enumerate(outcome.result["answers"], 1):
+            if a.get("not_found") and retried:     # looked again with more pages and still nothing: say so, deliver the rest
+                checks.append({"id": f"q{i}_answered", "pass": False, "gap": True,
+                               "detail": f"not found in the documents: {a['question'][:80]}"})
+            else:
+                checks.append({"id": f"q{i}_quote_on_cited_page", "pass": a["verified"],
+                               "detail": f"{a['question'][:60]} -> {a.get('doc')} p{a.get('page')}" + (" (answered 'not found')" if a.get("not_found") else "")})
         if not all(c["pass"] for c in checks):
             job.state.update_task("answer", params={"retry_questions": [a["question"] for a in outcome.result["answers"] if not a["verified"]]})
         return Verdict(all(c["pass"] for c in checks), checks, "quote found on the cited page and the answer's numbers in the quote (deterministic)")
@@ -174,8 +186,10 @@ class AnswerQuestion(Capability):
         return Outcome(True, clean(text)[:300], {"answer": clean(text)}, ["answer.md"], made_by="model")
 
     def verify(self, job, params, outcome):
+        # eval2 found two jobs that said VERIFIED for a wrong number: an answer nothing independent checked is reported as
+        # "answered, not checked" (verdict UNVERIFIED), never as verified
         return Verdict(True, [{"id": "answered", "pass": True, "detail": "UNVERIFIED: a model answer, not checked against a source"}],
-                       "unverified")
+                       "unverified", unverified=True)
 
 
 CAPABILITIES = [IndexDocuments(), AnswerFromDocuments(), AnswerQuestion()]
