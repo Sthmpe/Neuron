@@ -1,0 +1,291 @@
+{
+  "label": "phone-baseline",
+  "revision": "ec9396b2f80aa4d2970cd36d4da6b33d22e502e4",
+  "fixture_sha256": "07ec95ac6aa46ed044fe30507e07bdba2735b30dc61e35e872e1f1767d29ea82",
+  "driver_sha256": "a8a9cdae59c9d3d8ef9eb2dfe394578c82ad0fc0a21c589b5c4faac6abd7113d",
+  "model": "qwen2.5-coder-1.5b-q4",
+  "model_sha256": "cc324af070c2ecbfd324a30884d2f951a7ff756aba85cb811a6ec436933bb046",
+  "server_sha256": "9c3d3ae64b901e552479582971e0a4cb90a8a1a71bbebf0a695a24fec4b4c888",
+  "seed": 71,
+  "threads": 1,
+  "context": 8192,
+  "environment": {
+    "cgroup": "/astra",
+    "memory.max": "2147483648",
+    "memory.swap.max": "0",
+    "interfaces": [
+      "lo"
+    ],
+    "external_probe": "[Errno 101] Network is unreachable",
+    "kernel": "6.12.113",
+    "python": "3.12.14"
+  },
+  "rows": [
+    {
+      "id": "mat-width",
+      "job": "20261119-222042-7511",
+      "thread_jobs": [
+        "20261119-222042-7511"
+      ],
+      "states": [
+        "running",
+        "done"
+      ],
+      "turns": [],
+      "status": "done",
+      "answer": "\\( 9w \\) square centimeters\n\nUnverified. The model used a second pass.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 2,
+        "tokens": 249,
+        "model_seconds": 21.6,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 21.83
+    },
+    {
+      "id": "mat-width-twin",
+      "job": "20261119-222103-8fca",
+      "thread_jobs": [
+        "20261119-222103-8fca"
+      ],
+      "states": [
+        "running",
+        "done"
+      ],
+      "turns": [],
+      "status": "done",
+      "answer": "\\( 9w \\) square centimeters\n\nUnverified. The model used a second pass.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 2,
+        "tokens": 249,
+        "model_seconds": 21.7,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 21.724
+    },
+    {
+      "id": "bike-time",
+      "job": "20261119-222125-f754",
+      "thread_jobs": [
+        "20261119-222125-f754"
+      ],
+      "states": [
+        "queued",
+        "running",
+        "failed"
+      ],
+      "turns": [],
+      "status": "failed",
+      "answer": "",
+      "verdict": "FAILED",
+      "usage": {
+        "model_calls": 6,
+        "tokens": 408,
+        "model_seconds": 38.4,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 38.605
+    },
+    {
+      "id": "ticket-count",
+      "job": "20261119-222204-2654",
+      "thread_jobs": [
+        "20261119-222204-2654"
+      ],
+      "states": [
+        "running",
+        "done"
+      ],
+      "turns": [],
+      "status": "done",
+      "answer": "Incorrect\n\nUnverified. The model used 1 Python run(s) and a second pass.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 3,
+        "tokens": 290,
+        "model_seconds": 20.2,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 20.566
+    },
+    {
+      "id": "opening-balance",
+      "job": "20261119-222224-a559",
+      "thread_jobs": [
+        "20261119-222224-a559"
+      ],
+      "states": [
+        "running",
+        "done"
+      ],
+      "turns": [],
+      "status": "done",
+      "answer": "67\n\nUnverified. The model used a second pass.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 2,
+        "tokens": 90,
+        "model_seconds": 9.1,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 9.2
+    },
+    {
+      "id": "paint-two-inputs",
+      "job": "20261119-222234-7407",
+      "thread_jobs": [
+        "20261119-222234-7407"
+      ],
+      "states": [
+        "running",
+        "done"
+      ],
+      "turns": [],
+      "status": "done",
+      "answer": "To determine the area of your rectangular painting in square metres, you need to know the length and width of the painting. The formula for the area \\( A \\) of a rectangle is: \\[ A = \\text{length} \\times \\text{width} \\] Here are the steps to calculate the area: 1. Measure the length of the painting. Let's say the length is \\( l \\) metres.\n2. Measure the width of the painting. Let's say the width is \\( w \\) metres.\n3. Multiply the length by the width to get the area. For example, if the length of the painting is 5 metres and the width is 3 metres, the area would be: \\[ A = 5 \\, \\text{metres} \\times 3 \\, \\text{metres} = 15 \\, \\text{square metres} \\] So, the area of your rectangular painting is \\(\\boxed{15}\\) square metres.\n\nUnverified. The local model supplied this answer.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 1,
+        "tokens": 205,
+        "model_seconds": 13.1,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 13.267
+    },
+    {
+      "id": "local-label",
+      "job": "20261119-222247-2295",
+      "thread_jobs": [
+        "20261119-222247-2295"
+      ],
+      "states": [
+        "running",
+        "done"
+      ],
+      "turns": [],
+      "status": "done",
+      "answer": "I'm sorry, but I don't have any information about the storage box you mentioned. Could you please provide more details or context?\n\nUnverified. The local model supplied this answer.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 1,
+        "tokens": 28,
+        "model_seconds": 2.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 1.994
+    },
+    {
+      "id": "complete-mat",
+      "job": "20261119-222249-bfbd",
+      "thread_jobs": [
+        "20261119-222249-bfbd"
+      ],
+      "states": [
+        "running",
+        "done"
+      ],
+      "turns": [],
+      "status": "done",
+      "answer": "45\n\nUnverified. The model used a second pass.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 2,
+        "tokens": 80,
+        "model_seconds": 8.3,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 8.45
+    },
+    {
+      "id": "complete-zero",
+      "job": "20261119-222257-6f1d",
+      "thread_jobs": [
+        "20261119-222257-6f1d"
+      ],
+      "states": [
+        "running",
+        "done"
+      ],
+      "turns": [],
+      "status": "done",
+      "answer": "0\n\nUnverified. The model used a second pass.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 2,
+        "tokens": 33,
+        "model_seconds": 5.4,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 5.638
+    },
+    {
+      "id": "arithmetic",
+      "job": "20261119-222303-d894",
+      "thread_jobs": [
+        "20261119-222303-d894"
+      ],
+      "states": [
+        "running",
+        "done"
+      ],
+      "turns": [],
+      "status": "done",
+      "answer": "41\n",
+      "verdict": "VERIFIED",
+      "usage": {
+        "model_calls": 0,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.169
+    },
+    {
+      "id": "concept",
+      "job": "20261119-222303-55d4",
+      "thread_jobs": [
+        "20261119-222303-55d4"
+      ],
+      "states": [
+        "running",
+        "done"
+      ],
+      "turns": [],
+      "status": "done",
+      "answer": "A thermometer measures temperature.\n\nUnverified. The local model supplied this answer.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 1,
+        "tokens": 6,
+        "model_seconds": 1.2,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 1.41
+    }
+  ],
+  "seconds": 160.356,
+  "peak_bytes": 2147483648,
+  "events": [
+    "low 0",
+    "high 0",
+    "max 1410",
+    "oom 0",
+    "oom_kill 0",
+    "oom_group_kill 0"
+  ],
+  "loads": 1,
+  "load_seconds": 16.796
+}
