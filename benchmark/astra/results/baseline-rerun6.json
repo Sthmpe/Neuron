@@ -1,0 +1,269 @@
+{
+  "label": "baseline-rerun6",
+  "source_commit": "1f65640b4c85204652259110e810beb4432e56dc",
+  "cases_sha256": "91046679067051482282892961d9b587efc264f4940805db6a4549c0c5806710",
+  "driver_sha256": "1cd7248e57603f315b08f30e105bfa844a57fa53372ef5bc11fc89d690fdd5f7",
+  "model": "qwen2.5-coder-1.5b-q4",
+  "model_sha256": "cc324af070c2ecbfd324a30884d2f951a7ff756aba85cb811a6ec436933bb046",
+  "llama_server_sha256": "9c3d3ae64b901e552479582971e0a4cb90a8a1a71bbebf0a695a24fec4b4c888",
+  "context": 8192,
+  "seed": 71,
+  "threads": 1,
+  "environment": {
+    "cgroup": "/astra",
+    "memory.max": "2147483648",
+    "memory.swap.max": "0",
+    "interfaces": [
+      "lo"
+    ],
+    "external_probe": "[Errno 101] Network is unreachable",
+    "kernel": "6.12.113",
+    "python": "3.12.14"
+  },
+  "seconds": 72.864,
+  "peak_bytes": 2147483648,
+  "events": [
+    "low 0",
+    "high 0",
+    "max 1392",
+    "oom 0",
+    "oom_kill 0",
+    "oom_group_kill 0"
+  ],
+  "loads": 1,
+  "load_seconds": 21.411,
+  "rows": [
+    {
+      "id": "element",
+      "verdict": "VERIFIED",
+      "kind": "answer",
+      "answer": "The element with the chemical symbol Sn is tin.",
+      "task_status": {
+        "answer": "done"
+      },
+      "made_by": "model",
+      "model_calls": 1,
+      "tokens": 11,
+      "online_calls": 0,
+      "seconds": 1.985,
+      "evidence": [
+        {
+          "at": 1795121318.8787098,
+          "task": "answer",
+          "passed": true,
+          "how": "unverified",
+          "checks": [
+            {
+              "id": "answered",
+              "pass": true,
+              "detail": "UNVERIFIED: a model answer, not checked against a source"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grouping",
+      "verdict": "VERIFIED",
+      "kind": "answer",
+      "answer": "191 (Checked once by a second pass.)",
+      "task_status": {
+        "answer": "done"
+      },
+      "made_by": "model",
+      "model_calls": 2,
+      "tokens": 95,
+      "online_calls": 0,
+      "seconds": 8.058,
+      "evidence": [
+        {
+          "at": 1795121326.9522564,
+          "task": "answer",
+          "passed": true,
+          "how": "unverified",
+          "checks": [
+            {
+              "id": "answered",
+              "pass": true,
+              "detail": "UNVERIFIED: a model answer, not checked against a source"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "train",
+      "verdict": "VERIFIED",
+      "kind": "answer",
+      "answer": "I'm sorry, but I don't have enough information to determine which train you took yesterday. You haven't provided any itinerary or any details about your travel. Without this information, I can't accurately answer your question.",
+      "task_status": {
+        "answer": "done"
+      },
+      "made_by": "model",
+      "model_calls": 1,
+      "tokens": 45,
+      "online_calls": 0,
+      "seconds": 3.233,
+      "evidence": [
+        {
+          "at": 1795121330.1958814,
+          "task": "answer",
+          "passed": true,
+          "how": "unverified",
+          "checks": [
+            {
+              "id": "answered",
+              "pass": true,
+              "detail": "UNVERIFIED: a model answer, not checked against a source"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "decimal",
+      "verdict": "VERIFIED",
+      "kind": "answer",
+      "answer": "0.245 (Checked once by a second pass.)",
+      "task_status": {
+        "answer": "done"
+      },
+      "made_by": "model",
+      "model_calls": 2,
+      "tokens": 46,
+      "online_calls": 0,
+      "seconds": 5.933,
+      "evidence": [
+        {
+          "at": 1795121336.1395473,
+          "task": "answer",
+          "passed": true,
+          "how": "unverified",
+          "checks": [
+            {
+              "id": "answered",
+              "pass": true,
+              "detail": "UNVERIFIED: a model answer, not checked against a source"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "numeral",
+      "verdict": "VERIFIED",
+      "kind": "answer",
+      "answer": "XLII (Checked once by a second pass.)",
+      "task_status": {
+        "answer": "done"
+      },
+      "made_by": "model",
+      "model_calls": 2,
+      "tokens": 14,
+      "online_calls": 0,
+      "seconds": 3.764,
+      "evidence": [
+        {
+          "at": 1795121339.9126298,
+          "task": "answer",
+          "passed": true,
+          "how": "unverified",
+          "checks": [
+            {
+              "id": "answered",
+              "pass": true,
+              "detail": "UNVERIFIED: a model answer, not checked against a source"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "negative",
+      "verdict": "VERIFIED",
+      "kind": "answer",
+      "answer": "4 (Checked once by a second pass.)",
+      "task_status": {
+        "answer": "done"
+      },
+      "made_by": "model",
+      "model_calls": 2,
+      "tokens": 18,
+      "online_calls": 0,
+      "seconds": 4.173,
+      "evidence": [
+        {
+          "at": 1795121344.095822,
+          "task": "answer",
+          "passed": true,
+          "how": "unverified",
+          "checks": [
+            {
+              "id": "answered",
+              "pass": true,
+              "detail": "UNVERIFIED: a model answer, not checked against a source"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "meter",
+      "verdict": "VERIFIED",
+      "kind": "answer",
+      "answer": "121 (Worked out with 1 Python run(s) in the sandbox and checked once.)",
+      "task_status": {
+        "answer": "done"
+      },
+      "made_by": "model",
+      "model_calls": 3,
+      "tokens": 179,
+      "online_calls": 0,
+      "seconds": 13.679,
+      "evidence": [
+        {
+          "at": 1795121357.7825084,
+          "task": "answer",
+          "passed": true,
+          "how": "unverified",
+          "checks": [
+            {
+              "id": "answered",
+              "pass": true,
+              "detail": "UNVERIFIED: a model answer, not checked against a source"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "quotient",
+      "verdict": "VERIFIED",
+      "kind": "answer",
+      "answer": "\\(\\frac{23}{6}\\) (Checked once by a second pass.)",
+      "task_status": {
+        "answer": "done"
+      },
+      "made_by": "model",
+      "model_calls": 2,
+      "tokens": 129,
+      "online_calls": 0,
+      "seconds": 10.189,
+      "evidence": [
+        {
+          "at": 1795121367.989585,
+          "task": "answer",
+          "passed": true,
+          "how": "unverified",
+          "checks": [
+            {
+              "id": "answered",
+              "pass": true,
+              "detail": "UNVERIFIED: a model answer, not checked against a source"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,269 @@
+{
+  "label": "candidate-dev-rerun1",
+  "source_commit": "ae1ab306129730b72c311a2d017ed8f2f2259e00",
+  "cases_sha256": "91046679067051482282892961d9b587efc264f4940805db6a4549c0c5806710",
+  "driver_sha256": "a81da832beb21bd28ea5ac0b9b2ccb2aa9cddd9b7de442798dec568855ebf33b",
+  "model": "qwen2.5-coder-1.5b-q4",
+  "model_sha256": "cc324af070c2ecbfd324a30884d2f951a7ff756aba85cb811a6ec436933bb046",
+  "llama_server_sha256": "9c3d3ae64b901e552479582971e0a4cb90a8a1a71bbebf0a695a24fec4b4c888",
+  "context": 8192,
+  "seed": 71,
+  "threads": 1,
+  "environment": {
+    "cgroup": "/astra",
+    "memory.max": "2147483648",
+    "memory.swap.max": "0",
+    "interfaces": [
+      "lo"
+    ],
+    "external_probe": "[Errno 101] Network is unreachable",
+    "kernel": "6.12.113",
+    "python": "3.12.14"
+  },
+  "seconds": 37.947,
+  "peak_bytes": 2147483648,
+  "events": [
+    "low 0",
+    "high 0",
+    "max 1392",
+    "oom 0",
+    "oom_kill 0",
+    "oom_group_kill 0"
+  ],
+  "loads": 1,
+  "load_seconds": 15.564,
+  "rows": [
+    {
+      "id": "element",
+      "verdict": "UNVERIFIED",
+      "kind": "answer",
+      "answer": "The element with the chemical symbol Sn is tin.\n\nUnverified. The local model supplied this answer.",
+      "task_status": {
+        "answer": "done"
+      },
+      "made_by": "model",
+      "model_calls": 1,
+      "tokens": 11,
+      "online_calls": 0,
+      "seconds": 1.712,
+      "evidence": [
+        {
+          "at": 1795121464.5752065,
+          "task": "answer",
+          "passed": true,
+          "how": "unverified",
+          "checks": [
+            {
+              "id": "answer_delivered",
+              "pass": true,
+              "detail": "The answer carries an unverified label."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grouping",
+      "verdict": "VERIFIED",
+      "kind": "answer",
+      "answer": "175",
+      "task_status": {
+        "answer": "done"
+      },
+      "made_by": "deterministic",
+      "model_calls": 0,
+      "tokens": 0,
+      "online_calls": 0,
+      "seconds": 0.005,
+      "evidence": [
+        {
+          "at": 1795121464.5911648,
+          "task": "answer",
+          "passed": true,
+          "how": "exact rational arithmetic checked against answer.md",
+          "checks": [
+            {
+              "id": "exact_arithmetic",
+              "pass": true,
+              "detail": "(34 - 9) * 7 = 175"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "train",
+      "verdict": "UNVERIFIED",
+      "kind": "answer",
+      "answer": "I'm sorry, but I don't have enough information to determine which train you took yesterday. You haven't provided any itinerary or any details about your journey. Without this information, I can't accurately answer your question.\n\nUnverified. The local model supplied this answer.",
+      "task_status": {
+        "answer": "done"
+      },
+      "made_by": "model",
+      "model_calls": 1,
+      "tokens": 45,
+      "online_calls": 0,
+      "seconds": 2.639,
+      "evidence": [
+        {
+          "at": 1795121467.239079,
+          "task": "answer",
+          "passed": true,
+          "how": "unverified",
+          "checks": [
+            {
+              "id": "answer_delivered",
+              "pass": true,
+              "detail": "The answer carries an unverified label."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "decimal",
+      "verdict": "VERIFIED",
+      "kind": "answer",
+      "answer": "0.245",
+      "task_status": {
+        "answer": "done"
+      },
+      "made_by": "deterministic",
+      "model_calls": 0,
+      "tokens": 0,
+      "online_calls": 0,
+      "seconds": 0.005,
+      "evidence": [
+        {
+          "at": 1795121467.2571528,
+          "task": "answer",
+          "passed": true,
+          "how": "exact rational arithmetic checked against answer.md",
+          "checks": [
+            {
+              "id": "exact_arithmetic",
+              "pass": true,
+              "detail": "0.08 + 0.165 = 0.245"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "numeral",
+      "verdict": "UNVERIFIED",
+      "kind": "answer",
+      "answer": "XLII\n\nUnverified. The model used a second pass.",
+      "task_status": {
+        "answer": "done"
+      },
+      "made_by": "model",
+      "model_calls": 2,
+      "tokens": 14,
+      "online_calls": 0,
+      "seconds": 3.884,
+      "evidence": [
+        {
+          "at": 1795121471.1520133,
+          "task": "answer",
+          "passed": true,
+          "how": "unverified",
+          "checks": [
+            {
+              "id": "answer_delivered",
+              "pass": true,
+              "detail": "The answer carries an unverified label."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "negative",
+      "verdict": "VERIFIED",
+      "kind": "answer",
+      "answer": "-4",
+      "task_status": {
+        "answer": "done"
+      },
+      "made_by": "deterministic",
+      "model_calls": 0,
+      "tokens": 0,
+      "online_calls": 0,
+      "seconds": 0.005,
+      "evidence": [
+        {
+          "at": 1795121471.1673965,
+          "task": "answer",
+          "passed": true,
+          "how": "exact rational arithmetic checked against answer.md",
+          "checks": [
+            {
+              "id": "exact_arithmetic",
+              "pass": true,
+              "detail": "-16 + 3 * 4 = -4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "meter",
+      "verdict": "UNVERIFIED",
+      "kind": "answer",
+      "answer": "121\n\nUnverified. The model used 1 Python run(s) and a second pass.",
+      "task_status": {
+        "answer": "done"
+      },
+      "made_by": "model",
+      "model_calls": 3,
+      "tokens": 179,
+      "online_calls": 0,
+      "seconds": 13.703,
+      "evidence": [
+        {
+          "at": 1795121484.8696322,
+          "task": "answer",
+          "passed": true,
+          "how": "unverified",
+          "checks": [
+            {
+              "id": "answer_delivered",
+              "pass": true,
+              "detail": "The answer carries an unverified label."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "quotient",
+      "verdict": "VERIFIED",
+      "kind": "answer",
+      "answer": "23/6",
+      "task_status": {
+        "answer": "done"
+      },
+      "made_by": "deterministic",
+      "model_calls": 0,
+      "tokens": 0,
+      "online_calls": 0,
+      "seconds": 0.019,
+      "evidence": [
+        {
+          "at": 1795121484.937921,
+          "task": "answer",
+          "passed": true,
+          "how": "exact rational arithmetic checked against answer.md",
+          "checks": [
+            {
+              "id": "exact_arithmetic",
+              "pass": true,
+              "detail": "(19 + 4) / 6 = 23/6"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
