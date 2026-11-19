@@ -28,10 +28,73 @@
    "agent_verdict": "PARTIAL",
    "false_claim": false,
    "detail": "FAIL line 8: fare(65) == 0\nFAIL line 10: day_total({8, 30, 65}) == 450\nFAIL line 11: free_riders({65, 64, 80}) == 2\nmake: *** [Makefile:3: test] Error 3\n"
+  },
+  {
+   "project": "cpp_trim",
+   "solved": false,
+   "tests_pass": false,
+   "tests_unchanged": true,
+   "seconds": 62.1,
+   "made_by": {
+    "deterministic": 1
+   },
+   "model_calls": 9,
+   "agent_verdict": "PARTIAL",
+   "false_claim": false,
+   "detail": "FAIL line 7: trim(\"\\tAda\\r\\n\") == \"Ada\"\nFAIL line 8: trim(\" \\t \") == \"\"\nFAIL line 10: clean_name(\"\\tNgozi\\n\") == \"Ngozi\"\nmake: *** [Makefile:2: test] Error 3\n"
+  },
+  {
+   "project": "go_parking",
+   "solved": false,
+   "tests_pass": false,
+   "tests_unchanged": true,
+   "seconds": 120.6,
+   "made_by": {
+    "deterministic": 1
+   },
+   "model_calls": 9,
+   "agent_verdict": "PARTIAL",
+   "false_claim": false,
+   "detail": "--- FAIL: TestFee (0.00s)\n    fee_test.go:9: Fee(30) = 200, want 0\n--- FAIL: TestDayTakings (0.00s)\n    fee_test.go:16: DayTakings = 1000, want 800\nFAIL\nFAIL\texample.com/parking/parking\t0.002s\nFAIL\n"
+  },
+  {
+   "project": "go_split",
+   "solved": true,
+   "tests_pass": true,
+   "tests_unchanged": true,
+   "seconds": 35.6,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "model_calls": 2,
+   "agent_verdict": "VERIFIED",
+   "false_claim": false,
+   "detail": ""
+  },
+  {
+   "project": "go_stock",
+   "solved": false,
+   "tests_pass": false,
+   "tests_unchanged": true,
+   "seconds": 64.0,
+   "made_by": {
+    "deterministic": 1
+   },
+   "model_calls": 9,
+   "agent_verdict": "PARTIAL",
+   "false_claim": false,
+   "detail": "--- FAIL: TestReorder (0.00s)\n    reorder_test.go:10: ReorderQty(5, 10, 50) = 55, want 45\nFAIL\nFAIL\texample.com/stock/stock\t0.003s\nFAIL\n"
   }
  ],
  "tier": "2gb",
  "network": "new empty network namespace (loopback only)",
  "code_commit": "f6bb6d7",
- "started": "2026-11-19 06:00:25"
+ "started": "2026-11-19 06:00:25",
+ "summary": {
+  "solved": 2,
+  "of": 6,
+  "false_claims": 0,
+  "seconds": 350.5
+ }
 }

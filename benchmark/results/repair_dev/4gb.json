@@ -1,0 +1,104 @@
+{
+ "rows": [
+  {
+   "project": "cpp_grades",
+   "solved": true,
+   "tests_pass": true,
+   "tests_unchanged": true,
+   "seconds": 5.0,
+   "made_by": {
+    "deterministic": 1,
+    "search": 1
+   },
+   "model_calls": 0,
+   "agent_verdict": "VERIFIED",
+   "false_claim": false,
+   "detail": ""
+  },
+  {
+   "project": "cpp_tickets",
+   "solved": true,
+   "tests_pass": true,
+   "tests_unchanged": true,
+   "seconds": 5.1,
+   "made_by": {
+    "deterministic": 1,
+    "search": 1
+   },
+   "model_calls": 0,
+   "agent_verdict": "VERIFIED",
+   "false_claim": false,
+   "detail": ""
+  },
+  {
+   "project": "cpp_trim",
+   "solved": true,
+   "tests_pass": true,
+   "tests_unchanged": true,
+   "seconds": 80.4,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "model_calls": 2,
+   "agent_verdict": "VERIFIED",
+   "false_claim": false,
+   "detail": ""
+  },
+  {
+   "project": "go_parking",
+   "solved": true,
+   "tests_pass": true,
+   "tests_unchanged": true,
+   "seconds": 19.3,
+   "made_by": {
+    "deterministic": 1,
+    "search": 1
+   },
+   "model_calls": 0,
+   "agent_verdict": "VERIFIED",
+   "false_claim": false,
+   "detail": ""
+  },
+  {
+   "project": "go_split",
+   "solved": true,
+   "tests_pass": true,
+   "tests_unchanged": true,
+   "seconds": 89.0,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "model_calls": 2,
+   "agent_verdict": "VERIFIED",
+   "false_claim": false,
+   "detail": ""
+  },
+  {
+   "project": "go_stock",
+   "solved": true,
+   "tests_pass": true,
+   "tests_unchanged": true,
+   "seconds": 18.8,
+   "made_by": {
+    "deterministic": 1,
+    "search": 1
+   },
+   "model_calls": 0,
+   "agent_verdict": "VERIFIED",
+   "false_claim": false,
+   "detail": ""
+  }
+ ],
+ "tier": "4gb",
+ "network": "new empty network namespace (loopback only)",
+ "code_commit": "7105ec7",
+ "started": "2026-11-19 06:07:40",
+ "summary": {
+  "solved": 6,
+  "of": 6,
+  "false_claims": 0,
+  "seconds": 217.6
+ }
+}

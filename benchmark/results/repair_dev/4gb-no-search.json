@@ -1,0 +1,53 @@
+{
+ "rows": [
+  {
+   "project": "cpp_grades",
+   "solved": true,
+   "tests_pass": true,
+   "tests_unchanged": true,
+   "seconds": 37.6,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "model_calls": 2,
+   "agent_verdict": "VERIFIED",
+   "false_claim": false,
+   "detail": ""
+  },
+  {
+   "project": "cpp_tickets",
+   "solved": true,
+   "tests_pass": true,
+   "tests_unchanged": true,
+   "seconds": 39.2,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "model_calls": 2,
+   "agent_verdict": "VERIFIED",
+   "false_claim": false,
+   "detail": ""
+  },
+  {
+   "project": "cpp_trim",
+   "solved": true,
+   "tests_pass": true,
+   "tests_unchanged": true,
+   "seconds": 239.7,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "model_calls": 9,
+   "agent_verdict": "VERIFIED",
+   "false_claim": false,
+   "detail": ""
+  }
+ ],
+ "tier": "4gb",
+ "network": "new empty network namespace (loopback only)",
+ "code_commit": "7105ec7",
+ "started": "2026-11-19 06:11:18"
+}
