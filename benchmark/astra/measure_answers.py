@@ -60,7 +60,14 @@ def main():
                 "model": frozen["id"], "model_sha256": frozen["sha256"], "llama_server_sha256": file_hash(binary),
                 "context": frozen["context_tokens"], "seed": 71, "threads": 1, "environment": environment}
     rows = []
-    with args.output.open("x") as record, tempfile.TemporaryDirectory() as temp:
+    journal = args.output.with_suffix(".jsonl")
+    with args.output.open("x") as record, journal.open("x") as checkpoints, tempfile.TemporaryDirectory() as temp:
+        def checkpoint(entry):
+            checkpoints.write(json.dumps(entry) + "\n")
+            checkpoints.flush()
+            os.fsync(checkpoints.fileno())
+
+        checkpoint({"start": metadata})
         root = Path(temp)
         log_dir = args.output.parent / (args.output.stem + "-logs")
         log_dir.mkdir()
@@ -85,6 +92,8 @@ def main():
                              "model_calls": report["model_calls"], "tokens": report["tokens"],
                              "online_calls": report["online_calls"], "seconds": round(seconds, 3),
                              "evidence": job.state.lines("evidence.jsonl")})
+                checkpoint({"row": rows[-1], "elapsed_seconds": round(time.monotonic() - started, 3),
+                            "peak_bytes_so_far": int((group / "memory.peak").read_text())})
                 print(case["id"], report["verdict"], round(seconds, 3), flush=True)
         finally:
             runner.unload()
