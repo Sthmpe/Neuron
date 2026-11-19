@@ -494,6 +494,449 @@
    "bench": "gpqa",
    "seconds": 56.4,
    "peak_mb": 5734
+  },
+  {
+   "correct": false,
+   "given": "C",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "gpqa-179",
+   "bench": "gpqa",
+   "seconds": 56.4,
+   "peak_mb": 5734
+  },
+  {
+   "correct": false,
+   "given": "B",
+   "calls": 1,
+   "tokens": 400,
+   "tools": {},
+   "id": "gpqa-180",
+   "bench": "gpqa",
+   "seconds": 57.0,
+   "peak_mb": 5734
+  },
+  {
+   "correct": false,
+   "given": "C",
+   "calls": 1,
+   "tokens": 140,
+   "tools": {},
+   "id": "gpqa-192",
+   "bench": "gpqa",
+   "seconds": 20.5,
+   "peak_mb": 5734
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 470,
+   "tests": 42,
+   "tools": {},
+   "id": "lcb-abc396_b",
+   "bench": "lcb",
+   "seconds": 77.6,
+   "peak_mb": 5769
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 281,
+   "tests": 43,
+   "tools": {},
+   "id": "lcb-abc400_a",
+   "bench": "lcb",
+   "seconds": 42.9,
+   "peak_mb": 5769
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 371,
+   "tests": 43,
+   "tools": {},
+   "id": "lcb-abc392_b",
+   "bench": "lcb",
+   "seconds": 57.3,
+   "peak_mb": 5769
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 339,
+   "tests": 44,
+   "tools": {},
+   "id": "lcb-abc390_a",
+   "bench": "lcb",
+   "seconds": 52.1,
+   "peak_mb": 5769
+  },
+  {
+   "correct": false,
+   "calls": 1,
+   "tokens": 1200,
+   "tests": 42,
+   "tools": {},
+   "id": "lcb-abc391_d",
+   "bench": "lcb",
+   "seconds": 171.2,
+   "peak_mb": 5769
+  },
+  {
+   "correct": false,
+   "calls": 1,
+   "tokens": 1200,
+   "tests": 43,
+   "tools": {},
+   "id": "lcb-abc400_c",
+   "bench": "lcb",
+   "seconds": 162.6,
+   "peak_mb": 5769
+  },
+  {
+   "correct": false,
+   "calls": 1,
+   "tokens": 1200,
+   "tests": 2,
+   "tools": {},
+   "id": "lcb-abc399_d",
+   "bench": "lcb",
+   "seconds": 170.5,
+   "peak_mb": 5769
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 827,
+   "tests": 43,
+   "tools": {},
+   "id": "lcb-abc390_c",
+   "bench": "lcb",
+   "seconds": 126.3,
+   "peak_mb": 5771
+  },
+  {
+   "correct": false,
+   "calls": 1,
+   "tokens": 1200,
+   "tests": 43,
+   "tools": {},
+   "id": "lcb-abc392_g",
+   "bench": "lcb",
+   "seconds": 167.6,
+   "peak_mb": 5779
+  },
+  {
+   "correct": false,
+   "calls": 1,
+   "tokens": 1200,
+   "tests": 43,
+   "tools": {},
+   "id": "lcb-abc398_f",
+   "bench": "lcb",
+   "seconds": 164.8,
+   "peak_mb": 5779
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 35,
+   "tools": {},
+   "id": "bfcl-simple_28",
+   "bench": "bfcl",
+   "seconds": 7.8,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 31,
+   "tools": {},
+   "id": "bfcl-simple_57",
+   "bench": "bfcl",
+   "seconds": 6.9,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 33,
+   "tools": {},
+   "id": "bfcl-simple_107",
+   "bench": "bfcl",
+   "seconds": 7.0,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 40,
+   "tools": {},
+   "id": "bfcl-simple_108",
+   "bench": "bfcl",
+   "seconds": 7.9,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 42,
+   "tools": {},
+   "id": "bfcl-simple_156",
+   "bench": "bfcl",
+   "seconds": 8.0,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 55,
+   "tools": {},
+   "id": "bfcl-simple_163",
+   "bench": "bfcl",
+   "seconds": 10.5,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 32,
+   "tools": {},
+   "id": "bfcl-simple_183",
+   "bench": "bfcl",
+   "seconds": 6.6,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 48,
+   "tools": {},
+   "id": "bfcl-simple_195",
+   "bench": "bfcl",
+   "seconds": 10.4,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 36,
+   "tools": {},
+   "id": "bfcl-simple_202",
+   "bench": "bfcl",
+   "seconds": 7.3,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 30,
+   "tools": {},
+   "id": "bfcl-simple_276",
+   "bench": "bfcl",
+   "seconds": 6.2,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 37,
+   "tools": {},
+   "id": "bfcl-simple_309",
+   "bench": "bfcl",
+   "seconds": 7.5,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 24,
+   "tools": {},
+   "id": "bfcl-simple_310",
+   "bench": "bfcl",
+   "seconds": 5.8,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 30,
+   "tools": {},
+   "id": "bfcl-simple_312",
+   "bench": "bfcl",
+   "seconds": 6.6,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 46,
+   "tools": {},
+   "id": "bfcl-simple_334",
+   "bench": "bfcl",
+   "seconds": 9.4,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 44,
+   "tools": {},
+   "id": "bfcl-simple_399",
+   "bench": "bfcl",
+   "seconds": 9.0,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 20,
+   "tools": {},
+   "id": "bfcl-multiple_2",
+   "bench": "bfcl",
+   "seconds": 5.7,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 38,
+   "tools": {},
+   "id": "bfcl-multiple_4",
+   "bench": "bfcl",
+   "seconds": 10.8,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 39,
+   "tools": {},
+   "id": "bfcl-multiple_6",
+   "bench": "bfcl",
+   "seconds": 10.6,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 37,
+   "tools": {},
+   "id": "bfcl-multiple_7",
+   "bench": "bfcl",
+   "seconds": 9.3,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 25,
+   "tools": {},
+   "id": "bfcl-multiple_30",
+   "bench": "bfcl",
+   "seconds": 7.2,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 46,
+   "tools": {},
+   "id": "bfcl-multiple_57",
+   "bench": "bfcl",
+   "seconds": 11.6,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 45,
+   "tools": {},
+   "id": "bfcl-multiple_95",
+   "bench": "bfcl",
+   "seconds": 10.2,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 31,
+   "tools": {},
+   "id": "bfcl-multiple_106",
+   "bench": "bfcl",
+   "seconds": 11.3,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 43,
+   "tools": {},
+   "id": "bfcl-multiple_115",
+   "bench": "bfcl",
+   "seconds": 13.2,
+   "peak_mb": 5780
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 25,
+   "tools": {},
+   "id": "bfcl-multiple_153",
+   "bench": "bfcl",
+   "seconds": 8.8,
+   "peak_mb": 5781
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 38,
+   "tools": {},
+   "id": "bfcl-multiple_159",
+   "bench": "bfcl",
+   "seconds": 10.6,
+   "peak_mb": 5781
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 31,
+   "tools": {},
+   "id": "bfcl-multiple_160",
+   "bench": "bfcl",
+   "seconds": 11.3,
+   "peak_mb": 5781
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 43,
+   "tools": {},
+   "id": "bfcl-multiple_162",
+   "bench": "bfcl",
+   "seconds": 10.2,
+   "peak_mb": 5781
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 32,
+   "tools": {},
+   "id": "bfcl-multiple_194",
+   "bench": "bfcl",
+   "seconds": 11.3,
+   "peak_mb": 5781
+  },
+  {
+   "correct": true,
+   "calls": 1,
+   "tokens": 36,
+   "tools": {},
+   "id": "bfcl-multiple_199",
+   "bench": "bfcl",
+   "seconds": 10.1,
+   "peak_mb": 5781
   }
  ],
  "summary": {
@@ -509,6 +952,45 @@
    "tokens": 9999,
    "calls": 28,
    "peak_mb": 5733
+  },
+  "gpqa": {
+   "n": 20,
+   "correct": 2,
+   "score": 0.1,
+   "ci95": [
+    0.028,
+    0.301
+   ],
+   "seconds": 1096,
+   "tokens": 7613,
+   "calls": 20,
+   "peak_mb": 5734
+  },
+  "lcb": {
+   "n": 10,
+   "correct": 5,
+   "score": 0.5,
+   "ci95": [
+    0.237,
+    0.763
+   ],
+   "seconds": 1193,
+   "tokens": 8288,
+   "calls": 10,
+   "peak_mb": 5779
+  },
+  "bfcl": {
+   "n": 30,
+   "correct": 30,
+   "score": 1.0,
+   "ci95": [
+    0.886,
+    1
+   ],
+   "seconds": 269,
+   "tokens": 1092,
+   "calls": 30,
+   "peak_mb": 5781
   }
  },
  "tier": "8gb",

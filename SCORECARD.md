@@ -25,10 +25,10 @@ Real measured scores of NEURON's three frozen reasoning models on four public be
 | 2GB, qwen2.5-coder-1.5b (Q4_K_M) `qwen2.5-coder-1.5b-instruct-q4_k_m.gguf` | full NEURON | **4/28** (14%, 95% CI 6%-32%) | **2/20** (10%, 95% CI 3%-30%) | **0/10** (0%, 95% CI 0%-28%) | **26/30** (87%, 95% CI 70%-95%) | 26 min | 1625 MB | 18,439 | 155 | check pass 48, public example runs 28, python runs 1, repairs 18, schema constrained 30, validation retry 0 |
 | 4GB, Qwen3.5-4B (Q4_K_M) `Qwen3.5-4B-Q4_K_M.gguf` | model alone | **10/28** (36%, 95% CI 21%-54%) | **0/20** (0%, 95% CI 0%-16%) | **4/10** (40%, 95% CI 17%-69%) | **29/30** (97%, 95% CI 83%-99%) | 98 min | 4011 MB | 26,646 | 88 | none |
 | 4GB, Qwen3.5-4B (Q4_K_M) `Qwen3.5-4B-Q4_K_M.gguf` | full NEURON | **18/28** (64%, 95% CI 46%-79%) | **4/20** (20%, 95% CI 8%-42%) | **4/10** (40%, 95% CI 17%-69%) | **29/30** (97%, 95% CI 83%-99%) | 110 min | 4059 MB | 33,753 | 130 | check pass 48, public example runs 4, python runs 0, repairs 0, schema constrained 30, validation retry 0 |
-| 8GB, gemma-4-E4B (Q4) | alone | not started | not started | not started | not started | | | | | |
-| 8GB, gemma-4-E4B (Q4) | neuron | not started | not started | not started | not started | | | | | |
+| 8GB, gemma-4-E4B (Q4) `gemma-4-E4B-it-Q4_K_M.gguf` | model alone | **9/28** (32%, 95% CI 18%-51%) | **2/20** (10%, 95% CI 3%-30%) | **5/10** (50%, 95% CI 24%-76%) | **30/30** (100%, 95% CI 89%-100%) | 68 min | 5781 MB | 26,992 | 88 | none |
+| 8GB, gemma-4-E4B (Q4) `gemma-4-E4B-it-Q4_K_M.gguf` | neuron | running | running | running | running | 1/88 items so far | | | | |
 
-Run status: 2gb alone: finished (2026-11-18 11:41:19); 2gb neuron: finished (2026-11-18 12:11:06); 4gb alone: finished (2026-11-18 13:23:08); 4gb neuron: finished (2026-11-18 22:43:09); 8gb alone: not started; 8gb neuron: not started.
+Run status: 2gb alone: finished (2026-11-18 11:41:19); 2gb neuron: finished (2026-11-18 12:11:06); 4gb alone: finished (2026-11-18 13:23:08); 4gb neuron: finished (2026-11-18 22:43:09); 8gb alone: finished (2026-11-19 00:35:54); 8gb neuron: running (1 of 88 items).
 
 ### Answers with no letter found (multiple choice)
 
@@ -40,6 +40,7 @@ Every multiple-choice answer may use at most 400 tokens (the same limit for ever
 | 2GB full NEURON | 2 of 28 | 3 of 20 |
 | 4GB model alone | 3 of 28 | 11 of 20 |
 | 4GB full NEURON | 6 of 28 | 15 of 20 |
+| 8GB model alone | 3 of 28 | 7 of 20 |
 
 A second pass with a larger answer limit, recorded as a separate protocol next to this one, is planned.
 

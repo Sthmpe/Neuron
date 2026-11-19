@@ -1,0 +1,27 @@
+{
+ "rows": [
+  {
+   "correct": false,
+   "given": "",
+   "first_given": "",
+   "calls": 2,
+   "tokens": 800,
+   "tools": {
+    "python_runs": 0,
+    "check_pass": 1
+   },
+   "id": "mmlu_pro-3017",
+   "bench": "mmlu_pro",
+   "seconds": 129.0,
+   "peak_mb": 5747
+  }
+ ],
+ "summary": {},
+ "tier": "8gb",
+ "condition": "neuron",
+ "model": "gemma-4-e4b-q4",
+ "model_file": "gemma-4-E4B-it-Q4_K_M.gguf",
+ "network": "new empty network namespace (loopback only)",
+ "seed": 20261118,
+ "started": "2026-11-19 01:44:03"
+}
