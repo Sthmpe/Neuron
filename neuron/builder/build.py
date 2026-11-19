@@ -244,6 +244,9 @@ def build_full(project, request, runner, sandbox, log=print, max_seconds=None, d
         spec, problems = plan(request, runner.client("planner"), meter, content_rules=bool(design))
         if spec is None:
             return {"ok": False, "stage": "plan", "error": "; ".join(problems), "llm": vars(meter), "resumed": False}
+        from .spec import owner_labels
+        spec.setdefault("dropped", [])
+        label_changes = owner_labels(spec, request)       # the owner's words on the forms, not the planner's synonyms
         if design and spec["kind"] == "site":            # pictures: the owner's first, labelled placeholders for the rest
             from ..media import images
             from . import design_step, site_images
@@ -267,6 +270,8 @@ def build_full(project, request, runner, sandbox, log=print, max_seconds=None, d
             state.decide("plan", "dropped", d)
         for n in spec.get("content_notes", []):
             state.decide("plan", "content", n)
+        for n in label_changes:
+            state.decide("plan", "owner words", n)
         state.decide("plan", "spec", f"planned a {spec['kind']} called {spec['app_name']} with tasks: "
                      + ", ".join(t["id"] for t in tasks))
         log(f"planned {len(tasks)} tasks: {[t['id'] for t in tasks]}")

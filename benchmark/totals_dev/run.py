@@ -90,6 +90,7 @@ def main():
     ap.add_argument("--tier", default="4gb")
     ap.add_argument("--validate", action="store_true")
     ap.add_argument("--force", action="store_true", help="run again although a result exists (a rerun: label it)")
+    ap.add_argument("--tag", default="", help="label for a rerun, e.g. rerun1-owner-words (never overwrites the original)")
     a = ap.parse_args()
     if a.validate:
         ok = True
@@ -103,7 +104,7 @@ def main():
                   [c["id"] for c in res["checks"] if not c["pass"]])
         print("VALID" if ok else "INVALID")
         return
-    f = ROOT / "benchmark" / "results" / "totals_dev" / f"{a.tier}.json"
+    f = ROOT / "benchmark" / "results" / "totals_dev" / (a.tier + (f"-{a.tag}" if a.tag else "") + ".json")
     if f.exists() and not a.force:                     # recorded already: never silently rerun (use --force and say so)
         print(f"already recorded: {f}")
         return
@@ -113,21 +114,20 @@ def main():
     if net["internet_reachable"]:
         sys.exit("The network could not be cut off; refusing to run.")
     Tier(a.tier).enter()
-    ws = ROOT / "benchmark" / "run" / "totals_dev" / a.tier
+    ws = ROOT / "benchmark" / "run" / "totals_dev" / (a.tier + (f"-{a.tag}" if a.tag else ""))
     shutil.rmtree(ws, ignore_errors=True)
     ws.mkdir(parents=True)
     t0 = time.time()
-    with open(ws.parent / f"{a.tier}.log", "w") as log:
+    with open(ws.parent / f"{ws.name}.log", "w") as log:
         subprocess.run([sys.executable, "-m", "neuron.agent", TASK["request"], "--workspace", str(ws), "--tier", a.tier, "--max-seconds", "5400",
                         "--report", str(ws / ".neuron" / "final_report.json")], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT,
                        env=dict(os.environ, NEURON_MEMORY="off"), timeout=7200)
     rep = json.loads((ws / ".neuron" / "final_report.json").read_text()) if (ws / ".neuron" / "final_report.json").exists() else {}
     res = check(ws / "app", ws / "shots")
     commit = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
-    out = {"task": TASK["id"], "tier": a.tier, "code_commit": commit, "network": net["method"], "seconds": round(time.time() - t0, 1),
+    out = {"task": TASK["id"], "tier": a.tier, "rerun_label": a.tag or None, "code_commit": commit, "network": net["method"], "seconds": round(time.time() - t0, 1),
            "solved": res["passed"] == res["total"], **res, "agent_verdict": rep.get("verdict"), "made_by": rep.get("made_by"),
            "model_calls": rep.get("model_calls"), "false_claim": rep.get("verdict") == "VERIFIED" and res["passed"] != res["total"]}
-    f = ROOT / "benchmark" / "results" / "totals_dev" / f"{a.tier}.json"
     f.parent.mkdir(parents=True, exist_ok=True)
     f.write_text(json.dumps(out, indent=1))
     print(json.dumps({k: out[k] for k in ("solved", "passed", "total", "agent_verdict", "false_claim", "seconds")}))

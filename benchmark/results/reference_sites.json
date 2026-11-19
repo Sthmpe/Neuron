@@ -33,20 +33,20 @@
  "bakery": {
   "request": "Make a website for Iya Bisi's Bakery at 24 Adelabu Street, Surulere, Lagos. We bake agege bread, wholemeal loaves, meat pies, chin chin and celebration cakes to order. Prices: agege bread 1,200 naira, wholemeal loaf 2,000 naira, meat pie 800 naira, chin chin 1,500 naira a pack, celebration cakes from 25,000 naira. We are open every day from 6am to 8pm. Cakes need 3 days' notice. Add an order form for cakes with name, phone, the date needed and what to write on the cake, and thank people afterwards.",
   "tier": "8gb",
-  "code_commit": "c871d3e",
-  "built_at": "2026-11-18 19:59",
+  "code_commit": "f1353c5",
+  "built_at": "2026-11-19 02:44",
   "seconds": 341.7,
   "agent_verdict": "PARTIAL",
   "not_done": {
    "images": [
-    "Wikimedia Commons asked NEURON to slow down; tries again by itself in 90 minutes (0 licensed photo(s) added (none); still needed: photo1, photo2)"
+    "Wikimedia Commons asked NEURON to slow down; tries again by itself in 360 minutes (1 licensed photo(s) added (photo1); still needed: photo2)"
    ]
   },
   "model_calls": 4,
   "page_word_problems": [],
   "pictures": {
    "hero": "licensed",
-   "photo1": "needed",
+   "photo1": "licensed",
    "photo2": "needed"
   },
   "overflow_px": {

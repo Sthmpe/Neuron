@@ -44,10 +44,61 @@
    "agent_verdict": "VERIFIED",
    "false_claim": false,
    "detail": ""
+  },
+  {
+   "project": "go_parking",
+   "solved": true,
+   "tests_pass": true,
+   "tests_unchanged": true,
+   "seconds": 213.6,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "model_calls": 6,
+   "agent_verdict": "VERIFIED",
+   "false_claim": false,
+   "detail": ""
+  },
+  {
+   "project": "go_split",
+   "solved": true,
+   "tests_pass": true,
+   "tests_unchanged": true,
+   "seconds": 77.6,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "model_calls": 2,
+   "agent_verdict": "VERIFIED",
+   "false_claim": false,
+   "detail": ""
+  },
+  {
+   "project": "go_stock",
+   "solved": true,
+   "tests_pass": true,
+   "tests_unchanged": true,
+   "seconds": 48.2,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "model_calls": 2,
+   "agent_verdict": "VERIFIED",
+   "false_claim": false,
+   "detail": ""
   }
  ],
  "tier": "4gb",
  "network": "new empty network namespace (loopback only)",
  "code_commit": "7105ec7",
- "started": "2026-11-19 06:11:18"
+ "started": "2026-11-19 06:11:18",
+ "summary": {
+  "solved": 6,
+  "of": 6,
+  "false_claims": 0,
+  "seconds": 655.9
+ }
 }

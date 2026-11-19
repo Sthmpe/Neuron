@@ -200,6 +200,35 @@ def _photo_row(spec):
     return ("ui.photos(" + ", ".join(f'ui.photo("{i["file"]}", "{i["alt"]}")' for i in pics) + ")") if pics else ""
 
 
+GENERIC_COUNT = {"quantity", "qty", "count", "number", "amount", "units", "num", "total_number"}
+
+
+def owner_labels(spec, request):
+    """A counted field the planner gave a generic name ("quantity") is labelled with the owner's own word when the
+    request says "the number of <things>" for that kind of record ("the number of plates" -> "Plates"). Only the label
+    changes (the database column keeps its name). Returns the changes, recorded as decisions.
+    Found by the computed-totals dev task: the 2 GB plan said "Quantity" where the owner said plates, so a person
+    looking for "plates" could not find the field, while NEURON's own checks, written from the plan, passed."""
+    changes = []
+    sentences = re.split(r"(?<=[.!?])\s+", request or "")
+    for e in spec.get("entities", []):
+        stem = e["name"].rstrip("s").lower()
+        nouns = []
+        for sent in sentences:
+            if re.search(rf"\b{re.escape(stem)}", sent.lower()):
+                nouns += [n.lower() for n in re.findall(r"\b(?:number|count) of ([a-z]+)", sent, re.I)]
+        names = {f["name"] for x in spec["entities"] for f in x["fields"]} | {x["name"] for x in spec["entities"]}
+        nouns = [n for n in dict.fromkeys(nouns) if n not in names and n.rstrip("s") not in names]
+        generic = [f for f in e["fields"] if f["type"] == "number" and f["name"].lower() in GENERIC_COUNT]
+        if len(nouns) == 1 and len(generic) == 1:
+            f = generic[0]
+            new = nouns[0].capitalize()
+            if f["label"] != new:
+                changes.append(f"{e['name']}.{f['name']}: labelled '{new}' (the owner's word) instead of '{f['label']}'")
+                f["label"] = new
+    return changes
+
+
 def _table_sql(name, fs):
     cols = ", ".join(f"{f['name']} {SQL_TYPE.get(f['type'], 'TEXT')}" for f in fs)
     return f"{name}(id INTEGER PRIMARY KEY, {cols})"

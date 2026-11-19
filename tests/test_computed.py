@@ -102,3 +102,17 @@ class ComputedBuildTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class OwnerWordsTests(unittest.TestCase):
+    def test_generic_count_field_gets_the_owners_word(self):
+        from neuron.builder.spec import owner_labels
+        spec = {"entities": [{"name": "dishes", "fields": [{"name": "name", "label": "Name", "type": "text"},
+                                                           {"name": "price", "label": "Price", "type": "number"}]},
+                             {"name": "orders", "fields": [{"name": "dish", "label": "Dish", "type": "link", "to": "dishes"},
+                                                           {"name": "quantity", "label": "Quantity", "type": "number"}]}]}
+        req = "Keep my dishes with their price. Keep orders: which dish and the number of plates."
+        self.assertEqual(len(owner_labels(spec, req)), 1)
+        self.assertEqual(spec["entities"][1]["fields"][1]["label"], "Plates")
+        self.assertEqual(spec["entities"][1]["fields"][1]["name"], "quantity")       # the column keeps its name
+        self.assertEqual(owner_labels(spec, req), [])                                # nothing more to change

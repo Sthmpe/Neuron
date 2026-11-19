@@ -1,0 +1,53 @@
+{
+ "task": "catering_orders",
+ "tier": "8gb",
+ "code_commit": "d93d161",
+ "network": "new empty network namespace (loopback only)",
+ "seconds": 282.7,
+ "solved": true,
+ "checks": [
+  {
+   "id": "login_works",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "add_dishes",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "add_orders",
+   "pass": true,
+   "detail": "Skip to content\nC\nCatering Business\nDashboard\nDishes\nOrders\nchef\nLog out\nOrders\nSearch\nDISH\tPLATES\tCUSTOMER\tEVENT DATE\tTOTAL\nMoi moi\t25.0\tBayo Ade\t2027-02-20\t20000\nJollof rice\t40.0\tAda Eze\t2027-01-15\t"
+  },
+  {
+   "id": "order_totals_shown",
+   "pass": true,
+   "detail": "needs 100000 and 20000"
+  },
+  {
+   "id": "dashboard_count_and_total",
+   "pass": true,
+   "detail": "Skip to content\nC\nCatering Business\nDashboard\nDishes\nOrders\nchef\nLog out\nDashboard\nOrders\n2\nTotal order value\n120000\nCatering Business\nDashboard\nDishes\nOrders\n\n\u00a9 2026 Catering Business"
+  },
+  {
+   "id": "search_by_customer",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "no_server_errors",
+   "pass": true,
+   "detail": ""
+  }
+ ],
+ "passed": 7,
+ "total": 7,
+ "agent_verdict": "VERIFIED",
+ "made_by": {
+  "model (3 files) + code (1 file)": 1
+ },
+ "model_calls": 4,
+ "false_claim": false
+}
