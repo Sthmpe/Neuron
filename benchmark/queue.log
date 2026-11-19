@@ -14,3 +14,17 @@ eval2-locked-2gb E11_long_docstrings: SOLVED | 4/4 checks | 29.0s | peak 1439 MB
 eval2-locked-2gb E12_computed_answer: not solved | 1/2 checks | 13.0s | peak 1450 MB | calls 2 | agent says VERIFIED
 PHASE5-DONE eval2-locked-2gb
 [2026-11-19 04:23:10] eval2 2gb finished
+eval2-locked-4gb E01_pdf_market: SOLVED | 12/12 checks | 86.0s | peak 3822 MB | calls 6 | agent says VERIFIED
+eval2-locked-4gb E02_excel_clinic: SOLVED | 10/10 checks | 27.0s | peak 4008 MB | calls 1 | agent says VERIFIED
+eval2-locked-4gb E03_word_notice: not solved | 3/5 checks | 458.1s | peak 3907 MB | calls 28 | agent says PARTIAL
+eval2-locked-4gb E04_pptx_training: SOLVED | 9/9 checks | 62.0s | peak 3856 MB | calls 1 | agent says VERIFIED
+eval2-locked-4gb E05_python_bug: SOLVED | 1/1 checks | 49.0s | peak 3903 MB | calls 0 | agent says VERIFIED
+eval2-locked-4gb E06_js_bug: SOLVED | 1/1 checks | 54.0s | peak 3893 MB | calls 2 | agent says VERIFIED
+eval2-locked-4gb E07_go_bug: SOLVED | 1/1 checks | 300.1s | peak 4085 MB | calls 7 | agent says VERIFIED
+eval2-locked-4gb E08_rust_bug: SOLVED | 1/1 checks | 52.0s | peak 3893 MB | calls 2 | agent says VERIFIED
+eval2-locked-4gb E09_cpp_csvsum: not solved | 1/5 checks | 1962.3s | peak 3975 MB | calls 11 | agent says PARTIAL
+eval2-locked-4gb E10_repair_app: SOLVED | 11/11 checks | 248.1s | peak 4075 MB | calls 2 | agent says VERIFIED
+eval2-locked-4gb E11_long_docstrings: SOLVED | 4/4 checks | 63.0s | peak 3759 MB | calls 8 | agent says VERIFIED
+eval2-locked-4gb E12_computed_answer: not solved | 1/2 checks | 131.0s | peak 3852 MB | calls 2 | agent says VERIFIED
+PHASE5-DONE eval2-locked-4gb
+[2026-11-19 05:21:39] eval2 4gb finished
