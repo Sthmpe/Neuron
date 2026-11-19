@@ -158,6 +158,8 @@ class AnswerQuestion(Capability):
 
     def run(self, job, params):
         from ..arithmetic import exact_answer
+        from ..capability import NeedsOwnerInput
+        from ..owner_input import prepare
         q = job.state.goal()["request"]
         exact = exact_answer(q)
         if exact is not None:
@@ -165,23 +167,32 @@ class AnswerQuestion(Capability):
             (job.workspace / "answer.md").write_text(text + "\n")
             return Outcome(True, text, {"answer": text, "expression": expression}, ["answer.md"])
 
+        turns = params.get("owner_inputs", [])
+        q, supplied = prepare(job, q, turns)
+        text = supplied.text if supplied else None
+        method = supplied.basis if supplied else ""
         result = {}
-        if COMPUTE.search(q):
+        if text is None and COMPUTE.search(q):
             from ..thinking import solve
             s = solve(lambda m, n: job.chat("builder", m, max_tokens=n, temperature=0.1), job.sandbox, q)
             text = s["answer"]
             result["tool_runs"] = s["tool_runs"]
             method = f"The model used {s['tool_runs']} Python run(s) and a second pass." if s["tool_runs"] else "The model used a second pass."
-        else:
+        elif text is None:
             mem = job.memory_context() if hasattr(job, "memory_context") else ""
-            text = job.ask_text("builder", "You are NEURON, an offline assistant. Answer clearly. Say so if you are not sure. No em dashes."
+            text = job.ask_text("builder", "You are NEURON, an offline assistant. Answer clearly. If a specific input only the owner "
+                                "can provide is missing, reply with NEED_INPUT followed by one question asking for that fact. "
+                                "Say so if you are not sure. No em dashes."
                                 + (f"\n\n{mem}" if mem else ""), q, max_tokens=700)
             method = "The local model supplied this answer."
-        answer = clean(text or "").strip()
+            missing = re.fullmatch(r"NEED_INPUT\s*:?\s*(.{4,220}\?)", text or "", re.I)
+            if missing:
+                raise NeedsOwnerInput(missing[1])
+        answer = (text if supplied and supplied.made_by == "owner" else clean(text or "")).strip()
         if not answer:
             return Outcome(False, "the local model did not supply a final answer")
         (job.workspace / "answer.md").write_text(f"{answer}\n\nUnverified. {method}\n")
-        return Outcome(True, answer[:300], {**result, "answer": answer}, ["answer.md"], made_by="model")
+        return Outcome(True, answer[:300], {**result, "answer": answer}, ["answer.md"], made_by=supplied.made_by if supplied else "model")
 
     def verify(self, job, params, outcome):
         from ..arithmetic import exact_answer

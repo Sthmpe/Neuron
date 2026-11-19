@@ -84,3 +84,47 @@ class OwnerInputTests(unittest.TestCase):
         detail = wait_for(self.phone, jid, {"waiting_input"})
         self.assertEqual(detail["input_request"]["question"], "What time?")
         self.assertEqual(detail["owner_inputs"], [{"question": "What date?", "answer": "Monday"}])
+
+
+class MissingFactTests(unittest.TestCase):
+    def test_unsourced_and_reused_numbers_need_an_owner(self):
+        from neuron.agent.owner_input import bind_plan
+        def bind(value):
+            return bind_plan({"operation": "divide", "inputs": [
+                {"name": "mass", "value": "18", "question": "What was the mass?"},
+                {"name": "volume", "value": value, "question": "Was the volume 12 litres?"}]}, "The sample weighs 18 grams.")
+        for guessed in ["12", "18", "?"]:
+            field = bind(guessed)["inputs"][1]
+            self.assertIsNone(field["value"])
+            self.assertEqual(field["question"], "What is the volume?")
+
+    def test_unusable_reply_keeps_the_step_open(self):
+        from neuron.agent.loop import Agent
+        from tests.test_agent import run
+        report, job, model = run("I used 7 litres from my tank. How much is left?", [])
+        self.assertEqual(report["verdict"], "WAITING_INPUT")
+        for reply in ["not sure", "blue", "12 or 20 litres", "19 litres"]:
+            prompt = job.state.task("answer")["input_request"]
+            self.assertIn("starting amount", prompt["question"])
+            job.state.answer_input(prompt["id"], reply, accept_new=True)
+            report = Agent(job).run("")
+        self.assertEqual(report["verdict"], "UNVERIFIED")
+        self.assertTrue((job.workspace / "answer.md").read_text().startswith("12 litres\n"))
+        self.assertEqual(model.calls, [])
+
+    def test_numeric_units_and_words(self):
+        from neuron.agent.owner_input import can_calculate, numbers
+        self.assertEqual(numbers("twenty-five minutes"), ["25"])
+        self.assertEqual(numbers("There were 1,250 more and then −8."), ["1250", "-8"])
+        self.assertFalse(can_calculate("I walked 12 km. How fast in km per hour?", ["30 minutes"]))
+        self.assertTrue(can_calculate("I walked 12 km. How fast in km per hour?", ["2 hours"]))
+
+    def test_concept_can_ask_using_the_normal_answer_path(self):
+        from neuron.agent.loop import Agent
+        from tests.test_agent import run
+        report, job, _ = run("Which room received the parcel?", ["NEED_INPUT: What room is written on the delivery slip?", "The parcel went to Room B."])
+        self.assertEqual(report["verdict"], "WAITING_INPUT")
+        prompt = job.state.task("answer")["input_request"]
+        job.state.answer_input(prompt["id"], "Room B", accept_new=True)
+        self.assertEqual(Agent(job).run("")["verdict"], "UNVERIFIED")
+        self.assertIn("Room B", (job.workspace / "answer.md").read_text())
