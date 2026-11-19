@@ -26,11 +26,11 @@ examiner did not pass. Raw results: `benchmark/results/phase5/eval2-locked-<tier
 ## What it shows
 
 - The target of zero false "verified" claims is **met on 8 GB and not met on 2 GB (2) or 4 GB (1)**.
-- Both causes are general and are now fixed in the system (measured afterwards on dev tasks, never on these):
+- Both causes are general; the fixes below are being made in the system (to be measured on dev tasks, never on these):
   1. E12 (2 and 4 GB): a plain answer to a question was reported VERIFIED although nothing independent had checked it
-     (its own check said "unverified"). Such answers now get their own verdict, "answered, not checked", never VERIFIED.
-  2. E01 (2 GB): one of six questions was answered "not found", and the job still said VERIFIED. An unanswered question
-     now makes the job PARTIAL and names the question.
+     (its own check said "unverified"). Fix: such answers get their own verdict, "answered, not checked", never VERIFIED.
+  2. E01 (2 GB): one of six questions was answered "not found", and the job still said VERIFIED. Fix: an unanswered
+     question makes the job PARTIAL and names the question.
 - E03 (Word notice) failed on every tier with the same two checks: a recurring weakness in long documents with tables.
 - The unseen repair-shop app with computed totals (E10) was solved on every tier, including after a kill and resume.
 - C++ from a description (E09) only on 8 GB; Go bug fixing (E07) on 4 and 8 GB (the locked phase-5 set had 0 of 2 on
