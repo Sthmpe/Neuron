@@ -28,3 +28,26 @@ eval2-locked-4gb E11_long_docstrings: SOLVED | 4/4 checks | 63.0s | peak 3759 MB
 eval2-locked-4gb E12_computed_answer: not solved | 1/2 checks | 131.0s | peak 3852 MB | calls 2 | agent says VERIFIED
 PHASE5-DONE eval2-locked-4gb
 [2026-11-19 05:21:39] eval2 4gb finished
+eval2-locked-8gb E01_pdf_market: SOLVED | 12/12 checks | 100.0s | peak 5635 MB | calls 6 | agent says VERIFIED
+eval2-locked-8gb E02_excel_clinic: SOLVED | 10/10 checks | 30.0s | peak 5745 MB | calls 1 | agent says VERIFIED
+eval2-locked-8gb E03_word_notice: not solved | 3/5 checks | 500.1s | peak 5659 MB | calls 28 | agent says PARTIAL
+eval2-locked-8gb E04_pptx_training: SOLVED | 9/9 checks | 53.0s | peak 5716 MB | calls 1 | agent says VERIFIED
+eval2-locked-8gb E05_python_bug: SOLVED | 1/1 checks | 53.0s | peak 5648 MB | calls 0 | agent says VERIFIED
+eval2-locked-8gb E06_js_bug: SOLVED | 1/1 checks | 133.0s | peak 5744 MB | calls 7 | agent says VERIFIED
+eval2-locked-8gb E07_go_bug: SOLVED | 1/1 checks | 235.0s | peak 5925 MB | calls 6 | agent says VERIFIED
+eval2-locked-8gb E08_rust_bug: SOLVED | 1/1 checks | 164.0s | peak 5724 MB | calls 9 | agent says VERIFIED
+eval2-locked-8gb E09_cpp_csvsum: SOLVED | 5/5 checks | 328.1s | peak 5702 MB | calls 3 | agent says VERIFIED
+eval2-locked-8gb E10_repair_app: SOLVED | 11/11 checks | 294.1s | peak 5871 MB | calls 2 | agent says VERIFIED
+eval2-locked-8gb E11_long_docstrings: SOLVED | 4/4 checks | 59.0s | peak 5566 MB | calls 8 | agent says VERIFIED
+eval2-locked-8gb E12_computed_answer: SOLVED | 2/2 checks | 130.0s | peak 5595 MB | calls 3 | agent says VERIFIED
+PHASE5-DONE eval2-locked-8gb
+[2026-11-19 05:56:35] eval2 8gb finished
+{"project": "cpp_grades", "solved": true, "tests_pass": true, "tests_unchanged": true, "seconds": 5.5, "made_by": {"deterministic": 1, "search": 1}, "model_calls": 0, "agent_verdict": "VERIFIED", "false_claim": false, "detail": ""}
+{"project": "cpp_tickets", "solved": true, "tests_pass": true, "tests_unchanged": true, "seconds": 5.2, "made_by": {"deterministic": 1, "search": 1}, "model_calls": 0, "agent_verdict": "VERIFIED", "false_claim": false, "detail": ""}
+{"project": "cpp_trim", "solved": false, "tests_pass": false, "tests_unchanged": true, "seconds": 65.5, "made_by": {"deterministic": 1}, "model_calls": 9, "agent_verdict": "PARTIAL", "false_claim": false, "detail": "FAIL line 7: trim(\"\\tAda\\r\\n\") == \"Ada\"\nFAIL line 8: trim(\" \\t \") == \"\"\nFAIL line 10: clean_name(\"\\tNgozi\\n\") == \"Ngozi\"\nmake: *** [Makefile:2: test] Error 3\n"}
+{"project": "go_parking", "solved": true, "tests_pass": true, "tests_unchanged": true, "seconds": 21.4, "made_by": {"deterministic": 1, "search": 1}, "model_calls": 0, "agent_verdict": "VERIFIED", "false_claim": false, "detail": ""}
+{"project": "go_split", "solved": false, "tests_pass": false, "tests_unchanged": true, "seconds": 113.3, "made_by": {"deterministic": 1}, "model_calls": 9, "agent_verdict": "PARTIAL", "false_claim": false, "detail": "--- FAIL: TestSplit (0.00s)\n    split_test.go:10: Split(1000, 3) = [333 333 333], want [334 333 333]\nFAIL\nFAIL\texample.com/bill/bill\t0.002s\nFAIL\n"}
+{"project": "go_stock", "solved": true, "tests_pass": true, "tests_unchanged": true, "seconds": 18.9, "made_by": {"deterministic": 1, "search": 1}, "model_calls": 0, "agent_verdict": "VERIFIED", "false_claim": false, "detail": ""}
+SUMMARY {'solved': 4, 'of': 6, 'false_claims': 0, 'seconds': 229.8}
+{"project": "cpp_grades", "solved": true, "tests_pass": true, "tests_unchanged": true, "seconds": 18.2, "made_by": {"deterministic": 1, "model": 1}, "model_calls": 2, "agent_verdict": "VERIFIED", "false_claim": false, "detail": ""}
+{"project": "cpp_tickets", "solved": false, "tests_pass": false, "tests_unchanged": true, "seconds": 50.0, "made_by": {"deterministic": 1}, "model_calls": 9, "agent_verdict": "PARTIAL", "false_claim": false, "detail": "FAIL line 8: fare(65) == 0\nFAIL line 10: day_total({8, 30, 65}) == 450\nFAIL line 11: free_riders({65, 64, 80}) == 2\nmake: *** [Makefile:3: test] Error 3\n"}

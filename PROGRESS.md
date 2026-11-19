@@ -83,6 +83,10 @@ Then, in order: full suite, merge, fast-forward main; design proof (20 requests)
 
 ## Events
 
+- 2026-11-19 06:00: eval2 (locked) official runs: 2 GB 7/12 with 2 false verified claims (E01, E12), 4 GB 9/12 with 1
+  (E12), 8 GB 11/12 with none. NEURON's code was identical for all three. Causes found: unchecked answers called
+  verified; an unanswered PDF question not turned into PARTIAL. Fixes follow, measured on dev tasks only.
+
 - 2026-11-19 04:02: scorecard finished (step 3): six runs, 88 fixed sampled items each. Full NEURON beats the model
   alone on MMLU-Pro for 4 GB (10 to 18 of 28, paired p = 0.008) and 8 GB (9 to 17, p = 0.021); nothing else shown; the
   2 GB model gains nothing. GPQA results are mostly limited by the 400-token answer limit (answers with no letter are

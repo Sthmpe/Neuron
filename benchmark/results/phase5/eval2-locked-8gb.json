@@ -1,0 +1,414 @@
+{
+ "rows": [
+  {
+   "task": "E01_pdf_market",
+   "kind": "pdf_qa",
+   "solved": true,
+   "checks_passed": 12,
+   "checks_total": 12,
+   "failed_checks": [],
+   "seconds": 100.0,
+   "peak_mb": 5635,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 100.0
+    }
+   ],
+   "model_calls": 6,
+   "tokens": 474,
+   "model_seconds": 91.1,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "E02_excel_clinic",
+   "kind": "excel",
+   "solved": true,
+   "checks_passed": 10,
+   "checks_total": 10,
+   "failed_checks": [],
+   "seconds": 30.0,
+   "peak_mb": 5745,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 30.0
+    }
+   ],
+   "model_calls": 1,
+   "tokens": 118,
+   "model_seconds": 20.6,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1,
+    "template": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "E03_word_notice",
+   "kind": "word",
+   "solved": false,
+   "checks_passed": 3,
+   "checks_total": 5,
+   "failed_checks": [
+    "length_in_range: 620 words",
+    "budget_table_correct: no table found"
+   ],
+   "seconds": 500.1,
+   "peak_mb": 5659,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 500.1
+    }
+   ],
+   "model_calls": 28,
+   "tokens": 3143,
+   "model_seconds": 492.1,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1,
+    "model+template": 1
+   },
+   "agent_verdict": "PARTIAL",
+   "false_claim": false
+  },
+  {
+   "task": "E04_pptx_training",
+   "kind": "pptx",
+   "solved": true,
+   "checks_passed": 9,
+   "checks_total": 9,
+   "failed_checks": [],
+   "seconds": 53.0,
+   "peak_mb": 5716,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 53.0
+    }
+   ],
+   "model_calls": 1,
+   "tokens": 317,
+   "model_seconds": 43.7,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1,
+    "template": 1,
+    "deterministic": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "E05_python_bug",
+   "kind": "workspace_bug",
+   "solved": true,
+   "checks_passed": 1,
+   "checks_total": 1,
+   "failed_checks": [],
+   "seconds": 53.0,
+   "peak_mb": 5648,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 53.0
+    }
+   ],
+   "model_calls": 0,
+   "tokens": 0,
+   "model_seconds": 0.0,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "E06_js_bug",
+   "kind": "workspace_bug",
+   "solved": true,
+   "checks_passed": 1,
+   "checks_total": 1,
+   "failed_checks": [],
+   "seconds": 133.0,
+   "peak_mb": 5744,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 133.0
+    }
+   ],
+   "model_calls": 7,
+   "tokens": 569,
+   "model_seconds": 120.5,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "E07_go_bug",
+   "kind": "workspace_bug",
+   "solved": true,
+   "checks_passed": 1,
+   "checks_total": 1,
+   "failed_checks": [],
+   "seconds": 235.0,
+   "peak_mb": 5925,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 235.0
+    }
+   ],
+   "model_calls": 6,
+   "tokens": 1257,
+   "model_seconds": 196.0,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "E08_rust_bug",
+   "kind": "workspace_bug",
+   "solved": true,
+   "checks_passed": 1,
+   "checks_total": 1,
+   "failed_checks": [],
+   "seconds": 164.0,
+   "peak_mb": 5724,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 164.0
+    }
+   ],
+   "model_calls": 9,
+   "tokens": 806,
+   "model_seconds": 149.5,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "E09_cpp_csvsum",
+   "kind": "cpp_build",
+   "solved": true,
+   "checks_passed": 5,
+   "checks_total": 5,
+   "failed_checks": [],
+   "seconds": 328.1,
+   "peak_mb": 5702,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 328.1
+    }
+   ],
+   "model_calls": 3,
+   "tokens": 2282,
+   "model_seconds": 319.7,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 2
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "E10_repair_app",
+   "kind": "web_app",
+   "solved": true,
+   "checks_passed": 11,
+   "checks_total": 11,
+   "failed_checks": [],
+   "seconds": 294.1,
+   "peak_mb": 5871,
+   "sessions": [
+    {
+     "ended": "killed",
+     "seconds": 149.1
+    },
+    {
+     "ended": "exited",
+     "seconds": 145.0,
+     "resumed": true
+    }
+   ],
+   "model_calls": 2,
+   "tokens": 666,
+   "model_seconds": 125.5,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": {
+    "killed_halfway": true,
+    "resumed_and_finished": true,
+    "resume_notes": [
+     "{\"at\": 1795067456.3644502, \"event\": \"resumed\", \"interrupted\": [\"build\"], \"done\": []}"
+    ]
+   },
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "E11_long_docstrings",
+   "kind": "long_task",
+   "solved": true,
+   "checks_passed": 4,
+   "checks_total": 4,
+   "failed_checks": [],
+   "seconds": 59.0,
+   "peak_mb": 5566,
+   "sessions": [
+    {
+     "ended": "killed",
+     "seconds": 29.0
+    },
+    {
+     "ended": "exited",
+     "seconds": 30.0,
+     "resumed": true
+    }
+   ],
+   "model_calls": 8,
+   "tokens": 246,
+   "model_seconds": 43.9,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": {
+    "killed_halfway": true,
+    "resumed_and_finished": true,
+    "resume_notes": [
+     "{\"at\": 1795067635.3087554, \"event\": \"resumed\", \"interrupted\": [\"document\"], \"done\": [\"inspect\"]}"
+    ]
+   },
+   "made_by": {
+    "deterministic": 2,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "E12_computed_answer",
+   "kind": "answer",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 130.0,
+   "peak_mb": 5595,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 130.0
+    }
+   ],
+   "model_calls": 3,
+   "tokens": 875,
+   "model_seconds": 121.9,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  }
+ ],
+ "set": "locked",
+ "tier": "8gb",
+ "tier_limit_mb": 8192,
+ "network": "new empty network namespace (loopback only)",
+ "model": {
+  "planner": "gemma-4-e4b-q4",
+  "reviewer": "gemma-4-e4b-q4",
+  "builder": "gemma-4-e4b-q4"
+ },
+ "bug_request": "The tests of this project fail. Find the bug in the source code and fix it so the tests pass. Do not change the tests.",
+ "started": "2026-11-19 05:21:40",
+ "code_commit": "c5043f35b58a413e347acfd84ca83ffa4a10dbd9",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

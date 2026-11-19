@@ -1,0 +1,37 @@
+{
+ "rows": [
+  {
+   "project": "cpp_grades",
+   "solved": true,
+   "tests_pass": true,
+   "tests_unchanged": true,
+   "seconds": 18.2,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "model_calls": 2,
+   "agent_verdict": "VERIFIED",
+   "false_claim": false,
+   "detail": ""
+  },
+  {
+   "project": "cpp_tickets",
+   "solved": false,
+   "tests_pass": false,
+   "tests_unchanged": true,
+   "seconds": 50.0,
+   "made_by": {
+    "deterministic": 1
+   },
+   "model_calls": 9,
+   "agent_verdict": "PARTIAL",
+   "false_claim": false,
+   "detail": "FAIL line 8: fare(65) == 0\nFAIL line 10: day_total({8, 30, 65}) == 450\nFAIL line 11: free_riders({65, 64, 80}) == 2\nmake: *** [Makefile:3: test] Error 3\n"
+  }
+ ],
+ "tier": "2gb",
+ "network": "new empty network namespace (loopback only)",
+ "code_commit": "f6bb6d7",
+ "started": "2026-11-19 06:00:25"
+}
