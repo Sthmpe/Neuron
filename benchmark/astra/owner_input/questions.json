@@ -1,0 +1,13 @@
+[
+  {"id":"mat-width","goal":"My rectangular mat is 9 cm long. What is its area in square centimetres?","fields":[{"prompt":"width|wide|other side|breadth","reply":"4 cm"}],"answer":"36"},
+  {"id":"mat-width-twin","goal":"My rectangular mat is 9 cm long. What is its area in square centimetres?","fields":[{"prompt":"width|wide|other side|breadth","reply":"7 cm"}],"answer":"63"},
+  {"id":"bike-time","goal":"I cycled 42 km. What was my average speed in km per hour?","fields":[{"prompt":"time|duration|how long|hours|minutes","reply":"3 hours"}],"answer":"14"},
+  {"id":"ticket-count","goal":"Tickets cost 6 dollars each. What did I spend on tickets?","fields":[{"prompt":"how many|number of tickets|quantity|ticket count","reply":"5 tickets"}],"answer":"30"},
+  {"id":"opening-balance","goal":"I spent 13 dollars from my wallet. How many dollars do I have left?","fields":[{"prompt":"start|initial|before|original|had|opening","reply":"50 dollars"}],"answer":"37"},
+  {"id":"paint-two-inputs","goal":"What is the area of my rectangular painting in square metres?","fields":[{"prompt":"length|long|height|tall","reply":"The length is 8 metres."},{"prompt":"width|wide|breadth","reply":"The width is 3 metres."}],"answer":"24"},
+  {"id":"local-label","goal":"What label did I put on my storage box?","fields":[{"prompt":"label|writ|text|name|say","reply":"Winter postcards"}],"answer":"Winter postcards"},
+  {"id":"complete-mat","goal":"My rectangular mat is 9 cm long and 5 cm wide. What is its area in square centimetres?","fields":[],"answer":"45"},
+  {"id":"complete-zero","goal":"Tickets cost 6 dollars each and I bought 0 tickets. What did I spend on tickets?","fields":[],"answer":"0"},
+  {"id":"arithmetic","goal":"What is 17 + 24?","fields":[],"answer":"41"},
+  {"id":"concept","goal":"What does a thermometer measure?","fields":[],"answer":"temperature"}
+]
