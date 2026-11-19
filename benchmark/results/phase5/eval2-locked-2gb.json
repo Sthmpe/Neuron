@@ -1,0 +1,422 @@
+{
+ "rows": [
+  {
+   "task": "E01_pdf_market",
+   "kind": "pdf_qa",
+   "solved": false,
+   "checks_passed": 10,
+   "checks_total": 12,
+   "failed_checks": [
+    "q4_answer_correct: not found (harbour market report 2026, page 3)",
+    "q4_cites_right_page: needs harbour_market_report_2026 page 1"
+   ],
+   "seconds": 68.0,
+   "peak_mb": 1466,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 68.0
+    }
+   ],
+   "model_calls": 6,
+   "tokens": 384,
+   "model_seconds": 26.4,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": true
+  },
+  {
+   "task": "E02_excel_clinic",
+   "kind": "excel",
+   "solved": true,
+   "checks_passed": 10,
+   "checks_total": 10,
+   "failed_checks": [],
+   "seconds": 17.0,
+   "peak_mb": 1590,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 17.0
+    }
+   ],
+   "model_calls": 1,
+   "tokens": 131,
+   "model_seconds": 7.8,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1,
+    "template": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "E03_word_notice",
+   "kind": "word",
+   "solved": false,
+   "checks_passed": 3,
+   "checks_total": 5,
+   "failed_checks": [
+    "length_in_range: 669 words",
+    "budget_table_correct: no table found"
+   ],
+   "seconds": 156.1,
+   "peak_mb": 1470,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 156.1
+    }
+   ],
+   "model_calls": 28,
+   "tokens": 2914,
+   "model_seconds": 152.3,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1,
+    "model+template": 1
+   },
+   "agent_verdict": "PARTIAL",
+   "false_claim": false
+  },
+  {
+   "task": "E04_pptx_training",
+   "kind": "pptx",
+   "solved": true,
+   "checks_passed": 9,
+   "checks_total": 9,
+   "failed_checks": [],
+   "seconds": 19.0,
+   "peak_mb": 1584,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 19.0
+    }
+   ],
+   "model_calls": 1,
+   "tokens": 277,
+   "model_seconds": 13.7,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1,
+    "template": 1,
+    "deterministic": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "E05_python_bug",
+   "kind": "workspace_bug",
+   "solved": true,
+   "checks_passed": 1,
+   "checks_total": 1,
+   "failed_checks": [],
+   "seconds": 31.0,
+   "peak_mb": 1481,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 31.0
+    }
+   ],
+   "model_calls": 0,
+   "tokens": 0,
+   "model_seconds": 0.0,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "E06_js_bug",
+   "kind": "workspace_bug",
+   "solved": true,
+   "checks_passed": 1,
+   "checks_total": 1,
+   "failed_checks": [],
+   "seconds": 20.0,
+   "peak_mb": 1527,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 20.0
+    }
+   ],
+   "model_calls": 2,
+   "tokens": 143,
+   "model_seconds": 12.1,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "E07_go_bug",
+   "kind": "workspace_bug",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "original_tests_pass: --- FAIL: TestWeeklyPay (0.00s)\n    pay_test.go:16: WeeklyPay(46,1000)=55000 want 49000\n--- FAIL: TestTeamPay (0.00s)\n    pay_test.go:25: TeamPay=45000 want 430"
+   ],
+   "seconds": 80.0,
+   "peak_mb": 1793,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 80.0
+    }
+   ],
+   "model_calls": 9,
+   "tokens": 734,
+   "model_seconds": 43.6,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1
+   },
+   "agent_verdict": "PARTIAL",
+   "false_claim": false
+  },
+  {
+   "task": "E08_rust_bug",
+   "kind": "workspace_bug",
+   "solved": true,
+   "checks_passed": 1,
+   "checks_total": 1,
+   "failed_checks": [],
+   "seconds": 91.0,
+   "peak_mb": 1554,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 91.0
+    }
+   ],
+   "model_calls": 9,
+   "tokens": 1250,
+   "model_seconds": 72.4,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "E09_cpp_csvsum",
+   "kind": "cpp_build",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "builds_with_make:                          ^\nsrc/main.cpp:59:17: note: \u2018size_t i\u2019 declared here\n   59 |     for (size_t i = 0; i < header.size(); ++i) {\n      |                 ^"
+   ],
+   "seconds": 542.1,
+   "peak_mb": 1571,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 542.1
+    }
+   ],
+   "model_calls": 19,
+   "tokens": 9421,
+   "model_seconds": 528.7,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1
+   },
+   "agent_verdict": "PARTIAL",
+   "false_claim": false
+  },
+  {
+   "task": "E10_repair_app",
+   "kind": "web_app",
+   "solved": true,
+   "checks_passed": 11,
+   "checks_total": 11,
+   "failed_checks": [],
+   "seconds": 90.0,
+   "peak_mb": 1701,
+   "sessions": [
+    {
+     "ended": "killed",
+     "seconds": 41.0
+    },
+    {
+     "ended": "exited",
+     "seconds": 49.0,
+     "resumed": true
+    }
+   ],
+   "model_calls": 2,
+   "tokens": 519,
+   "model_seconds": 33.3,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": {
+    "killed_halfway": true,
+    "resumed_and_finished": true,
+    "resume_notes": [
+     "{\"at\": 1795062094.04773, \"event\": \"resumed\", \"interrupted\": [\"build\"], \"done\": []}"
+    ]
+   },
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "E11_long_docstrings",
+   "kind": "long_task",
+   "solved": true,
+   "checks_passed": 4,
+   "checks_total": 4,
+   "failed_checks": [],
+   "seconds": 29.0,
+   "peak_mb": 1439,
+   "sessions": [
+    {
+     "ended": "killed",
+     "seconds": 12.0
+    },
+    {
+     "ended": "exited",
+     "seconds": 17.0,
+     "resumed": true
+    }
+   ],
+   "model_calls": 8,
+   "tokens": 465,
+   "model_seconds": 23.7,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": {
+    "killed_halfway": true,
+    "resumed_and_finished": true,
+    "resume_notes": [
+     "{\"at\": 1795062159.8226187, \"event\": \"resumed\", \"interrupted\": [\"document\"], \"done\": [\"inspect\"]}"
+    ]
+   },
+   "made_by": {
+    "deterministic": 2,
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": false
+  },
+  {
+   "task": "E12_computed_answer",
+   "kind": "answer",
+   "solved": false,
+   "checks_passed": 1,
+   "checks_total": 2,
+   "failed_checks": [
+    "number_correct: want 46010; found [51000.0]"
+   ],
+   "seconds": 13.0,
+   "peak_mb": 1450,
+   "sessions": [
+    {
+     "ended": "exited",
+     "seconds": 13.0
+    }
+   ],
+   "model_calls": 2,
+   "tokens": 163,
+   "model_seconds": 9.7,
+   "online_calls": 0,
+   "human_help": {
+    "approvals_asked": 0,
+    "manual_steps": 0
+   },
+   "recovery": null,
+   "made_by": {
+    "model": 1
+   },
+   "agent_verdict": "VERIFIED",
+   "false_claim": true
+  }
+ ],
+ "set": "locked",
+ "tier": "2gb",
+ "tier_limit_mb": 2048,
+ "network": "new empty network namespace (loopback only)",
+ "model": {
+  "planner": "qwen2.5-coder-1.5b-q4",
+  "reviewer": "qwen2.5-coder-1.5b-q4",
+  "builder": "qwen2.5-coder-1.5b-q4"
+ },
+ "bug_request": "The tests of this project fail. Find the bug in the source code and fix it so the tests pass. Do not change the tests.",
+ "started": "2026-11-19 04:03:37",
+ "code_commit": "d9fffe2a968191024559690e8f250d55ea896a7e",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

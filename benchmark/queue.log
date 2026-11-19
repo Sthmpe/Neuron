@@ -1,0 +1,16 @@
+[2026-11-19 04:03:37] scorecard finished; starting step-5 measurements
+LOCK INTACT
+eval2-locked-2gb E01_pdf_market: not solved | 10/12 checks | 68.0s | peak 1466 MB | calls 6 | agent says VERIFIED
+eval2-locked-2gb E02_excel_clinic: SOLVED | 10/10 checks | 17.0s | peak 1590 MB | calls 1 | agent says VERIFIED
+eval2-locked-2gb E03_word_notice: not solved | 3/5 checks | 156.1s | peak 1470 MB | calls 28 | agent says PARTIAL
+eval2-locked-2gb E04_pptx_training: SOLVED | 9/9 checks | 19.0s | peak 1584 MB | calls 1 | agent says VERIFIED
+eval2-locked-2gb E05_python_bug: SOLVED | 1/1 checks | 31.0s | peak 1481 MB | calls 0 | agent says VERIFIED
+eval2-locked-2gb E06_js_bug: SOLVED | 1/1 checks | 20.0s | peak 1527 MB | calls 2 | agent says VERIFIED
+eval2-locked-2gb E07_go_bug: not solved | 0/1 checks | 80.0s | peak 1793 MB | calls 9 | agent says PARTIAL
+eval2-locked-2gb E08_rust_bug: SOLVED | 1/1 checks | 91.0s | peak 1554 MB | calls 9 | agent says VERIFIED
+eval2-locked-2gb E09_cpp_csvsum: not solved | 0/1 checks | 542.1s | peak 1571 MB | calls 19 | agent says PARTIAL
+eval2-locked-2gb E10_repair_app: SOLVED | 11/11 checks | 90.0s | peak 1701 MB | calls 2 | agent says VERIFIED
+eval2-locked-2gb E11_long_docstrings: SOLVED | 4/4 checks | 29.0s | peak 1439 MB | calls 8 | agent says VERIFIED
+eval2-locked-2gb E12_computed_answer: not solved | 1/2 checks | 13.0s | peak 1450 MB | calls 2 | agent says VERIFIED
+PHASE5-DONE eval2-locked-2gb
+[2026-11-19 04:23:10] eval2 2gb finished
