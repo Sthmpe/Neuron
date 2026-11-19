@@ -3,13 +3,13 @@ const $ = (s, el = document) => el.querySelector(s);
 const view = $('#view');
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const LABEL = { draft: 'Draft', queued: 'Waiting to start', running: 'Working', done: 'Done and checked', partial: 'Partly done', failed: 'Not done',
-  waiting_approval: 'Needs your OK', paused: 'Paused', waiting_network: 'Waiting for the internet' };
+  waiting_approval: 'Needs your OK', waiting_input: 'Needs your reply', paused: 'Paused', waiting_network: 'Waiting for the internet' };
 function badge(job) {
   const unverified = job.status === 'done' && (job.verdict || job.report?.verdict) === 'UNVERIFIED';
   const status = unverified ? 'unverified' : job.status;
   return `<span class="badge b-${esc(status)}">${unverified ? 'Answered · unverified' : esc(LABEL[status] || status)}</span>`;
 }
-const STEP = { pending: '', in_progress: '·', done: '✓', partial: '~', failed: '!', skipped: '-', waiting_approval: '?', waiting_network: '…' };
+const STEP = { pending: '', in_progress: '·', done: '✓', partial: '~', failed: '!', skipped: '-', waiting_approval: '?', waiting_input: '?', waiting_network: '…' };
 let timer = null;
 let gen = 0;       // only the newest screen may draw: an older one that finishes loading later is dropped
 
@@ -85,6 +85,12 @@ async function jobView(id, g) {
       <div class="row">${live ? `<button class="btn danger small" id="stop">Stop</button>` : ''}
       ${['paused', 'failed', 'partial'].includes(j.status) ? `<button class="btn small" id="resume">Resume</button>` : ''}
       ${hasApp ? `<button class="btn primary small" id="preview">Open the app</button>` : ''}</div></section>
+      ${j.owner_inputs?.length ? `<section class="card"><h2>Your replies</h2>${j.owner_inputs.map(t =>
+        `<p>${esc(t.question)}<br><b>${esc(t.answer)}</b></p>`).join('')}</section>` : ''}
+      ${j.input_request ? `<form class="card" id="input-form"><h2>One detail needed</h2>
+        <label for="owner-input">${esc(j.input_request.question)}</label>
+        <textarea id="owner-input" required maxlength="1200"></textarea>
+        <button class="btn primary" type="submit">Reply and continue</button><div role="status" class="err" id="input-error"></div></form>` : ''}
       ${j.approvals.length ? `<section class="card"><h2>Needs your OK</h2>${j.approvals.map(a => `<p>${esc(a.question || a.action)} (step ${esc(a.task)})</p>
         <div class="row"><button class="btn primary small" data-ok="${esc(a.task)}|${esc(a.action)}">Approve</button>
         <button class="btn danger small" data-no="${esc(a.task)}|${esc(a.action)}">Reject</button></div>`).join('')}</section>` : ''}
@@ -99,10 +105,24 @@ async function jobView(id, g) {
       ${j.evidence.length ? `<section class="card"><h2>Evidence</h2>${j.evidence.slice(-4).map(e => `<h3>${esc(e.task)}: ${e.passed && e.how === 'unverified' ? 'answer delivered' : e.passed ? 'passed' : 'failed'}</h3>
         <p class="note">${esc(e.how)}</p><div class="checks">${e.checks.map(c => `<div class="ck"><b class="${c.pass ? 'ok' : 'no'}">${c.pass ? '✓' : '✗'}</b>
         <span>${esc(c.id.replace(/_/g, ' '))}${c.detail ? ': ' + esc(c.detail) : ''}</span></div>`).join('')}</div>`).join('')}</section>` : ''}
-      ${!live && j.status !== 'draft' ? `<section class="card"><h2>Ask for a change or a next step</h2>
+      ${!live && !['draft', 'waiting_input'].includes(j.status) ? `<section class="card"><h2>Ask for a change or a next step</h2>
         <textarea id="more" aria-label="Follow-up" placeholder="For example: add a column for VAT, or make it shorter"></textarea>
         <div class="row"><button class="btn primary" id="send">Send</button></div><div id="msg2"></div></section>` : ''}
       <section class="card"><h2>What NEURON is doing</h2><div class="feed">${feed.slice().reverse().map(e => `<div>${esc(e.text)}</div>`).join('') || '<p class="note">Nothing yet</p>'}</div></section>`;
+    $('#input-form')?.addEventListener('submit', async event => {
+      event.preventDefault();
+      const answer = $('#owner-input').value.trim();
+      const button = event.currentTarget.querySelector('button');
+      if (!answer || button.disabled) return;
+      button.disabled = true;
+      try {
+        await api(`/api/jobs/${id}/input`, { method: 'POST', json: { id: j.input_request.id, answer } });
+        await draw();
+      } catch (err) {
+        if (g === gen && $('#input-error')) $('#input-error').textContent = err.message;
+        button.disabled = false;
+      }
+    });
     $('#send')?.addEventListener('click', async () => { const text = $('#more').value.trim(); if (!text) return;
       $('#send').disabled = true;
       try { const r = await api(`/api/jobs/${id}/followup`, { method: 'POST', json: { text } }); location.hash = `#/job/${r.id}`; }

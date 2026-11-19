@@ -10,7 +10,7 @@ from pathlib import Path
 
 from ..brain.llm import LLMUnavailable
 from . import router
-from .capability import Missing, Outcome, Verdict, default_registry
+from .capability import Missing, NeedsOwnerInput, Outcome, Verdict, default_registry
 from .effects import Effects, Uncertain
 from .state import JobState
 
@@ -238,11 +238,16 @@ class Agent:
         while len(task["attempts"]) < MAX_TRIES:
             n = len(task["attempts"]) + 1
             params = dict(task.get("params") or {})
+            if task.get("owner_inputs"):
+                params["owner_inputs"] = task["owner_inputs"]
             if task["attempts"] and not task["attempts"][-1].get("passed"):   # revise: change strategy, never repeat
                 params.update(self.choose_strategy(task, cap))
             t0 = time.time()
             try:
                 out = cap.run(job, params)
+            except NeedsOwnerInput as e:
+                s.request_input(tid, e.question, e.context)
+                return
             except Uncertain as e:
                 # NEURON stopped in the middle of an outside action last time. Repeating it could do it twice: ask.
                 action = f"repeat:{e.key}"
@@ -340,6 +345,8 @@ class Agent:
             made[t.get("made_by", "deterministic")] = made.get(t.get("made_by", "deterministic"), 0) + 1
         if plan and len(done) == len(plan):
             verdict = "UNVERIFIED" if any(t.get("verification") == "unverified" for t in done) else "VERIFIED"
+        elif any(t["status"] == "waiting_input" for t in plan):
+            verdict = "WAITING_INPUT"
         else:
             verdict = "PARTIAL" if done or partial else "FAILED"
         files = sorted({f for t in done + partial for f in t.get("files", [])})
@@ -350,11 +357,12 @@ class Agent:
                                for t in plan if t["status"] == "waiting_network"}},
                "model_calls": self.job.calls, "online_calls": self.job.online_calls, "model_seconds": round(self.job.model_seconds, 1), "tokens": self.job.tokens,
                "usage_all_sessions": self.job.usage_total(),
-               "seconds": round(seconds, 1), "pending": [t["id"] for t in plan if t["status"] in ("pending", "waiting_approval", "waiting_network")],
+               "seconds": round(seconds, 1), "pending": [t["id"] for t in plan if t["status"] in ("pending", "waiting_approval", "waiting_network", "waiting_input")],
+               "waiting_input": [t["id"] for t in plan if t["status"] == "waiting_input"],
                "waiting_network": [t["id"] for t in plan if t["status"] == "waiting_network"],
                "retry_at": min([t.get("not_before", 0) for t in plan if t["status"] == "waiting_network"] or [0]),
                "outside_actions": self.job.effects.summary(),
                "waiting_approval": [t["id"] for t in plan if t["status"] == "waiting_approval"]}
-        self.s.set_progress(state="finished" if not rep["pending"] else "paused", verdict=verdict)
+        self.s.set_progress(state="waiting_input" if rep["waiting_input"] else "paused" if rep["pending"] else "finished", verdict=verdict)
         (self.s.dir / "report.json").write_text(json.dumps(rep, indent=1))
         return rep

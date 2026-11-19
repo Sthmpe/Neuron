@@ -27,9 +27,12 @@ class JobManager:
         self.runner_factory, self.sandbox_factory, self.registry, self.log = runner_factory, sandbox_factory, registry, log
         self.runner = None
         self.queue, self.lock, self.wake = deque(), threading.Lock(), threading.Event()
+        self.meta_lock = threading.Lock()
         self.current, self.current_job, self.stopping = None, None, False
         for meta in sorted(self.all(), key=lambda m: m["created"]):
-            if meta["status"] in ("queued", "running"):            # interrupted by a restart: continue
+            replied = meta["status"] == "waiting_input" and any(
+                t["status"] == "pending" and t.get("owner_inputs") for t in JobState(self._path(meta["id"]) / "workspace").plan())
+            if meta["status"] in ("queued", "running") or replied:
                 self.queue.append(meta["id"])
                 self._meta(meta["id"], status="queued", note="resumed after a restart")
         self.memory = None                              # created on the first job (default: <home>/memory/knowledge.db)
@@ -47,11 +50,12 @@ class JobManager:
 
     def _meta(self, jid, **fields):
         f = self._path(jid) / "meta.json"
-        m = json.loads(f.read_text())
-        m.update(fields, updated=time.time())
-        tmp = f.with_suffix(".tmp")
-        tmp.write_text(json.dumps(m, indent=1))
-        tmp.replace(f)
+        with self.meta_lock:
+            m = json.loads(f.read_text())
+            m.update(fields, updated=time.time())
+            tmp = f.with_suffix(".tmp")
+            tmp.write_text(json.dumps(m, indent=1))
+            tmp.replace(f)
         return m
 
     def meta(self, jid):
@@ -137,18 +141,36 @@ class JobManager:
 
     def start(self, jid):
         with self.lock:
-            if jid not in self.queue and self.current != jid:
-                self.queue.append(jid)
+            status = self.meta(jid)["status"]
+            if status == "waiting_input" or (self.current == jid and status in ("running", "queued")):
+                return
+            self._enqueue(jid)
+
+    def _enqueue(self, jid):
+        """Called under the queue lock, including when the previous run is just leaving the worker."""
+        if jid not in self.queue:
+            self.queue.append(jid)
         self._meta(jid, status="queued")
         self.wake.set()
 
-    def stop(self, jid):
-        if self.current == jid and self.current_job is not None:
-            self.current_job.stop_requested = True
+    def submit_input(self, jid, prompt_id, answer):
+        if not isinstance(prompt_id, str) or not isinstance(answer, str) or not 1 <= len(answer.strip()) <= 1200:
+            raise ValueError("Enter a reply of 1 to 1200 characters.")
         with self.lock:
+            st = JobState(self._path(jid) / "workspace")
+            waiting = self.meta(jid)["status"] == "waiting_input"
+            if st.answer_input(prompt_id, answer.strip(), accept_new=waiting):
+                self._enqueue(jid)
+
+    def stop(self, jid):
+        with self.lock:
+            if self.meta(jid)["status"] == "waiting_input":
+                return
+            if self.current == jid and self.current_job is not None:
+                self.current_job.stop_requested = True
             if jid in self.queue:
                 self.queue.remove(jid)
-        self._meta(jid, status="paused", note="stopped by the owner")
+            self._meta(jid, status="paused", note="stopped by the owner")
 
     def approve(self, jid, task, action, yes):
         st = JobState(self._path(jid) / "workspace")
@@ -160,19 +182,20 @@ class JobManager:
         while not self.stopping:
             with self.lock:
                 jid = self.queue.popleft() if self.queue else None
+                self.current = jid
             if jid is None:
                 self._resume_waiting()
                 self._maintain()
                 self.wake.wait(1.0)
                 self.wake.clear()
                 continue
-            self.current = jid
             try:
                 self._run(jid)
             except Exception as e:                                  # a job's failure must not stop the machine
                 self._meta(jid, status="failed", error=f"{type(e).__name__}: {e}"[:400])
             finally:
-                self.current, self.current_job = None, None
+                with self.lock:
+                    self.current, self.current_job = None, None
 
     def _resume_waiting(self, every=30):
         """Jobs that stopped only because they needed the internet start again by themselves once it is back."""
@@ -202,7 +225,8 @@ class JobManager:
         rep = Agent(job).run(m["goal"], attachments)
         status = "waiting_approval" if rep.get("waiting_approval") else ("paused" if getattr(job, "stop_requested", False)
                   else "waiting_network" if rep.get("waiting_network")
-                  else {"VERIFIED": "done", "UNVERIFIED": "done", "PARTIAL": "partial", "FAILED": "failed"}[rep["verdict"]])
+                  else {"VERIFIED": "done", "UNVERIFIED": "done", "WAITING_INPUT": "waiting_input",
+                        "PARTIAL": "partial", "FAILED": "failed"}[rep["verdict"]])
         self._meta(jid, status=status, report=rep, finished=time.time())
 
     def _open_memory(self):
@@ -255,19 +279,26 @@ class JobManager:
     def detail(self, jid):
         m = self.meta(jid)
         st = JobState(self._path(jid) / "workspace")
+        tasks = st.plan()
+        prompt = next((t["input_request"] for t in tasks if t["status"] == "waiting_input"), None)
+        asking = m["status"] == "waiting_input" and prompt is not None
+        history = [{"question": turn["question"], "answer": turn["answer"]} for t in tasks for turn in t.get("owner_inputs", [])]
+        hide_answer = any(t["capability"] == "answer_question" and t["status"] != "done" for t in tasks)
         plan = [{"id": t["id"], "title": t["title"], "status": t["status"], "summary": t.get("summary", ""), "made_by": t.get("made_by"),
                  "verification": t.get("verification"), "tries": len(t.get("attempts", [])), "gaps": t.get("gaps", []),
                  "last_failure": (t["attempts"][-1].get("failure") if t.get("attempts") and not t["attempts"][-1].get("passed") else "")}
-                for t in st.plan()] if st.exists() else []
+                for t in tasks]
         evidence = st.lines("evidence.jsonl")[-12:] if st.exists() else []
         progress = st.progress() if st.exists() else {}
         if (m.get("report") or {}).get("verdict") == "UNVERIFIED":
             progress["verdict"] = "UNVERIFIED"
         return {**m, "kind": st.goal().get("kind") if st.exists() else None, "plan": plan, "progress": progress,
+                "input_request": {k: prompt[k] for k in ("id", "question")} if asking else None, "owner_inputs": history,
                 "approvals": [a for a in st.approvals() if a["status"] == "pending"] if st.exists() else [],
                 "evidence": [{"task": e["task"], "passed": e["passed"], "how": e["how"],
                               "checks": [{"id": c["id"], "pass": c["pass"], "detail": str(c["detail"])[:160]} for c in e["checks"][:12]]} for e in evidence],
-                "outputs": self.outputs(jid), "answer": self._answer(jid),
+                "outputs": [o for o in self.outputs(jid) if not hide_answer or o["path"] not in ("answer.md", "answers.md")],
+                "answer": "" if hide_answer else self._answer(jid),
                 "thread": [{"id": t["id"], "said": t.get("request") or t["goal"], "status": t["status"],
                             "verdict": (t.get("report") or {}).get("verdict")} for t in self.conversation(jid)]}
 

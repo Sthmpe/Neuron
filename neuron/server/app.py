@@ -241,7 +241,7 @@ def make_handler(state):
                     new = jobs.follow_up(m.group(1), text)
                     jobs.start(new)
                     return self._send(201, {"id": new})
-                m = re.fullmatch(r"/api/jobs/([\w-]+)/(upload|start|stop|approve|preview)", path)
+                m = re.fullmatch(r"/api/jobs/([\w-]+)/(upload|start|stop|approve|input|preview)", path)
                 if not m:
                     return self._send(404, {"error": "not found"})
                 jid, act = m.groups()
@@ -256,6 +256,11 @@ def make_handler(state):
                 elif act == "approve":
                     b = self._json()
                     jobs.approve(jid, b["task"], b["action"], bool(b.get("approve")))
+                elif act == "input":
+                    b = self._json()
+                    if not isinstance(b, dict):
+                        raise ValueError("Expected a question ID and a reply.")
+                    jobs.submit_input(jid, b.get("id"), b.get("answer"))
                 elif act == "preview":
                     app_dir = jobs.file(jid, "app/app.py").parent
                     url = state["previews"].open(jid, app_dir)
