@@ -172,7 +172,9 @@ class AnswerQuestion(Capability):
         q = job.state.goal()["request"]
         if COMPUTE.search(q):                  # numbers involved: think, compute with real Python in the sandbox, check once
             from ..thinking import solve
-            s = solve(lambda m, n: job.chat("builder", m, max_tokens=n, temperature=0.1), job.sandbox, q)
+            s = solve(lambda m, n: job.chat("builder", m, max_tokens=n, temperature=0.1), job.sandbox, q, require_code=True)
+            if not s["answer"].strip():                 # only the note, no answer: that is a failure, never "answered"
+                return Outcome(False, "the local model produced no answer" + (f" (its program printed: {s['printed'][:120]})" if s.get("printed") else ""))
             text = s["answer"] + (f"\n\n(Worked out with {s['tool_runs']} Python run(s) in the sandbox and checked once.)" if s["tool_runs"]
                                   else "\n\n(Checked once by a second pass.)")
             (job.workspace / "answer.md").write_text(clean(text) + "\n")

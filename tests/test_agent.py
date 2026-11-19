@@ -343,3 +343,21 @@ class ThinkingTests(unittest.TestCase):
         llm = ScriptedLLM(["12 + 30 = 41. Answer: 41", "12 + 30 is 42, not 41. Answer: 42"])
         s = solve(lambda m, n: llm.chat(m, max_tokens=n), None, "What is 12 + 30?")
         self.assertEqual((s["first_answer"], s["answer"], s["calls"]), ("41", "42", 2))
+
+
+class RequireCodeTests(unittest.TestCase):
+    def test_calculation_question_always_runs_a_program(self):
+        """The 2 GB model answered an average in its head, wrongly (44 for 45); arithmetic now always goes through code."""
+        replies = ["The average is 44.\nAnswer: 44",
+                   "```python\nprint(sum([42, 37, 55, 61, 30]) / 5)\n```",
+                   "The program printed 45.0.\nAnswer: 45",
+                   "Correct.\nAnswer: 45"]
+        rep, job, llm = run("My shop sold 42, 37, 55, 61 and 30 loaves on five days. What is the average per day?", replies)
+        self.assertEqual(rep["verdict"], "UNVERIFIED", rep)
+        text = (job.workspace / "answer.md").read_text()
+        self.assertIn("45", text)
+        self.assertIn("1 Python run", text)
+
+    def test_empty_answer_is_a_failure_not_answered(self):
+        rep, job, llm = run("What is 15% of 18,500 naira?", ["Let me think."] * 12)
+        self.assertNotIn(rep["verdict"], ("VERIFIED", "UNVERIFIED"), rep)
