@@ -150,31 +150,52 @@ COMPUTE = re.compile(r"\d|\b(calculate|compute|how (much|many)|percent|average|t
 
 class AnswerQuestion(Capability):
     name = "answer_question"
-    purpose = "Answer a general question with the local model (not independently checkable)"
-    permissions = ("use_model",)
+    purpose = "Answer a general question and state which results have independent evidence"
+    permissions = ("use_model", "write_workspace")
     resources = {"ram_mb": 40, "uses_model": True}
-    verification = "none possible offline: reported as unverified"
+    verification = "exact arithmetic checked against the delivered answer; other answers marked unverified"
     domains = ("research",)
 
     def run(self, job, params):
+        from ..arithmetic import exact_answer
         q = job.state.goal()["request"]
-        if COMPUTE.search(q):                  # numbers involved: think, compute with real Python in the sandbox, check once
+        exact = exact_answer(q)
+        if exact is not None:
+            expression, text = exact
+            (job.workspace / "answer.md").write_text(text + "\n")
+            return Outcome(True, text, {"answer": text, "expression": expression}, ["answer.md"])
+
+        result = {}
+        if COMPUTE.search(q):
             from ..thinking import solve
             s = solve(lambda m, n: job.chat("builder", m, max_tokens=n, temperature=0.1), job.sandbox, q)
-            text = s["answer"] + (f"\n\n(Worked out with {s['tool_runs']} Python run(s) in the sandbox and checked once.)" if s["tool_runs"]
-                                  else "\n\n(Checked once by a second pass.)")
-            (job.workspace / "answer.md").write_text(clean(text) + "\n")
-            return Outcome(True, clean(text)[:300], {"answer": clean(text), "tool_runs": s["tool_runs"]}, ["answer.md"], made_by="model")
-        mem = job.memory_context() if hasattr(job, "memory_context") else ""
-        text = job.ask_text("builder", "You are NEURON, an offline assistant. Answer clearly. Say so if you are not sure. No em dashes."
-                            + (f"\n\n{mem}" if mem else ""), q, max_tokens=700)
-        if not text:
-            return Outcome(False, "no answer from the local model")
-        (job.workspace / "answer.md").write_text(clean(text) + "\n")
-        return Outcome(True, clean(text)[:300], {"answer": clean(text)}, ["answer.md"], made_by="model")
+            text = s["answer"]
+            result["tool_runs"] = s["tool_runs"]
+            method = f"The model used {s['tool_runs']} Python run(s) and a second pass." if s["tool_runs"] else "The model used a second pass."
+        else:
+            mem = job.memory_context() if hasattr(job, "memory_context") else ""
+            text = job.ask_text("builder", "You are NEURON, an offline assistant. Answer clearly. Say so if you are not sure. No em dashes."
+                                + (f"\n\n{mem}" if mem else ""), q, max_tokens=700)
+            method = "The local model supplied this answer."
+        answer = clean(text or "").strip()
+        if not answer:
+            return Outcome(False, "the local model did not supply a final answer")
+        (job.workspace / "answer.md").write_text(f"{answer}\n\nUnverified. {method}\n")
+        return Outcome(True, answer[:300], {**result, "answer": answer}, ["answer.md"], made_by="model")
 
     def verify(self, job, params, outcome):
-        return Verdict(True, [{"id": "answered", "pass": True, "detail": "UNVERIFIED: a model answer, not checked against a source"}],
+        from ..arithmetic import exact_answer
+        path = job.workspace / "answer.md"
+        delivered = path.read_text().strip() if path.is_file() else ""
+        exact = exact_answer(job.state.goal()["request"])
+        if exact is not None:
+            expression, expected = exact
+            ok = delivered == expected
+            return Verdict(ok, [{"id": "exact_arithmetic", "pass": ok, "detail": f"{expression} = {expected}"}],
+                           "exact rational arithmetic checked against answer.md")
+        answer = outcome.result.get("answer", "")
+        ok = bool(answer) and delivered.startswith(answer + "\n\nUnverified.")
+        return Verdict(ok, [{"id": "answer_delivered", "pass": ok, "detail": "The answer carries an unverified label."}],
                        "unverified")
 
 

@@ -55,14 +55,22 @@ class JobManager:
         return m
 
     def meta(self, jid):
-        return json.loads((self._path(jid) / "meta.json").read_text())
+        directory = self._path(jid)
+        meta = json.loads((directory / "meta.json").read_text())
+        report = meta.get("report") or {}
+        # Older reports promoted a delivered answer even when the saved step explicitly said unverified.
+        if report.get("kind") == "answer" and report.get("verdict") == "VERIFIED":
+            plan = JobState(directory / "workspace").plan()
+            if any(t.get("verification") == "unverified" for t in plan):
+                report["verdict"] = "UNVERIFIED"
+        return meta
 
     def all(self):
         out = []
         for d in self.dir.iterdir():
             if (d / "meta.json").exists():
                 try:
-                    out.append(json.loads((d / "meta.json").read_text()))
+                    out.append(self.meta(d.name))
                 except ValueError:
                     pass
         return sorted(out, key=lambda m: -m["created"])
@@ -194,7 +202,7 @@ class JobManager:
         rep = Agent(job).run(m["goal"], attachments)
         status = "waiting_approval" if rep.get("waiting_approval") else ("paused" if getattr(job, "stop_requested", False)
                   else "waiting_network" if rep.get("waiting_network")
-                  else {"VERIFIED": "done", "PARTIAL": "partial", "FAILED": "failed"}[rep["verdict"]])
+                  else {"VERIFIED": "done", "UNVERIFIED": "done", "PARTIAL": "partial", "FAILED": "failed"}[rep["verdict"]])
         self._meta(jid, status=status, report=rep, finished=time.time())
 
     def _open_memory(self):
@@ -252,12 +260,16 @@ class JobManager:
                  "last_failure": (t["attempts"][-1].get("failure") if t.get("attempts") and not t["attempts"][-1].get("passed") else "")}
                 for t in st.plan()] if st.exists() else []
         evidence = st.lines("evidence.jsonl")[-12:] if st.exists() else []
-        return {**m, "kind": st.goal().get("kind") if st.exists() else None, "plan": plan, "progress": st.progress() if st.exists() else {},
+        progress = st.progress() if st.exists() else {}
+        if (m.get("report") or {}).get("verdict") == "UNVERIFIED":
+            progress["verdict"] = "UNVERIFIED"
+        return {**m, "kind": st.goal().get("kind") if st.exists() else None, "plan": plan, "progress": progress,
                 "approvals": [a for a in st.approvals() if a["status"] == "pending"] if st.exists() else [],
                 "evidence": [{"task": e["task"], "passed": e["passed"], "how": e["how"],
                               "checks": [{"id": c["id"], "pass": c["pass"], "detail": str(c["detail"])[:160]} for c in e["checks"][:12]]} for e in evidence],
                 "outputs": self.outputs(jid), "answer": self._answer(jid),
-                "thread": [{"id": t["id"], "said": t.get("request") or t["goal"], "status": t["status"]} for t in self.conversation(jid)]}
+                "thread": [{"id": t["id"], "said": t.get("request") or t["goal"], "status": t["status"],
+                            "verdict": (t.get("report") or {}).get("verdict")} for t in self.conversation(jid)]}
 
     def _answer(self, jid):
         """A written answer (questions, document questions) is shown on the phone directly, like a chat reply."""
@@ -272,7 +284,10 @@ class JobManager:
         ev = []
         for name, kind in (("journal.jsonl", "session"), ("decisions.jsonl", "decision"), ("evidence.jsonl", "check")):
             for e in st.lines(name):
-                text = e.get("text") or (f"{e.get('task')}: {'verified' if e.get('passed') else 'check failed'} ({e.get('how')})" if kind == "check" else e.get("event", ""))
+                text = e.get("text") or e.get("event", "")
+                if kind == "check":
+                    label = "answer delivered" if e.get("how") == "unverified" else "verified"
+                    text = f"{e.get('task')}: {label if e.get('passed') else 'check failed'} ({e.get('how')})"
                 ev.append({"at": e["at"], "kind": kind, "text": str(text)[:300]})
         ev.sort(key=lambda e: e["at"])
         return [dict(e, seq=i) for i, e in enumerate(ev, 1) if i > after]

@@ -272,7 +272,8 @@ class Agent:
                        "strategy": params.get("strategy"), "seconds": round(time.time() - t0, 1),
                        "failure": "; ".join(f"{c['id']}: {c['detail']}" for c in verdict.failures)[:1500]}
             s.add_attempt(tid, attempt)
-            job.log(f"  {tid} try {n}: {'verified' if verdict.passed else 'failed - ' + attempt['failure'][:140]}")
+            label = "delivered (unverified)" if verdict.how == "unverified" else "verified"
+            job.log(f"  {tid} try {n}: {label if verdict.passed else 'failed - ' + attempt['failure'][:140]}")
             if verdict.passed:
                 s.update_task(tid, status="done", summary=out.summary, result=out.result, files=out.files, made_by=out.made_by,
                               verification=verdict.how)
@@ -337,7 +338,10 @@ class Agent:
         made = {}
         for t in done:
             made[t.get("made_by", "deterministic")] = made.get(t.get("made_by", "deterministic"), 0) + 1
-        verdict = "VERIFIED" if plan and len(done) == len(plan) else "PARTIAL" if done or partial else "FAILED"
+        if plan and len(done) == len(plan):
+            verdict = "UNVERIFIED" if any(t.get("verification") == "unverified" for t in done) else "VERIFIED"
+        else:
+            verdict = "PARTIAL" if done or partial else "FAILED"
         files = sorted({f for t in done + partial for f in t.get("files", [])})
         rep = {"verdict": verdict, "kind": self.s.goal().get("kind"), "tasks": {t["id"]: t["status"] for t in plan},
                "failed": {t["id"]: t.get("summary", "") for t in failed}, "files": files, "made_by": made,

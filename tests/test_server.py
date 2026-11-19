@@ -176,6 +176,8 @@ class ServerTests(unittest.TestCase):
         c.base = base2
         d = wait_for(c, jid, ("done",))
         self.assertIn("answer.md", [o["path"] for o in d["outputs"]])
+        self.assertEqual(d["report"]["verdict"], "UNVERIFIED")
+        self.assertIn("Unverified.", d["answer"])
         self.assertIn("scatters blue light", d["answer"])            # shown on the phone directly
 
 

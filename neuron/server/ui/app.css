@@ -28,7 +28,7 @@ background:var(--tone);color:var(--ink);text-decoration:none}.btn:hover{backgrou
 padding:16px 18px;text-decoration:none;color:var(--ink)}.item .t{font-weight:600}.item .s{color:var(--soft);font-size:.85rem}
 .badge{flex:none;font-size:.78rem;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--tone);color:var(--muted)}
 .b-done{background:var(--ok-bg);color:var(--ok)}.b-failed{background:var(--bad-bg);color:var(--bad)}.b-running,.b-queued{background:var(--accent-soft);color:var(--accent)}
-.b-partial,.b-waiting_approval,.b-paused{background:var(--warn-bg);color:var(--warn)}
+.b-unverified,.b-partial,.b-waiting_approval,.b-paused{background:var(--warn-bg);color:var(--warn)}
 .steps{display:grid;gap:4px}.step{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:12px 4px}
 .dot{width:26px;height:26px;border-radius:999px;display:grid;place-items:center;font-size:.8rem;font-weight:800;background:var(--tone);color:var(--soft)}
 .dot.done{background:var(--ok-bg);color:var(--ok)}.dot.failed,.dot.skipped{background:var(--bad-bg);color:var(--bad)}.dot.in_progress{background:var(--accent);color:#fff}

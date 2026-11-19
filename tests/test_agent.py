@@ -307,7 +307,7 @@ class ThinkingTests(unittest.TestCase):
                    "The program printed 395.\nAnswer: 395",
                    "The arithmetic is right.\nAnswer: 395"]
         rep, job, llm = run("How much is 17 times 23 plus 4?", replies)
-        self.assertEqual(rep["verdict"], "VERIFIED", rep)
+        self.assertEqual(rep["verdict"], "UNVERIFIED", rep)
         text = (job.workspace / "answer.md").read_text()
         self.assertIn("395", text)
         self.assertIn("1 Python run", text)

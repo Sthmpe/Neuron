@@ -4,6 +4,11 @@ const view = $('#view');
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const LABEL = { draft: 'Draft', queued: 'Waiting to start', running: 'Working', done: 'Done and checked', partial: 'Partly done', failed: 'Not done',
   waiting_approval: 'Needs your OK', paused: 'Paused', waiting_network: 'Waiting for the internet' };
+function badge(job) {
+  const unverified = job.status === 'done' && (job.verdict || job.report?.verdict) === 'UNVERIFIED';
+  const status = unverified ? 'unverified' : job.status;
+  return `<span class="badge b-${esc(status)}">${unverified ? 'Answered · unverified' : esc(LABEL[status] || status)}</span>`;
+}
 const STEP = { pending: '', in_progress: '·', done: '✓', partial: '~', failed: '!', skipped: '-', waiting_approval: '?', waiting_network: '…' };
 let timer = null;
 let gen = 0;       // only the newest screen may draw: an older one that finishes loading later is dropped
@@ -57,7 +62,7 @@ async function homeView(g) {
   const { jobs } = await api('/api/jobs');
   if (g !== gen) return;
   $('#jobs').innerHTML = jobs.length ? jobs.map(j => `<a class="item" href="#/job/${j.id}"><div><div class="t">${esc(j.title)}</div>
-    <div class="s">${ago(j.created)}</div></div><span class="badge b-${j.status}">${LABEL[j.status] || j.status}</span></a>`).join('')
+    <div class="s">${ago(j.created)}</div></div>${badge(j)}</a>`).join('')
     : '<p class="note">Nothing yet. Your first job will appear here.</p>';
 }
 
@@ -73,8 +78,8 @@ async function jobView(id, g) {
     const earlier = (j.thread || []).filter(t => t.id !== j.id);
     view.innerHTML = `<p><a href="#/">Back</a></p>
       ${earlier.length ? `<section class="card thread"><h2>Earlier in this conversation</h2>${earlier.map(t => `<a class="said" href="#/job/${t.id}">
-        <span>${esc(t.said).slice(0, 160)}</span><span class="badge b-${t.status}">${LABEL[t.status] || t.status}</span></a>`).join('')}</section>` : ''}
-      <section class="card"><span class="badge b-${j.status}">${LABEL[j.status] || j.status}</span>
+        <span>${esc(t.said).slice(0, 160)}</span>${badge(t)}</a>`).join('')}</section>` : ''}
+      <section class="card">${badge(j)}
       <h1 style="margin-top:12px">${esc(j.title)}</h1>${(j.request || j.goal) !== j.title ? `<p class="lead">${esc(j.request || j.goal).slice(0, 600)}</p>` : ''}
       ${j.kind ? `<p class="note">Understood as: ${esc(j.kind.replace('_', ' '))}</p>` : ''}
       <div class="row">${live ? `<button class="btn danger small" id="stop">Stop</button>` : ''}
@@ -86,12 +91,12 @@ async function jobView(id, g) {
       ${j.answer ? `<section class="card"><h2>Answer</h2><div class="answer">${esc(j.answer)}</div></section>` : ''}
       <section class="card"><h2>Steps</h2><div class="steps">${j.plan.map(t => `<div class="step"><span class="dot ${t.status}">${STEP[t.status] || ''}</span>
         <div><div class="t">${esc(t.title)}</div>${t.summary ? `<div class="s">${esc(t.summary)}</div>` : ''}
-        <div class="m">${t.verification ? 'Checked by: ' + esc(t.verification) : ''}${t.made_by ? ' · made by: ' + esc(t.made_by) : ''}${t.tries > 1 ? ' · tries: ' + t.tries : ''}</div>
+        <div class="m">${t.verification === 'unverified' ? 'Answer unverified' : t.verification ? 'Checked by: ' + esc(t.verification) : ''}${t.made_by ? ' · made by: ' + esc(t.made_by) : ''}${t.tries > 1 ? ' · tries: ' + t.tries : ''}</div>
         ${t.last_failure && t.status !== 'done' && t.status !== 'partial' ? `<div class="s no">${esc(t.last_failure).slice(0, 300)}</div>` : ''}
         ${(t.gaps || []).map(g => `<div class="s no">Not done: ${esc(g)}</div>`).join('')}</div></div>`).join('') || '<p class="note">Planning</p>'}</div></section>
       ${outs.length ? `<section class="card out"><h2>Results</h2>${outs.map(o => `<a href="/api/jobs/${id}/file?path=${encodeURIComponent(o.path)}">
         <span>${esc(o.path)}</span><span class="note">${Math.max(1, Math.round(o.bytes / 1024))} KB</span></a>`).join('')}</section>` : ''}
-      ${j.evidence.length ? `<section class="card"><h2>Evidence</h2>${j.evidence.slice(-4).map(e => `<h3>${esc(e.task)}: ${e.passed ? 'passed' : 'failed'}</h3>
+      ${j.evidence.length ? `<section class="card"><h2>Evidence</h2>${j.evidence.slice(-4).map(e => `<h3>${esc(e.task)}: ${e.passed && e.how === 'unverified' ? 'answer delivered' : e.passed ? 'passed' : 'failed'}</h3>
         <p class="note">${esc(e.how)}</p><div class="checks">${e.checks.map(c => `<div class="ck"><b class="${c.pass ? 'ok' : 'no'}">${c.pass ? '✓' : '✗'}</b>
         <span>${esc(c.id.replace(/_/g, ' '))}${c.detail ? ': ' + esc(c.detail) : ''}</span></div>`).join('')}</div>`).join('')}</section>` : ''}
       ${!live && j.status !== 'draft' ? `<section class="card"><h2>Ask for a change or a next step</h2>
