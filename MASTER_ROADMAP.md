@@ -62,7 +62,7 @@ Status words: **done** (built and measured), **built** (built, tested with scrip
 |---|---|---|
 | Step-3 held-out (bugs, builds, workspaces) | **done** | `benchmark/results/heldout_summary.md`; labelled rerun of builds with the current system 9/9 |
 | Phase-5 locked set | **done** | 3 examiner amendments recorded in `benchmark/phase5/LOCKED.md`; official + labelled reruns kept apart |
-| W5a. New locked set "eval2" | **run on all tiers** (2026-11-19): 2 GB 7/12 (2 false claims), 4 GB 9/12 (1), 8 GB 11/12 (0); `benchmark/eval2/RESULTS.md`. Both false-claim causes identified; general fixes in progress (to be measured on dev tasks) | `benchmark/eval2/` (12 tasks: PDF, Excel, Word, PowerPoint, Python/JS/Go/Rust bugs, C++ program, unseen repair-shop app, long task, computed answer). Locked 2026-11-18 before any tuning, fingerprint in `LOCK.json`; every examiner validated (24/24: references pass, wrong deliveries fail). Next: official runs on 2/4/8 GB with memory off. Acceptance: zero false "verified" claims |
+| W5a. New locked set "eval2" | **run on all tiers** (2026-11-19): 2 GB 7/12 (2 false claims), 4 GB 9/12 (1), 8 GB 11/12 (0); `benchmark/eval2/RESULTS.md`. Both false-claim causes fixed (unchecked answers are UNVERIFIED; unanswered questions make the job PARTIAL); dev honesty check on 2 GB: 0 false claims | `benchmark/eval2/` (12 tasks: PDF, Excel, Word, PowerPoint, Python/JS/Go/Rust bugs, C++ program, unseen repair-shop app, long task, computed answer). Locked 2026-11-18 before any tuning, fingerprint in `LOCK.json`; every examiner validated (24/24: references pass, wrong deliveries fail). Next: official runs on 2/4/8 GB with memory off. Acceptance: zero false "verified" claims |
 | W5b. Scorecard (MMLU-Pro, GPQA Diamond, LiveCodeBench, BFCL) | **done** (2026-11-19) | `SCORECARD.md`: all three models, model alone and full NEURON, 88 fixed sampled items each, network cut, code a655659. Full NEURON is better on MMLU-Pro for 4 GB (10 to 18 of 28, paired p = 0.008) and 8 GB (9 to 17, p = 0.021); no shown difference elsewhere; the 2 GB model gains nothing. GPQA is low everywhere and largely limited by the 400-token answer limit (counts in the page). No comparison with published scores (conditions differ). Next: a labelled second pass with a larger answer limit |
 
 ## W6. Knowledge memory
@@ -79,20 +79,19 @@ Status words: **done** (built and measured), **built** (built, tested with scrip
 
 | | |
 |---|---|
-| Status | **in progress** |
-| Evidence | Phase-5 official runs had 3 false "verified" claims (PDF answers at 4 and 8 GB, shop app at 8 GB). First fix (2026-11-18): unbuildable requested features reported as gaps (job says PARTIAL); answer numbers must be in the quote. Not yet measured with real models |
-| Acceptance | Zero false "verified" claims on the new locked set (W5a) |
-| Next | Step 5 |
+| Status | **improved, measured** (2026-11-19) |
+| Evidence | Phase 5: 3 false claims. eval2 (locked, new tasks): 2 GB 2, 4 GB 1, 8 GB 0. Causes: unchecked model answers called verified; an unanswered PDF question not turned into PARTIAL; on a dev app, a field named with a synonym of the owner's word passed NEURON's own checks. Fixed: new verdict UNVERIFIED ("answered, not checked"); "not found" answers never confirmed; owner's words on forms; calculations always run as code; an empty answer is a failure. Dev honesty check 0 false claims on 2 GB (`benchmark/results/honesty_dev/`) |
+| Unverified | A fresh locked set run after these fixes (eval2 is spent for tuning purposes; a third locked set would be needed for a clean measurement) |
 
 ## W8. Software building and code
 
 | Item | Status | Evidence / next |
 |---|---|---|
 | Web apps (lists, forms, search, login, dashboard counts, links, one rule per record type) | **done** | held-out builds 3/3 on all tiers (step-3 and current system) |
-| Computed totals and sums in apps | **built, not yet measured with a real model** | Computed fields (formula over own and linked number fields) and dashboard sums, worked out in the database query; template builds pass their checks. Locked shop app had failed only on totals, revenue sum and own tests (13/17). Next: measure on a dev app with the real 2/4/8 GB models |
+| Computed totals and sums in apps | **done, measured** | eval2 repair-shop app with totals solved on every tier; dev catering app 7/7 on 4 and 8 GB; 2 GB failed (owner's word 'plates' became 'Quantity'), fixed, labelled rerun 7/7 (`benchmark/results/totals_dev/`). Earlier: | Computed fields (formula over own and linked number fields) and dashboard sums, worked out in the database query; template builds pass their checks. Locked shop app had failed only on totals, revenue sum and own tests (13/17). Next: measure on a dev app with the real 2/4/8 GB models |
 | New programs (C++, Go, Python, ...) | **built** | locked C++ program: only 8 GB built it (7/7) |
 | Bug fixing: Python | **done** | held-out 4 GB 20/20 bugs, workspaces 6/10 |
-| Bug fixing: C++ / Go | **improved, not yet measured with real models** | locked phase 5: C++ 1-2 of 3, Go 0 of 2 at every tier (the model found the right function but wrote wrong fixes). Built: one-token changes tried before the model (`neuron/agent/repair_search.py`), failing test lines shown to the model, two candidate edits per try, Go tab indentation handled. Dev set `benchmark/repair_dev` (6 projects, not locked): the search alone fixes all 4 one-token bugs in 1 to 14 s with no model. Next: `benchmark.repair_dev.run` on 2/4/8 GB with the search on and off |
+| Bug fixing: C++ / Go | **improved, measured** | dev set with the one-token search on / off: 2 GB 4/6 vs 2/6, 4 GB 6/6 vs 6/6 (218 s vs 656 s), 8 GB 6/6 vs 6/6, no false claims; eval2 Go bug solved on 4 and 8 GB. Earlier: | locked phase 5: C++ 1-2 of 3, Go 0 of 2 at every tier (the model found the right function but wrote wrong fixes). Built: one-token changes tried before the model (`neuron/agent/repair_search.py`), failing test lines shown to the model, two candidate edits per try, Go tab indentation handled. Dev set `benchmark/repair_dev` (6 projects, not locked): the search alone fixes all 4 one-token bugs in 1 to 14 s with no model. Next: `benchmark.repair_dev.run` on 2/4/8 GB with the search on and off |
 | Mobile, desktop, games, Flutter | **later** | not built; reported as missing |
 
 ## W9. Documents and data

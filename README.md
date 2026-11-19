@@ -31,7 +31,7 @@ Owner's execution plan of 2026-11-18 (backlog with evidence in [`MASTER_ROADMAP.
 | 2. Usable release (clean Linux retest, Windows via WSL2) | Linux retested from a clean setup (4/4 real tasks after fixes); Windows written, **waiting for your test** |
 | 3. Scorecard (MMLU-Pro, GPQA Diamond, LiveCodeBench, BFCL) | **Done** ([`SCORECARD.md`](SCORECARD.md)): full NEURON beats the model alone on MMLU-Pro for 4 GB (10 to 18 of 28) and 8 GB (9 to 17), both shown by a paired test; no shown difference elsewhere; samples, not full runs |
 | 4. Knowledge memory | Built (keyword + meaning search, 2 GB-friendly embedding model, fallback); no reliable effect on an easy task pair |
-| 5. New locked set, honesty, totals, C++/Go | eval2 locked before tuning and run: 2 GB 7/12, 4 GB 9/12, 8 GB 11/12; false "verified" claims 2, 1, 0 ([results](benchmark/eval2/RESULTS.md)); the two causes are being fixed; repair-shop app with totals solved on every tier |
+| 5. New locked set, honesty, totals, C++/Go | eval2 locked before tuning and run: 2 GB 7/12, 4 GB 9/12, 8 GB 11/12; false "verified" claims 2, 1, 0 ([results](benchmark/eval2/RESULTS.md)); both causes fixed (dev honesty check: 0 false claims); computed totals and C++/Go repair measured on dev tasks (one-token search: 2 GB 4/6 vs 2/6) |
 | 6. Offline to online | Built: waiting steps resume by themselves, crash-safe outside actions, licensed photos with sources, safe package upgrades (real pip and npm runs) |
 | 7. Creative quality | Content rules built; 3 reference sites built, **waiting for your approval** ([`docs/REFERENCE_SITES.md`](docs/REFERENCE_SITES.md)) |
 
@@ -181,8 +181,9 @@ One 1.5B model, single prompt per attempt, network off. Details in [`docs/HISTOR
 
 ## Honest limits
 
-- **The agent sometimes claims more than it did** (3 false "verified" claims in the official locked runs, listed above).
-  Every result still shows its evidence, and the examiners caught these, but the claim itself is not yet trustworthy.
+- **The agent has claimed more than it did**: 3 false "verified" claims in phase 5, then 2, 1 and 0 on the new locked
+  set (2, 4 and 8 GB). The causes found are fixed (unchecked answers now say "answered, not checked"; unanswered
+  questions make a job partial) and a dev check shows 0 false claims, but no fresh locked set has been run since.
 - **Compiled-language bug fixing is weak** (C++ 1 to 2 of 3, Go 0 of 2 in the locked set). One-token bugs are now
   fixed by a model-free search (4 of 4 on the dev set); real-model runs of the new system are still to come.
 - **The 2 GB model is weak**: it never produced a valid plan for the shop app, and fixed 7 of 20 held-out bugs.

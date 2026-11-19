@@ -83,6 +83,11 @@ Then, in order: full suite, merge, fast-forward main; design proof (20 requests)
 
 ## Events
 
+- 2026-11-19 07:15: step 5 completed. Honesty fixes (UNVERIFIED verdict, not-found answers, owner's words on forms,
+  calculations as code, empty answer = failure); dev measurements: repair search on/off (2 GB 4/6 vs 2/6, 4 and 8 GB
+  6/6 either way, faster with it), computed totals 7/7 on 4 and 8 GB and on the labelled 2 GB rerun, honesty check 0
+  false claims. All reruns labelled; original results kept.
+
 - 2026-11-19 06:00: eval2 (locked) official runs: 2 GB 7/12 with 2 false verified claims (E01, E12), 4 GB 9/12 with 1
   (E12), 8 GB 11/12 with none. NEURON's code was identical for all three. Causes found: unchecked answers called
   verified; an unanswered PDF question not turned into PARTIAL. Fixes follow, measured on dev tasks only.
