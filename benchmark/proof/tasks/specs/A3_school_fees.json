@@ -1,0 +1,94 @@
+{
+ "login": [
+  "bursar",
+  "chalk77"
+ ],
+ "pages": [
+  "",
+  "Students",
+  "Payments"
+ ],
+ "steps": [
+  {
+   "id": "add_student_1",
+   "open": "Students",
+   "fill": {
+    "Name": "Ngozi Okafor",
+    "Class": "JSS1",
+    "Fee": "60000"
+   },
+   "expect": [
+    "Ngozi Okafor"
+   ]
+  },
+  {
+   "id": "add_student_2",
+   "open": "Students",
+   "fill": {
+    "Name": "Tunde Bakare",
+    "Class": "JSS2",
+    "Fee": "65000"
+   },
+   "expect": [
+    "Tunde Bakare"
+   ]
+  },
+  {
+   "id": "add_payment_1",
+   "open": "Payments",
+   "fill": {
+    "Student": "Ngozi",
+    "Amount": "40000"
+   },
+   "expect": [
+    "40000"
+   ]
+  },
+  {
+   "id": "add_payment_2",
+   "open": "Payments",
+   "fill": {
+    "Student": "Tunde",
+    "Amount": "65000"
+   },
+   "expect": [
+    "65000"
+   ]
+  },
+  {
+   "id": "dashboard_numbers",
+   "open": "/",
+   "near": [
+    [
+     "students",
+     "2"
+    ],
+    [
+     "fee",
+     "125000"
+    ],
+    [
+     "paid",
+     "105000"
+    ]
+   ]
+  },
+  {
+   "id": "search_students",
+   "open": "Students",
+   "search": "Tunde",
+   "expect": [
+    "Tunde Bakare"
+   ],
+   "absent": [
+    "Ngozi Okafor"
+   ]
+  }
+ ],
+ "after_restart": {
+  "open": "Students",
+  "expect": [
+   "Ngozi Okafor"
+  ]
+ }
+}

@@ -1,0 +1,719 @@
+[
+ {
+  "id": "A1_pharmacy",
+  "category": "app",
+  "request": "I run a small pharmacy. Make an app where I log in (user pharm, password pills42). Keep my medicines with their name, how many are in stock and the price. Keep sales: which medicine, the quantity and the customer's name; show what each sale costs. When I add a sale, the stock of that medicine must go down, and the sale must be refused if there is not enough stock. Search sales by customer. The dashboard shows the number of sales, the total value of all sales, and how many medicines have fewer than 10 in stock.",
+  "budget_s": 900,
+  "spec": "specs/A1_pharmacy.json",
+  "workspace": null,
+  "inputs": []
+ },
+ {
+  "id": "A2_tailor",
+  "category": "app",
+  "request": "I am a tailor. Build an app with a login (user stitch, password needle8). Keep customers with name and phone. Keep orders: which customer, the garment, the price and the deposit paid; show the balance still owed on each order (price minus deposit). Search orders by garment. The dashboard shows how many customers and orders I have and the total balance owed.",
+  "budget_s": 900,
+  "spec": "specs/A2_tailor.json",
+  "workspace": null,
+  "inputs": []
+ },
+ {
+  "id": "A3_school_fees",
+  "category": "app",
+  "request": "Make a fee tracker for my school with a login (user bursar, password chalk77). Keep students with name, class and the term fee. Keep payments: which student and the amount paid. Search students by name. The dashboard shows the number of students, the total of all term fees, and the total paid.",
+  "budget_s": 900,
+  "spec": "specs/A3_school_fees.json",
+  "workspace": null,
+  "inputs": []
+ },
+ {
+  "id": "A4_savings_group",
+  "category": "app",
+  "request": "Our savings group needs an app with a login (user treasurer, password coins55). Keep members with name and phone. Keep contributions: which member, the amount and the month. Search contributions by month. The dashboard shows the number of members, the total contributed and how many contributions were below 5000.",
+  "budget_s": 900,
+  "spec": "specs/A4_savings_group.json",
+  "workspace": null,
+  "inputs": []
+ },
+ {
+  "id": "A5_library_loans",
+  "category": "app",
+  "request": "Make a library app with a login (user librarian, password books21). Keep books with title, author and the number of copies on the shelf. Keep loans: which book, the borrower's name and how many copies they take. When a loan is added, the copies on the shelf go down by that number, and the loan must be refused if not enough copies are left. Search loans by borrower. The dashboard shows the number of loans and how many books have fewer than 1 copy on the shelf.",
+  "budget_s": 900,
+  "spec": "specs/A5_library_loans.json",
+  "workspace": null,
+  "inputs": []
+ },
+ {
+  "id": "A6_gym_members",
+  "category": "app",
+  "request": "Build a members app for my gym with a login (user coach, password lift900). Keep members with name, plan and monthly fee. Search members by name. The dashboard shows how many members there are, the total monthly income from fees, and how many members pay less than 10000 a month.",
+  "budget_s": 900,
+  "spec": "specs/A6_gym_members.json",
+  "workspace": null,
+  "inputs": []
+ },
+ {
+  "id": "A7_event_tickets",
+  "category": "app",
+  "request": "I sell tickets for events. Make an app with a login (user tickets, password stage44). Keep events with name, ticket price and seats left. Keep ticket sales: which event, how many tickets and the buyer's name; show what each sale costs. When I add a sale, the seats left for that event go down, and the sale must be refused if there are not enough seats. Search sales by buyer. The dashboard shows the number of sales and the total ticket revenue.",
+  "budget_s": 900,
+  "spec": "specs/A7_event_tickets.json",
+  "workspace": null,
+  "inputs": []
+ },
+ {
+  "id": "A8_repair_shop_site",
+  "category": "app",
+  "request": "Make a website for Swift Fix, a phone repair shop at 9 Ogui Road, Enugu. We repair cracked screens from 15,000 naira, replace batteries from 8,000 naira and fix charging ports from 6,000 naira. We are open Monday to Saturday, 9am to 6pm. Add a form where people leave their name and phone number to ask for a call back, and thank them afterwards.",
+  "budget_s": 900,
+  "spec": "specs/A8_repair_shop_site.json",
+  "workspace": null,
+  "inputs": []
+ },
+ {
+  "id": "B1_py_invoice",
+  "category": "bug",
+  "request": "The tests of this project fail. Find the bug in the source code and fix it so the tests pass. Do not change the tests.",
+  "budget_s": 600,
+  "lang": "python",
+  "workspace": "workspaces/B1_py_invoice",
+  "hidden": "hidden/B1_py_invoice",
+  "test_cmd": [
+   "python3",
+   "-m",
+   "unittest",
+   "discover",
+   "-s",
+   "tests",
+   "-t",
+   "."
+  ],
+  "hidden_cmd": [
+   "python3",
+   "-m",
+   "unittest",
+   "discover",
+   "-s",
+   "tests",
+   "-t",
+   "."
+  ],
+  "original_tests": [
+   "tests/__init__.py",
+   "tests/test_invoice.py"
+  ],
+  "inputs": []
+ },
+ {
+  "id": "B2_py_inventory",
+  "category": "bug",
+  "request": "The tests of this project fail. Find the bug in the source code and fix it so the tests pass. Do not change the tests.",
+  "budget_s": 600,
+  "lang": "python",
+  "workspace": "workspaces/B2_py_inventory",
+  "hidden": "hidden/B2_py_inventory",
+  "test_cmd": [
+   "python3",
+   "-m",
+   "unittest",
+   "discover",
+   "-s",
+   "tests",
+   "-t",
+   "."
+  ],
+  "hidden_cmd": [
+   "python3",
+   "-m",
+   "unittest",
+   "discover",
+   "-s",
+   "tests",
+   "-t",
+   "."
+  ],
+  "original_tests": [
+   "tests/__init__.py",
+   "tests/test_report.py"
+  ],
+  "inputs": []
+ },
+ {
+  "id": "B3_py_schedule",
+  "category": "bug",
+  "request": "The tests of this project fail. Find the bug in the source code and fix it so the tests pass. Do not change the tests.",
+  "budget_s": 600,
+  "lang": "python",
+  "workspace": "workspaces/B3_py_schedule",
+  "hidden": "hidden/B3_py_schedule",
+  "test_cmd": [
+   "python3",
+   "-m",
+   "unittest",
+   "discover",
+   "-s",
+   "tests",
+   "-t",
+   "."
+  ],
+  "hidden_cmd": [
+   "python3",
+   "-m",
+   "unittest",
+   "discover",
+   "-s",
+   "tests",
+   "-t",
+   "."
+  ],
+  "original_tests": [
+   "tests/__init__.py",
+   "tests/test_bookings.py"
+  ],
+  "inputs": []
+ },
+ {
+  "id": "B4_js_cart",
+  "category": "bug",
+  "request": "The tests of this project fail. Find the bug in the source code and fix it so the tests pass. Do not change the tests.",
+  "budget_s": 600,
+  "lang": "javascript",
+  "workspace": "workspaces/B4_js_cart",
+  "hidden": "hidden/B4_js_cart",
+  "test_cmd": [
+   "npm",
+   "test",
+   "--silent"
+  ],
+  "hidden_cmd": [
+   "node",
+   "test/hidden_b4.test.js"
+  ],
+  "original_tests": [
+   "test/cart.test.js"
+  ],
+  "inputs": []
+ },
+ {
+  "id": "B5_js_csv",
+  "category": "bug",
+  "request": "The tests of this project fail. Find the bug in the source code and fix it so the tests pass. Do not change the tests.",
+  "budget_s": 600,
+  "lang": "javascript",
+  "workspace": "workspaces/B5_js_csv",
+  "hidden": "hidden/B5_js_csv",
+  "test_cmd": [
+   "npm",
+   "test",
+   "--silent"
+  ],
+  "hidden_cmd": [
+   "node",
+   "test/hidden_b5.test.js"
+  ],
+  "original_tests": [
+   "test/summary.test.js"
+  ],
+  "inputs": []
+ },
+ {
+  "id": "B6_go_payroll",
+  "category": "bug",
+  "request": "The tests of this project fail. Find the bug in the source code and fix it so the tests pass. Do not change the tests.",
+  "budget_s": 600,
+  "lang": "go",
+  "workspace": "workspaces/B6_go_payroll",
+  "hidden": "hidden/B6_go_payroll",
+  "test_cmd": [
+   "go",
+   "test",
+   "./..."
+  ],
+  "hidden_cmd": [
+   "go",
+   "test",
+   "./..."
+  ],
+  "original_tests": [
+   "pay/gross_test.go"
+  ],
+  "inputs": []
+ },
+ {
+  "id": "B7_go_stats",
+  "category": "bug",
+  "request": "The tests of this project fail. Find the bug in the source code and fix it so the tests pass. Do not change the tests.",
+  "budget_s": 600,
+  "lang": "go",
+  "workspace": "workspaces/B7_go_stats",
+  "hidden": "hidden/B7_go_stats",
+  "test_cmd": [
+   "go",
+   "test",
+   "./..."
+  ],
+  "hidden_cmd": [
+   "go",
+   "test",
+   "./..."
+  ],
+  "original_tests": [
+   "stats/report_test.go"
+  ],
+  "inputs": []
+ },
+ {
+  "id": "B8_cpp_bank",
+  "category": "bug",
+  "request": "The tests of this project fail. Find the bug in the source code and fix it so the tests pass. Do not change the tests.",
+  "budget_s": 600,
+  "lang": "c++",
+  "workspace": "workspaces/B8_cpp_bank",
+  "hidden": "hidden/B8_cpp_bank",
+  "test_cmd": [
+   "make",
+   "-s",
+   "test"
+  ],
+  "hidden_cmd": [
+   "sh",
+   "-c",
+   "g++ -std=c++17 -Isrc -o /tmp/hb8 src/account.cpp src/ledger.cpp tests/hidden_b8.cpp && /tmp/hb8"
+  ],
+  "original_tests": [
+   "tests/test.cpp"
+  ],
+  "inputs": []
+ },
+ {
+  "id": "C1_py_invoice_discounts",
+  "category": "feature",
+  "request": "Add discount codes to this invoice project. Create invoice/discounts.py with apply_code(subtotal, code): SAVE10 takes 10 percent off, FLAT500 takes 500 naira (50000 kobo) off but never below zero, and an unknown code raises ValueError. Then change invoice.totals.total(lines, code=None) so a code is applied to the subtotal before VAT. Keep the existing behaviour when no code is given and keep the existing tests passing.",
+  "budget_s": 720,
+  "lang": "python",
+  "workspace": "workspaces/C1_py_invoice_discounts",
+  "hidden": "hidden/C1_py_invoice_discounts",
+  "test_cmd": [
+   "python3",
+   "-m",
+   "unittest",
+   "discover",
+   "-s",
+   "tests",
+   "-t",
+   "."
+  ],
+  "hidden_cmd": [
+   "python3",
+   "-m",
+   "unittest",
+   "discover",
+   "-s",
+   "tests",
+   "-t",
+   "."
+  ],
+  "original_tests": [
+   "tests/__init__.py",
+   "tests/test_invoice.py"
+  ],
+  "inputs": []
+ },
+ {
+  "id": "C2_py_inventory_export",
+  "category": "feature",
+  "request": "Add a CSV export to this stock project. Create stock/export.py with to_csv(items) that returns text: the header line name,on_hand,reorder_level,reorder and then one line per item in alphabetical order of name, where reorder is yes or no according to the existing reorder rule. Also make python3 -m stock.export FILE work: FILE is a JSON list of objects with name, on_hand and reorder_level, and the command prints the CSV.",
+  "budget_s": 720,
+  "lang": "python",
+  "workspace": "workspaces/C2_py_inventory_export",
+  "hidden": "hidden/C2_py_inventory_export",
+  "test_cmd": [
+   "python3",
+   "-m",
+   "unittest",
+   "discover",
+   "-s",
+   "tests",
+   "-t",
+   "."
+  ],
+  "hidden_cmd": [
+   "python3",
+   "-m",
+   "unittest",
+   "discover",
+   "-s",
+   "tests",
+   "-t",
+   "."
+  ],
+  "original_tests": [
+   "tests/__init__.py",
+   "tests/test_report.py"
+  ],
+  "inputs": []
+ },
+ {
+  "id": "C3_js_cart_delivery",
+  "category": "feature",
+  "request": "Add delivery to this cart. Create cart/delivery.js exporting deliveryFee(subtotal): 1500 naira, or 0 when the subtotal is 20000 or more. Then change total(items, discountPercent) in cart/cart.js to add the delivery fee, worked out on the discounted subtotal, and keep count working. Update the existing test's expected totals for the new delivery rule if they change.",
+  "budget_s": 720,
+  "lang": "javascript",
+  "workspace": "workspaces/C3_js_cart_delivery",
+  "hidden": "hidden/C3_js_cart_delivery",
+  "test_cmd": [
+   "npm",
+   "test",
+   "--silent"
+  ],
+  "hidden_cmd": [
+   "node",
+   "test/hidden_c3.test.js"
+  ],
+  "original_tests": [
+   "test/cart.test.js"
+  ],
+  "inputs": []
+ },
+ {
+  "id": "C4_go_payroll_payslip",
+  "category": "feature",
+  "request": "Add a payslip to package pay. Create pay/tax.go with Tax(gross float64) float64: 10 percent of the part of the gross above 30000, nothing below that, rounded to whole naira. Then add Payslip(name string, hours, rate float64) string in a new file pay/payslip.go returning exactly \"NAME: gross G, tax T, net N\" with whole-naira numbers, using the existing Gross function.",
+  "budget_s": 720,
+  "lang": "go",
+  "workspace": "workspaces/C4_go_payroll_payslip",
+  "hidden": "hidden/C4_go_payroll_payslip",
+  "test_cmd": [
+   "go",
+   "test",
+   "./..."
+  ],
+  "hidden_cmd": [
+   "go",
+   "test",
+   "./..."
+  ],
+  "original_tests": [
+   "pay/gross_test.go"
+  ],
+  "inputs": []
+ },
+ {
+  "id": "C5_py_notes_search",
+  "category": "feature",
+  "request": "Add a search command to this notes tool: python3 -m notes.cli search WORD prints the titles of the notes whose title or body contains WORD, ignoring upper and lower case, one per line in the order they were added, and prints no notes found if none match. Put the matching logic in a new module notes/search.py as find(notes, word) returning the matching notes, and keep add and list working.",
+  "budget_s": 720,
+  "lang": "python",
+  "workspace": "workspaces/C5_py_notes_search",
+  "hidden": "hidden/C5_py_notes_search",
+  "test_cmd": [
+   "python3",
+   "-m",
+   "unittest",
+   "discover",
+   "-s",
+   "tests",
+   "-t",
+   "."
+  ],
+  "hidden_cmd": [
+   "python3",
+   "-m",
+   "unittest",
+   "discover",
+   "-s",
+   "tests",
+   "-t",
+   "."
+  ],
+  "original_tests": [
+   "tests/__init__.py",
+   "tests/test_cli.py"
+  ],
+  "inputs": []
+ },
+ {
+  "id": "C6_js_todo_overdue",
+  "category": "feature",
+  "request": "Add due dates to this to-do list. add(list, title, due) takes an optional due date written as YYYY-MM-DD and stores it on the item. Create todo/overdue.js exporting overdue(list, today) that returns the titles of the unfinished items whose due date is before today (also YYYY-MM-DD), earliest due date first. Items without a due date are never overdue. Keep the existing functions and test working.",
+  "budget_s": 720,
+  "lang": "javascript",
+  "workspace": "workspaces/C6_js_todo_overdue",
+  "hidden": "hidden/C6_js_todo_overdue",
+  "test_cmd": [
+   "npm",
+   "test",
+   "--silent"
+  ],
+  "hidden_cmd": [
+   "node",
+   "test/hidden_c6.test.js"
+  ],
+  "original_tests": [
+   "test/todo.test.js"
+  ],
+  "inputs": []
+ },
+ {
+  "id": "C7_cpp_shapes_triangle",
+  "category": "feature",
+  "request": "Add a Triangle shape to this C++ project: struct Triangle in src/shapes.h constructed from three side lengths (a, b, c), with area() by Heron's formula and perimeter(), implemented in src/shapes.cpp. The constructor must throw std::invalid_argument when the sides cannot form a triangle (any side zero or negative, or one side at least the sum of the other two). total_area must work with triangles too. Keep the existing tests passing.",
+  "budget_s": 720,
+  "lang": "c++",
+  "workspace": "workspaces/C7_cpp_shapes_triangle",
+  "hidden": "hidden/C7_cpp_shapes_triangle",
+  "test_cmd": [
+   "make",
+   "-s",
+   "test"
+  ],
+  "hidden_cmd": [
+   "sh",
+   "-c",
+   "g++ -std=c++17 -Isrc -o /tmp/hc7 src/shapes.cpp tests/hidden_c7.cpp && /tmp/hc7"
+  ],
+  "original_tests": [
+   "tests/test.cpp"
+  ],
+  "inputs": []
+ },
+ {
+  "id": "C8_py_units_temperature",
+  "category": "feature",
+  "request": "Add temperature conversion to this units package: create units/temperature.py and make units.convert(value, from_unit, to_unit) also convert between C, F and K (Celsius, Fahrenheit, Kelvin). Converting between a length and a temperature, or using an unknown unit, must still raise ValueError. Keep the length conversions working.",
+  "budget_s": 720,
+  "lang": "python",
+  "workspace": "workspaces/C8_py_units_temperature",
+  "hidden": "hidden/C8_py_units_temperature",
+  "test_cmd": [
+   "python3",
+   "-m",
+   "unittest",
+   "discover",
+   "-s",
+   "tests",
+   "-t",
+   "."
+  ],
+  "hidden_cmd": [
+   "python3",
+   "-m",
+   "unittest",
+   "discover",
+   "-s",
+   "tests",
+   "-t",
+   "."
+  ],
+  "original_tests": [
+   "tests/__init__.py",
+   "tests/test_units.py"
+  ],
+  "inputs": []
+ },
+ {
+  "id": "D1_excel_regional_sales",
+  "kind": "excel_products",
+  "inputs": [
+   "sources/regional_sales_2026.csv"
+  ],
+  "output": "sales_summary.xlsx",
+  "args": [
+   "region",
+   "units",
+   "unit_price"
+  ],
+  "request": "Make sales_summary.xlsx from the attached CSV: put all the rows on a sheet named Data, and on a sheet named Summary show, for each region, the total units and the total revenue (units times unit price) using formulas, with a Total row at the bottom.",
+  "category": "document",
+  "budget_s": 480
+ },
+ {
+  "id": "D2_excel_staff_costs",
+  "kind": "excel_products",
+  "inputs": [
+   "sources/staff_hours_october.csv"
+  ],
+  "output": "staff_costs.xlsx",
+  "args": [
+   "department",
+   "hours",
+   "hourly_rate"
+  ],
+  "request": "Make staff_costs.xlsx from the attached October hours: the rows on a sheet named Data, and a sheet named Summary with, for each department, the total hours and the total pay (hours times hourly rate) as formulas, plus a Total row.",
+  "category": "document",
+  "budget_s": 480
+ },
+ {
+  "id": "D3_excel_expenses",
+  "kind": "excel_simple",
+  "inputs": [
+   "sources/office_expenses_q3.csv"
+  ],
+  "output": "expenses_summary.xlsx",
+  "args": [
+   "category",
+   "amount"
+  ],
+  "request": "Make expenses_summary.xlsx from the attached third-quarter expenses: the rows on a sheet named Data and a sheet named Summary with the total amount for each category, using formulas, and a Total row.",
+  "category": "document",
+  "budget_s": 480
+ },
+ {
+  "id": "D4_word_repair_request",
+  "kind": "word",
+  "inputs": [],
+  "output": "repair_request.docx",
+  "word": {
+   "headings": [
+    "Problem",
+    "What I am asking for",
+    "Timeline"
+   ],
+   "words": [
+    150,
+    350
+   ],
+   "table": {
+    "header": [
+     "Item",
+     "Cost (NGN)"
+    ],
+    "rows": {
+     "Kitchen tap": 12000,
+     "Bathroom door lock": 8500,
+     "Window glass": 20000
+    }
+   }
+  },
+  "request": "Write repair_request.docx, a letter to my landlord asking for repairs in my flat, with the headings Problem, What I am asking for and Timeline, between 150 and 350 words. Include a table with the columns Item and Cost (NGN) listing Kitchen tap 12000, Bathroom door lock 8500 and Window glass 20000, and a Total row.",
+  "category": "document",
+  "budget_s": 480
+ },
+ {
+  "id": "D5_word_leave_policy",
+  "kind": "word",
+  "inputs": [],
+  "output": "leave_policy.docx",
+  "word": {
+   "headings": [
+    "Purpose",
+    "Types of leave",
+    "How to apply"
+   ],
+   "words": [
+    200,
+    400
+   ],
+   "table": {
+    "header": [
+     "Leave type",
+     "Days"
+    ],
+    "rows": {
+     "Annual": 20,
+     "Sick": 10,
+     "Compassionate": 5
+    }
+   }
+  },
+  "request": "Write leave_policy.docx for the staff of a small printing company, with the headings Purpose, Types of leave and How to apply, between 200 and 400 words. Include a table with the columns Leave type and Days: Annual 20, Sick 10, Compassionate 5, and a Total row.",
+  "category": "document",
+  "budget_s": 480
+ },
+ {
+  "id": "D6_pptx_cooperative_agm",
+  "kind": "pptx",
+  "inputs": [],
+  "output": "agm_2026.pptx",
+  "pptx": {
+   "slides": 6,
+   "must_contain": [
+    "Unity Farmers",
+    "12%"
+   ],
+   "max_bullets": 5
+  },
+  "request": "Make agm_2026.pptx, a 6-slide deck for the annual general meeting of Unity Farmers Cooperative: welcome, the year in numbers (maize sales rose 12%), new members, the storage barn project, next year's plans, and questions. At most 5 bullet points on a slide.",
+  "category": "document",
+  "budget_s": 480
+ },
+ {
+  "id": "D7_pptx_fire_safety",
+  "kind": "pptx",
+  "inputs": [],
+  "output": "fire_safety.pptx",
+  "pptx": {
+   "slides": 4,
+   "must_contain": [
+    "car park",
+    "112"
+   ],
+   "max_bullets": 5
+  },
+  "request": "Make fire_safety.pptx, a 4-slide training deck for shop staff on fire safety: preventing fires, using the extinguisher, what to do when the alarm sounds (meet at the assembly point in the car park), and calling the emergency number 112. At most 5 bullet points on a slide.",
+  "category": "document",
+  "budget_s": 480
+ },
+ {
+  "id": "D8_pdf_clinic_report",
+  "kind": "pdf_qa",
+  "inputs": [
+   "sources/riverside_clinic_report_2026.pdf"
+  ],
+  "output": "answers",
+  "questions": [
+   {
+    "q": "How many children did the clinic see in 2026?",
+    "expect": [
+     "2140"
+    ],
+    "doc": "riverside_clinic_report_2026",
+    "page": 1
+   },
+   {
+    "q": "How many nurses does the clinic employ?",
+    "expect": [
+     "6"
+    ],
+    "doc": "riverside_clinic_report_2026",
+    "page": 1
+   },
+   {
+    "q": "How much does a general consultation cost for a child?",
+    "expect": [
+     "1500"
+    ],
+    "doc": "riverside_clinic_report_2026",
+    "page": 2
+   },
+   {
+    "q": "How many blood tests did the clinic carry out in 2026?",
+    "expect": [
+     "610"
+    ],
+    "doc": "riverside_clinic_report_2026",
+    "page": 2
+   },
+   {
+    "q": "How much were staff costs in 2026?",
+    "expect": [
+     "9.8"
+    ],
+    "doc": "riverside_clinic_report_2026",
+    "page": 3
+   },
+   {
+    "q": "What is the estimated cost of the planned pharmacy corner?",
+    "expect": [
+     "2.3"
+    ],
+    "doc": "riverside_clinic_report_2026",
+    "page": 3
+   }
+  ],
+  "request": "Answer these questions from the attached clinic report, giving the page number for each answer:\n1. How many children did the clinic see in 2026?\n2. How many nurses does the clinic employ?\n3. How much does a general consultation cost for a child?\n4. How many blood tests did the clinic carry out in 2026?\n5. How much were staff costs in 2026?\n6. What is the estimated cost of the planned pharmacy corner?",
+  "category": "document",
+  "budget_s": 480
+ }
+]

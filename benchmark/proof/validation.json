@@ -1,0 +1,404 @@
+{
+ "A1_pharmacy reference app": {
+  "as_expected": true,
+  "score": "16/16",
+  "failed": []
+ },
+ "A1_pharmacy nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "app_delivered"
+  ]
+ },
+ "A2_tailor reference app": {
+  "as_expected": true,
+  "score": "14/14",
+  "failed": []
+ },
+ "A2_tailor nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "app_delivered"
+  ]
+ },
+ "A3_school_fees reference app": {
+  "as_expected": true,
+  "score": "13/13",
+  "failed": []
+ },
+ "A3_school_fees nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "app_delivered"
+  ]
+ },
+ "A4_savings_group reference app": {
+  "as_expected": true,
+  "score": "14/14",
+  "failed": []
+ },
+ "A4_savings_group nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "app_delivered"
+  ]
+ },
+ "A5_library_loans reference app": {
+  "as_expected": true,
+  "score": "14/14",
+  "failed": []
+ },
+ "A5_library_loans nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "app_delivered"
+  ]
+ },
+ "A6_gym_members reference app": {
+  "as_expected": true,
+  "score": "12/12",
+  "failed": []
+ },
+ "A6_gym_members nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "app_delivered"
+  ]
+ },
+ "A7_event_tickets reference app": {
+  "as_expected": true,
+  "score": "15/15",
+  "failed": []
+ },
+ "A7_event_tickets nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "app_delivered"
+  ]
+ },
+ "A8_repair_shop_site reference app": {
+  "as_expected": true,
+  "score": "6/6",
+  "failed": []
+ },
+ "A8_repair_shop_site nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "app_delivered"
+  ]
+ },
+ "B1_py_invoice reference": {
+  "as_expected": true,
+  "score": "2/2",
+  "failed": []
+ },
+ "B1_py_invoice as shipped": {
+  "as_expected": true,
+  "score": "0/2",
+  "failed": [
+   "original_tests_pass",
+   "hidden_tests_pass"
+  ]
+ },
+ "B2_py_inventory reference": {
+  "as_expected": true,
+  "score": "2/2",
+  "failed": []
+ },
+ "B2_py_inventory as shipped": {
+  "as_expected": true,
+  "score": "0/2",
+  "failed": [
+   "original_tests_pass",
+   "hidden_tests_pass"
+  ]
+ },
+ "B3_py_schedule reference": {
+  "as_expected": true,
+  "score": "2/2",
+  "failed": []
+ },
+ "B3_py_schedule as shipped": {
+  "as_expected": true,
+  "score": "0/2",
+  "failed": [
+   "original_tests_pass",
+   "hidden_tests_pass"
+  ]
+ },
+ "B4_js_cart reference": {
+  "as_expected": true,
+  "score": "2/2",
+  "failed": []
+ },
+ "B4_js_cart as shipped": {
+  "as_expected": true,
+  "score": "0/2",
+  "failed": [
+   "original_tests_pass",
+   "hidden_tests_pass"
+  ]
+ },
+ "B5_js_csv reference": {
+  "as_expected": true,
+  "score": "2/2",
+  "failed": []
+ },
+ "B5_js_csv as shipped": {
+  "as_expected": true,
+  "score": "0/2",
+  "failed": [
+   "original_tests_pass",
+   "hidden_tests_pass"
+  ]
+ },
+ "B6_go_payroll reference": {
+  "as_expected": true,
+  "score": "2/2",
+  "failed": []
+ },
+ "B6_go_payroll as shipped": {
+  "as_expected": true,
+  "score": "0/2",
+  "failed": [
+   "original_tests_pass",
+   "hidden_tests_pass"
+  ]
+ },
+ "B7_go_stats reference": {
+  "as_expected": true,
+  "score": "2/2",
+  "failed": []
+ },
+ "B7_go_stats as shipped": {
+  "as_expected": true,
+  "score": "0/2",
+  "failed": [
+   "original_tests_pass",
+   "hidden_tests_pass"
+  ]
+ },
+ "B8_cpp_bank reference": {
+  "as_expected": true,
+  "score": "2/2",
+  "failed": []
+ },
+ "B8_cpp_bank as shipped": {
+  "as_expected": true,
+  "score": "0/2",
+  "failed": [
+   "original_tests_pass",
+   "hidden_tests_pass"
+  ]
+ },
+ "C1_py_invoice_discounts reference": {
+  "as_expected": true,
+  "score": "2/2",
+  "failed": []
+ },
+ "C1_py_invoice_discounts as shipped": {
+  "as_expected": true,
+  "score": "0/2",
+  "failed": [
+   "original_tests_pass",
+   "hidden_tests_pass"
+  ]
+ },
+ "C2_py_inventory_export reference": {
+  "as_expected": true,
+  "score": "2/2",
+  "failed": []
+ },
+ "C2_py_inventory_export as shipped": {
+  "as_expected": true,
+  "score": "0/2",
+  "failed": [
+   "original_tests_pass",
+   "hidden_tests_pass"
+  ]
+ },
+ "C3_js_cart_delivery reference": {
+  "as_expected": true,
+  "score": "2/2",
+  "failed": []
+ },
+ "C3_js_cart_delivery as shipped": {
+  "as_expected": true,
+  "score": "1/2",
+  "failed": [
+   "hidden_tests_pass"
+  ]
+ },
+ "C4_go_payroll_payslip reference": {
+  "as_expected": true,
+  "score": "2/2",
+  "failed": []
+ },
+ "C4_go_payroll_payslip as shipped": {
+  "as_expected": true,
+  "score": "0/2",
+  "failed": [
+   "original_tests_pass",
+   "hidden_tests_pass"
+  ]
+ },
+ "C5_py_notes_search reference": {
+  "as_expected": true,
+  "score": "2/2",
+  "failed": []
+ },
+ "C5_py_notes_search as shipped": {
+  "as_expected": true,
+  "score": "0/2",
+  "failed": [
+   "original_tests_pass",
+   "hidden_tests_pass"
+  ]
+ },
+ "C6_js_todo_overdue reference": {
+  "as_expected": true,
+  "score": "2/2",
+  "failed": []
+ },
+ "C6_js_todo_overdue as shipped": {
+  "as_expected": true,
+  "score": "1/2",
+  "failed": [
+   "hidden_tests_pass"
+  ]
+ },
+ "C7_cpp_shapes_triangle reference": {
+  "as_expected": true,
+  "score": "2/2",
+  "failed": []
+ },
+ "C7_cpp_shapes_triangle as shipped": {
+  "as_expected": true,
+  "score": "1/2",
+  "failed": [
+   "hidden_tests_pass"
+  ]
+ },
+ "C8_py_units_temperature reference": {
+  "as_expected": true,
+  "score": "2/2",
+  "failed": []
+ },
+ "C8_py_units_temperature as shipped": {
+  "as_expected": true,
+  "score": "0/2",
+  "failed": [
+   "original_tests_pass",
+   "hidden_tests_pass"
+  ]
+ },
+ "D1_excel_regional_sales reference": {
+  "as_expected": true,
+  "score": "10/10",
+  "failed": []
+ },
+ "D1_excel_regional_sales nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "file_exists"
+  ]
+ },
+ "D2_excel_staff_costs reference": {
+  "as_expected": true,
+  "score": "9/9",
+  "failed": []
+ },
+ "D2_excel_staff_costs nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "file_exists"
+  ]
+ },
+ "D3_excel_expenses reference": {
+  "as_expected": true,
+  "score": "7/7",
+  "failed": []
+ },
+ "D3_excel_expenses nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "file_exists"
+  ]
+ },
+ "D4_word_repair_request reference": {
+  "as_expected": true,
+  "score": "5/5",
+  "failed": []
+ },
+ "D4_word_repair_request nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "file_exists"
+  ]
+ },
+ "D5_word_leave_policy reference": {
+  "as_expected": true,
+  "score": "5/5",
+  "failed": []
+ },
+ "D5_word_leave_policy nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "file_exists"
+  ]
+ },
+ "D6_pptx_cooperative_agm reference": {
+  "as_expected": true,
+  "score": "9/9",
+  "failed": []
+ },
+ "D6_pptx_cooperative_agm nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "file_exists"
+  ]
+ },
+ "D7_pptx_fire_safety reference": {
+  "as_expected": true,
+  "score": "9/9",
+  "failed": []
+ },
+ "D7_pptx_fire_safety nothing delivered": {
+  "as_expected": true,
+  "score": "0/1",
+  "failed": [
+   "file_exists"
+  ]
+ },
+ "D8_pdf_clinic_report reference": {
+  "as_expected": true,
+  "score": "12/12",
+  "failed": []
+ },
+ "D8_pdf_clinic_report nothing delivered": {
+  "as_expected": true,
+  "score": "0/12",
+  "failed": [
+   "q1_answer_correct",
+   "q1_cites_right_page",
+   "q2_answer_correct",
+   "q2_cites_right_page",
+   "q3_answer_correct",
+   "q3_cites_right_page"
+  ]
+ }
+}

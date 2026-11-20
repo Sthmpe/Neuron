@@ -1,0 +1,104 @@
+{
+ "login": [
+  "stitch",
+  "needle8"
+ ],
+ "pages": [
+  "",
+  "Customers",
+  "Orders"
+ ],
+ "steps": [
+  {
+   "id": "add_customer_1",
+   "open": "Customers",
+   "fill": {
+    "Name": "Kemi Bello",
+    "Phone": "0803 111 2222"
+   },
+   "expect": [
+    "Kemi Bello"
+   ]
+  },
+  {
+   "id": "add_customer_2",
+   "open": "Customers",
+   "fill": {
+    "Name": "Femi Ade",
+    "Phone": "0805 333 4444"
+   },
+   "expect": [
+    "Femi Ade"
+   ]
+  },
+  {
+   "id": "add_order_1",
+   "open": "Orders",
+   "fill": {
+    "Customer": "Kemi",
+    "Garment": "Agbada",
+    "Price": "45000",
+    "Deposit": "20000"
+   },
+   "expect": [
+    "Agbada"
+   ]
+  },
+  {
+   "id": "add_order_2",
+   "open": "Orders",
+   "fill": {
+    "Customer": "Femi",
+    "Garment": "Kaftan",
+    "Price": "30000",
+    "Deposit": "30000"
+   },
+   "expect": [
+    "Kaftan"
+   ]
+  },
+  {
+   "id": "balance_shown",
+   "open": "Orders",
+   "expect": [
+    "25000"
+   ]
+  },
+  {
+   "id": "dashboard_numbers",
+   "open": "/",
+   "near": [
+    [
+     "customers",
+     "2"
+    ],
+    [
+     "orders",
+     "2"
+    ],
+    [
+     "(balance|owed)",
+     "25000"
+    ]
+   ]
+  },
+  {
+   "id": "search_by_garment",
+   "open": "Orders",
+   "search": "Agbada",
+   "expect": [
+    "Agbada"
+   ],
+   "absent": [
+    "Kaftan"
+   ]
+  }
+ ],
+ "after_restart": {
+  "open": "Orders",
+  "expect": [
+   "Agbada",
+   "Kaftan"
+  ]
+ }
+}

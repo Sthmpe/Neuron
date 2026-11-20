@@ -1,0 +1,103 @@
+{
+ "login": [
+  "tickets",
+  "stage44"
+ ],
+ "pages": [
+  "",
+  "Events",
+  "Sales"
+ ],
+ "steps": [
+  {
+   "id": "add_event_1",
+   "open": "Events",
+   "fill": {
+    "Name": "Jazz Night",
+    "Price": "5000",
+    "Seats": "100"
+   },
+   "expect": [
+    "Jazz Night"
+   ]
+  },
+  {
+   "id": "add_event_2",
+   "open": "Events",
+   "fill": {
+    "Name": "Comedy Show",
+    "Price": "3000",
+    "Seats": "4"
+   },
+   "expect": [
+    "Comedy Show"
+   ]
+  },
+  {
+   "id": "add_sale",
+   "open": "Sales",
+   "fill": {
+    "Event": "Jazz",
+    "Tickets": "3",
+    "Buyer": "Ada Eze"
+   },
+   "expect": [
+    "Ada Eze"
+   ]
+  },
+  {
+   "id": "sale_cost_shown",
+   "open": "Sales",
+   "expect": [
+    "15000"
+   ]
+  },
+  {
+   "id": "seats_went_down",
+   "open": "Events",
+   "expect": [
+    "97"
+   ]
+  },
+  {
+   "id": "too_large_sale_refused",
+   "open": "Sales",
+   "fill": {
+    "Event": "Comedy",
+    "Tickets": "5",
+    "Buyer": "Bayo Ade"
+   },
+   "absent": [
+    "Bayo Ade"
+   ]
+  },
+  {
+   "id": "dashboard_numbers",
+   "open": "/",
+   "near": [
+    [
+     "sales",
+     "1"
+    ],
+    [
+     "revenue",
+     "15000"
+    ]
+   ]
+  },
+  {
+   "id": "search_by_buyer",
+   "open": "Sales",
+   "search": "Ada",
+   "expect": [
+    "Ada Eze"
+   ]
+  }
+ ],
+ "after_restart": {
+  "open": "Sales",
+  "expect": [
+   "Ada Eze"
+  ]
+ }
+}

@@ -1,0 +1,83 @@
+{
+ "login": [
+  "coach",
+  "lift900"
+ ],
+ "pages": [
+  "",
+  "Members"
+ ],
+ "steps": [
+  {
+   "id": "add_member_1",
+   "open": "Members",
+   "fill": {
+    "Name": "Halima Yusuf",
+    "Plan": "Gold",
+    "Fee": "15000"
+   },
+   "expect": [
+    "Halima Yusuf"
+   ]
+  },
+  {
+   "id": "add_member_2",
+   "open": "Members",
+   "fill": {
+    "Name": "Obinna Eze",
+    "Plan": "Basic",
+    "Fee": "8000"
+   },
+   "expect": [
+    "Obinna Eze"
+   ]
+  },
+  {
+   "id": "add_member_3",
+   "open": "Members",
+   "fill": {
+    "Name": "Grace Udo",
+    "Plan": "Basic",
+    "Fee": "8000"
+   },
+   "expect": [
+    "Grace Udo"
+   ]
+  },
+  {
+   "id": "dashboard_numbers",
+   "open": "/",
+   "near": [
+    [
+     "members",
+     "3"
+    ],
+    [
+     "(income|total)",
+     "31000"
+    ],
+    [
+     "(less|below)",
+     "2"
+    ]
+   ]
+  },
+  {
+   "id": "search_members",
+   "open": "Members",
+   "search": "Grace",
+   "expect": [
+    "Grace Udo"
+   ],
+   "absent": [
+    "Halima Yusuf"
+   ]
+  }
+ ],
+ "after_restart": {
+  "open": "Members",
+  "expect": [
+   "Obinna Eze"
+  ]
+ }
+}

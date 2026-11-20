@@ -1,0 +1,51 @@
+{
+ "login": null,
+ "pages": [
+  ""
+ ],
+ "steps": [
+  {
+   "id": "business_and_services",
+   "open": "/",
+   "expect": [
+    "Swift Fix",
+    "15000",
+    "8000",
+    "6000"
+   ]
+  },
+  {
+   "id": "address_and_hours",
+   "open": "/",
+   "expect": [
+    "9 Ogui Road",
+    "Monday",
+    "Saturday",
+    "9am",
+    "6pm"
+   ]
+  },
+  {
+   "id": "nothing_invented",
+   "open": "/",
+   "absent": [
+    "@",
+    "testimonial",
+    "years of experience",
+    "award"
+   ]
+  },
+  {
+   "id": "call_back_form_thanks",
+   "open": "/",
+   "fill": {
+    "Name": "Chidi Okeke",
+    "Phone": "0803 555 1212"
+   },
+   "stay": true,
+   "expect": [
+    "thank"
+   ]
+  }
+ ]
+}

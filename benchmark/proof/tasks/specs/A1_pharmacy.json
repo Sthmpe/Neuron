@@ -1,0 +1,120 @@
+{
+ "login": [
+  "pharm",
+  "pills42"
+ ],
+ "pages": [
+  "",
+  "Medicines",
+  "Sales"
+ ],
+ "steps": [
+  {
+   "id": "add_medicine_1",
+   "open": "Medicines",
+   "fill": {
+    "Name": "Paracetamol",
+    "Stock": "50",
+    "Price": "200"
+   },
+   "expect": [
+    "Paracetamol"
+   ]
+  },
+  {
+   "id": "add_medicine_2",
+   "open": "Medicines",
+   "fill": {
+    "Name": "Vitamin C",
+    "Stock": "8",
+    "Price": "500"
+   },
+   "expect": [
+    "Vitamin C"
+   ]
+  },
+  {
+   "id": "add_sale",
+   "open": "Sales",
+   "fill": {
+    "Medicine": "Paracetamol",
+    "Quantity": "5",
+    "Customer": "Ada Eze"
+   },
+   "expect": [
+    "Ada Eze"
+   ]
+  },
+  {
+   "id": "sale_cost_shown",
+   "open": "Sales",
+   "expect": [
+    "1000"
+   ]
+  },
+  {
+   "id": "stock_went_down",
+   "open": "Medicines",
+   "near": [
+    [
+     "Paracetamol",
+     "45"
+    ]
+   ]
+  },
+  {
+   "id": "too_large_sale_refused",
+   "open": "Sales",
+   "fill": {
+    "Medicine": "Vitamin C",
+    "Quantity": "20",
+    "Customer": "Bayo Ade"
+   },
+   "absent": [
+    "Bayo Ade"
+   ]
+  },
+  {
+   "id": "stock_unchanged_after_refusal",
+   "open": "Medicines",
+   "near": [
+    [
+     "Vitamin C",
+     "8"
+    ]
+   ]
+  },
+  {
+   "id": "dashboard_numbers",
+   "open": "/",
+   "near": [
+    [
+     "sales",
+     "1"
+    ],
+    [
+     "(total|value)",
+     "1000"
+    ],
+    [
+     "(fewer|low|below)",
+     "1"
+    ]
+   ]
+  },
+  {
+   "id": "search_by_customer",
+   "open": "Sales",
+   "search": "Ada",
+   "expect": [
+    "Ada Eze"
+   ]
+  }
+ ],
+ "after_restart": {
+  "open": "Sales",
+  "expect": [
+   "Ada Eze"
+  ]
+ }
+}

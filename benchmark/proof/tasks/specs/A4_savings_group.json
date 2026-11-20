@@ -1,0 +1,106 @@
+{
+ "login": [
+  "treasurer",
+  "coins55"
+ ],
+ "pages": [
+  "",
+  "Members",
+  "Contributions"
+ ],
+ "steps": [
+  {
+   "id": "add_member_1",
+   "open": "Members",
+   "fill": {
+    "Name": "Amaka Obi",
+    "Phone": "0802 123 4567"
+   },
+   "expect": [
+    "Amaka Obi"
+   ]
+  },
+  {
+   "id": "add_member_2",
+   "open": "Members",
+   "fill": {
+    "Name": "Sani Musa",
+    "Phone": "0806 765 4321"
+   },
+   "expect": [
+    "Sani Musa"
+   ]
+  },
+  {
+   "id": "add_contribution_1",
+   "open": "Contributions",
+   "fill": {
+    "Member": "Amaka",
+    "Amount": "10000",
+    "Month": "January"
+   },
+   "expect": [
+    "January"
+   ]
+  },
+  {
+   "id": "add_contribution_2",
+   "open": "Contributions",
+   "fill": {
+    "Member": "Sani",
+    "Amount": "3000",
+    "Month": "January"
+   },
+   "expect": [
+    "3000"
+   ]
+  },
+  {
+   "id": "add_contribution_3",
+   "open": "Contributions",
+   "fill": {
+    "Member": "Amaka",
+    "Amount": "7000",
+    "Month": "February"
+   },
+   "expect": [
+    "February"
+   ]
+  },
+  {
+   "id": "dashboard_numbers",
+   "open": "/",
+   "near": [
+    [
+     "members",
+     "2"
+    ],
+    [
+     "(total|contributed)",
+     "20000"
+    ],
+    [
+     "below",
+     "1"
+    ]
+   ]
+  },
+  {
+   "id": "search_by_month",
+   "open": "Contributions",
+   "search": "February",
+   "expect": [
+    "7000"
+   ],
+   "absent": [
+    "3000"
+   ]
+  }
+ ],
+ "after_restart": {
+  "open": "Contributions",
+  "expect": [
+   "February"
+  ]
+ }
+}

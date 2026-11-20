@@ -1,0 +1,17 @@
+region,product,units,unit_price
+North,Rice 50kg,31,42000
+North,Beans 25kg,40,28000
+North,Palm oil 5L,36,9500
+North,Sugar 1kg,27,1800
+South,Rice 50kg,21,42000
+South,Beans 25kg,16,28000
+South,Palm oil 5L,11,9500
+South,Sugar 1kg,29,1800
+East,Rice 50kg,9,42000
+East,Beans 25kg,30,28000
+East,Palm oil 5L,11,9500
+East,Sugar 1kg,11,1800
+West,Rice 50kg,22,42000
+West,Beans 25kg,16,28000
+West,Palm oil 5L,32,9500
+West,Sugar 1kg,26,1800

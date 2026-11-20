@@ -1,0 +1,99 @@
+{
+ "login": [
+  "librarian",
+  "books21"
+ ],
+ "pages": [
+  "",
+  "Books",
+  "Loans"
+ ],
+ "steps": [
+  {
+   "id": "add_book_1",
+   "open": "Books",
+   "fill": {
+    "Title": "Arrow of God",
+    "Author": "Chinua Achebe",
+    "Copies": "2"
+   },
+   "expect": [
+    "Arrow of God"
+   ]
+  },
+  {
+   "id": "add_book_2",
+   "open": "Books",
+   "fill": {
+    "Title": "Purple Hibiscus",
+    "Author": "Chimamanda Adichie",
+    "Copies": "1"
+   },
+   "expect": [
+    "Purple Hibiscus"
+   ]
+  },
+  {
+   "id": "add_loan",
+   "open": "Loans",
+   "fill": {
+    "Book": "Arrow",
+    "Borrower": "Musa Bello",
+    "Copies": "1"
+   },
+   "expect": [
+    "Musa Bello"
+   ]
+  },
+  {
+   "id": "copies_went_down",
+   "open": "Books",
+   "near": [
+    [
+     "Achebe",
+     "1"
+    ]
+   ]
+  },
+  {
+   "id": "too_large_loan_refused",
+   "open": "Loans",
+   "fill": {
+    "Book": "Purple",
+    "Borrower": "Ife Ojo",
+    "Copies": "2"
+   },
+   "absent": [
+    "Ife Ojo"
+   ]
+  },
+  {
+   "id": "dashboard_numbers",
+   "open": "/",
+   "near": [
+    [
+     "loans",
+     "1"
+    ],
+    [
+     "(fewer|copy|shelf)",
+     "0"
+    ]
+   ]
+  },
+  {
+   "id": "search_by_borrower",
+   "open": "Loans",
+   "search": "Musa",
+   "expect": [
+    "Musa Bello"
+   ]
+  }
+ ],
+ "after_restart": {
+  "open": "Loans",
+  "expect": [
+   "Musa Bello"
+  ]
+ }
+}
