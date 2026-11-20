@@ -46,6 +46,25 @@ class WiderRepair(unittest.TestCase):
         self.assertFalse([m for m in mutants(src, 1, 4) if m[0] in (2, 3) and m[3].split(":")[0] in ("scale", "drop", "slice")])
 
 
+class ConstantOutsideAFunction(unittest.TestCase):
+    """Core proof B6, 4 GB run 1: the wrong value was a package-level constant, which was never searched. Invented project."""
+
+    def test_go_constant_is_found_by_the_search(self):
+        import shutil
+        if not shutil.which("go"):
+            self.skipTest("go not installed")
+        ws = Path(tempfile.mkdtemp(prefix="neuron-go-"))
+        (ws / "go.mod").write_text("module ship\n\ngo 1.21\n")
+        (ws / "ship").mkdir()
+        (ws / "ship" / "rates.go").write_text("package ship\n\n// Price per kilogram, in naira hundreds.\nconst PerKg = 2.5\n")
+        (ws / "ship" / "cost.go").write_text("package ship\n\n// Cost of sending a parcel.\nfunc Cost(kg float64) float64 {\n\treturn kg * PerKg\n}\n")
+        (ws / "ship" / "cost_test.go").write_text('package ship\n\nimport "testing"\n\nfunc TestCost(t *testing.T) {\n'
+                                                 '\tif c := Cost(3); c != 6 {\n\t\tt.Errorf("Cost(3) = %v, want 6", c)\n\t}\n}\n')
+        rep, job, llm = run(REQUEST, ["no idea"] * 30, workspace=ws)
+        self.assertEqual(rep["verdict"], "VERIFIED", rep.get("failed"))
+        self.assertIn("PerKg = 2.0", (ws / "ship" / "rates.go").read_text())
+
+
 class EditMatching(unittest.TestCase):
     """Core proof B4, 4 GB run 1: the model's diagnosis was right but its edit 'could not be applied'."""
     FN = "function share(total, pct) {\n  return total - total * pct;\n}"

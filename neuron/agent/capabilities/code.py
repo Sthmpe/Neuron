@@ -21,6 +21,8 @@ FUNC = {
     "default": re.compile(r"^[\w:<>\*&\s,~]*?\b((?:[A-Za-z_]\w*::)*[A-Za-z_~]\w*)\s*\([^;{]*\)\s*(?:const)?\s*(?:noexcept)?\s*(?:->\s*[\w:<>]+)?\s*\{?\s*$"),
 }
 KEYWORDS = {"if", "for", "while", "switch", "return", "catch", "sizeof", "else", "do"}
+CONST_LINE = re.compile(r"^\s*(?:export\s+)?(?:static\s+)?(?:const(?:expr)?|var|let|#define|final)\s+(?:[\w:<>]+\s+)?([A-Za-z_]\w*)"
+                        r"\s*(?:[:=]|\s)\s*[^;(){}]*\d[^;(){}]*;?\s*(?://.*)?$")
 
 
 def functions_in(path, text):
@@ -170,12 +172,21 @@ class FixBug(Capability):
                 short = name.split("::")[-1]
                 score = (5 if short in idents else 0) + sum(1 for i in idents if re.search(rf"\b{re.escape(i)}\b", body)) * 0.2
                 cands.append((score, f, name, a, b, body))
+        # constants outside any function ("const OvertimeRate = 1.25"): the functions above use them, and a wrong value
+        # there is a common bug (core proof B6, 4 GB run 1: only functions were searched and diagnosed)
+        bodies = " ".join(c[5] for c in sorted(cands, key=lambda c: -c[0])[:3])
+        for f in srcs:
+            for n, line in enumerate((ws / f).read_text(errors="replace").splitlines(), 1):
+                m = CONST_LINE.match(line)
+                if m and not any(c[1] == f and c[3] <= n <= c[4] for c in cands):
+                    score = 1.5 + (3 if re.search(rf"\b{re.escape(m.group(1))}\b", bodies) else 0) + (5 if m.group(1) in idents else 0)
+                    cands.append((score, f, f"(constant {m.group(1)})", n, n, line))
         cands.sort(key=lambda c: -c[0])
         import os
         if not params.get("strategy") and cands and cands[0][0] > 0 and os.environ.get("NEURON_REPAIR_SEARCH", "1") != "0":
             # first, small one-token changes to the functions the failing tests point at (no model needed)
             from ..repair_search import search
-            win = search(ws, [(c[1], c[2], c[3], c[4]) for c in cands[:3] if c[0] > 0], cmd, job.sandbox,
+            win = search(ws, [(c[1], c[2], c[3], c[4]) for c in cands[:5] if c[0] > 0], cmd, job.sandbox,
                          lambda r: r.ok and not r.timed_out, log=job.log)
             if win:
                 lang = {".go": "go", ".rs": "rust", ".java": "java", ".js": "javascript", ".ts": "typescript"}.get(Path(win["file"]).suffix, "c++")
@@ -200,7 +211,7 @@ class FixBug(Capability):
                             + "Which function has the bug, what is wrong, and what is the fix?",
                             {"type": "object", "required": ["function", "problem", "fix"],
                              "properties": {"function": {"type": "string", "enum": keys}, "problem": {"type": "string"}, "fix": {"type": "string"}}},
-                            max_tokens=300)
+                            max_tokens=700)              # 300 cut the 4B model's JSON off mid-sentence: "no diagnosis" 3 times (B6)
         if not diag:
             return Outcome(False, "no diagnosis from the model")
         pick = top[keys.index(diag["function"])] if diag["function"] in keys else top[0]
