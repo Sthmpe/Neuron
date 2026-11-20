@@ -1,0 +1,25 @@
+{"id": "F1", "kind": "fact", "bare": {"seconds": 0.43, "calls": 1, "right": true}, "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 0.8, "calls": 1, "right": true}}
+{"id": "F2", "kind": "fact", "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 0.86, "calls": 1, "right": true}, "bare": {"seconds": 0.89, "calls": 1, "right": true}}
+{"id": "F3", "kind": "fact", "bare": {"seconds": 0.85, "calls": 1, "right": true}, "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 1.16, "calls": 1, "right": true}}
+{"id": "F4", "kind": "fact", "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 0.29, "calls": 1, "right": true}, "bare": {"seconds": 0.88, "calls": 1, "right": true}}
+{"id": "F5", "kind": "fact", "bare": {"seconds": 0.41, "calls": 1, "right": true}, "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 0.69, "calls": 1, "right": true}}
+{"id": "F6", "kind": "fact", "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 0.43, "calls": 1, "right": true}, "bare": {"seconds": 1.38, "calls": 1, "right": true}}
+{"id": "F7", "kind": "fact", "bare": {"seconds": 0.63, "calls": 1, "right": true}, "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 0.87, "calls": 1, "right": true}}
+{"id": "F8", "kind": "fact", "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 0.56, "calls": 1, "right": true}, "bare": {"seconds": 0.61, "calls": 1, "right": true}}
+{"id": "C1", "kind": "calc", "bare": {"seconds": 17.53, "calls": 1, "right": true}, "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 15.27, "calls": 1, "right": true}}
+{"id": "C2", "kind": "calc", "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 7.86, "calls": 1, "right": true}, "bare": {"seconds": 9.13, "calls": 1, "right": true}}
+{"id": "C3", "kind": "calc", "bare": {"seconds": 14.09, "calls": 1, "right": true}, "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 9.45, "calls": 1, "right": true}}
+{"id": "C4", "kind": "calc", "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 5.14, "calls": 1, "right": true}, "bare": {"seconds": 6.4, "calls": 1, "right": true}}
+{"id": "C5", "kind": "calc", "bare": {"seconds": 9.06, "calls": 1, "right": true}, "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 5.61, "calls": 1, "right": true}}
+{"id": "C6", "kind": "calc", "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 6.81, "calls": 1, "right": true}, "bare": {"seconds": 11.45, "calls": 1, "right": true}}
+{"id": "C7", "kind": "calc", "bare": {"seconds": 7.2, "calls": 1, "right": true}, "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 6.31, "calls": 1, "right": true}}
+{"id": "C8", "kind": "calc", "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 5.72, "calls": 1, "right": true}, "bare": {"seconds": 6.08, "calls": 1, "right": true}}
+{"id": "W1", "kind": "write", "bare": {"seconds": 1.51, "calls": 1, "right": true}, "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 1.04, "calls": 1, "right": true}}
+{"id": "W2", "kind": "write", "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 1.73, "calls": 1, "right": true}, "bare": {"seconds": 4.5, "calls": 1, "right": true}}
+{"id": "W3", "kind": "write", "bare": {"seconds": 5.26, "calls": 1, "right": true}, "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 0.86, "calls": 1, "right": true}}
+{"id": "W4", "kind": "write", "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 0.45, "calls": 1, "right": true}, "bare": {"seconds": 0.67, "calls": 1, "right": false}}
+{"id": "W5", "kind": "write", "bare": {"seconds": 0.94, "calls": 1, "right": true}, "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 1.27, "calls": 1, "right": true}}
+{"id": "W6", "kind": "write", "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 3.67, "calls": 1, "right": true}, "bare": {"seconds": 3.74, "calls": 1, "right": true}}
+{"id": "W7", "kind": "write", "bare": {"seconds": 0.81, "calls": 1, "right": true}, "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 1.11, "calls": 1, "right": true}}
+{"id": "W8", "kind": "write", "neuron_verdict": "UNVERIFIED", "neuron_fast": true, "neuron": {"seconds": 1.21, "calls": 1, "right": true}, "bare": {"seconds": 1.26, "calls": 1, "right": true}}
+SUMMARY {"bare": {"right": 23, "of": 24, "total_seconds": 105.7, "median_seconds": 1.44, "model_calls": 24, "fact": 8, "calc": 8, "write": 7}, "neuron": {"right": 24, "of": 24, "total_seconds": 79.2, "median_seconds": 1.19, "model_calls": 24, "fact": 8, "calc": 8, "write": 8}} ratio 0.75

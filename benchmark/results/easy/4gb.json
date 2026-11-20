@@ -1,0 +1,463 @@
+{
+ "tier": "4gb",
+ "rerun_label": null,
+ "code_commit": "544467a",
+ "network": "new empty network namespace (loopback only)",
+ "summary": {
+  "bare": {
+   "right": 24,
+   "of": 24,
+   "total_seconds": 527.5,
+   "median_seconds": 17.73,
+   "model_calls": 24,
+   "fact": 8,
+   "calc": 8,
+   "write": 8
+  },
+  "neuron": {
+   "right": 23,
+   "of": 24,
+   "total_seconds": 179.2,
+   "median_seconds": 3.89,
+   "model_calls": 29,
+   "fact": 8,
+   "calc": 8,
+   "write": 7
+  }
+ },
+ "rows": [
+  {
+   "id": "F1",
+   "kind": "fact",
+   "bare": {
+    "seconds": 10.69,
+    "calls": 1,
+    "right": true,
+    "text": "The capital of Kenya is **Nairobi**.\n\nLocated in the western part of the country, Nairobi serves as the nation's primary economic hub and is home to the country's major government institutions, including the Parliament and the President's office. It is also a major center for commerce, tourism, and "
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 1.65,
+    "calls": 1,
+    "right": true,
+    "text": "Nairobi\n\nUnverified. The local model supplied this answer.\n"
+   }
+  },
+  {
+   "id": "F2",
+   "kind": "fact",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 3.72,
+    "calls": 1,
+    "right": true,
+    "text": "carbon dioxide\n\nUnverified. The model wrote a program that computed this; it ran once in the sandbox.\n"
+   },
+   "bare": {
+    "seconds": 19.3,
+    "calls": 1,
+    "right": true,
+    "text": "Plants take in **carbon dioxide** ($CO_2$) for photosynthesis.\n\nDuring the process of photosynthesis, plants use sunlight, water, and carbon dioxide to create oxygen and energy in the form of sugar (glucose). The carbon dioxide is absorbed primarily through tiny pores in the leaves called **stomata*"
+   }
+  },
+  {
+   "id": "F3",
+   "kind": "fact",
+   "bare": {
+    "seconds": 16.99,
+    "calls": 1,
+    "right": true,
+    "text": "The novel *Things Fall Apart* was written by **Chinua Achebe**.\n\nPublished in 1958, it is widely considered a landmark work in postcolonial literature. The story is set in pre-colonial Nigeria and follows the life of Okonkwo, a proud and powerful Igbo man whose life is disrupted by the arrival of Br"
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 2.27,
+    "calls": 1,
+    "right": true,
+    "text": "Chinua Achebe\n\nUnverified. The local model supplied this answer.\n"
+   }
+  },
+  {
+   "id": "F4",
+   "kind": "fact",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 1.32,
+    "calls": 1,
+    "right": true,
+    "text": "100\n\nUnverified. The local model supplied this answer.\n"
+   },
+   "bare": {
+    "seconds": 16.05,
+    "calls": 1,
+    "right": true,
+    "text": "At standard atmospheric pressure (sea level), pure water boils at **100\u00b0C**.\n\nThis temperature corresponds to 212\u00b0F or 373.15 Kelvin. The boiling point is defined as the temperature at which the vapor pressure of the liquid equals the surrounding atmospheric pressure. Since atmospheric pressure vari"
+   }
+  },
+  {
+   "id": "F5",
+   "kind": "fact",
+   "bare": {
+    "seconds": 36.71,
+    "calls": 1,
+    "right": true,
+    "text": "The number of continents depends on the geographical model used, but the most widely accepted answer in modern geography is **seven**.\n\nThese seven continents are:\n1.  **Asia**\n2.  **Africa**\n3.  **North America**\n4.  **South America**\n5.  **Europe**\n6.  **Australia** (often referred to as Oceania)\n"
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 54.91,
+    "calls": 6,
+    "right": true,
+    "text": "7\n\nUnverified. The model wrote a program that ran 1 time(s) in the sandbox, then a second pass checked it.\n"
+   }
+  },
+  {
+   "id": "F6",
+   "kind": "fact",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 2.21,
+    "calls": 1,
+    "right": true,
+    "text": "CPU stands for Central Processing Unit.\n\nUnverified. The local model supplied this answer.\n"
+   },
+   "bare": {
+    "seconds": 10.39,
+    "calls": 1,
+    "right": true,
+    "text": "**CPU** stands for **Central Processing Unit**.\n\nIt is often referred to as the \"brain\" of a computer. The CPU is the primary component responsible for executing instructions and performing calculations, controlling the flow of data between the computer's memory and storage, and managing overall sys"
+   }
+  },
+  {
+   "id": "F7",
+   "kind": "fact",
+   "bare": {
+    "seconds": 11.9,
+    "calls": 1,
+    "right": true,
+    "text": "The planet closest to the Sun is **Mercury**.\n\nIt is the smallest planet in our solar system and has the shortest orbital period, taking only about 88 Earth days to complete one orbit around the Sun. Because it is so close to the star, Mercury experiences extreme temperature variations, ranging from"
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 1.69,
+    "calls": 1,
+    "right": true,
+    "text": "Mercury\n\nUnverified. The local model supplied this answer.\n"
+   }
+  },
+  {
+   "id": "F8",
+   "kind": "fact",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 2.2,
+    "calls": 1,
+    "right": true,
+    "text": "The largest ocean on Earth is the Pacific Ocean.\n\nUnverified. The local model supplied this answer.\n"
+   },
+   "bare": {
+    "seconds": 16.97,
+    "calls": 1,
+    "right": true,
+    "text": "The largest ocean on Earth is the **Pacific Ocean**.\n\nIt covers an area of approximately **180 million square kilometers** (about 69.5 million square miles), which is roughly 30% of the total surface area of the Earth. The Pacific Ocean is not only the largest but also the deepest, containing the Ma"
+   }
+  },
+  {
+   "id": "C1",
+   "kind": "calc",
+   "bare": {
+    "seconds": 37.52,
+    "calls": 1,
+    "right": true,
+    "text": "To calculate the total amount you need to pay, let's break down the steps logically:\n\n1.  **Calculate the discount amount:**\n    The original price is 18,500 Naira, and there is a 15% discount.\n    $$ \\text{Discount} = 18,500 \\times 0.15 = 2,775 \\text{ Naira} $$\n\n2.  **Calculate the discounted price"
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 11.07,
+    "calls": 1,
+    "right": true,
+    "text": "17725.0\n\nUnverified. The model wrote a program that computed this; it ran once in the sandbox.\n"
+   }
+  },
+  {
+   "id": "C2",
+   "kind": "calc",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 7.2,
+    "calls": 1,
+    "right": true,
+    "text": "45.0\n\nUnverified. The model wrote a program that computed this; it ran once in the sandbox.\n"
+   },
+   "bare": {
+    "seconds": 39.28,
+    "calls": 1,
+    "right": true,
+    "text": "To find the average number of loaves sold per day, we need to calculate the **mean** of the daily sales figures.\n\n### Step 1: Calculate the Total Number of Loaves Sold\nFirst, sum the number of loaves sold over the five days:\n$$42 + 37 + 55 + 61 + 30$$\n\nLet's break it down:\n*   $42 + 37 = 79$\n*   $79"
+   }
+  },
+  {
+   "id": "C3",
+   "kind": "calc",
+   "bare": {
+    "seconds": 49.8,
+    "calls": 1,
+    "right": true,
+    "text": "To calculate the percentage increase in rent, we follow these steps:\n\n1.  **Identify the original value and the new value:**\n    *   Original Rent ($P$) = 400,000 Naira\n    *   New Rent ($A$) = 460,000 Naira\n\n2.  **Calculate the amount of increase:**\n    $$ \\text{Increase} = \\text{New Rent} - \\text{"
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 22.46,
+    "calls": 1,
+    "right": true,
+    "text": "15.0\n\nUnverified. The model wrote a program that computed this; it ran once in the sandbox.\n"
+   }
+  },
+  {
+   "id": "C4",
+   "kind": "calc",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 4.06,
+    "calls": 1,
+    "right": true,
+    "text": "210.0\n\nUnverified. The model wrote a program that computed this; it ran once in the sandbox.\n"
+   },
+   "bare": {
+    "seconds": 25.24,
+    "calls": 1,
+    "right": true,
+    "text": "To find the number of minutes in 3.5 hours, we can use the following conversion factor:\n\n1 hour = 60 minutes\n\n**Calculation:**\n$$3.5 \\text{ hours} \\times 60 \\text{ minutes/hour}$$\n\nBreaking it down:\n1.  $3 \\text{ hours} \\times 60 = 180 \\text{ minutes}$\n2.  $0.5 \\text{ hours} \\times 60 = 30 \\text{ mi"
+   }
+  },
+  {
+   "id": "C5",
+   "kind": "calc",
+   "bare": {
+    "seconds": 15.42,
+    "calls": 1,
+    "right": true,
+    "text": "To convert kilometers (km) to metres (m), you need to know the conversion factor:\n\n$$1 \\text{ km} = 1,000 \\text{ m}$$\n\nTo find the number of metres in 2.4 km, multiply the value in kilometres by 1,000:\n\n$$2.4 \\times 1,000 = 2,400$$\n\nThere are **2,400 metres** in 2.4 km."
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 2.0,
+    "calls": 1,
+    "right": true,
+    "text": "2400\n\nUnverified. The local model supplied this answer.\n"
+   }
+  },
+  {
+   "id": "C6",
+   "kind": "calc",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 6.7,
+    "calls": 1,
+    "right": true,
+    "text": "131000\n\nUnverified. The model wrote a program that computed this; it ran once in the sandbox.\n"
+   },
+   "bare": {
+    "seconds": 22.99,
+    "calls": 1,
+    "right": true,
+    "text": "To find the total amount, we need to calculate the cost of the rice and add the delivery fee.\n\n1.  **Calculate the cost of the rice:**\n    You bought 3 bags at 42,000 Naira each.\n    $$3 \\times 42,000 = 126,000 \\text{ Naira}$$\n\n2.  **Add the delivery fee:**\n    The delivery cost is 5,000 Naira.\n    "
+   }
+  },
+  {
+   "id": "C7",
+   "kind": "calc",
+   "bare": {
+    "seconds": 29.09,
+    "calls": 1,
+    "right": true,
+    "text": "To find out how much each friend pays, we need to divide the total bill equally among the three friends.\n\n**Step-by-Step Calculation:**\n\n1.  **Identify the total bill**: \u20a625,500\n2.  **Identify the number of friends**: 3\n3.  **Perform the division**:\n    $$ \\frac{25,500}{3} $$\n\n    *   $25 \\div 3 = 8"
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 1.92,
+    "calls": 1,
+    "right": true,
+    "text": "8500\n\nUnverified. The local model supplied this answer.\n"
+   }
+  },
+  {
+   "id": "C8",
+   "kind": "calc",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 0.95,
+    "calls": 1,
+    "right": true,
+    "text": "96\n\nUnverified. The local model supplied this answer.\n"
+   },
+   "bare": {
+    "seconds": 14.5,
+    "calls": 1,
+    "right": true,
+    "text": "To find the area of the room, we use the formula for the area of a rectangle:\n\n$$ \\text{Area} = \\text{Length} \\times \\text{Width} $$\n\nGiven:\n*   Length = $12$ metres\n*   Width = $8$ metres\n\n**Calculation:**\n$$ \\text{Area} = 12 \\times 8 = 96 $$\n\nThe area of the room is **96 square metres**."
+   }
+  },
+  {
+   "id": "W1",
+   "kind": "write",
+   "bare": {
+    "seconds": 6.28,
+    "calls": 1,
+    "right": true,
+    "text": "We sincerely apologize for the delay in your order and understand how frustrating this must be for you. We are already working to expedite your shipment and will ensure it reaches you as soon as possible."
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 6.59,
+    "calls": 1,
+    "right": true,
+    "text": "I sincerely apologize for the delay in your order and for the inconvenience it has caused. We are working to resolve the issue immediately and will ensure your package arrives as soon as possible.\n\nUnverified. The local model supplied this answer.\n"
+   }
+  },
+  {
+   "id": "W2",
+   "kind": "write",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 9.42,
+    "calls": 1,
+    "right": true,
+    "text": "1. Unplug electronics from the wall when not in use to stop \"vampire\" power drain.\n2. Switch to LED light bulbs, which use significantly less energy than incandescent bulbs.\n3. Adjust your thermostat by a few degrees in winter or summer to reduce heating and cooling loads.\n\nUnverified. The local mod"
+   },
+   "bare": {
+    "seconds": 37.25,
+    "calls": 1,
+    "right": true,
+    "text": "Here are three practical tips for saving electricity at home:\n\n1. **Switch to LED Lighting and Unplug \"Vampire\" Devices**\n   LED bulbs use significantly less energy than traditional incandescent bulbs and last much longer. Additionally, many electronics (like TVs, computers, and chargers) continue t"
+   }
+  },
+  {
+   "id": "W3",
+   "kind": "write",
+   "bare": {
+    "seconds": 16.96,
+    "calls": 1,
+    "right": true,
+    "text": "Subject: Thank You for [Daughter's Name]\n\nDear [Teacher's Name],\n\nI wanted to take a moment to sincerely thank you for all the hard work and dedication you put into [Daughter's Name]'s learning this year. She has come home smiling and sharing so much about her day, and it's clear she is thriving in "
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 9.39,
+    "calls": 1,
+    "right": true,
+    "text": "Dear [Teacher's Name], I wanted to send a quick note to say thank you for all your hard work and dedication. Your patience and kindness have made a wonderful difference in my daughter's life. We truly appreciate you! Warmly, [Your Name]\n\nUnverified. The local model supplied this answer.\n"
+   }
+  },
+  {
+   "id": "W4",
+   "kind": "write",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 2.42,
+    "calls": 1,
+    "right": true,
+    "text": "Could you please send me the report at your earliest convenience?\n\nUnverified. The local model supplied this answer.\n"
+   },
+   "bare": {
+    "seconds": 15.79,
+    "calls": 1,
+    "right": true,
+    "text": "Here are a few ways to rewrite that sentence more politely, depending on the context:\n\n*   **Standard Professional:** \"Could you please send me the report at your earliest convenience?\"\n*   **Direct but Soft:** \"Please send me the report when you have a moment.\"\n*   **Urgent but Courteous:** \"I woul"
+   }
+  },
+  {
+   "id": "W5",
+   "kind": "write",
+   "bare": {
+    "seconds": 37.59,
+    "calls": 1,
+    "right": true,
+    "text": "Here are three name suggestions for a small bakery in Ibadan, blending local flavor with a modern touch:\n\n1.  **Oke-Ibadan Bakes**\n    *   *Why it works:* \"Oke\" means \"house\" or \"home\" in Yoruba, evoking a sense of warmth and tradition. Pairing it with \"Ibadan\" grounds the brand locally, while \"Bake"
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 4.94,
+    "calls": 1,
+    "right": true,
+    "text": "1. Ibadan Crumb\n2. Oke-Are Bakes\n3. The Golden Crust\n\nUnverified. The local model supplied this answer.\n"
+   }
+  },
+  {
+   "id": "W6",
+   "kind": "write",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 12.05,
+    "calls": 1,
+    "right": true,
+    "text": "A spreadsheet is a digital application that organizes data into a grid of rows and columns, allowing users to input, calculate, and analyze information efficiently. Each cell in the grid can hold text, numbers, or formulas, and when a formula is entered, it automatically updates results if the under"
+   },
+   "bare": {
+    "seconds": 18.85,
+    "calls": 1,
+    "right": true,
+    "text": "A spreadsheet is a digital computing application designed to organize, calculate, and analyze data in a tabular format consisting of rows and columns, where each cell can hold specific information such as text, numbers, or formulas. Users can input data into these cells and utilize built-in mathemat"
+   }
+  },
+  {
+   "id": "W7",
+   "kind": "write",
+   "bare": {
+    "seconds": 3.41,
+    "calls": 1,
+    "right": true,
+    "text": "Grey clouds gather low,\nSoft rain taps on the window pane,\nGreen grass drinks the rain."
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 4.64,
+    "calls": 1,
+    "right": false,
+    "text": "Grey clouds touch the ground,\nSoft drops fall on leaves and stone,\nSilence fills the air.\n\nUnverified. The local model supplied this answer.\n"
+   }
+  },
+  {
+   "id": "W8",
+   "kind": "write",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 3.41,
+    "calls": 1,
+    "right": true,
+    "text": "1. Sunscreen\n2. Beach towel\n3. Sunglasses\n4. Flip-flops\n\nUnverified. The local model supplied this answer.\n"
+   },
+   "bare": {
+    "seconds": 18.48,
+    "calls": 1,
+    "right": true,
+    "text": "Here are four essential items to pack for a beach trip:\n\n1.  **Sunscreen and Sun Hat**: Protect your skin from harmful UV rays and shield your face and neck from the sun.\n2.  **Swimsuit and Towel**: A comfortable swimsuit for swimming and a quick-drying towel to dry off after.\n3.  **Beach Bag**: A d"
+   }
+  }
+ ],
+ "slowdown_ratio": 0.34
+}
