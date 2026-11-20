@@ -167,11 +167,16 @@ def migration(home, cases):
 
 
 def serve_child(args):
+    from neuron.brain.llm import LlamaClient
     from neuron.brain.models import ModelManager, ModelRunner
     from neuron.brain.sandbox import Sandbox
     from neuron.server.app import serve
     h = args.home
     runner = ModelRunner(ModelManager(h.parent/"models"), "2gb", threads=1, log_dir=h.parent)
+    if args.model_url:
+        client = LlamaClient(args.model_url)
+        client.extra_body = {"seed":71}
+        runner.client = lambda role: client
     server = serve(h, "127.0.0.1", args.port, lambda:runner, lambda:Sandbox(), log=lambda _:None)
     stop = threading.Event()
     signal.signal(signal.SIGTERM, lambda *_: stop.set())
@@ -195,10 +200,11 @@ def serve_child(args):
 
 
 @contextmanager
-def service(args, home, port=0):
+def service(args, home, port=0, model_url=""):
     ready = home.parent/"ready.json"
     ready.unlink(missing_ok=True)
-    proc = subprocess.Popen([sys.executable,__file__,"--source",str(args.source),"--home",str(home),"--port",str(port)])
+    proc = subprocess.Popen([sys.executable,__file__,"--source",str(args.source),"--home",str(home),"--port",str(port),
+                             "--model-url",model_url])
     try:
         end = time.monotonic()+60
         while not ready.exists():
@@ -211,7 +217,7 @@ def service(args, home, port=0):
         proc.wait(timeout=60)
 
 
-def delayed(args, home, case):
+def delayed(args, home, case, runner):
     from benchmark.release.retest import Phone
     polls = []
     def call(method, path, body=None):
@@ -238,7 +244,8 @@ def delayed(args, home, case):
             if left<=0:
                 return round(time.monotonic()-start,3)
             time.sleep(min(1,left))
-    with service(args,home) as (first,auth):
+    model_process = runner.server.proc
+    with service(args,home,model_url=runner.client("builder").url) as (first,auth):
         phone = Phone("http://127.0.0.1:"+str(auth["port"]))
         call("POST","/api/pair",{"code":auth["code"]})
         jid = call("POST","/api/jobs",{"goal":case["goal"]})["id"]
@@ -250,6 +257,9 @@ def delayed(args, home, case):
         prompt = d["input_request"]
         began = time.monotonic()
         before = observe(case["wait_before_restart_s"],first)
+    runner.unload()
+    if model_process.poll() is None:
+        raise RuntimeError("old model still running")
     with service(args,home,auth["port"]) as (second,_):
         after = observe(case["wait_after_restart_s"],second)
         submitted = time.monotonic()-began
@@ -260,6 +270,7 @@ def delayed(args, home, case):
         passed = passed and d["id"]==jid and first!=second and d["status"]=="done" and content_matches(case["expect"],d["answer"].splitlines()[0])
         return {"pass":passed,"id":jid,"question":prompt["question"],"owner":case["owner"],"pids":[first,second],
                 "observed_delays":[before,after],"reply_after_seconds":round(submitted,3),"polls":polls,
+                "old_model_pid":model_process.pid,"old_model_exited":True,
                 "status":d["status"],"answer":d["answer"],"usage":d["report"]["usage_all_sessions"]}
 
 
@@ -268,6 +279,7 @@ def main():
     ap.add_argument("--source", type=Path,required=True)
     ap.add_argument("--home",type=Path)
     ap.add_argument("--port",type=int,default=0)
+    ap.add_argument("--model-url",default="")
     ap.add_argument("--model",type=Path)
     ap.add_argument("--label")
     ap.add_argument("--output",type=Path)
@@ -310,6 +322,7 @@ def main():
                 record("documents",document,root/("natural-"+c["id"]),c,runner,Sandbox())
             for c in cases["calculations"]:
                 record("calculations",calculation,root/c["id"],c,runner)
+            record("delayed_phone",delayed,args,root/"phone",cases["delayed_phone"],runner)
         finally:
             runner.unload()
         for c in cases["documents"]:
@@ -319,7 +332,6 @@ def main():
         for c in cases["calculator_replays"]:
             record("calculator_replays",replay,c)
         record("migration",migration,root/"old",cases["documents"])
-        record("delayed_phone",delayed,args,root/"phone",cases["delayed_phone"])
         result.update(seconds=round(time.monotonic()-start,3),peak_bytes=int((group/"memory.peak").read_text()),
                       memory_events=(group/"memory.events").read_text().splitlines())
         json.dump(result,output,indent=2)
