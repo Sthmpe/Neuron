@@ -166,6 +166,16 @@ class AnswerFromDocuments(Capability):
                 answers.append({"question": q, "answer": "not found", "verified": False, "not_found": True})
                 continue
             page = next((p for p in idx.pages if p["doc"] == data["doc"] and p["page"] == data["page"]), None)
+            quote_n = norm(data["quote"] or "")
+            if len(quote_n) > 8 and (page is None or quote_n not in norm(page["text"])):
+                # the quote is copied exactly but the page number is wrong (core proof D8, 2 GB: "The clinic employs 6
+                # nurses" quoted from page 1, cited as page 2): cite the page where the quote really is, if it is on
+                # exactly one page of the documents
+                where = [p for p in idx.pages if quote_n in norm(p["text"])]
+                if len(where) == 1:
+                    job.state.decide("answer", "citation", f"{q[:60]}: quote found on {where[0]['doc']} page {where[0]['page']}, "
+                                                           f"not page {data['page']}; cited where it is")
+                    page, data["doc"], data["page"] = where[0], where[0]["doc"], where[0]["page"]
             not_found = bool(NOT_FOUND.search(data["answer"] or ""))       # honest, but not an answer: never confirmed
             verified = not not_found and page is not None and len(norm(data["quote"])) > 8 and norm(data["quote"]) in norm(page["text"]) \
                 and facts_backed(q, data["answer"], data["quote"])
