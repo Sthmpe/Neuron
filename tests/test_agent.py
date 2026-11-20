@@ -334,7 +334,7 @@ class ThinkingTests(unittest.TestCase):
         self.assertEqual(rep["unverified"], ["answer"])
         text = (job.workspace / "answer.md").read_text()
         self.assertIn("395", text)
-        self.assertIn("1 Python run", text)
+        self.assertIn("ran 1 time(s)", text)
         self.assertIn("Output of your program:\n395", llm.calls[1]["messages"][-1]["content"])   # the real result was fed back
 
     def test_check_pass_can_correct_the_first_answer(self):
@@ -348,7 +348,8 @@ class ThinkingTests(unittest.TestCase):
 class RequireCodeTests(unittest.TestCase):
     def test_calculation_question_always_runs_a_program(self):
         """The 2 GB model answered an average in its head, wrongly (44 for 45); arithmetic now always goes through code."""
-        replies = ["The average is 44.\nAnswer: 44",
+        plan = json.dumps({"operation": "other", "inputs": [], "unit": "loaves"})   # the fact-planning step (Astra's design)
+        replies = [plan, "The average is 44.\nAnswer: 44",
                    "```python\nprint(sum([42, 37, 55, 61, 30]) / 5)\n```",
                    "The program printed 45.0.\nAnswer: 45",
                    "Correct.\nAnswer: 45"]
@@ -356,7 +357,7 @@ class RequireCodeTests(unittest.TestCase):
         self.assertEqual(rep["verdict"], "UNVERIFIED", rep)
         text = (job.workspace / "answer.md").read_text()
         self.assertIn("45", text)
-        self.assertIn("1 Python run", text)
+        self.assertIn("ran 1 time(s)", text)
 
     def test_empty_answer_is_a_failure_not_answered(self):
         rep, job, llm = run("What is 15% of 18,500 naira?", ["Let me think."] * 12)

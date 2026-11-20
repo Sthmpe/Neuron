@@ -39,6 +39,15 @@ class Missing(Exception):
     """A required compiler, application, library or model is not installed."""
 
 
+class NeedsOwnerInput(Exception):
+    """Pause this step until the owner supplies a fact. Context belongs to the requesting capability.
+    (From Astra's research/astra branch.)"""
+    def __init__(self, question, context=None):
+        super().__init__(question)
+        self.question = question
+        self.context = context
+
+
 class Capability:
     name = ""
     purpose = ""

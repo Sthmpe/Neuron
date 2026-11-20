@@ -12,6 +12,7 @@
 import json
 import os
 import time
+import uuid
 from pathlib import Path
 
 TERMINAL = ("done", "partial", "failed", "skipped")     # partial: delivered with stated gaps
@@ -90,6 +91,27 @@ class JobState:
             if t["id"] == tid:
                 t["attempts"].append(attempt)
         _write(self.dir / "plan.json", plan)
+
+    def request_input(self, tid, question, context=None):
+        """A step needs a fact only the owner has (from Astra's research/astra branch)."""
+        prompt = {"id": uuid.uuid4().hex, "question": question, "context": context}
+        self.update_task(tid, status="waiting_input", input_request=prompt, summary="Waiting for the owner's reply")
+
+    def answer_input(self, prompt_id, answer, accept_new):
+        """Commit the reply and make the step runnable in the same plan revision. Re-sending the same reply is harmless."""
+        for task in self.plan():
+            history = task.get("owner_inputs", [])
+            for old in history:
+                if old["id"] == prompt_id:
+                    if old["answer"] == answer:
+                        return False
+                    raise ValueError("This question already has a different reply.")
+            prompt = task.get("input_request")
+            if accept_new and task["status"] == "waiting_input" and prompt and prompt["id"] == prompt_id:
+                self.update_task(task["id"], status="pending", input_request=None,
+                                 owner_inputs=[*history, {**prompt, "answer": answer}], summary="Owner replied")
+                return True
+        raise ValueError("This question is no longer waiting for a reply.")
 
     def add_tasks(self, tasks, after=None):
         plan = self.plan()

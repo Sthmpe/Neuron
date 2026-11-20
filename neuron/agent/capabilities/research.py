@@ -204,37 +204,70 @@ COMPUTE = re.compile(r"\d|\b(calculate|compute|how (much|many)|percent|average|t
 
 class AnswerQuestion(Capability):
     name = "answer_question"
-    purpose = "Answer a general question with the local model (not independently checkable)"
-    permissions = ("use_model",)
+    purpose = "Answer a general question and state which results have independent evidence"
+    permissions = ("use_model", "write_workspace")
     resources = {"ram_mb": 40, "uses_model": True}
-    verification = "none possible offline: reported as unverified"
+    verification = "exact arithmetic checked against the delivered answer; other answers marked unverified"
     domains = ("research",)
 
     def run(self, job, params):
+        # Exact arithmetic, the owner-input questions and the "Unverified." label are Astra's design (research/astra
+        # 6847ef3); the require-code solver, the empty-answer failure and the computed-result protection are Claude's.
+        from ..arithmetic import exact_answer
+        from ..capability import NeedsOwnerInput
+        from ..owner_input import METHOD, prepare
         q = job.state.goal()["request"]
-        if COMPUTE.search(q):                  # numbers involved: think, compute with real Python in the sandbox, check once
+        exact = exact_answer(q)
+        if exact is not None:                      # a pure calculation: exact, no model, independently checked below
+            expression, text = exact
+            (job.workspace / "answer.md").write_text(text + "\n")
+            return Outcome(True, text, {"answer": text, "expression": expression}, ["answer.md"])
+        turns = params.get("owner_inputs", [])
+        q, supplied = prepare(job, q, turns)       # may pause the step with a question for the owner
+        text = supplied.text if supplied else None
+        method = supplied.basis if supplied else ""
+        result, extra = {}, ""
+        if text is None and COMPUTE.search(q) and not METHOD.search(q):
             from ..thinking import solve
             s = solve(lambda m, n: job.chat("builder", m, max_tokens=n, temperature=0.1), job.sandbox, q, require_code=True)
-            if not s["answer"].strip():                 # only the note, no answer: that is a failure, never "answered"
-                return Outcome(False, "the local model produced no answer" + (f" (its program printed: {s['printed'][:120]})" if s.get("printed") else ""))
-            text = s["answer"] + (f"\n\n(Worked out with {s['tool_runs']} Python run(s) in the sandbox and checked once.)" if s["tool_runs"]
-                                  else "\n\n(Checked once by a second pass.)")
+            text = s["answer"]
+            result["tool_runs"] = s["tool_runs"]
+            method = (f"The model wrote a program that ran {s['tool_runs']} time(s) in the sandbox, then a second pass checked it."
+                      if s["tool_runs"] else "The model answered and a second pass checked it.")
             if s.get("check_disagreed"):
-                text += f"\n(A second pass said {s['check_disagreed']}; the result the program printed is kept.)"
-            (job.workspace / "answer.md").write_text(clean(text) + "\n")
-            return Outcome(True, clean(text)[:300], {"answer": clean(text), "tool_runs": s["tool_runs"]}, ["answer.md"], made_by="model")
-        mem = job.memory_context() if hasattr(job, "memory_context") else ""
-        text = job.ask_text("builder", "You are NEURON, an offline assistant. Answer clearly. Say so if you are not sure. No em dashes."
-                            + (f"\n\n{mem}" if mem else ""), q, max_tokens=700)
-        if not text:
-            return Outcome(False, "no answer from the local model")
-        (job.workspace / "answer.md").write_text(clean(text) + "\n")
-        return Outcome(True, clean(text)[:300], {"answer": clean(text)}, ["answer.md"], made_by="model")
+                extra = f" A second pass said {s['check_disagreed']}; the result the program printed is kept."
+            if not (text or "").strip():
+                return Outcome(False, "the local model produced no answer" + (f" (its program printed: {s['printed'][:120]})" if s.get("printed") else ""))
+        elif text is None:
+            mem = job.memory_context() if hasattr(job, "memory_context") else ""
+            text = job.ask_text("builder", "You are NEURON, an offline assistant. Answer clearly. If a specific input only the owner "
+                                "can provide is missing, reply with NEED_INPUT followed by one question asking for that fact. "
+                                "For a formula or method, explain with variables. Say so if you are not sure. No em dashes."
+                                + (f"\n\n{mem}" if mem else ""), q, max_tokens=700)
+            method = "The local model supplied this answer."
+            missing = re.fullmatch(r"NEED_INPUT\s*:?\s*(.{4,220}\?)", (text or "").strip(), re.I)
+            if missing:
+                raise NeedsOwnerInput(missing[1])
+        answer = (text if supplied and supplied.made_by == "owner" else clean(text or "")).strip()
+        if not answer:
+            return Outcome(False, "the local model did not supply a final answer")
+        (job.workspace / "answer.md").write_text(f"{answer}\n\nUnverified. {method}{extra}\n")
+        return Outcome(True, answer[:300], {**result, "answer": answer}, ["answer.md"], made_by=supplied.made_by if supplied else "model")
 
     def verify(self, job, params, outcome):
-        # eval2 found two jobs that said VERIFIED for a wrong number: an answer nothing independent checked is reported as
-        # "answered, not checked" (verdict UNVERIFIED), never as verified
-        return Verdict(True, [{"id": "answered", "pass": True, "detail": "UNVERIFIED: a model answer, not checked against a source"}],
+        from ..arithmetic import exact_answer
+        path = job.workspace / "answer.md"
+        delivered = path.read_text().strip() if path.is_file() else ""
+        exact = exact_answer(job.state.goal()["request"])
+        if exact is not None:                      # the only answers here that are really checked
+            expression, expected = exact
+            ok = delivered == expected
+            return Verdict(ok, [{"id": "exact_arithmetic", "pass": ok, "detail": f"{expression} = {expected}"}],
+                           "exact rational arithmetic checked against answer.md")
+        answer = outcome.result.get("answer", "")
+        ok = bool(answer) and delivered.startswith(answer + "\n\nUnverified.")
+        # eval2 found jobs that said VERIFIED for a wrong number: an unchecked answer is UNVERIFIED, never VERIFIED
+        return Verdict(ok, [{"id": "answer_delivered", "pass": ok, "detail": "UNVERIFIED: a model answer, not checked against a source"}],
                        "unverified", unverified=True)
 
 

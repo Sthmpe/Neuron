@@ -27,9 +27,12 @@ class JobManager:
         self.runner_factory, self.sandbox_factory, self.registry, self.log = runner_factory, sandbox_factory, registry, log
         self.runner = None
         self.queue, self.lock, self.wake = deque(), threading.Lock(), threading.Event()
+        self.meta_lock = threading.Lock()
         self.current, self.current_job, self.stopping = None, None, False
         for meta in sorted(self.all(), key=lambda m: m["created"]):
-            if meta["status"] in ("queued", "running"):            # interrupted by a restart: continue
+            replied = meta["status"] == "waiting_input" and any(      # the owner replied, then the machine restarted
+                t["status"] == "pending" and t.get("owner_inputs") for t in JobState(self._path(meta["id"]) / "workspace").plan())
+            if meta["status"] in ("queued", "running") or replied:    # interrupted by a restart: continue
                 self.queue.append(meta["id"])
                 self._meta(meta["id"], status="queued", note="resumed after a restart")
         self.memory = None                              # created on the first job (default: <home>/memory/knowledge.db)
@@ -47,23 +50,33 @@ class JobManager:
 
     def _meta(self, jid, **fields):
         f = self._path(jid) / "meta.json"
-        m = json.loads(f.read_text())
-        m.update(fields, updated=time.time())
-        tmp = f.with_suffix(".tmp")
-        tmp.write_text(json.dumps(m, indent=1))
-        tmp.replace(f)
+        with self.meta_lock:
+            m = json.loads(f.read_text())
+            m.update(fields, updated=time.time())
+            tmp = f.with_suffix(".tmp")
+            tmp.write_text(json.dumps(m, indent=1))
+            tmp.replace(f)
         return m
 
     def meta(self, jid):
-        return json.loads((self._path(jid) / "meta.json").read_text())
+        directory = self._path(jid)
+        meta = json.loads((directory / "meta.json").read_text())
+        report = meta.get("report") or {}
+        # Older reports called a delivered answer VERIFIED although the saved step said unverified (Astra's finding)
+        if report.get("kind") == "answer" and report.get("verdict") == "VERIFIED":
+            if any(t.get("verification") == "unverified" for t in JobState(directory / "workspace").plan()):
+                report["verdict"] = "UNVERIFIED"
+                if meta.get("status") == "done":
+                    meta["status"] = "answered"
+        return meta
 
     def all(self):
         out = []
         for d in self.dir.iterdir():
             if (d / "meta.json").exists():
                 try:
-                    out.append(json.loads((d / "meta.json").read_text()))
-                except ValueError:
+                    out.append(self.meta(d.name))
+                except (ValueError, KeyError):
                     pass
         return sorted(out, key=lambda m: -m["created"])
 
@@ -129,10 +142,25 @@ class JobManager:
 
     def start(self, jid):
         with self.lock:
+            if self.meta(jid)["status"] == "waiting_input":          # it continues when the owner replies
+                return
             if jid not in self.queue and self.current != jid:
                 self.queue.append(jid)
         self._meta(jid, status="queued")
         self.wake.set()
+
+    def submit_input(self, jid, prompt_id, answer):
+        """The owner's reply to a step's question (from Astra's research/astra branch). Safe to send twice."""
+        if not isinstance(prompt_id, str) or not isinstance(answer, str) or not 1 <= len(answer.strip()) <= 1200:
+            raise ValueError("Enter a reply of 1 to 1200 characters.")
+        with self.lock:
+            st = JobState(self._path(jid) / "workspace")
+            waiting = self.meta(jid)["status"] == "waiting_input"
+            if st.answer_input(prompt_id, answer.strip(), accept_new=waiting):
+                if jid not in self.queue:
+                    self.queue.append(jid)
+                self._meta(jid, status="queued")
+                self.wake.set()
 
     def stop(self, jid):
         if self.current == jid and self.current_job is not None:
@@ -194,7 +222,8 @@ class JobManager:
         rep = Agent(job).run(m["goal"], attachments)
         status = "waiting_approval" if rep.get("waiting_approval") else ("paused" if getattr(job, "stop_requested", False)
                   else "waiting_network" if rep.get("waiting_network")
-                  else {"VERIFIED": "done", "UNVERIFIED": "answered", "PARTIAL": "partial", "FAILED": "failed"}[rep["verdict"]])
+                  else {"VERIFIED": "done", "UNVERIFIED": "answered", "WAITING_INPUT": "waiting_input",
+                        "PARTIAL": "partial", "FAILED": "failed"}[rep["verdict"]])
         self._meta(jid, status=status, report=rep, finished=time.time())
 
     def _open_memory(self):
@@ -250,16 +279,23 @@ class JobManager:
     def detail(self, jid):
         m = self.meta(jid)
         st = JobState(self._path(jid) / "workspace")
+        tasks = st.plan() if st.exists() else []
+        prompt = next((t["input_request"] for t in tasks if t["status"] == "waiting_input"), None)
+        asking = m["status"] == "waiting_input" and prompt is not None
+        history = [{"question": turn["question"], "answer": turn["answer"]} for t in tasks for turn in t.get("owner_inputs", [])]
+        hide_answer = any(t.get("capability") == "answer_question" and t["status"] not in ("done", "partial") for t in tasks)
         plan = [{"id": t["id"], "title": t["title"], "status": t["status"], "summary": t.get("summary", ""), "made_by": t.get("made_by"),
                  "verification": t.get("verification"), "tries": len(t.get("attempts", [])), "gaps": t.get("gaps", []),
                  "last_failure": (t["attempts"][-1].get("failure") if t.get("attempts") and not t["attempts"][-1].get("passed") else "")}
-                for t in st.plan()] if st.exists() else []
+                for t in tasks]
         evidence = st.lines("evidence.jsonl")[-12:] if st.exists() else []
         return {**m, "kind": st.goal().get("kind") if st.exists() else None, "plan": plan, "progress": st.progress() if st.exists() else {},
+                "input_request": {k: prompt[k] for k in ("id", "question")} if asking else None, "owner_inputs": history,
                 "approvals": [a for a in st.approvals() if a["status"] == "pending"] if st.exists() else [],
                 "evidence": [{"task": e["task"], "passed": e["passed"], "how": e["how"],
                               "checks": [{"id": c["id"], "pass": c["pass"], "detail": str(c["detail"])[:160]} for c in e["checks"][:12]]} for e in evidence],
-                "outputs": self.outputs(jid), "answer": self._answer(jid),
+                "outputs": [o for o in self.outputs(jid) if not hide_answer or o["path"] not in ("answer.md", "answers.md")],
+                "answer": "" if hide_answer else self._answer(jid),
                 "thread": [{"id": t["id"], "said": t.get("request") or t["goal"], "status": t["status"]} for t in self.conversation(jid)]}
 
     def _answer(self, jid):
