@@ -21,17 +21,67 @@ def parse_request(req):
     if m:
         a, b = [int(x) for x in m.groups() if x]
         out["words"] = [a, b]
-    m = re.search(r"table with the columns (.+?) and (.+?) and these rows:\s*(.+?)(?:, then a total row|\.\s|$)", req, re.I)
-    if m:
-        rows = []
-        for item in re.split(r",\s*", m.group(3)):
-            mm = re.match(r"(.+?)\s+([\d,.]+)$", item.strip())
-            if mm:
-                rows.append([mm.group(1).strip(), float(mm.group(2).replace(",", ""))])
-        sec = re.search(r"The (\w+) section must have a table", req, re.I)
-        out["table"] = {"columns": [m.group(1).strip(), m.group(2).strip()], "rows": rows,
-                        "total": bool(re.search(r"total row", req, re.I)), "section": sec.group(1) if sec else None}
+    t = parse_table(req)
+    if t:
+        out["table"] = t
     return out
+
+
+ROW = re.compile(r"([A-Za-z][\w()'/&-]*(?:\s+[A-Za-z(][\w()'/&-]*)*?)\s*:?\s+(\d[\d,]*(?:\.\d+)?)(?![\d%])")
+
+
+def parse_table(req):
+    """A two-column table the owner described, in the usual phrasings: "a table with the columns Item and Cost (NGN)
+    listing Kitchen tap 12000, Door lock 8500 and Window glass 20000, and a Total row", "... the columns Leave type and
+    Days: Annual 20, Sick 10, Compassionate 5", "... and these rows: ...". (Core proof D4/D5: the old pattern only knew
+    the last phrasing, so the table was silently left out.) Returns None unless at least two rows with numbers are found."""
+    m = re.search(r"table with (?:the |two )?columns\s+(.+?)\s+and\s+(.+?)(?:\s*:\s*|\s+listing\s+|\s+and these rows:?\s*|"
+                  r"\s+with (?:the )?rows:?\s*|\s+for\s+|,\s*(?=[A-Z]))(.+?)(?:,?\s+(?:and|then|plus) (?:a |the )?total row|\.\s|\.$|$)",
+                  req, re.I | re.S)
+    if not m:
+        return None
+    cols = [m.group(1).strip(" '\""), m.group(2).strip(" '\"")]
+    body = re.sub(r",?\s+and\s+", ", ", m.group(3))
+    rows = [[name.strip(), float(num.replace(",", ""))] for name, num in ROW.findall(body)]
+    rows = [r for r in rows if r[0].lower() not in ("total", "and")]
+    if len(rows) < 2:
+        return None
+    sec = re.search(r"The ([\w ]+?) section must have a table", req, re.I)
+    return {"columns": cols, "rows": rows, "total": bool(re.search(r"total row|a total\b|with (?:the |a )?total", req, re.I)),
+            "section": sec.group(1) if sec else None}
+
+
+def table_section(table, sections):
+    """Where the table goes when the owner did not say: the section whose plan mentions the table's rows or columns most,
+    else one about costs or requests, else the last section."""
+    words = lambda x: set(re.findall(r"[a-z]{3,}", x.lower()))
+    want = words(" ".join(table["columns"] + [r[0] for r in table["rows"]]))
+    scored = [(len(want & words(s["heading"] + " " + s.get("points", ""))), i) for i, s in enumerate(sections)]
+    best = max(scored)
+    if best[0] > 0:
+        return best[1]
+    money = [i for i, s in enumerate(sections) if re.search(r"cost|budget|price|fee|asking|request|types?|figures", s["heading"], re.I)]
+    return money[0] if money else len(sections) - 1
+
+
+def fit_words(title, sections, bodies, lo, hi):
+    """Trim whole sentences from the end of the longest sections until the document (title, headings and text, as a
+    reader counts it) is inside the owner's range; paragraphs are kept, and every section keeps at least one sentence."""
+    words = lambda text: len(re.findall(r"\b\w+\b", text))
+    fixed = words("\n".join([title] + [s["heading"] for s in sections]))
+    paras = [[re.split(r"(?<=[.!?])\s+", x.strip()) for x in re.split(r"\n\s*\n", b) if x.strip()] for b in bodies]
+    size = lambda k: sum(words(" ".join(par)) for par in paras[k])
+    sentences = lambda k: sum(len(par) for par in paras[k])
+    target = hi - max(5, (hi - lo) // 10)
+    while fixed + sum(size(k) for k in range(len(paras))) > target:
+        k = max((k for k in range(len(paras)) if sentences(k) > 1), key=size, default=None)
+        if k is None:
+            break
+        j = max(range(len(paras[k])), key=lambda j: (len(paras[k][j]), j))     # the section's longest paragraph
+        paras[k][j].pop()
+        if not paras[k][j]:
+            paras[k].pop(j)
+    return ["\n\n".join(" ".join(par) for par in body) for body in paras]
 
 
 class PlanDocument(Capability):
@@ -84,29 +134,45 @@ class WriteDocument(Capability):
         p = job.state.task("outline")["result"]
         req = job.state.goal()["request"]
         lo, hi = p.get("words", [300, 800])
-        per = max(40, int((lo + hi) / 2 / max(1, len(p["sections"]))))
+        heads = len(re.findall(r"\b\w+\b", " ".join([p["title"]] + [x["heading"] for x in p["sections"]])))
+        per = max(40, int(((lo + hi) / 2 - heads) / max(1, len(p["sections"]))))
         if params.get("feedback") and "length" in params["feedback"]:
             m = re.search(r"(\d+) words", params["feedback"])
             if m:
                 per = int(per * ((lo + hi) / 2) / max(1, int(m.group(1))))
-        doc = Document()
-        st = doc.styles["Normal"]
-        st.font.name, st.font.size = "Calibri", Pt(11)
-        doc.add_heading(p["title"], 0)
         bodies = []
         for s in p["sections"]:
             text = job.ask_text("builder", "You write clear, plain business prose. No headings, no bullet lists, no em dashes.",
                                 f"Document: {p['title']}\nRequest: {req}\n\nWrite the section '{s['heading']}' ({s.get('points', '')}). "
                                 f"About {per} words, in 1 to 3 paragraphs." +
-                                (" A table with the figures follows this text, so do not repeat every number." if p.get("table") and p["table"].get("section", "").lower() in s["heading"].lower() else ""),
+                                (" A table with the figures follows this text, so do not repeat every number." if p.get("table") else ""),
                                 max_tokens=int(per * 2.2) + 60, temperature=0.4)
-            text = clean(re.sub(r"^#+.*\n|^\s*\*\*.*\*\*\s*$", "", text, flags=re.M)).strip()
-            bodies.append(text)
+            bodies.append(clean(re.sub(r"^#+.*\n|^\s*\*\*.*\*\*\s*$", "", text, flags=re.M)).strip())
+        if p.get("words"):                      # the owner's word range is met by code, not hoped for
+            count = lambda b: len(re.findall(r"\b\w+\b", "\n".join([p["title"]] + [x["heading"] for x in p["sections"]] + b)))
+            for _ in range(2):                  # too short: ask for more in the shortest section
+                if count(bodies) >= lo:
+                    break
+                k = min(range(len(bodies)), key=lambda i: len(bodies[i].split()))
+                more = job.ask_text("builder", "You write clear, plain business prose. No headings, no bullet lists, no em dashes.",
+                                    f"Document: {p['title']}\nRequest: {req}\n\nAdd about {lo - count(bodies) + 20} words to this section "
+                                    f"'{p['sections'][k]['heading']}', continuing it:\n{bodies[k]}", max_tokens=400, temperature=0.4)
+                bodies[k] = (bodies[k] + " " + clean(more).strip()).strip()
+            bodies = fit_words(p["title"], p["sections"], bodies, lo, hi)
+        t = p.get("table")
+        at = None
+        if t:
+            at = next((i for i, s in enumerate(p["sections"]) if t.get("section") and t["section"].lower() in s["heading"].lower()), None)
+            at = table_section(t, p["sections"]) if at is None else at
+        doc = Document()
+        st = doc.styles["Normal"]
+        st.font.name, st.font.size = "Calibri", Pt(11)
+        doc.add_heading(p["title"], 0)
+        for i, s in enumerate(p["sections"]):
             doc.add_heading(s["heading"], 1)
-            for para in [x.strip() for x in re.split(r"\n\s*\n", text) if x.strip()]:
+            for para in [x.strip() for x in re.split(r"\n\s*\n", bodies[i]) if x.strip()]:
                 doc.add_paragraph(para)
-            t = p.get("table")
-            if t and t.get("section") and t["section"].lower() in s["heading"].lower():
+            if t and i == at:
                 table = doc.add_table(rows=1, cols=2)
                 table.style = "Light Shading Accent 1"
                 table.rows[0].cells[0].text, table.rows[0].cells[1].text = t["columns"]

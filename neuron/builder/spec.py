@@ -429,10 +429,31 @@ def expand(spec):
                     rows[0][d["field"]] = str(int(d["below"]) - 1)
                     rows[1][d["field"]] = str(int(d["below"]) + 50)
             steps += [{"post": f"/{e['name']}", "form": r} for r in rows]
-        posted = {}
+        # What the app must have saved after these posts. A stock rule can refuse a sample record (a loan of a book
+        # whose sample copies were set below a dashboard threshold): the expected numbers follow the rules instead of
+        # assuming every post was saved. (Core proof A5: the builder rejected its own correct app for expecting 2 loans.)
+        posted, stock = {}, {}
         for st in steps:
-            if "post" in st:
-                posted.setdefault(st["post"].strip("/"), []).append(st["form"])
+            if "post" not in st:
+                continue
+            ent, row = st["post"].strip("/"), st["form"]
+            r = relations.rule_for(spec, ent)
+            if r:
+                k = (r["target"], row.get(r["link_field"]))
+                amt = float(row.get(r["amount_field"]) or 0)
+                new = stock.get(k, 0.0) + (-amt if r["change"] == "subtract" else amt)
+                if r["change"] == "subtract" and r["block_if_negative"] and new < 0:
+                    continue                                   # refused: the app must not save it
+                stock[k] = new
+            for tr in spec.get("rules", []):
+                if tr["target"] == ent:
+                    stock[(ent, row.get(tr["target_key"]))] = float(row.get(tr["target_field"]) or 0)
+            posted.setdefault(ent, []).append(row)
+
+        def value_now(ent, row, field):
+            tr = next((t for t in spec.get("rules", []) if t["target"] == ent and t["target_field"] == field), None)
+            return stock.get((ent, row.get(tr["target_key"])), 0.0) if tr else float(row.get(field) or 0)
+
         changed = {r["target"] for r in spec.get("rules", [])}
 
         def lookup(target, key, value, field):
@@ -450,8 +471,12 @@ def expand(spec):
                 total = sum(computed.evaluate(comp["parts"], r, lookup) if comp else float(r.get(d["field"]) or 0)
                             for r in posted.get(d["entity"], []))
                 near.append([d["label"], computed.fmt(total)])
+            elif d and d["kind"] == "count_below":
+                n_below = sum(1 for r in posted.get(d["entity"], []) if value_now(d["entity"], r, d["field"]) < d["below"])
+                near.append([x[0], str(n_below)])
             else:
-                near.append([x[0], x[1] if x[1] else "1"])
+                count_d = next((dd for dd in spec["dashboard"] if dd["label"] == x[0] and dd["kind"] == "count"), None)
+                near.append([x[0], str(len(posted.get(count_d["entity"], []))) if count_d else (x[1] or "1")])
         steps.append({"get": "/", "expect_text": [d["label"] for d in spec["dashboard"]], "expect_near": near})
         add({"id": "dashboard", "title": "Dashboard with the key numbers", "file": "pages/dashboard.py",
              "must_define": "register", "contract": "\n".join(lines),
