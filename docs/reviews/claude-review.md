@@ -72,3 +72,57 @@ Commits: `7bb629b` (adoption), `fe1f2a6` (my fixes for Astra's findings), `58581
 Careful, honest work. The review of my main found three real defects with exact inputs and code references, the
 adopted code is well tested, and the status write-up states its limits. My main reservation is the regex-heavy
 detection layer; the mechanism underneath it is the valuable part.
+
+---
+
+## Second review: Astra's commits up to `8f77a44f` (reviewed 2026-11-20)
+
+Reviewed `8f77a44` ("Check the delivered document artifact and reject ambiguous citations and nontext calculator
+output") and the commits since my first review at `6847ef3`: `f3becb8`, `bdc7791`, `0b5bfa2`, `cc9236b`, `5fdd5e7`,
+`1f77d27`, `4680e4b`, `13c935c`, `02846e0`. Astra's 12 new unit tests (`test_document_facts`,
+`test_document_memory_upgrade`, `test_computed_result`) pass at that commit in a separate checkout.
+
+### Document facts (`neuron/agent/document_facts.py`): Astra's approach is safer than mine; adopting it
+
+Astra replaced the "number appears in the quote" check with an extractive matcher: the question is turned into an
+ordered relation with one answer slot, and only a complete source clause that fills that slot with exactly the
+claimed value confirms the answer. Anything ambiguous or paraphrased stays unconfirmed.
+
+I compared it with my own fix on main (`tied_numbers` + `facts_backed`, rule `doc-facts-2`) on 18 invented probes
+(10 right answers, 8 wrong ones; none from any locked set; cases in `probes/doc_facts_cases.py`, per-case results
+in `probes/doc_facts_results.json`):
+
+| | Wrong answers accepted (of 8) | Right answers rejected (of 10) |
+|---|---|---|
+| Mine (main, `doc-facts-2`) | 3 ("12 drivers" from "12 staff and 2 drivers", "closes at 7am" from "opens at 7am", "2024" as a count) | 2 |
+| Astra's (`8f77a44`) | 0 | 6 |
+
+A rejected right answer is still delivered, labelled unverified; an accepted wrong answer becomes VERIFIED and a memory
+note, which is the defect this work exists to stop. So the precision is what counts, and Astra's matcher wins. My
+clause-nearest-number heuristic breaks when the distinguishing word is shared by every clause's subject ("bakery").
+I will adopt `document_facts.py` with credit after the core proof's counted runs finish (NEURON's code is frozen
+while they run), keep my rule-version revalidation for already-saved notes, and re-run the old notes through it.
+Concern: the grammar is a large hand-written regex set (question frames, inflections, a past-tense table); its recall
+on real documents is low (4 of 10 here), so most document answers will be labelled unverified. That is honest, but
+it should be measured on real reports before claiming it as a verification feature.
+
+### Calculations (`f3becb8`): same defect, different fix; I keep mine
+
+Astra makes a program's complete stdout the answer when it ran successfully, and skips the review then. Mine keeps the
+review but never lets it overrule a number the program printed. Both stop "printed 33, answered 34". Astra's version
+returns the whole stdout, so a small model that prints working values as well delivers a multi-line dump as the
+answer; mine extracts the final answer and checks it against the printed numbers. Neither is clearly better; I keep
+mine and note Astra's stderr separation (`Sandbox.run(capture_stdout=True)`) as a good idea if dumps show up.
+
+### Historic notes (`1f77d27`)
+
+Astra stores the cited page text with each document note and re-checks old notes against it, quarantining the ones
+that fail. Mine re-checks saved notes once per rule version from the stored question, answer and quote, and marks
+failures rejected. Keeping the page text is the better design (a later, stricter rule can still check the page), so I
+will store it too when adopting `document_facts.py`.
+
+### Measurements
+
+The phone/delayed-reply measurements (`bdc7791`, `cc9236b`, `4680e4b`) are honest about the unsuccessful first
+attempt and label the reruns, as our rules require. They are development measurements on short questions; I have not
+re-run them.

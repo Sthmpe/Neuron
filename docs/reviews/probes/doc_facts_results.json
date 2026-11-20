@@ -1,0 +1,222 @@
+{
+ "mine_main_8a17927_doc-facts-2": [
+  {
+   "q": "How many yellow chairs are there?",
+   "a": "3",
+   "want": true,
+   "got": true
+  },
+  {
+   "q": "How many staff does the bakery employ?",
+   "a": "The bakery employs 12 staff.",
+   "want": true,
+   "got": true
+  },
+  {
+   "q": "What was the library's income in 2025?",
+   "a": "4.2 million naira",
+   "want": true,
+   "got": false
+  },
+  {
+   "q": "How much does a day ticket cost?",
+   "a": "2,500 naira",
+   "want": true,
+   "got": false
+  },
+  {
+   "q": "When does the market open?",
+   "a": "7am",
+   "want": true,
+   "got": true
+  },
+  {
+   "q": "How many patients were seen in March?",
+   "a": "310",
+   "want": true,
+   "got": true
+  },
+  {
+   "q": "Who chairs the board?",
+   "a": "Mrs Okafor",
+   "want": true,
+   "got": true
+  },
+  {
+   "q": "How many trucks does the company own?",
+   "a": "9",
+   "want": true,
+   "got": true
+  },
+  {
+   "q": "How many members joined in 2024?",
+   "a": "45",
+   "want": true,
+   "got": true
+  },
+  {
+   "q": "What is the capacity of the hall?",
+   "a": "300 people",
+   "want": true,
+   "got": true
+  },
+  {
+   "q": "How many yellow chairs are there?",
+   "a": "16 yellow chairs.",
+   "want": false,
+   "got": false
+  },
+  {
+   "q": "How many drivers does the bakery employ?",
+   "a": "12",
+   "want": false,
+   "got": true
+  },
+  {
+   "q": "What were the donations in 2025?",
+   "a": "4.2 million naira",
+   "want": false,
+   "got": false
+  },
+  {
+   "q": "How much does a week ticket cost?",
+   "a": "2,500 naira",
+   "want": false,
+   "got": false
+  },
+  {
+   "q": "When does the market close?",
+   "a": "7am",
+   "want": false,
+   "got": true
+  },
+  {
+   "q": "How many trucks does the company own?",
+   "a": "12",
+   "want": false,
+   "got": false
+  },
+  {
+   "q": "How many members joined in 2024?",
+   "a": "2024",
+   "want": false,
+   "got": true
+  },
+  {
+   "q": "What is the capacity of the hall?",
+   "a": "250 people",
+   "want": false,
+   "got": false
+  }
+ ],
+ "astra_8f77a44": [
+  {
+   "q": "How many yellow chairs are there?",
+   "a": "3",
+   "want": true,
+   "got": true
+  },
+  {
+   "q": "How many staff does the bakery employ?",
+   "a": "The bakery employs 12 staff.",
+   "want": true,
+   "got": false
+  },
+  {
+   "q": "What was the library's income in 2025?",
+   "a": "4.2 million naira",
+   "want": true,
+   "got": false
+  },
+  {
+   "q": "How much does a day ticket cost?",
+   "a": "2,500 naira",
+   "want": true,
+   "got": true
+  },
+  {
+   "q": "When does the market open?",
+   "a": "7am",
+   "want": true,
+   "got": false
+  },
+  {
+   "q": "How many patients were seen in March?",
+   "a": "310",
+   "want": true,
+   "got": false
+  },
+  {
+   "q": "Who chairs the board?",
+   "a": "Mrs Okafor",
+   "want": true,
+   "got": false
+  },
+  {
+   "q": "How many trucks does the company own?",
+   "a": "9",
+   "want": true,
+   "got": true
+  },
+  {
+   "q": "How many members joined in 2024?",
+   "a": "45",
+   "want": true,
+   "got": false
+  },
+  {
+   "q": "What is the capacity of the hall?",
+   "a": "300 people",
+   "want": true,
+   "got": true
+  },
+  {
+   "q": "How many yellow chairs are there?",
+   "a": "16 yellow chairs.",
+   "want": false,
+   "got": false
+  },
+  {
+   "q": "How many drivers does the bakery employ?",
+   "a": "12",
+   "want": false,
+   "got": false
+  },
+  {
+   "q": "What were the donations in 2025?",
+   "a": "4.2 million naira",
+   "want": false,
+   "got": false
+  },
+  {
+   "q": "How much does a week ticket cost?",
+   "a": "2,500 naira",
+   "want": false,
+   "got": false
+  },
+  {
+   "q": "When does the market close?",
+   "a": "7am",
+   "want": false,
+   "got": false
+  },
+  {
+   "q": "How many trucks does the company own?",
+   "a": "12",
+   "want": false,
+   "got": false
+  },
+  {
+   "q": "How many members joined in 2024?",
+   "a": "2024",
+   "want": false,
+   "got": false
+  },
+  {
+   "q": "What is the capacity of the hall?",
+   "a": "250 people",
+   "want": false,
+   "got": false
+  }
+ ]
+}
