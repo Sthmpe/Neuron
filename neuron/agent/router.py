@@ -31,6 +31,23 @@ RULES = [
 ]
 
 
+CODE_GLOBS = ("*.py", "*.cpp", "*.go", "*.rs", "*.java", "*.js")
+
+
+def project_has_code(workspace):
+    """True if the folder holds a code project of the owner's. An app NEURON built (its kit, pages and schema) is not
+    one: a follow-up like "Add a contact page" there belongs to the app builder, not to the code-feature step."""
+    ws = Path(workspace)
+    built_apps = {p.parent.parent for p in ws.rglob("kit/web.py")}      # the app folder that holds the kit
+    for pattern in CODE_GLOBS:
+        for f in ws.rglob(pattern):
+            rel = f.relative_to(ws)
+            if ".neuron" in rel.parts or "__pycache__" in rel.parts or any(f.is_relative_to(a) for a in built_apps):
+                continue
+            return True
+    return False
+
+
 def rule_guess(request, attachments=(), workspace=None):
     text = request.lower()
     hits = [k for k, pattern in RULES if re.search(pattern, text)]
@@ -41,8 +58,7 @@ def rule_guess(request, attachments=(), workspace=None):
         hits = ["excel"] + [h for h in hits if h != "excel"] if "excel" in hits or not hits else hits
     # any(...) over the generators themselves was always True (a generator object is truthy), so a request containing
     # "fix" went to the bug fixer even in an empty folder (core proof A8: "fix charging ports" on a website request)
-    has_code = workspace is not None and any(next(Path(workspace).rglob(p), None) is not None
-                                             for p in ("*.py", "*.cpp", "*.go", "*.rs", "*.java", "*.js"))
+    has_code = workspace is not None and project_has_code(workspace)
     if not has_code:                          # "add"/"make" means new behaviour only when there is a project to change
         hits = [h for h in hits if h != "add_feature"]
     if has_code and "fix_bug" in hits and "document_code" not in hits:

@@ -73,6 +73,13 @@ class RoutingFixTests(unittest.TestCase):
     def test_bug_request_on_a_project_still_goes_to_the_bug_fixer(self):
         self.assertEqual(rule_guess("The tests fail. Fix the bug.", [], project())[0], "fix_bug")
 
+    def test_a_follow_up_on_an_app_neuron_built_is_not_a_code_feature(self):
+        ws = Path(tempfile.mkdtemp(prefix="neuron-app-"))
+        (ws / "app" / "kit").mkdir(parents=True)
+        (ws / "app" / "kit" / "web.py").write_text("class App: pass\n")
+        (ws / "app" / "app.py").write_text("from kit.web import App\n")
+        self.assertNotEqual(rule_guess("Add a contact page to the website", [], ws)[0], "add_feature")
+
     def test_make_without_a_project_is_not_a_feature_and_stays_on_the_fast_path(self):
         self.assertNotIn("add_feature", rule_guess("Make a haiku about rain", [], None)[1])
         self.assertTrue(is_simple("Make a haiku about rain"))
