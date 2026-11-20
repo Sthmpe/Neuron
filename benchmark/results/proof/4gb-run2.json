@@ -1,0 +1,340 @@
+{
+ "rows": [
+  {
+   "task": "A1_pharmacy",
+   "category": "app",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 16,
+   "checks_total": 16,
+   "failed_checks": [],
+   "seconds": 293.2,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4077,
+   "model_calls": 4,
+   "generated_tokens": 1258,
+   "prompt_tokens_processed": 5097,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 1258
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A1_pharmacy",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 9,
+   "checks_total": 16,
+   "failed_checks": [
+    "add_sale: missing Ada Eze; ",
+    "sale_cost_shown: missing 1000; ",
+    "stock_went_down: not near: Paracetamol=45",
+    "dashboard_numbers: not near: (total|value)=1000",
+    "search_by_customer: locator.fill: Timeout 30000ms exceeded.",
+    "no_server_errors: 500 /medicines; 500 /medicines; 500 /sales",
+    "data_survives_restart: missing Ada Eze; "
+   ],
+   "seconds": 361.2,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4086,
+   "model_calls": 6,
+   "generated_tokens": 1585,
+   "prompt_tokens_processed": 6609,
+   "self_reported": {
+    "model_calls": 6,
+    "tokens": 19503
+   },
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 6,
+    "writes": 5,
+    "runs": 4,
+    "reads": 0,
+    "ended": "the same reply 3 times in a row",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:35053: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "A2_tailor",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "app_runs_phase_1: the app did not answer on port 8000",
+    "app_runs_phase_2: the app did not answer on port 8000"
+   ],
+   "seconds": 465.7,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4087,
+   "model_calls": 10,
+   "generated_tokens": 1474,
+   "prompt_tokens_processed": 12747,
+   "self_reported": {
+    "model_calls": 10,
+    "tokens": 31717
+   },
+   "claim": "stopped: model errors",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 10,
+    "writes": 5,
+    "runs": 6,
+    "reads": 4,
+    "ended": "model errors",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:41223: Remote end closed connection without response",
+     "local model server not reachable at http://127.0.0.1:18080: Remote end closed connection without response",
+     "local model server not reachable at http://127.0.0.1:40467: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "A2_tailor",
+   "category": "app",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 14,
+   "checks_total": 14,
+   "failed_checks": [],
+   "seconds": 237.1,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4052,
+   "model_calls": 4,
+   "generated_tokens": 1025,
+   "prompt_tokens_processed": 4004,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 1025
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A3_school_fees",
+   "category": "app",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 13,
+   "checks_total": 13,
+   "failed_checks": [],
+   "seconds": 224.1,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4077,
+   "model_calls": 4,
+   "generated_tokens": 921,
+   "prompt_tokens_processed": 3900,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 921
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A3_school_fees",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "app_runs_phase_1: the app did not answer on port 8000",
+    "app_runs_phase_2: the app did not answer on port 8000"
+   ],
+   "seconds": 349.7,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4086,
+   "model_calls": 8,
+   "generated_tokens": 1221,
+   "prompt_tokens_processed": 8851,
+   "self_reported": {
+    "model_calls": 8,
+    "tokens": 23094
+   },
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 8,
+    "writes": 4,
+    "runs": 7,
+    "reads": 0,
+    "ended": "the same reply 3 times in a row",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:18080: Remote end closed connection without response",
+     "local model server not reachable at http://127.0.0.1:38543: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "A4_savings_group",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 3,
+   "checks_total": 14,
+   "failed_checks": [
+    "login_works: false",
+    "add_member_1: no field for Phone",
+    "add_member_2: no field for Phone",
+    "add_contribution_1: no field for Member",
+    "add_contribution_2: no field for Member",
+    "add_contribution_3: no field for Member",
+    "dashboard_numbers: not near: members=2, (total|contributed)=20000, below=1",
+    "search_by_month: locator.fill: Timeout 30000ms exceeded.",
+    "no_server_errors: 500 /login",
+    "data_survives_restart: missing February; ",
+    "no_server_errors_after_restart: 500 /login"
+   ],
+   "seconds": 236.6,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 3979,
+   "model_calls": 2,
+   "generated_tokens": 1200,
+   "prompt_tokens_processed": 2939,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 5808
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 2,
+    "writes": 6,
+    "runs": 1,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "A4_savings_group",
+   "category": "app",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 13,
+   "checks_total": 14,
+   "failed_checks": [
+    "dashboard_numbers: not near: below=1"
+   ],
+   "seconds": 211.6,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4070,
+   "model_calls": 4,
+   "generated_tokens": 931,
+   "prompt_tokens_processed": 3931,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 931
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A5_library_loans",
+   "category": "app",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 2,
+   "checks_total": 14,
+   "failed_checks": [
+    "login_required: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:33245/",
+    "wrong_password_rejected: page.goto: Navigation to \"http://127.0.0.1:33245/login\" is interrupted by another navigation to \"chrome-error://chromewebdata/\"",
+    "login_works: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:33245/",
+    "add_book_1: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:33245/",
+    "add_book_2: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:33245/",
+    "add_loan: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:33245/",
+    "copies_went_down: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:33245/",
+    "too_large_loan_refused: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:33245/",
+    "dashboard_numbers: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:33245/",
+    "search_by_borrower: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:33245/",
+    "works_on_a_phone: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:33245/",
+    "data_survives_restart: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:46755/"
+   ],
+   "seconds": 309.1,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 3915,
+   "model_calls": 8,
+   "generated_tokens": 1450,
+   "prompt_tokens_processed": 6174,
+   "self_reported": {
+    "model_calls": 8,
+    "tokens": 1450
+   },
+   "claim": "FAILED",
+   "false_claim": false,
+   "made_by": {},
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  }
+ ],
+ "tier": "4gb",
+ "run": 2,
+ "seed": 2,
+ "tier_limit_mb": 4096,
+ "network": "new empty network namespace (loopback only)",
+ "model": {
+  "planner": "qwen3.5-4b-q4",
+  "reviewer": "qwen3.5-4b-q4",
+  "builder": "qwen3.5-4b-q4"
+ },
+ "lock": "15be2767e9b9ca782441561ba62792dc1b9b4d253a28772e48b10c615acda609",
+ "grace_s": 60,
+ "started": "2026-11-20 17:52:25",
+ "code_commit": "bd0e6d8e773344a278a85926bdb85f5005b45ee0",
+ "tier_limit_hits": 0,
+ "oom_kills": 9
+}

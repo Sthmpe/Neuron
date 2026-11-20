@@ -223,3 +223,13 @@ PROOF-DONE 4gb-run1
 2gb-run2 D8_pdf_clinic_report neuron: not solved | 10/12 | 93.0s | peak 1509 MB | calls 18 | claims PARTIAL
 PROOF-DONE 2gb-run2
 4gb-run2 A1_pharmacy neuron: SOLVED | 16/16 | 293.2s | peak 4077 MB | calls 4 | claims VERIFIED
+4gb-run2 A1_pharmacy bare: not solved | 9/16 | 361.2s | peak 4086 MB | calls 6 | claims stopped: the same reply 3 times in a row
+4gb-run2 A2_tailor bare: not solved | 0/2 | 465.7s | peak 4087 MB | calls 10 | claims stopped: model errors
+4gb-run2 A2_tailor neuron: SOLVED | 14/14 | 237.1s | peak 4052 MB | calls 4 | claims VERIFIED
+4gb-run2 A3_school_fees neuron: SOLVED | 13/13 | 224.1s | peak 4077 MB | calls 4 | claims VERIFIED
+4gb-run2 A3_school_fees bare: not solved | 0/2 | 349.7s | peak 4086 MB | calls 8 | claims stopped: the same reply 3 times in a row
+4gb-run2 A4_savings_group bare: not solved | 3/14 | 236.6s | peak 3979 MB | calls 2 | claims DONE
+4gb-run2 A4_savings_group neuron: not solved | 13/14 | 211.6s | peak 4070 MB | calls 4 | claims VERIFIED
+4gb-run2 A5_library_loans neuron: not solved | 2/14 | 309.1s | peak 3915 MB | calls 8 | claims FAILED
+benchmark/proof/run_all.sh: line 6:  5501 Killed                  python3 -m benchmark.proof.run --tier "$tier" --run "$k"
+RUN FAILED 4gb 2

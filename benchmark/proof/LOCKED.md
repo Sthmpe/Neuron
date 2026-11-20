@@ -84,6 +84,16 @@ R1. (2026-11-20 10:57, during 2 GB run 1, after 51 recorded rows) The bare model
    good delivery into a pass or a fail that would not have happened anyway; a row flagged with `examiner_error` on a
    delivery that looks valid will be reported separately.
 
+R2. (2026-11-20 18:45, during 4 GB run 2, after 9 recorded rows) The runner lives inside the tier it measures. During
+   the bare model's A5 attempt the 4 GB limit was hit repeatedly (9 out-of-memory kills in that pass) and the kernel
+   killed the runner itself, apparently in a race right after killing the bare model's server. The orphaned bare loop
+   kept running, and `run_all.sh` went on to 2 GB run 3, whose first attempt (A1 bare) then ran beside the orphan on
+   the same machine and model port. Everything was stopped. The runner now (a) gives itself a low out-of-memory
+   priority while every measured process keeps the normal one, so the limit still applies to the conditions exactly as
+   before, (b) makes each measured process die if the runner dies, and (c) clears stray agent, bare and model-server
+   processes before each condition starts. The two attempts that produced no row run again, labelled in their rows'
+   `note` (4 GB run 2 A5 bare, 2 GB run 3 A1 bare). 4 GB run 2 is completed after 2 GB run 3 (the driver resumes it).
+
 Proposed, awaiting the owner's decision:
 
 1. (2026-11-20, found by smoke3, before any counted run) `app_exam.js` opens a page by clicking the first link whose

@@ -36,7 +36,11 @@ GRACE = 60
 NOTES = {("2gb-run1", "D2_excel_staff_costs", "bare"): "second attempt: the first attempt's examination crashed (BadZipFile on "
          "a text file named .xlsx) before runner amendment R1, so no row was recorded and the condition ran again",
          ("4gb-run1", "A1_pharmacy", "bare"): "second attempt: the first was stopped after about 4 minutes, unrecorded, "
-         "to apply runner amendment R1"}
+         "to apply runner amendment R1",
+         ("4gb-run2", "A5_library_loans", "bare"): "second attempt: during the first, the tier's memory limit killed the runner "
+         "itself (runner amendment R2), so no row was recorded",
+         ("2gb-run3", "A1_pharmacy", "bare"): "second attempt: the first ran beside an orphaned process from the killed 4 GB "
+         "runner (same machine, same model port) and was stopped, unrecorded (runner amendment R2)"}
 
 
 def verify_lock():
@@ -80,12 +84,31 @@ def server_usage(job):
     return {"calls": calls, "prompt_tokens_processed": prompt, "generated_tokens": generated}
 
 
+def _child_setup():
+    """Runner amendment R2: a measured process keeps the normal out-of-memory priority (the runner itself is protected,
+    see main), and dies if the runner dies, so no orphan keeps running beside the next condition."""
+    import ctypes
+    with open("/proc/self/oom_score_adj", "w") as f:
+        f.write("0")
+    ctypes.CDLL("libc.so.6", use_errno=True).prctl(1, signal.SIGKILL)     # PR_SET_PDEATHSIG
+
+
+def _clear_strays():
+    """Nothing from an earlier condition may run beside this one (R2: after the runner was killed, its orphaned bare
+    loop and model server kept running beside the next pass)."""
+    for pattern in ("benchmark.proof.bare", "neuron.agent", "llama-server"):
+        subprocess.run(["pkill", "-9", "-f", pattern], capture_output=True)
+    time.sleep(1)
+
+
 def run_one(cmd, log_file, seconds, seed):
     env = dict(os.environ, NEURON_MEMORY="off", NEURON_SEED=str(seed))
+    _clear_strays()
     with open(log_file, "a") as log:
         log.write(f"\n===== started {time.strftime('%H:%M:%S')} =====\n")
         log.flush()
-        proc = subprocess.Popen(cmd, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, start_new_session=True, env=env)
+        proc = subprocess.Popen(cmd, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, start_new_session=True, env=env,
+                                preexec_fn=_child_setup)
         t0 = time.time()
         while proc.poll() is None:
             if time.time() - t0 > seconds + GRACE:
@@ -121,6 +144,8 @@ def main(argv=None):
     scratch = ROOT / "benchmark" / "run" / "proof" / label
     scratch.mkdir(parents=True, exist_ok=True)
     tier = Tier(a.tier).enter()
+    with open("/proc/self/oom_score_adj", "w") as f:      # R2: the runner is measured but never the one the limit kills
+        f.write("-900")
     mgr = ModelManager()
     lock = json.loads((HERE / "LOCK.json").read_text())
     results.update(tier=a.tier, run=a.run, seed=a.run, tier_limit_mb=round(tier.limit / MB), network=net["method"],
