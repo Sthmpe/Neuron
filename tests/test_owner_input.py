@@ -156,3 +156,26 @@ class MissingFactTests(unittest.TestCase):
         self.assertEqual(Agent(job).run("")["verdict"], "UNVERIFIED")
         self.assertTrue((job.workspace / "answer.md").read_text().startswith("127\n"))
         self.assertEqual(len(model.calls), 1)
+
+    def test_rejected_values_are_not_solver_evidence(self):
+        from neuron.agent.owner_input import contextual_question, latest_replies
+        turns = [{"question": "Which quantity?", "answer": value, "context": {"plan": {}, "index": 0}}
+                 for value in ["9 or 12", "16 litres"]]
+        text = contextual_question("How much remains?", latest_replies(turns))
+        self.assertIn("16 litres", text)
+        self.assertNotIn("9 or 12", text)
+
+    def test_an_instrument_name_does_not_become_a_unit(self):
+        from neuron.agent.owner_input import declared_answer
+        from types import SimpleNamespace
+        q = "What is the gauge reading after adding 7? I have not given the previous reading."
+        history = [{"question": "What was the previous reading?", "answer": "120"}]
+        job = SimpleNamespace(ask_json=lambda *a, **kw: {"expression": "120 + 7", "unit": "gauge"})
+        _, answer = declared_answer(job, q, history, {"end_of_question": q.index(" I have")})
+        self.assertEqual(answer.text, "127")
+
+    def test_unreadable_plan_cannot_publish_a_numeric_guess(self):
+        from tests.test_agent import run
+        report, job, _ = run("How much would my trip cost?", ["bad plan", "bad check"] * 3)
+        self.assertEqual(report["verdict"], "FAILED")
+        self.assertFalse((job.workspace / "answer.md").exists())

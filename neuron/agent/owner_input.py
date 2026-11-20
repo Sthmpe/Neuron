@@ -5,6 +5,7 @@ from collections import Counter
 from dataclasses import dataclass
 from fractions import Fraction
 
+from ..brain.llm import LLMUnavailable
 from .arithmetic import exact_answer
 from .capability import NeedsOwnerInput
 
@@ -136,7 +137,7 @@ def bind_plan(raw, q):
     if not isinstance(raw, dict) or raw.get("operation") not in KINDS or not isinstance(raw.get("inputs"), list):
         return None
     operation = raw["operation"]
-    if operation in OPS and len(raw["inputs"]) != 2:
+    if operation in OPS and not raw["inputs"]:
         return None
     available = numeric_sources(q)
     fields = []
@@ -157,7 +158,8 @@ def bind_plan(raw, q):
             value = proposed
         fields.append({"name": name, "question": question_for(field, q), "value": value})
     unit = raw.get("unit")
-    return {"operation": operation, "inputs": fields, "unassigned_numbers": available,
+    return {"operation": operation if operation not in OPS or len(fields) == 2 else "other",
+            "inputs": fields, "unassigned_numbers": available,
             "unit": unit if isinstance(unit, str) and len(unit) < 70 else ""}
 
 
@@ -212,6 +214,30 @@ def contextual_question(q, turns):
             "Use the units as stated and answer the original question.\n" + json.dumps(facts, ensure_ascii=False)) if facts else q
 
 
+def latest_replies(turns):
+    """Keep earlier attempts visible in the phone history. Use the last reply to each field as evidence."""
+    latest = {}
+    for turn in turns:
+        context = turn.get("context") or {}
+        field = ("plan", context["index"]) if "plan" in context else ("question", context.get("end_of_question", turn["question"]))
+        latest[field] = turn
+    return list(latest.values())
+
+
+def check_incomplete_plan(job, q):
+    schema = {"type": "object", "required": ["question"], "properties": {"question": STRING}}
+    result = job.ask_json("builder", "Identify a necessary fact absent from the owner's request. Ask one short question "
+                          "for that fact. If all required facts are present, return an empty question.",
+                          q, schema, max_tokens=85, tries=1)
+    if isinstance(result, dict) and isinstance(result.get("question"), str):
+        question = result["question"].strip()
+        if not question:
+            return
+        if question.endswith("?") and len(question) <= 220 and set(numbers(question)) <= set(numbers(q)):
+            raise NeedsOwnerInput(question)
+    raise LLMUnavailable("could not establish which inputs the question needs")
+
+
 @dataclass
 class SuppliedAnswer:
     text: str
@@ -223,7 +249,9 @@ def declared_answer(job, q, turns, context):
     """When the owner explicitly named the missing fact, reconcile compound arithmetic with the supplied value."""
     original = q[:context["end_of_question"]].strip()
     augmented = contextual_question(original, turns)
-    if UNKNOWN.search(turns[-1]["answer"]):
+    field = turns[-1]["question"]
+    numeric = QUANTITY.search(field) or re.search(r"\b(reading|length|width|height|weight|count|duration)\b", field, re.I)
+    if UNKNOWN.search(turns[-1]["answer"]) or numeric and not usable_quantity({"name": field}, turns[-1]["answer"]):
         raise NeedsOwnerInput(turns[-1]["question"], context)
     if not numbers(original) or not numbers(turns[-1]["answer"]) or not can_calculate(original, [t["answer"] for t in turns]):
         return augmented, None
@@ -238,7 +266,10 @@ def declared_answer(job, q, turns, context):
         exact = exact_answer(expression)
         available = Counter(n.lstrip("-") for n in numbers(source))
         used = Counter(n.lstrip("-") for n in numbers(expression))
-        if exact and available == used and (not unit or unit.casefold() in source.casefold()):
+        if exact and available == used:
+            # The word "meter" can name an instrument. A unit must qualify a value or be requested explicitly.
+            qualified = unit and re.search(r"(?:\d\s*|\b(?:in|as|how many)\s+)" + re.escape(unit) + r"\b", source, re.I)
+            unit = unit if qualified else ""
             return original, SuppliedAnswer((exact[1] + " " + unit).strip(),
                                             f"NEURON interpreted the inputs and calculated {expression}.", "model+calculation")
     return augmented, None
@@ -260,6 +291,7 @@ def usable_quantity(field, reply):
 def prepare(job, q, turns):
     """Return the question and an optional grounded answer, or suspend the step."""
 
+    turns = latest_replies(turns)
     augmented = contextual_question(q, turns)
     if turns:
         ctx = turns[-1].get("context") or {}
@@ -291,6 +323,7 @@ def prepare(job, q, turns):
         explicit = change_plan(q)
         plan = bind_plan(explicit or input_plan(job, q), q)
         if not plan:
+            check_incomplete_plan(job, q)
             return q, None
         plan["made_by"] = "deterministic" if explicit else "model+calculation"
 
