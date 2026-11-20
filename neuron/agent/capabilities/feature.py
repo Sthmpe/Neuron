@@ -4,12 +4,13 @@ Found by the core proof (2026-11-20): NEURON had no way to do this. A request li
 project. Create invoice/discounts.py with apply_code(subtotal, code) ..." was sent to the bug fixer, which saw the
 tests already passing and called the job VERIFIED with nothing written.
 
-The loop: plan which files to create or change (the files the request names are always included) -> write each file
--> the project's own tests must still pass -> NEURON writes a test of the requested behaviour, from the examples in the
-request, in the project's language -> both must pass. A failure goes back to the model with the output (the reviewer
-decides whether the code or the new test is wrong). Guards: a rewritten file may not lose a function it had, every
-file and function the request names must exist at the end, and a failing NEURON test is removed rather than left
-behind. Success is decided by running code, never by the model's opinion.
+The loop, lean because a 4B model on a CPU takes a minute or more per long reply: one call writes every file to create
+or change -> the project's own tests must still pass (else one call per round with the output) -> one call writes
+NEURON's test of the requested behaviour, from the examples in the request, in the project's language -> if it fails,
+one combined call decides from the request whether the code or the test is wrong and sends the corrected file(s).
+Guards: test files of the project are never edited, a rewritten file may not lose a function it had, a correction that
+breaks the project's tests is undone, every file and function the request names must exist at the end, and a failing
+NEURON test is removed rather than left behind. Success is decided by running code, never by the model's opinion.
 """
 import re
 from pathlib import Path
@@ -24,11 +25,6 @@ SOURCE_EXT = {".py", ".js", ".mjs", ".ts", ".go", ".cpp", ".cc", ".c", ".h", ".h
 NAMED_PATH = re.compile(r"(?<![\w/.-])((?:[\w-]+/)*[\w-]+\.(?:py|js|mjs|ts|go|cpp|cc|c|h|hpp|rs|java))\b")
 NAMED_FUNC = re.compile(r"\b([A-Za-z_][A-Za-z0-9_]*)\s*\(")
 NOT_NAMES = {"if", "for", "while", "print", "return", "and", "or", "not", "with", "e", "g", "i", "ie", "eg"}
-PLAN_SCHEMA = {"type": "object", "required": ["files"], "properties": {"files": {"type": "array", "maxItems": 5, "items": {
-    "type": "object", "required": ["path", "action", "what"],
-    "properties": {"path": {"type": "string"}, "action": {"type": "string", "enum": ["create", "change"]}, "what": {"type": "string"}}}}}}
-BLAME_SCHEMA = {"type": "object", "required": ["wrong", "file", "why"],
-                "properties": {"wrong": {"type": "string", "enum": ["code", "test"]}, "file": {"type": "string"}, "why": {"type": "string"}}}
 MAX_ROUNDS = 3
 
 
@@ -123,30 +119,6 @@ class AddFeature(Capability):
                 used += len(text)
         return "\n".join(parts)
 
-    def _write(self, job, ws, request, plan_text, item, note=""):
-        rel = item["path"]
-        path = ws / rel
-        before = path.read_text(errors="replace") if path.exists() else ""
-        keep = defined_names(rel, before)
-        ask = (f"Request:\n{request}\n\nThe plan:\n{plan_text}\n\nProject files:\n{self._context(ws)}\n\n"
-               + (f"What went wrong last time:\n{clip(note, 1500)}\n\n" if note else "")
-               + (f"Write the complete new content of {rel} (a new file): {item['what']}" if not before else
-                  f"Write the complete new content of {rel}, keeping everything it already does: {item['what']}"))
-        for attempt in range(2):
-            reply = job.ask_text("builder", "You change an existing project. Reply with one code block containing the complete "
-                                 "content of the file, nothing else.", ask, max_tokens=1800)
-            code = extract_code(reply)
-            if not code or not code.strip():
-                continue
-            lost = keep - defined_names(rel, code)
-            if lost:                          # a rewrite that drops a function would break the rest of the project
-                ask += f"\n\nYour last version dropped {', '.join(sorted(lost))}. Keep every existing function."
-                continue
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(code.rstrip("\n") + "\n")
-            return True
-        return False
-
     def _run_feature_test(self, job, ws, cmd):
         """Run NEURON's test on a copy of the project, so build caches and outputs never land in the owner's folder."""
         import shutil
@@ -157,7 +129,28 @@ class AddFeature(Capability):
         shutil.rmtree(work, ignore_errors=True)
         return r.ok and not r.timed_out, r.output[-2500:]
 
+    def _files_from(self, reply, ws, allow_tests=()):
+        """FILE: <path> + code block pairs from a reply, kept only for safe paths (inside the project, source files, not
+        tests unless allowed), and never a rewrite that drops a function the file had. Returns ({path: code}, notes)."""
+        out, notes = {}, []
+        for path, code in re.findall(r"FILE:\s*[`'\"]?([\w./-]+)[`'\"]?\s*\n+```[^\n]*\n(.*?)```", reply, re.S):
+            path = path.strip().lstrip("./")
+            if ".." in Path(path).parts or Path(path).suffix not in SOURCE_EXT or not code.strip():
+                continue
+            if is_test_file(path) and path not in allow_tests:
+                notes.append(f"{path} is a test of the project and was not changed")
+                continue
+            before = (ws / path).read_text(errors="replace") if (ws / path).exists() else ""
+            lost = defined_names(path, before) - defined_names(path, code)
+            if lost:
+                notes.append(f"{path} was not changed: the new version dropped {', '.join(sorted(lost))}")
+                continue
+            out[path] = code.rstrip("\n") + "\n"
+        return out, notes
+
     def run(self, job, params):
+        """Lean on purpose (a 4B model on a CPU takes a minute or more per long reply): one call writes every file, one
+        writes NEURON's test, one combined call per repair round."""
         ws = job.workspace
         cmd = detect_test_command(ws)
         lang = project_language(ws)
@@ -165,66 +158,67 @@ class AddFeature(Capability):
             return Outcome(False, "no project with a test command found here", evidence={"no_retry": True})
         request = job.state.goal()["request"]
         named_paths, named_funcs = named_in_request(request, ws)
-        plan = job.ask_json("planner", "You plan a change to an existing project: which files to create or change.",
-                            f"Request:\n{request}\n\nProject files:\n{self._context(ws, 5000)}\n\nList the files to create or change "
-                            "(the source files only, not tests) and what each must do.", PLAN_SCHEMA, max_tokens=500) or {"files": []}
-        items, seen = [], set()
-        for it in plan.get("files", []):
-            p = str(it.get("path", "")).strip().lstrip("./")
-            if p and ".." not in Path(p).parts and not is_test_file(p) and p not in seen and Path(p).suffix in SOURCE_EXT:
-                items.append({"path": p, "action": "change" if (ws / p).exists() else "create", "what": it.get("what", "")})
-                seen.add(p)
-        for p in named_paths:                 # a file the owner named is always part of the plan
-            if p not in seen and not is_test_file(p):
-                items.insert(0, {"path": p, "action": "change" if (ws / p).exists() else "create", "what": "as the request says"})
-                seen.add(p)
-        if not items:
-            return Outcome(False, "could not decide which files to change")
-        plan_text = "\n".join(f"- {it['action']} {it['path']}: {it['what']}" for it in items)
-        job.state.decide("feature", "plan", plan_text)
-        written = [it["path"] for it in items if self._write(job, ws, request, plan_text, it, params.get("feedback", ""))]
-        test_path, test_cmd = feature_test_plan(ws, lang, written)
-        test_ok = proj_ok = False
-        out = ""
+        system = ("You change an existing project to do what is asked. Reply with the complete content of every source file "
+                  "you create or change (not the tests), each as a line 'FILE: <path>' followed by one code block. Keep "
+                  "everything the existing files already do.")
+        ask = (f"Request:\n{request}\n\nProject files:\n{self._context(ws)}\n\n"
+               + (f"Files the request names: {', '.join(named_paths)}\n" if named_paths else "")
+               + (f"What went wrong last time:\n{clip(params['feedback'], 1200)}\n" if params.get("feedback") else ""))
+        written, notes, out = [], [], ""
+        proj_ok = False
         for rnd in range(MAX_ROUNDS):
-            proj_ok, res = run_project_tests(job)
-            if not proj_ok:
-                out = "The project's tests fail:\n" + (res.output[-2500:] if res else "")
-                blame = job.ask_json("reviewer", "You decide which changed file breaks the project's tests.",
-                                     f"Request:\n{request}\n\nChanged files: {', '.join(written)}\n\n{out}\n\nWhich file must be fixed, and why?",
-                                     BLAME_SCHEMA, max_tokens=300)
-                target = next((it for it in items if blame and it["path"] == blame.get("file")), items[0])
-                self._write(job, ws, request, plan_text, target, out + (f"\nReviewer: {blame['why']}" if blame else ""))
+            reply = job.ask_text("builder", system, ask + ("" if not out else f"\n{out}\nSend the corrected files."), max_tokens=2000)
+            files_, notes = self._files_from(reply, ws)
+            if not files_:
+                out = "The last reply had no usable 'FILE: <path>' block. " + " ".join(notes)
                 continue
-            if test_path is None:
+            for path, code in files_.items():
+                (ws / path).parent.mkdir(parents=True, exist_ok=True)
+                (ws / path).write_text(code)
+                if path not in written:
+                    written.append(path)
+            proj_ok, res = run_project_tests(job)
+            if proj_ok:
                 break
-            if not (ws / test_path).exists():
-                reply = job.ask_text("builder", "You write a test of new behaviour. Reply with one code block: the complete test file.",
-                                     f"Request:\n{request}\n\nProject files:\n{self._context(ws)}\n\nWrite {test_path}: "
-                                     f"{TEST_STYLE.get(lang, 'a test file')}. Check only what the request states, with the exact "
-                                     "values the request gives (its examples and rules); do not invent other behaviour.", max_tokens=1200)
-                code = extract_code(reply)
-                if not code:
-                    continue
+            out = "The project's tests now fail:\n" + (res.output[-2000:] if res else "")
+        job.state.decide("feature", "files", ", ".join(written) or "none")
+        test_path, test_cmd = feature_test_plan(ws, lang, written)
+        test_ok = False
+        if proj_ok and test_path:
+            reply = job.ask_text("builder", "You write a test of new behaviour. Reply with one code block: the complete test file.",
+                                 f"Request:\n{request}\n\nProject files:\n{self._context(ws)}\n\nWrite {test_path}: "
+                                 f"{TEST_STYLE.get(lang, 'a test file')}. Check only what the request states, with the exact "
+                                 "values the request gives (its examples and rules); do not invent other behaviour.", max_tokens=1200)
+            code = extract_code(reply)
+            if code:
                 (ws / test_path).parent.mkdir(parents=True, exist_ok=True)
                 (ws / test_path).write_text(code.rstrip("\n") + "\n")
-            test_ok, tout = self._run_feature_test(job, ws, test_cmd)
-            if test_ok:
-                break
-            out = f"NEURON's test of the new behaviour ({test_path}) fails:\n{tout}"
-            blame = job.ask_json("reviewer", "A new test of requested behaviour fails. Decide whether the code or the test is wrong, "
-                                 "judged only by what the request says.",
-                                 f"Request:\n{request}\n\nTest file {test_path}:\n{clip((ws / test_path).read_text(errors='replace'), 2500)}\n\n"
-                                 f"Changed files: {', '.join(written)}\n\n{out}", BLAME_SCHEMA, max_tokens=300)
-            if blame and blame.get("wrong") == "test":
-                (ws / test_path).unlink(missing_ok=True)       # written again in the next round, with the reason
-                request_note = f"\n(An earlier test was wrong: {blame.get('why', '')})"
-                request = request + request_note if request_note not in request else request
-                continue
-            target = next((it for it in items if blame and it["path"] == blame.get("file")), items[0])
-            self._write(job, ws, request, plan_text, target, out + (f"\nReviewer: {blame['why']}" if blame else ""))
-        if test_path and not test_ok and (ws / test_path).exists():
-            (ws / test_path).unlink()                          # never leave a failing test of our own behind
+                for rnd in range(2):
+                    test_ok, tout = self._run_feature_test(job, ws, test_cmd)
+                    if test_ok:
+                        break
+                    # one combined call: the code or NEURON's own test may be wrong; judged only by the request
+                    reply = job.ask_text("reviewer", "A new test of requested behaviour fails. Decide, from the request alone, "
+                                         "whether the code or the test is wrong, and reply with the complete corrected file(s), "
+                                         "each as 'FILE: <path>' followed by one code block.",
+                                         f"Request:\n{request}\n\nProject files:\n{self._context(ws)}\n\nTest output:\n{tout[-1800:]}",
+                                         max_tokens=2000)
+                    fixed, more = self._files_from(reply, ws, allow_tests=(test_path,))
+                    notes += more
+                    backup = {p: (ws / p).read_text(errors="replace") if (ws / p).exists() else None for p in fixed}
+                    for path, code in fixed.items():
+                        (ws / path).write_text(code)
+                    if fixed and not run_project_tests(job)[0]:       # a fix that breaks the project's tests is undone
+                        for path, text in backup.items():
+                            (ws / path).write_text(text) if text is not None else (ws / path).unlink(missing_ok=True)
+                        notes.append("a correction broke the project's tests and was undone")
+                    for path in fixed:
+                        if path not in written and path != test_path:
+                            written.append(path)
+                if not test_ok:
+                    test_ok, _ = self._run_feature_test(job, ws, test_cmd)
+            if not test_ok and (ws / test_path).exists():
+                (ws / test_path).unlink()                      # never leave a failing test of our own behind
         missing = [p for p in named_paths if not (ws / p).exists()]
         src_text = "\n".join((ws / f).read_text(errors="replace") for f in files(ws) if Path(f).suffix in SOURCE_EXT and not is_test_file(f))
         absent = [f for f in named_funcs if not re.search(rf"\b{re.escape(f)}\b", src_text)]
@@ -233,9 +227,9 @@ class AddFeature(Capability):
                "; ".join(x for x in [("the project's tests fail" if not proj_ok else ""),
                                      ("NEURON's test of the new behaviour did not pass" if proj_ok and not test_ok else ""),
                                      (f"missing files {missing}" if missing else ""), (f"missing functions {absent}" if absent else "")] if x))
-        return Outcome(ok, why, {"plan": items, "written": written, "feature_test": test_path if test_ok else None,
-                                 "feature_test_cmd": test_cmd, "named_files": named_paths, "named_functions": named_funcs,
-                                 "feedback": out[-1500:]}, written, made_by="model")
+        return Outcome(ok, why, {"written": written, "feature_test": test_path if test_ok else None, "feature_test_cmd": test_cmd,
+                                 "named_files": named_paths, "named_functions": named_funcs, "notes": notes[-6:], "feedback": out[-1500:]},
+                       written, made_by="model")
 
     def verify(self, job, params, outcome):
         ws = job.workspace
