@@ -92,3 +92,69 @@ RUN FAILED 2gb 1
 2gb-run1 D8_pdf_clinic_report neuron: not solved | 10/12 | 104.6s | peak 1504 MB | calls 18 | claims PARTIAL
 2gb-run1 D8_pdf_clinic_report bare: not solved | 0/12 | 12.5s | peak 1487 MB | calls 1 | claims DONE
 PROOF-DONE 2gb-run1
+4gb-run1 A1_pharmacy bare: not solved | 10/16 | 642.8s | peak 4075 MB | calls 10 | claims stopped: model errors
+4gb-run1 A1_pharmacy neuron: SOLVED | 16/16 | 309.2s | peak 4053 MB | calls 4 | claims VERIFIED
+4gb-run1 A2_tailor neuron: SOLVED | 14/14 | 256.6s | peak 4065 MB | calls 4 | claims VERIFIED
+4gb-run1 A2_tailor bare: not solved | 9/14 | 446.7s | peak 4086 MB | calls 9 | claims stopped: model errors
+4gb-run1 A3_school_fees bare: not solved | 0/2 | 419.7s | peak 4085 MB | calls 9 | claims stopped: model errors
+4gb-run1 A3_school_fees neuron: SOLVED | 13/13 | 223.6s | peak 4060 MB | calls 4 | claims VERIFIED
+4gb-run1 A4_savings_group neuron: not solved | 13/14 | 224.1s | peak 4063 MB | calls 4 | claims VERIFIED
+4gb-run1 A4_savings_group bare: not solved | 3/14 | 249.6s | peak 4082 MB | calls 3 | claims DONE
+4gb-run1 A5_library_loans bare: not solved | 0/2 | 251.1s | peak 4084 MB | calls 3 | claims DONE
+4gb-run1 A5_library_loans neuron: not solved | 2/14 | 332.2s | peak 3949 MB | calls 8 | claims FAILED
+4gb-run1 A6_gym_members neuron: not solved | 6/12 | 163.6s | peak 4076 MB | calls 3 | claims VERIFIED
+4gb-run1 A6_gym_members bare: not solved | 0/2 | 960.4s | peak 4037 MB | calls 6 | claims stopped: no report
+4gb-run1 A7_event_tickets bare: not solved | 5/15 | 444.7s | peak 4085 MB | calls 6 | claims stopped: model errors
+4gb-run1 A7_event_tickets neuron: not solved | 8/15 | 260.1s | peak 4071 MB | calls 4 | claims VERIFIED
+4gb-run1 A8_repair_shop_site neuron: not solved | 0/1 | 0.5s | peak 27 MB | calls 0 | claims PARTIAL
+4gb-run1 A8_repair_shop_site bare: not solved | 0/1 | 375.2s | peak 4084 MB | calls 6 | claims stopped: model errors
+4gb-run1 B1_py_invoice bare: SOLVED | 2/2 | 143.6s | peak 4035 MB | calls 4 | claims DONE
+4gb-run1 B1_py_invoice neuron: SOLVED | 2/2 | 91.0s | peak 3885 MB | calls 4 | claims VERIFIED
+4gb-run1 B2_py_inventory neuron: SOLVED | 2/2 | 46.5s | peak 3885 MB | calls 2 | claims VERIFIED
+4gb-run1 B2_py_inventory bare: SOLVED | 2/2 | 117.1s | peak 4084 MB | calls 4 | claims DONE
+4gb-run1 B3_py_schedule bare: SOLVED | 2/2 | 155.6s | peak 4037 MB | calls 5 | claims DONE
+4gb-run1 B3_py_schedule neuron: SOLVED | 2/2 | 168.6s | peak 3885 MB | calls 4 | claims VERIFIED
+4gb-run1 B4_js_cart neuron: not solved | 0/2 | 334.2s | peak 3913 MB | calls 10 | claims PARTIAL
+4gb-run1 B4_js_cart bare: SOLVED | 2/2 | 85.0s | peak 4029 MB | calls 3 | claims DONE
+4gb-run1 B5_js_csv bare: SOLVED | 2/2 | 632.9s | peak 4068 MB | calls 6 | claims DONE
+4gb-run1 B5_js_csv neuron: SOLVED | 2/2 | 98.1s | peak 3875 MB | calls 2 | claims VERIFIED
+4gb-run1 B6_go_payroll neuron: not solved | 0/2 | 363.7s | peak 4077 MB | calls 7 | claims PARTIAL
+4gb-run1 B6_go_payroll bare: SOLVED | 2/2 | 353.2s | peak 4059 MB | calls 3 | claims DONE
+4gb-run1 B7_go_stats bare: SOLVED | 2/2 | 164.1s | peak 4073 MB | calls 3 | claims DONE
+4gb-run1 B7_go_stats neuron: SOLVED | 2/2 | 115.1s | peak 4045 MB | calls 3 | claims VERIFIED
+4gb-run1 B8_cpp_bank neuron: not solved | 0/2 | 217.6s | peak 3882 MB | calls 9 | claims PARTIAL
+4gb-run1 B8_cpp_bank bare: SOLVED | 2/2 | 109.1s | peak 3985 MB | calls 2 | claims DONE
+4gb-run1 C1_py_invoice_discounts bare: not solved | 0/2 | 103.0s | peak 4036 MB | calls 3 | claims DONE
+4gb-run1 C1_py_invoice_discounts neuron: not solved | 0/2 | 14.0s | peak 3765 MB | calls 1 | claims VERIFIED
+4gb-run1 C2_py_inventory_export neuron: not solved | 0/2 | 780.4s | peak 3884 MB | calls 7 | claims no report
+4gb-run1 C2_py_inventory_export bare: SOLVED | 2/2 | 105.5s | peak 4033 MB | calls 3 | claims DONE
+4gb-run1 C3_js_cart_delivery bare: SOLVED | 2/2 | 117.1s | peak 4033 MB | calls 3 | claims DONE
+4gb-run1 C3_js_cart_delivery neuron: not solved | 1/2 | 14.0s | peak 3791 MB | calls 1 | claims VERIFIED
+4gb-run1 C4_go_payroll_payslip neuron: not solved | 0/2 | 723.4s | peak 3886 MB | calls 20 | claims PARTIAL
+4gb-run1 C4_go_payroll_payslip bare: SOLVED | 2/2 | 205.1s | peak 4081 MB | calls 5 | claims DONE
+4gb-run1 C5_py_notes_search bare: not solved | 0/2 | 328.2s | peak 4083 MB | calls 6 | claims DONE
+4gb-run1 C5_py_notes_search neuron: not solved | 0/2 | 780.4s | peak 3883 MB | calls 8 | claims no report
+4gb-run1 C6_js_todo_overdue neuron: not solved | 1/2 | 14.0s | peak 3825 MB | calls 1 | claims VERIFIED
+4gb-run1 C6_js_todo_overdue bare: not solved | 1/2 | 371.7s | peak 4083 MB | calls 6 | claims stopped: the same reply 3 times in a row
+4gb-run1 C7_cpp_shapes_triangle bare: SOLVED | 2/2 | 120.6s | peak 3985 MB | calls 2 | claims DONE
+4gb-run1 C7_cpp_shapes_triangle neuron: not solved | 0/2 | 780.3s | peak 4006 MB | calls 6 | claims no report
+4gb-run1 C8_py_units_temperature neuron: not solved | 0/2 | 21.0s | peak 3761 MB | calls 2 | claims VERIFIED
+4gb-run1 C8_py_units_temperature bare: not solved | 0/2 | 151.1s | peak 4028 MB | calls 3 | claims DONE
+4gb-run1 D1_excel_regional_sales bare: not solved | 7/10 | 540.3s | peak 4083 MB | calls 4 | claims stopped: no report
+4gb-run1 D1_excel_regional_sales neuron: SOLVED | 10/10 | 32.0s | peak 3921 MB | calls 1 | claims VERIFIED
+4gb-run1 D2_excel_staff_costs neuron: SOLVED | 9/9 | 31.0s | peak 3939 MB | calls 1 | claims VERIFIED
+4gb-run1 D2_excel_staff_costs bare: not solved | 0/1 | 518.2s | peak 4045 MB | calls 3 | claims stopped: time budget used up
+4gb-run1 D3_excel_expenses bare: not solved | 6/7 | 395.2s | peak 4047 MB | calls 5 | claims stopped: the same reply 3 times in a row
+4gb-run1 D3_excel_expenses neuron: SOLVED | 7/7 | 28.5s | peak 3954 MB | calls 1 | claims VERIFIED
+4gb-run1 D4_word_repair_request neuron: not solved | 3/5 | 388.2s | peak 3903 MB | calls 16 | claims PARTIAL
+4gb-run1 D4_word_repair_request bare: not solved | 3/5 | 540.2s | peak 4082 MB | calls 4 | claims stopped: no report
+4gb-run1 D5_word_leave_policy bare: not solved | 4/5 | 211.6s | peak 4054 MB | calls 3 | claims DONE
+4gb-run1 D5_word_leave_policy neuron: not solved | 3/5 | 456.2s | peak 3915 MB | calls 16 | claims PARTIAL
+4gb-run1 D6_pptx_cooperative_agm neuron: SOLVED | 9/9 | 98.0s | peak 3939 MB | calls 1 | claims VERIFIED
+4gb-run1 D6_pptx_cooperative_agm bare: SOLVED | 9/9 | 483.3s | peak 4066 MB | calls 5 | claims DONE
+4gb-run1 D7_pptx_fire_safety bare: SOLVED | 9/9 | 490.2s | peak 4069 MB | calls 5 | claims DONE
+4gb-run1 D7_pptx_fire_safety neuron: SOLVED | 9/9 | 59.0s | peak 3938 MB | calls 1 | claims VERIFIED
+4gb-run1 D8_pdf_clinic_report neuron: SOLVED | 12/12 | 293.1s | peak 3874 MB | calls 18 | claims PARTIAL
+4gb-run1 D8_pdf_clinic_report bare: not solved | 6/12 | 37.0s | peak 3973 MB | calls 2 | claims DONE
+PROOF-DONE 4gb-run1
+2gb-run2 A1_pharmacy neuron: not solved | 13/16 | 150.6s | peak 1688 MB | calls 8 | claims VERIFIED
