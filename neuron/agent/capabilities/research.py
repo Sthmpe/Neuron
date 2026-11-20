@@ -260,8 +260,10 @@ class AnswerQuestion(Capability):
 
     FAST_SYSTEM = ("You are NEURON, an offline assistant. Answer the request directly and clearly. If it needs a calculation, "
                    "write one short Python program in a ```python block that computes the answer from the numbers given and "
-                   "prints only the result. If a fact only the owner can know is missing, reply only: NEED_INPUT: <one question>. "
-                   "No em dashes.")
+                   "prints only the result. No em dashes.")
+    # offered only for personal requests: told it may ask, the 2 GB model asked instead of answering "Who wrote Things
+    # Fall Apart?" (internal easy set, first run)
+    ASK_RULE = " If a fact only the owner can know is missing, reply only: NEED_INPUT: <one question>."
     @staticmethod
     def _allowed_numbers(q):
         """Numbers a program may use although the request does not state them: 0, 1 and 2 always; 100 and the values a
@@ -297,13 +299,18 @@ class AnswerQuestion(Capability):
             raise NeedsOwnerInput(f"What is the {missing[1].strip()}?", {"end_of_question": missing.start()})
         if PERSONAL_EVENT.fullmatch(q.strip()) and not QUANTITY.search(q) and not numbers(q):
             raise NeedsOwnerInput(direct_question(q.strip()), {"direct": True})
+        from ..owner_input import PERSONAL
+        personal = bool(PERSONAL.search(q))
         mem = job.memory_context() if hasattr(job, "memory_context") else ""
-        text = job.ask_text("builder", self.FAST_SYSTEM + (f"\n\n{mem}" if mem else ""), q, max_tokens=700)
+        text = job.ask_text("builder", self.FAST_SYSTEM + (self.ASK_RULE if personal else "") + (f"\n\n{mem}" if mem else ""),
+                            q, max_tokens=700)
         if not text:
             return Outcome(False, "the local model did not supply an answer")
         need = re.search(r"NEED_INPUT\s*:?\s*(.{4,220}\?)", text, re.I)
         if need and not python_block(text):
-            raise NeedsOwnerInput(need[1].strip())
+            if personal:
+                raise NeedsOwnerInput(need[1].strip())
+            return None                            # asked about something it should know: the careful path decides
         code = python_block(text)
         if code:
             ok = self._allowed_numbers(q)

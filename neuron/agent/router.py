@@ -66,7 +66,14 @@ def is_simple(request, attachments=(), workspace=None):
         if any(p for p in ws.rglob("*") if p.is_file() and ".neuron" not in p.relative_to(ws).parts):
             return False                          # there is something to work on: not a simple question
     kind, hits = rule_guess(text, attachments, workspace)
-    return kind in (None, "answer") and not hits
+    if kind in (None, "answer") and not hits:
+        return True
+    # "Explain what a spreadsheet is" is a question about a topic, not a request to make one: a question form with no
+    # verb of making stays simple (the internal easy set sent it to the spreadsheet builder)
+    asks = re.match(r"\s*(what|why|how|who|when|where|which|explain|describe|define|tell me|is|are|can|does|do)\b", text, re.I)
+    makes = re.search(r"\b(make|create|build|write|generate|draft|produce|prepare|fix|repair|debug|design)\b|\.(xlsx|docx|pptx|pdf|csv)\b",
+                      text, re.I)
+    return bool(asks) and not makes and kind != "fix_bug"
 
 
 def understand(job, request, attachments=()):

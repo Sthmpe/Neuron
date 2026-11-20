@@ -1,0 +1,463 @@
+{
+ "tier": "2gb",
+ "rerun_label": null,
+ "code_commit": "4d2acf5",
+ "network": "new empty network namespace (loopback only)",
+ "summary": {
+  "bare": {
+   "right": 23,
+   "of": 24,
+   "total_seconds": 99.0,
+   "median_seconds": 1.36,
+   "model_calls": 24,
+   "fact": 8,
+   "calc": 7,
+   "write": 8
+  },
+  "neuron": {
+   "right": 21,
+   "of": 24,
+   "total_seconds": 74.7,
+   "median_seconds": 1.0,
+   "model_calls": 23,
+   "fact": 7,
+   "calc": 8,
+   "write": 6
+  }
+ },
+ "rows": [
+  {
+   "id": "F1",
+   "kind": "fact",
+   "bare": {
+    "seconds": 0.43,
+    "calls": 1,
+    "right": true,
+    "text": "The capital of Kenya is Nairobi."
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 0.76,
+    "calls": 1,
+    "right": true,
+    "text": "The capital of Kenya is Nairobi.\n\nUnverified. The local model supplied this answer.\n"
+   }
+  },
+  {
+   "id": "F2",
+   "kind": "fact",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 0.77,
+    "calls": 1,
+    "right": true,
+    "text": "Plants take in carbon dioxide (CO2) for photosynthesis.\n\nUnverified. The local model supplied this answer.\n"
+   },
+   "bare": {
+    "seconds": 0.84,
+    "calls": 1,
+    "right": true,
+    "text": "Plants take in carbon dioxide (CO2) for photosynthesis."
+   }
+  },
+  {
+   "id": "F3",
+   "kind": "fact",
+   "bare": {
+    "seconds": 0.87,
+    "calls": 1,
+    "right": true,
+    "text": "The novel \"Things Fall Apart\" was written by Chinua Achebe."
+   },
+   "neuron_verdict": "WAITING_INPUT",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 0.84,
+    "calls": 1,
+    "right": false,
+    "text": ""
+   }
+  },
+  {
+   "id": "F4",
+   "kind": "fact",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 0.77,
+    "calls": 1,
+    "right": true,
+    "text": "At sea level, water boils at 100 degrees Celsius.\n\nUnverified. The local model supplied this answer.\n"
+   },
+   "bare": {
+    "seconds": 1.0,
+    "calls": 1,
+    "right": true,
+    "text": "Water boils at sea level at a temperature of 100 degrees Celsius."
+   }
+  },
+  {
+   "id": "F5",
+   "kind": "fact",
+   "bare": {
+    "seconds": 0.43,
+    "calls": 1,
+    "right": true,
+    "text": "There are seven continents on Earth."
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 0.79,
+    "calls": 1,
+    "right": true,
+    "text": "There are 7 continents.\n\nUnverified. The local model supplied this answer.\n"
+   }
+  },
+  {
+   "id": "F6",
+   "kind": "fact",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 0.41,
+    "calls": 1,
+    "right": true,
+    "text": "CPU stands for Central Processing Unit.\n\nUnverified. The local model supplied this answer.\n"
+   },
+   "bare": {
+    "seconds": 0.54,
+    "calls": 1,
+    "right": true,
+    "text": "CPU stands for Central Processing Unit."
+   }
+  },
+  {
+   "id": "F7",
+   "kind": "fact",
+   "bare": {
+    "seconds": 0.51,
+    "calls": 1,
+    "right": true,
+    "text": "The planet closest to the sun is Mercury."
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 0.84,
+    "calls": 1,
+    "right": true,
+    "text": "The planet closest to the sun is Mercury.\n\nUnverified. The local model supplied this answer.\n"
+   }
+  },
+  {
+   "id": "F8",
+   "kind": "fact",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 0.55,
+    "calls": 1,
+    "right": true,
+    "text": "The largest ocean on Earth is the Pacific Ocean.\n\nUnverified. The local model supplied this answer.\n"
+   },
+   "bare": {
+    "seconds": 1.41,
+    "calls": 1,
+    "right": true,
+    "text": "The largest ocean on Earth is the Pacific Ocean, which covers approximately 70.5 million square kilometers (27.1 million square miles)."
+   }
+  },
+  {
+   "id": "C1",
+   "kind": "calc",
+   "bare": {
+    "seconds": 16.13,
+    "calls": 1,
+    "right": true,
+    "text": "To determine the total cost of the dress after the discount and delivery fee, we need to follow these steps:\n\n1. Calculate the discount amount.\n2. Subtract the discount amount from the original price.\n3. Add the delivery fee to the discounted price.\n\nLet's go through each step in detail.\n\n1. **Calcu"
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 11.55,
+    "calls": 1,
+    "right": true,
+    "text": "17725.0\n\nUnverified. The model wrote a program that computed this; it ran once in the sandbox.\n"
+   }
+  },
+  {
+   "id": "C2",
+   "kind": "calc",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 7.08,
+    "calls": 1,
+    "right": true,
+    "text": "45.0\n\nUnverified. The model wrote a program that computed this; it ran once in the sandbox.\n"
+   },
+   "bare": {
+    "seconds": 9.03,
+    "calls": 1,
+    "right": false,
+    "text": "To find the average number of loaves sold per day, we need to follow these steps:\n\n1. Sum the total number of loaves sold over the five days.\n2. Divide the total number of loaves by the number of days (which is 5).\n\nLet's calculate this using Python code.\n```python\n# List of loaves sold each day\nloa"
+   }
+  },
+  {
+   "id": "C3",
+   "kind": "calc",
+   "bare": {
+    "seconds": 14.3,
+    "calls": 1,
+    "right": true,
+    "text": "To determine the percentage increase in rent, we can use the formula for percentage increase:\n\n\\[\n\\text{Percentage Increase} = \\left( \\frac{\\text{New Value} - \\text{Old Value}}{\\text{Old Value}} \\right) \\times 100\n\\]\n\nHere, the old value of rent is 400,000 naira, and the new value of rent is 460,000"
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 9.53,
+    "calls": 1,
+    "right": true,
+    "text": "15.0\n\nUnverified. The model wrote a program that computed this; it ran once in the sandbox.\n"
+   }
+  },
+  {
+   "id": "C4",
+   "kind": "calc",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 6.57,
+    "calls": 1,
+    "right": true,
+    "text": "210.0\n\nUnverified. The model wrote a program that computed this; it ran once in the sandbox.\n"
+   },
+   "bare": {
+    "seconds": 8.78,
+    "calls": 1,
+    "right": true,
+    "text": "To determine how many minutes are in 3.5 hours, we need to use the conversion factor that 1 hour is equal to 60 minutes. Therefore, we can multiply the number of hours by 60 to get the equivalent number of minutes.\n\nHere is the step-by-step calculation:\n\n1. Identify the number of hours: 3.5 hours.\n2"
+   }
+  },
+  {
+   "id": "C5",
+   "kind": "calc",
+   "bare": {
+    "seconds": 6.26,
+    "calls": 1,
+    "right": true,
+    "text": "To convert kilometers to meters, you need to multiply the number of kilometers by 1000. In this case, you would multiply 2.4 by 1000 to get the answer in meters.\n\nLet's do this calculation using Python code.\n```python\n# Define the number of kilometers\nkilometers = 2.4\n\n# Convert kilometers to meters"
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 4.85,
+    "calls": 1,
+    "right": true,
+    "text": "2400.0\n\nUnverified. The model wrote a program that computed this; it ran once in the sandbox.\n"
+   }
+  },
+  {
+   "id": "C6",
+   "kind": "calc",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 8.57,
+    "calls": 1,
+    "right": true,
+    "text": "To find the total cost, we need to calculate the cost of the rice and the delivery separately, and then add them together. 1. Calculate the cost of the rice: \\[ \\text{Cost of rice} = 3 \\text{ bags} \\times 42000 \\text{ naira/bag} = 126000 \\text{ naira} \\] 2. Add the cost of the delivery to the cost o"
+   },
+   "bare": {
+    "seconds": 7.32,
+    "calls": 1,
+    "right": true,
+    "text": "To find the total cost, we need to calculate the cost of the rice and the delivery separately, and then add them together.\n\n1. Calculate the total cost of the rice:\n   \\[\n   \\text{Total cost of rice} = 3 \\times 42000 = 126000 \\text{ naira}\n   \\]\n\n2. Add the cost of the delivery to the total cost of "
+   }
+  },
+  {
+   "id": "C7",
+   "kind": "calc",
+   "bare": {
+    "seconds": 7.13,
+    "calls": 1,
+    "right": true,
+    "text": "To determine how much each of the three friends pays when they share a bill of 25500 naira equally, we need to divide the total bill by the number of friends. Here are the steps:\n\n1. Identify the total bill amount, which is 25500 naira.\n2. Identify the number of friends, which is 3.\n3. Divide the to"
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 7.39,
+    "calls": 1,
+    "right": true,
+    "text": "To determine how much each of the three friends pays when they share a bill of 25500 naira equally, we need to divide the total bill by the number of friends. Here's the step-by-step calculation: 1. Identify the total bill: 25500 naira.\n2. Identify the number of friends: 3.\n3. Divide the total bill "
+   }
+  },
+  {
+   "id": "C8",
+   "kind": "calc",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 5.39,
+    "calls": 1,
+    "right": true,
+    "text": "The area of the room is 96 square metres.\n\nUnverified. The model wrote a program that computed this; it ran once in the sandbox.\n"
+   },
+   "bare": {
+    "seconds": 7.24,
+    "calls": 1,
+    "right": true,
+    "text": "To find the area of a rectangle, we use the formula:\n\n\\[\n\\text{Area} = \\text{length} \\times \\text{width}\n\\]\n\nGiven:\n- Length = 12 metres\n- Width = 8 metres\n\nSubstitute these values into the formula:\n\n\\[\n\\text{Area} = 12 \\, \\text{metres} \\times 8 \\, \\text{metres}\n\\]\n\nNow, perform the multiplication:\n"
+   }
+  },
+  {
+   "id": "W1",
+   "kind": "write",
+   "bare": {
+    "seconds": 1.28,
+    "calls": 1,
+    "right": true,
+    "text": "I'm sorry for the inconvenience caused by the late delivery of your order. I hope you understand and feel better."
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 1.07,
+    "calls": 1,
+    "right": true,
+    "text": "I'm sorry, but I cannot provide an apology for a late order.\n\nUnverified. The local model supplied this answer.\n"
+   }
+  },
+  {
+   "id": "W2",
+   "kind": "write",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 1.49,
+    "calls": 1,
+    "right": true,
+    "text": "1. Unplug electronics when not in use.\n2. Use energy-efficient light bulbs.\n3. Turn off lights and appliances when leaving a room.\n\nUnverified. The local model supplied this answer.\n"
+   },
+   "bare": {
+    "seconds": 3.91,
+    "calls": 1,
+    "right": true,
+    "text": "1. Turn off lights when not in use: This can save up to 10% of your electricity bill.\n2. Unplug appliances when not in use: This can save up to 30% of your electricity bill.\n3. Use energy-efficient appliances: Look for appliances with the Energy Star label, which indicate that they use less energy t"
+   }
+  },
+  {
+   "id": "W3",
+   "kind": "write",
+   "bare": {
+    "seconds": 4.79,
+    "calls": 1,
+    "right": true,
+    "text": "Dear [Teacher's Name],\n\nI hope this message finds you well. I wanted to take a moment to express my sincere gratitude for all the hard work and dedication you put into my daughter's education. Your guidance and support have been invaluable, and I am grateful for the opportunity to have you as her te"
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 0.92,
+    "calls": 1,
+    "right": true,
+    "text": "Thank you for taking the time to teach my daughter.\n\nUnverified. The local model supplied this answer.\n"
+   }
+  },
+  {
+   "id": "W4",
+   "kind": "write",
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 0.44,
+    "calls": 1,
+    "right": true,
+    "text": "Please send me the report immediately.\n\nUnverified. The local model supplied this answer.\n"
+   },
+   "bare": {
+    "seconds": 0.78,
+    "calls": 1,
+    "right": true,
+    "text": "Please send me the report as soon as possible."
+   }
+  },
+  {
+   "id": "W5",
+   "kind": "write",
+   "bare": {
+    "seconds": 0.92,
+    "calls": 1,
+    "right": true,
+    "text": "1. Sweet Treats Bakery\n2. Baking Haven\n3. Sweet Delights Bakery"
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 2.13,
+    "calls": 1,
+    "right": true,
+    "text": "Sure, here are three names for a small bakery in Ibadan: 1. Sweet Treats Bakery\n2. Baked Bliss Bakery\n3. Delightful Delights Bakery\n\nUnverified. The local model supplied this answer.\n"
+   }
+  },
+  {
+   "id": "W6",
+   "kind": "write",
+   "neuron_verdict": "FAILED",
+   "neuron_fast": false,
+   "neuron": {
+    "seconds": 0.01,
+    "calls": 0,
+    "right": false,
+    "text": ""
+   },
+   "bare": {
+    "seconds": 2.93,
+    "calls": 1,
+    "right": true,
+    "text": "A spreadsheet is a digital tool used for organizing and analyzing data in a tabular format. It allows users to create, edit, and manipulate data in rows and columns, and can be used for a variety of purposes such as financial analysis, data entry, and reporting."
+   }
+  },
+  {
+   "id": "W7",
+   "kind": "write",
+   "bare": {
+    "seconds": 0.89,
+    "calls": 1,
+    "right": true,
+    "text": "Raindrops fall,\nSilent in the night,\nPeace in the sky."
+   },
+   "neuron_verdict": "UNVERIFIED",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 1.19,
+    "calls": 1,
+    "right": true,
+    "text": "Raindrops fall,\nWater flows,\nNature's symphony.\n\nUnverified. The local model supplied this answer.\n"
+   }
+  },
+  {
+   "id": "W8",
+   "kind": "write",
+   "neuron_verdict": "WAITING_INPUT",
+   "neuron_fast": true,
+   "neuron": {
+    "seconds": 0.74,
+    "calls": 1,
+    "right": false,
+    "text": ""
+   },
+   "bare": {
+    "seconds": 1.31,
+    "calls": 1,
+    "right": true,
+    "text": "1. Sunscreen\n2. Beach towel\n3. Flip-flops or sandals\n4. Water bottle"
+   }
+  }
+ ],
+ "slowdown_ratio": 0.75
+}

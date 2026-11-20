@@ -36,8 +36,15 @@ class FastPathTests(unittest.TestCase):
         self.assertEqual(rep["verdict"], "FAILED")
         self.assertFalse((job.workspace / "answer.md").exists())
 
+    def test_general_question_is_answered_not_turned_into_a_question_for_the_owner(self):
+        rep, job, llm = run("Who wrote the novel Things Fall Apart?", ["Chinua Achebe wrote Things Fall Apart."])
+        self.assertEqual(rep["verdict"], "UNVERIFIED")
+        self.assertNotIn("NEED_INPUT", llm.calls[0]["messages"][0]["content"])
+
     def test_what_is_not_simple(self):
         self.assertTrue(is_simple("Why is the sky blue?"))
+        self.assertTrue(is_simple("Explain in one paragraph what a spreadsheet is."))     # a topic, not a file to make
+        self.assertFalse(is_simple("Make a spreadsheet of my expenses"))
         self.assertFalse(is_simple("Write memo.docx to staff about parking"))
         self.assertFalse(is_simple("Build a website for my bakery"))
         self.assertFalse(is_simple("Summarise this", attachments=["a.pdf"]))
