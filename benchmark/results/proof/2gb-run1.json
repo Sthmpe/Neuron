@@ -1,0 +1,1648 @@
+{
+ "rows": [
+  {
+   "task": "A1_pharmacy",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "app_runs_phase_1: the app did not answer on port 8000",
+    "app_runs_phase_2: the app did not answer on port 8000"
+   ],
+   "seconds": 247.1,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1446,
+   "model_calls": 3,
+   "generated_tokens": 3369,
+   "prompt_tokens_processed": 2892,
+   "self_reported": {
+    "model_calls": 3,
+    "tokens": 10695
+   },
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 3,
+    "writes": 10,
+    "runs": 0,
+    "reads": 0,
+    "ended": "the same reply 3 times in a row",
+    "errors": []
+   }
+  },
+  {
+   "task": "A1_pharmacy",
+   "category": "app",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 13,
+   "checks_total": 16,
+   "failed_checks": [
+    "stock_went_down: not near: Paracetamol=45",
+    "too_large_sale_refused: should not show Bayo Ade; ",
+    "dashboard_numbers: not near: (total|value)=1000, (fewer|low|below)=1"
+   ],
+   "seconds": 147.1,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1670,
+   "model_calls": 8,
+   "generated_tokens": 1610,
+   "prompt_tokens_processed": 6160,
+   "self_reported": {
+    "model_calls": 8,
+    "tokens": 1610
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "model (2 files) + template (1 file) + code (1 file)": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "A2_tailor",
+   "category": "app",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 14,
+   "checks_total": 14,
+   "failed_checks": [],
+   "seconds": 90.5,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1693,
+   "model_calls": 4,
+   "generated_tokens": 978,
+   "prompt_tokens_processed": 3839,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 978
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "A2_tailor",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "app_runs_phase_1: the app did not answer on port 8000",
+    "app_runs_phase_2: the app did not answer on port 8000"
+   ],
+   "seconds": 80.0,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1456,
+   "model_calls": 3,
+   "generated_tokens": 1079,
+   "prompt_tokens_processed": 1716,
+   "self_reported": {
+    "model_calls": 3,
+    "tokens": 8177
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 3,
+    "writes": 5,
+    "runs": 1,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "A3_school_fees",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 4,
+   "checks_total": 13,
+   "failed_checks": [
+    "wrong_password_rejected: false",
+    "login_works: locator.fill: Timeout 30000ms exceeded.",
+    "add_student_1: no field for Class",
+    "add_student_2: no field for Class",
+    "add_payment_1: no field for Student",
+    "add_payment_2: no field for Student",
+    "dashboard_numbers: not near: students=2, fee=125000, paid=105000",
+    "search_students: locator.fill: Timeout 30000ms exceeded.",
+    "data_survives_restart: locator.fill: Timeout 30000ms exceeded."
+   ],
+   "seconds": 78.5,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1450,
+   "model_calls": 1,
+   "generated_tokens": 1121,
+   "prompt_tokens_processed": 1605,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 2726
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 1,
+    "writes": 6,
+    "runs": 0,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "A3_school_fees",
+   "category": "app",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 13,
+   "checks_total": 13,
+   "failed_checks": [],
+   "seconds": 87.0,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1670,
+   "model_calls": 4,
+   "generated_tokens": 876,
+   "prompt_tokens_processed": 3766,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 876
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "A4_savings_group",
+   "category": "app",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 14,
+   "checks_total": 14,
+   "failed_checks": [],
+   "seconds": 95.6,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1669,
+   "model_calls": 4,
+   "generated_tokens": 941,
+   "prompt_tokens_processed": 3797,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 941
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "A4_savings_group",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 4,
+   "checks_total": 14,
+   "failed_checks": [
+    "wrong_password_rejected: false",
+    "login_works: locator.fill: Timeout 30000ms exceeded.",
+    "add_member_1: no field for Phone",
+    "add_member_2: no field for Phone",
+    "add_contribution_1: no field for Member",
+    "add_contribution_2: no field for Member",
+    "add_contribution_3: no field for Member",
+    "dashboard_numbers: not near: members=2, (total|contributed)=20000, below=1",
+    "search_by_month: locator.fill: Timeout 30000ms exceeded.",
+    "data_survives_restart: locator.fill: Timeout 30000ms exceeded."
+   ],
+   "seconds": 74.5,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1455,
+   "model_calls": 1,
+   "generated_tokens": 979,
+   "prompt_tokens_processed": 1603,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 2582
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 1,
+    "writes": 5,
+    "runs": 0,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "A5_library_loans",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 4,
+   "checks_total": 14,
+   "failed_checks": [
+    "wrong_password_rejected: false",
+    "login_works: locator.fill: Timeout 30000ms exceeded.",
+    "add_book_1: no field for Title",
+    "add_book_2: no field for Title",
+    "add_loan: no field for Book",
+    "copies_went_down: not near: Achebe=1",
+    "too_large_loan_refused: no field for Book",
+    "dashboard_numbers: not near: loans=1, (fewer|copy|shelf)=0",
+    "search_by_borrower: locator.fill: Timeout 30000ms exceeded.",
+    "data_survives_restart: locator.fill: Timeout 30000ms exceeded."
+   ],
+   "seconds": 51.0,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1457,
+   "model_calls": 1,
+   "generated_tokens": 678,
+   "prompt_tokens_processed": 1642,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 2320
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 1,
+    "writes": 4,
+    "runs": 0,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "A5_library_loans",
+   "category": "app",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 9,
+   "checks_total": 14,
+   "failed_checks": [
+    "add_loan: no field for Copies",
+    "too_large_loan_refused: no field for Copies",
+    "dashboard_numbers: not near: loans=1",
+    "search_by_borrower: missing Musa Bello; ",
+    "data_survives_restart: missing Musa Bello; "
+   ],
+   "seconds": 88.0,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1678,
+   "model_calls": 4,
+   "generated_tokens": 931,
+   "prompt_tokens_processed": 3838,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 931
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "A6_gym_members",
+   "category": "app",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 6,
+   "checks_total": 12,
+   "failed_checks": [
+    "add_member_1: no field for Name",
+    "add_member_2: no field for Name",
+    "add_member_3: no field for Name",
+    "dashboard_numbers: not near: members=3, (income|total)=31000, (less|below)=2",
+    "search_members: locator.fill: Timeout 30000ms exceeded.",
+    "data_survives_restart: missing Obinna Eze; "
+   ],
+   "seconds": 86.5,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1676,
+   "model_calls": 4,
+   "generated_tokens": 921,
+   "prompt_tokens_processed": 3774,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 921
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "A6_gym_members",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "app_runs_phase_1: the app did not answer on port 8000",
+    "app_runs_phase_2: the app did not answer on port 8000"
+   ],
+   "seconds": 52.5,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1460,
+   "model_calls": 1,
+   "generated_tokens": 718,
+   "prompt_tokens_processed": 1605,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 2323
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 1,
+    "writes": 4,
+    "runs": 0,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "A7_event_tickets",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "app_runs_phase_1: the app did not answer on port 8000",
+    "app_runs_phase_2: the app did not answer on port 8000"
+   ],
+   "seconds": 439.2,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1461,
+   "model_calls": 4,
+   "generated_tokens": 6432,
+   "prompt_tokens_processed": 2845,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 15390
+   },
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 4,
+    "writes": 22,
+    "runs": 0,
+    "reads": 0,
+    "ended": "the same reply 3 times in a row",
+    "errors": []
+   }
+  },
+  {
+   "task": "A7_event_tickets",
+   "category": "app",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 8,
+   "checks_total": 15,
+   "failed_checks": [
+    "add_sale: no field for Event",
+    "sale_cost_shown: missing 15000; ",
+    "seats_went_down: missing 97; ",
+    "too_large_sale_refused: no field for Event",
+    "dashboard_numbers: not near: sales=1, revenue=15000",
+    "search_by_buyer: locator.fill: Timeout 30000ms exceeded.",
+    "data_survives_restart: missing Ada Eze; "
+   ],
+   "seconds": 211.6,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1692,
+   "model_calls": 8,
+   "generated_tokens": 2505,
+   "prompt_tokens_processed": 10885,
+   "self_reported": {
+    "model_calls": 8,
+    "tokens": 2505
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "model (2 files) + template (1 file) + code (1 file)": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "A8_repair_shop_site",
+   "category": "app",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "app_delivered: no app.py"
+   ],
+   "seconds": 0.5,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 29,
+   "model_calls": 0,
+   "generated_tokens": 0,
+   "prompt_tokens_processed": 0,
+   "self_reported": {
+    "model_calls": 0,
+    "tokens": 0
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "A8_repair_shop_site",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 2,
+   "checks_total": 6,
+   "failed_checks": [
+    "business_and_services: missing Swift Fix, 15000, 8000, 6000; ",
+    "address_and_hours: missing 9 Ogui Road, Monday, Saturday, 9am, 6pm; ",
+    "call_back_form_thanks: missing thank; ",
+    "no_server_errors: 500 /quotes"
+   ],
+   "seconds": 52.5,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1460,
+   "model_calls": 1,
+   "generated_tokens": 727,
+   "prompt_tokens_processed": 1637,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 2364
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 1,
+    "writes": 5,
+    "runs": 0,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "B1_py_invoice",
+   "category": "bug",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: st_total_includes_vat\n    self.assertEqual(total([Line(\"bag\", 2, 1000000)]), 2150000)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionE",
+    "hidden_tests_pass: st_total_includes_vat\n    self.assertEqual(total([Line(\"bag\", 2, 1000000)]), 2150000)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionE"
+   ],
+   "seconds": 53.0,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1460,
+   "model_calls": 4,
+   "generated_tokens": 690,
+   "prompt_tokens_processed": 1789,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 7587
+   },
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 4,
+    "writes": 9,
+    "runs": 3,
+    "reads": 0,
+    "ended": "the same reply 3 times in a row",
+    "errors": []
+   }
+  },
+  {
+   "task": "B1_py_invoice",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: st_total_includes_vat\n    self.assertEqual(total([Line(\"bag\", 2, 1000000)]), 2150000)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionE",
+    "hidden_tests_pass: st_total_includes_vat\n    self.assertEqual(total([Line(\"bag\", 2, 1000000)]), 2150000)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionE"
+   ],
+   "seconds": 32.5,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1488,
+   "model_calls": 7,
+   "generated_tokens": 330,
+   "prompt_tokens_processed": 2743,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 50
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "B2_py_inventory",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: salt\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'nothing to reorder' != '1 to reorder: salt'\n- nothing to reord",
+    "hidden_tests_pass: salt\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'nothing to reorder' != '1 to reorder: salt'\n- nothing to reord"
+   ],
+   "seconds": 44.5,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1493,
+   "model_calls": 7,
+   "generated_tokens": 468,
+   "prompt_tokens_processed": 3485,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 50
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "B2_py_inventory",
+   "category": "bug",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: salt\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'nothing to reorder' != '1 to reorder: salt'\n- nothing to reord",
+    "hidden_tests_pass: salt\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'nothing to reorder' != '1 to reorder: salt'\n- nothing to reord"
+   ],
+   "seconds": 16.5,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1459,
+   "model_calls": 1,
+   "generated_tokens": 209,
+   "prompt_tokens_processed": 670,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 879
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 1,
+    "writes": 2,
+    "runs": 0,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "B3_py_schedule",
+   "category": "bug",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: ile \"/workspace/tests/test_hidden_b3.py\", line 9, in test_parse\n    self.assertEqual(to_minutes(\"12:45\"), 765)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\nAs",
+    "hidden_tests_pass: ile \"/workspace/tests/test_hidden_b3.py\", line 9, in test_parse\n    self.assertEqual(to_minutes(\"12:45\"), 765)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\nAs"
+   ],
+   "seconds": 42.0,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1460,
+   "model_calls": 3,
+   "generated_tokens": 534,
+   "prompt_tokens_processed": 1712,
+   "self_reported": {
+    "model_calls": 3,
+    "tokens": 4974
+   },
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 3,
+    "writes": 2,
+    "runs": 2,
+    "reads": 0,
+    "ended": "the same reply 3 times in a row",
+    "errors": []
+   }
+  },
+  {
+   "task": "B3_py_schedule",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: ile \"/workspace/tests/test_hidden_b3.py\", line 9, in test_parse\n    self.assertEqual(to_minutes(\"12:45\"), 765)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\nAs",
+    "hidden_tests_pass: ile \"/workspace/tests/test_hidden_b3.py\", line 9, in test_parse\n    self.assertEqual(to_minutes(\"12:45\"), 765)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\nAs"
+   ],
+   "seconds": 68.5,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1488,
+   "model_calls": 7,
+   "generated_tokens": 803,
+   "prompt_tokens_processed": 5025,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 50
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "B4_js_cart",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: 54:19)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49 {\n  generatedMe",
+    "hidden_tests_pass: r:254:19)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49 {\n  generate"
+   ],
+   "seconds": 51.0,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1514,
+   "model_calls": 9,
+   "generated_tokens": 649,
+   "prompt_tokens_processed": 2488,
+   "self_reported": {
+    "model_calls": 9,
+    "tokens": 649
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "B4_js_cart",
+   "category": "bug",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: 54:19)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49 {\n  generatedMe",
+    "hidden_tests_pass: r:254:19)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49 {\n  generate"
+   ],
+   "seconds": 119.5,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1477,
+   "model_calls": 5,
+   "generated_tokens": 1775,
+   "prompt_tokens_processed": 1869,
+   "self_reported": {
+    "model_calls": 5,
+    "tokens": 11656
+   },
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 5,
+    "writes": 4,
+    "runs": 4,
+    "reads": 0,
+    "ended": "the same reply 3 times in a row",
+    "errors": []
+   }
+  },
+  {
+   "task": "B5_js_csv",
+   "category": "bug",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: nMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: { L",
+    "hidden_tests_pass: EntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTIO"
+   ],
+   "seconds": 46.0,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1488,
+   "model_calls": 3,
+   "generated_tokens": 609,
+   "prompt_tokens_processed": 1411,
+   "self_reported": {
+    "model_calls": 3,
+    "tokens": 4401
+   },
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 3,
+    "writes": 4,
+    "runs": 2,
+    "reads": 0,
+    "ended": "the same reply 3 times in a row",
+    "errors": []
+   }
+  },
+  {
+   "task": "B5_js_csv",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: nMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: { L",
+    "hidden_tests_pass: EntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTIO"
+   ],
+   "seconds": 61.0,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1516,
+   "model_calls": 9,
+   "generated_tokens": 757,
+   "prompt_tokens_processed": 3071,
+   "self_reported": {
+    "model_calls": 9,
+    "tokens": 757
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "B6_go_payroll",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: --- FAIL: TestGross (0.00s)\n    gross_test.go:10: Gross(44, 1000) = 45000, want 46000\n--- FAIL: TestHiddenOvertime (0.00s)\n    hidden_b6_test.go:7: Gross(50, 80",
+    "hidden_tests_pass: --- FAIL: TestGross (0.00s)\n    gross_test.go:10: Gross(44, 1000) = 45000, want 46000\n--- FAIL: TestHiddenOvertime (0.00s)\n    hidden_b6_test.go:7: Gross(50, 80"
+   ],
+   "seconds": 87.0,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1717,
+   "model_calls": 9,
+   "generated_tokens": 873,
+   "prompt_tokens_processed": 1480,
+   "self_reported": {
+    "model_calls": 9,
+    "tokens": 873
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "B6_go_payroll",
+   "category": "bug",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: --- FAIL: TestGross (0.00s)\n    gross_test.go:10: Gross(44, 1000) = 45000, want 46000\n--- FAIL: TestHiddenOvertime (0.00s)\n    hidden_b6_test.go:7: Gross(50, 80",
+    "hidden_tests_pass: --- FAIL: TestGross (0.00s)\n    gross_test.go:10: Gross(44, 1000) = 45000, want 46000\n--- FAIL: TestHiddenOvertime (0.00s)\n    hidden_b6_test.go:7: Gross(50, 80"
+   ],
+   "seconds": 8.0,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1459,
+   "model_calls": 2,
+   "generated_tokens": 51,
+   "prompt_tokens_processed": 655,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 1392
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 2,
+    "writes": 1,
+    "runs": 0,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "B7_go_stats",
+   "category": "bug",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: --- FAIL: TestHiddenMedian (0.00s)\n    hidden_b7_test.go:9: Median([1 2 3 4]) = 3, want 2.5\n--- FAIL: TestSummary (0.00s)\n    report_test.go:7: got \"days 4, tot",
+    "hidden_tests_pass: --- FAIL: TestHiddenMedian (0.00s)\n    hidden_b7_test.go:9: Median([1 2 3 4]) = 3, want 2.5\n--- FAIL: TestSummary (0.00s)\n    report_test.go:7: got \"days 4, tot"
+   ],
+   "seconds": 54.1,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1703,
+   "model_calls": 5,
+   "generated_tokens": 676,
+   "prompt_tokens_processed": 906,
+   "self_reported": {
+    "model_calls": 5,
+    "tokens": 6680
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 5,
+    "writes": 8,
+    "runs": 4,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "B7_go_stats",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: --- FAIL: TestHiddenMedian (0.00s)\n    hidden_b7_test.go:9: Median([1 2 3 4]) = 3, want 2.5\n--- FAIL: TestSummary (0.00s)\n    report_test.go:7: got \"days 4, tot",
+    "hidden_tests_pass: --- FAIL: TestHiddenMedian (0.00s)\n    hidden_b7_test.go:9: Median([1 2 3 4]) = 3, want 2.5\n--- FAIL: TestSummary (0.00s)\n    report_test.go:7: got \"days 4, tot"
+   ],
+   "seconds": 101.6,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1747,
+   "model_calls": 9,
+   "generated_tokens": 1070,
+   "prompt_tokens_processed": 1539,
+   "self_reported": {
+    "model_calls": 9,
+    "tokens": 1070
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "B8_cpp_bank",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: FAIL line 9: a.balance() == 8950\nFAIL line 11: a.balance() == 9000\nmake: *** [Makefile:2: test] Error 2\n",
+    "hidden_tests_pass: hidden failed\n"
+   ],
+   "seconds": 78.5,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1505,
+   "model_calls": 9,
+   "generated_tokens": 1118,
+   "prompt_tokens_processed": 1874,
+   "self_reported": {
+    "model_calls": 9,
+    "tokens": 1118
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "B8_cpp_bank",
+   "category": "bug",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: FAIL line 9: a.balance() == 8950\nFAIL line 11: a.balance() == 9000\nmake: *** [Makefile:2: test] Error 2\n",
+    "hidden_tests_pass: hidden failed\n"
+   ],
+   "seconds": 221.1,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1493,
+   "model_calls": 4,
+   "generated_tokens": 3133,
+   "prompt_tokens_processed": 1205,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 11850
+   },
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 4,
+    "writes": 6,
+    "runs": 1,
+    "reads": 2,
+    "ended": "the same reply 3 times in a row",
+    "errors": []
+   }
+  },
+  {
+   "task": "C1_py_invoice_discounts",
+   "category": "feature",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: e/invoice/totals.py\", line 12, in total\n    subtotal = subtotal\n               ^^^^^^^^\nUnboundLocalError: cannot access local variable 'subtotal' where it is n",
+    "hidden_tests_pass: e/invoice/totals.py\", line 12, in total\n    subtotal = subtotal\n               ^^^^^^^^\nUnboundLocalError: cannot access local variable 'subtotal' where it is n"
+   ],
+   "seconds": 39.0,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1461,
+   "model_calls": 4,
+   "generated_tokens": 436,
+   "prompt_tokens_processed": 1512,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 5991
+   },
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 4,
+    "writes": 4,
+    "runs": 3,
+    "reads": 0,
+    "ended": "the same reply 3 times in a row",
+    "errors": []
+   }
+  },
+  {
+   "task": "C1_py_invoice_discounts",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass:   ~~~~~~~~~~^^^^^^\n  File \"/workspace/tests/test_hidden_c1.py\", line 3, in <module>\n    from invoice.discounts import apply_code\nModuleNotFoundError: No module ",
+    "hidden_tests_pass:   ~~~~~~~~~~^^^^^^\n  File \"/workspace/tests/test_hidden_c1.py\", line 3, in <module>\n    from invoice.discounts import apply_code\nModuleNotFoundError: No module "
+   ],
+   "seconds": 5.0,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1431,
+   "model_calls": 1,
+   "generated_tokens": 15,
+   "prompt_tokens_processed": 272,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 15
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "C2_py_inventory_export",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: ort__(name)\n    ~~~~~~~~~~^^^^^^\n  File \"/workspace/tests/test_hidden_c2.py\", line 8, in <module>\n    from stock.export import to_csv\nModuleNotFoundError: No mo",
+    "hidden_tests_pass: ort__(name)\n    ~~~~~~~~~~^^^^^^\n  File \"/workspace/tests/test_hidden_c2.py\", line 8, in <module>\n    from stock.export import to_csv\nModuleNotFoundError: No mo"
+   ],
+   "seconds": 10.5,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1430,
+   "model_calls": 2,
+   "generated_tokens": 84,
+   "prompt_tokens_processed": 361,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 84
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "C2_py_inventory_export",
+   "category": "feature",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: ,yes']\n\nSecond list contains 2 additional elements.\nFirst extra element 0:\n'name,on_hand,reorder_level,reorder'\n\n- []\n+ ['name,on_hand,reorder_level,reorder', '",
+    "hidden_tests_pass: ,yes']\n\nSecond list contains 2 additional elements.\nFirst extra element 0:\n'name,on_hand,reorder_level,reorder'\n\n- []\n+ ['name,on_hand,reorder_level,reorder', '"
+   ],
+   "seconds": 20.5,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1459,
+   "model_calls": 2,
+   "generated_tokens": 230,
+   "prompt_tokens_processed": 763,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 1954
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 2,
+    "writes": 1,
+    "runs": 1,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "C3_js_cart_delivery",
+   "category": "feature",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: nternal/modules/cjs/loader:254:19)\n    at Module.require (node:internal/modules/cjs/loader:1527:12)\n    at require (node:internal/modules/helpers:147:16)\n    at",
+    "hidden_tests_pass: al/modules/cjs/loader:254:19)\n    at Module.require (node:internal/modules/cjs/loader:1527:12)\n    at require (node:internal/modules/helpers:147:16)\n    at Obje"
+   ],
+   "seconds": 29.5,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1481,
+   "model_calls": 3,
+   "generated_tokens": 354,
+   "prompt_tokens_processed": 1054,
+   "self_reported": {
+    "model_calls": 3,
+    "tokens": 3698
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 3,
+    "writes": 2,
+    "runs": 1,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "C3_js_cart_delivery",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 1,
+   "checks_total": 2,
+   "failed_checks": [
+    "hidden_tests_pass:     at Object.<anonymous> (/workspace/test/hidden_c3.test.js:2:25)\n    at Module._compile (node:internal/modules/cjs/loader:1781:14)\n    at Object..js (node:int"
+   ],
+   "seconds": 5.5,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1463,
+   "model_calls": 1,
+   "generated_tokens": 15,
+   "prompt_tokens_processed": 255,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 15
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "deterministic": 2
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "C4_go_payroll_payslip",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: # example.com/payroll/pay [example.com/payroll/pay.test]\npay/hidden_c4_test.go:6:10: undefined: Tax\npay/hidden_c4_test.go:9:10: undefined: Tax\npay/hidden_c4_tes",
+    "hidden_tests_pass: # example.com/payroll/pay [example.com/payroll/pay.test]\npay/hidden_c4_test.go:6:10: undefined: Tax\npay/hidden_c4_test.go:9:10: undefined: Tax\npay/hidden_c4_tes"
+   ],
+   "seconds": 11.0,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1657,
+   "model_calls": 1,
+   "generated_tokens": 15,
+   "prompt_tokens_processed": 271,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 15
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "C4_go_payroll_payslip",
+   "category": "feature",
+   "condition": "bare",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 29.5,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1735,
+   "model_calls": 4,
+   "generated_tokens": 268,
+   "prompt_tokens_processed": 860,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 4075
+   },
+   "claim": "DONE",
+   "false_claim": false,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 4,
+    "writes": 3,
+    "runs": 1,
+    "reads": 1,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "C5_py_notes_search",
+   "category": "feature",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: strip(), \"Market\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'usage: add TITLE BODY | list' != 'Market'\n- usage: add TIT",
+    "hidden_tests_pass: strip(), \"Market\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'usage: add TITLE BODY | list' != 'Market'\n- usage: add TIT"
+   ],
+   "seconds": 18.0,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1460,
+   "model_calls": 2,
+   "generated_tokens": 181,
+   "prompt_tokens_processed": 887,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 2081
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 2,
+    "writes": 1,
+    "runs": 1,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "C5_py_notes_search",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: mport__(name)\n    ~~~~~~~~~~^^^^^^\n  File \"/workspace/tests/test_hidden_c5.py\", line 7, in <module>\n    from notes.search import find\nModuleNotFoundError: No mo",
+    "hidden_tests_pass: mport__(name)\n    ~~~~~~~~~~^^^^^^\n  File \"/workspace/tests/test_hidden_c5.py\", line 7, in <module>\n    from notes.search import find\nModuleNotFoundError: No mo"
+   ],
+   "seconds": 732.8,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1490,
+   "model_calls": 29,
+   "generated_tokens": 11128,
+   "prompt_tokens_processed": 15410,
+   "self_reported": {
+    "model_calls": 29,
+    "tokens": 11128
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "model": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "C6_js_todo_overdue",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 1,
+   "checks_total": 2,
+   "failed_checks": [
+    "hidden_tests_pass:     at Object.<anonymous> (/workspace/test/hidden_c6.test.js:3:21)\n    at Module._compile (node:internal/modules/cjs/loader:1781:14)\n    at Object..js (node:int"
+   ],
+   "seconds": 5.0,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1450,
+   "model_calls": 1,
+   "generated_tokens": 15,
+   "prompt_tokens_processed": 255,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 15
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "C6_js_todo_overdue",
+   "category": "feature",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 1,
+   "checks_total": 2,
+   "failed_checks": [
+    "hidden_tests_pass: oader:1505:32)\n    at Function._load (node:internal/modules/cjs/loader:1309:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)\n    at Function."
+   ],
+   "seconds": 11.0,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1488,
+   "model_calls": 2,
+   "generated_tokens": 85,
+   "prompt_tokens_processed": 669,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 1472
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 2,
+    "writes": 1,
+    "runs": 1,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "C7_cpp_shapes_triangle",
+   "category": "feature",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: & shapes) {\n      |        ^~~~~~~~~~\nsrc/shapes.cpp:9:8: note: \u2018double total_area(const std::vector<std::unique_ptr<Shape> >&)\u2019 previously defined here\n    9 |",
+    "hidden_tests_pass: (const std::vector<std::unique_ptr<Shape>>& shapes) {\n      |        ^~~~~~~~~~\nsrc/shapes.cpp:9:8: note: \u2018double total_area(const std::vector<std::unique_ptr<S"
+   ],
+   "seconds": 134.1,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1534,
+   "model_calls": 4,
+   "generated_tokens": 1769,
+   "prompt_tokens_processed": 2089,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 10768
+   },
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 4,
+    "writes": 2,
+    "runs": 3,
+    "reads": 0,
+    "ended": "the same reply 3 times in a row",
+    "errors": []
+   }
+  },
+  {
+   "task": "C7_cpp_shapes_triangle",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass:     ^~~~~~~~~~\n      |                 ;\nsrc/shapes.cpp:20:45: error: \u2018triangle4\u2019 was not declared in this scope\n   20 |         std::cout << \"Triangle 4 area: ",
+    "hidden_tests_pass: catch (const std::invalid_argument&) {}\n      |                   ^~\n      |                   ;\ntests/hidden_c7.cpp:15:19: error: expected \u2018;\u2019 before \u2018x\u2019\n   15"
+   ],
+   "seconds": 319.1,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1551,
+   "model_calls": 13,
+   "generated_tokens": 5160,
+   "prompt_tokens_processed": 4488,
+   "self_reported": {
+    "model_calls": 13,
+    "tokens": 5160
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "model": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "C8_py_units_temperature",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass:        ~~~~~~~^^^^^^^^^^^^^^^\n  File \"/workspace/units/__init__.py\", line 8, in convert\n    raise ValueError(f\"cannot convert {from_unit} to {to_unit}\")\nValueEr",
+    "hidden_tests_pass:        ~~~~~~~^^^^^^^^^^^^^^^\n  File \"/workspace/units/__init__.py\", line 8, in convert\n    raise ValueError(f\"cannot convert {from_unit} to {to_unit}\")\nValueEr"
+   ],
+   "seconds": 7.0,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1427,
+   "model_calls": 2,
+   "generated_tokens": 57,
+   "prompt_tokens_processed": 328,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 57
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "C8_py_units_temperature",
+   "category": "feature",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass:        ~~~~~~~^^^^^^^^^^^^^^^\n  File \"/workspace/units/__init__.py\", line 8, in convert\n    raise ValueError(f\"cannot convert {from_unit} to {to_unit}\")\nValueEr",
+    "hidden_tests_pass:        ~~~~~~~^^^^^^^^^^^^^^^\n  File \"/workspace/units/__init__.py\", line 8, in convert\n    raise ValueError(f\"cannot convert {from_unit} to {to_unit}\")\nValueEr"
+   ],
+   "seconds": 25.5,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1459,
+   "model_calls": 2,
+   "generated_tokens": 348,
+   "prompt_tokens_processed": 717,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 2074
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 2,
+    "writes": 1,
+    "runs": 1,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "D1_excel_regional_sales",
+   "category": "document",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "file_exists: /home/user/neuron/benchmark/run/proof/2gb-run1/bare/D1_excel_regional_sales/sales_summary.xlsx"
+   ],
+   "seconds": 128.6,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1460,
+   "model_calls": 2,
+   "generated_tokens": 2050,
+   "prompt_tokens_processed": 708,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 5466
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 2,
+    "writes": 0,
+    "runs": 0,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "D1_excel_regional_sales",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 10,
+   "checks_total": 10,
+   "failed_checks": [],
+   "seconds": 11.0,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1539,
+   "model_calls": 1,
+   "generated_tokens": 97,
+   "prompt_tokens_processed": 223,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 97
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1,
+    "template": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "D2_excel_staff_costs",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 9,
+   "checks_total": 9,
+   "failed_checks": [],
+   "seconds": 14.0,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1607,
+   "model_calls": 1,
+   "generated_tokens": 158,
+   "prompt_tokens_processed": 209,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 158
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1,
+    "template": 1
+   },
+   "bare_detail": null
+  }
+ ],
+ "tier": "2gb",
+ "run": 1,
+ "seed": 1,
+ "tier_limit_mb": 2048,
+ "network": "new empty network namespace (loopback only)",
+ "model": {
+  "planner": "qwen2.5-coder-1.5b-q4",
+  "reviewer": "qwen2.5-coder-1.5b-q4",
+  "builder": "qwen2.5-coder-1.5b-q4"
+ },
+ "lock": "15be2767e9b9ca782441561ba62792dc1b9b4d253a28772e48b10c615acda609",
+ "grace_s": 60,
+ "started": "2026-11-20 09:34:48",
+ "code_commit": "d41f5b0a959b047c039fd3ef82b7a2bc3cc028ef",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

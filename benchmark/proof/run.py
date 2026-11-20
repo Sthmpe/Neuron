@@ -32,6 +32,13 @@ MB = 2 ** 20
 GRACE = 60
 
 
+# Attempts that ran but whose result was not recorded, so the condition ran again (see LOCKED.md, runner amendment R1)
+NOTES = {("2gb-run1", "D2_excel_staff_costs", "bare"): "second attempt: the first attempt's examination crashed (BadZipFile on "
+         "a text file named .xlsx) before runner amendment R1, so no row was recorded and the condition ran again",
+         ("4gb-run1", "A1_pharmacy", "bare"): "second attempt: the first was stopped after about 4 minutes, unrecorded, "
+         "to apply runner amendment R1"}
+
+
 def verify_lock():
     r = subprocess.run([sys.executable, str(HERE / "verify_lock.py")], capture_output=True, text=True)
     if r.returncode != 0:
@@ -143,7 +150,13 @@ def main(argv=None):
                     rep = json.loads(report.read_text())
                 except (OSError, ValueError):
                     rep = {}
-                exam = examine(task, job, scratch / cond / f"{task['id']}__shots")
+                try:
+                    exam = examine(task, job, scratch / cond / f"{task['id']}__shots")
+                    examiner_error = None
+                except Exception as e:      # noqa: BLE001  runner amendment R1: a crash on a delivery fails it, never stops the pass
+                    examiner_error = f"{type(e).__name__}: {e}"[:300]
+                    exam = {"checks": [{"id": "examiner_could_not_read_the_delivery", "pass": False, "detail": examiner_error}],
+                            "passed": 0, "total": 1, "solved": False}
                 usage_srv = server_usage(job)
                 solved = exam["solved"]
                 if cond == "neuron":
@@ -163,7 +176,8 @@ def main(argv=None):
                        "prompt_tokens_processed": usage_srv["prompt_tokens_processed"],
                        "self_reported": {"model_calls": calls, "tokens": tokens}, "claim": claim,
                        "false_claim": claimed_success and not solved,
-                       "made_by": rep.get("made_by") if cond == "neuron" else "model",
+                       "made_by": rep.get("made_by") if cond == "neuron" else "model", "examiner_error": examiner_error,
+                       "note": NOTES.get((label, task["id"], cond)),
                        "bare_detail": {k: rep.get(k) for k in ("turns", "writes", "runs", "reads", "ended", "errors")} if cond == "bare" else None}
                 results["rows"].append(row)
                 results["tier_limit_hits"], results["oom_kills"] = tier.limit_hits(), tier.oom_kills()

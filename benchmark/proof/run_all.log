@@ -1,0 +1,80 @@
+2gb-run1 A1_pharmacy bare: not solved | 0/2 | 247.1s | peak 1446 MB | calls 3 | claims stopped: the same reply 3 times in a row
+2gb-run1 A1_pharmacy neuron: not solved | 13/16 | 147.1s | peak 1670 MB | calls 8 | claims VERIFIED
+2gb-run1 A2_tailor neuron: SOLVED | 14/14 | 90.5s | peak 1693 MB | calls 4 | claims VERIFIED
+2gb-run1 A2_tailor bare: not solved | 0/2 | 80.0s | peak 1456 MB | calls 3 | claims DONE
+2gb-run1 A3_school_fees bare: not solved | 4/13 | 78.5s | peak 1450 MB | calls 1 | claims DONE
+2gb-run1 A3_school_fees neuron: SOLVED | 13/13 | 87.0s | peak 1670 MB | calls 4 | claims VERIFIED
+2gb-run1 A4_savings_group neuron: SOLVED | 14/14 | 95.6s | peak 1669 MB | calls 4 | claims VERIFIED
+2gb-run1 A4_savings_group bare: not solved | 4/14 | 74.5s | peak 1455 MB | calls 1 | claims DONE
+2gb-run1 A5_library_loans bare: not solved | 4/14 | 51.0s | peak 1457 MB | calls 1 | claims DONE
+2gb-run1 A5_library_loans neuron: not solved | 9/14 | 88.0s | peak 1678 MB | calls 4 | claims VERIFIED
+2gb-run1 A6_gym_members neuron: not solved | 6/12 | 86.5s | peak 1676 MB | calls 4 | claims VERIFIED
+2gb-run1 A6_gym_members bare: not solved | 0/2 | 52.5s | peak 1460 MB | calls 1 | claims DONE
+2gb-run1 A7_event_tickets bare: not solved | 0/2 | 439.2s | peak 1461 MB | calls 4 | claims stopped: the same reply 3 times in a row
+2gb-run1 A7_event_tickets neuron: not solved | 8/15 | 211.6s | peak 1692 MB | calls 8 | claims VERIFIED
+2gb-run1 A8_repair_shop_site neuron: not solved | 0/1 | 0.5s | peak 29 MB | calls 0 | claims PARTIAL
+2gb-run1 A8_repair_shop_site bare: not solved | 2/6 | 52.5s | peak 1460 MB | calls 1 | claims DONE
+2gb-run1 B1_py_invoice bare: not solved | 0/2 | 53.0s | peak 1460 MB | calls 4 | claims stopped: the same reply 3 times in a row
+2gb-run1 B1_py_invoice neuron: not solved | 0/2 | 32.5s | peak 1488 MB | calls 7 | claims PARTIAL
+2gb-run1 B2_py_inventory neuron: not solved | 0/2 | 44.5s | peak 1493 MB | calls 7 | claims PARTIAL
+2gb-run1 B2_py_inventory bare: not solved | 0/2 | 16.5s | peak 1459 MB | calls 1 | claims DONE
+2gb-run1 B3_py_schedule bare: not solved | 0/2 | 42.0s | peak 1460 MB | calls 3 | claims stopped: the same reply 3 times in a row
+2gb-run1 B3_py_schedule neuron: not solved | 0/2 | 68.5s | peak 1488 MB | calls 7 | claims PARTIAL
+2gb-run1 B4_js_cart neuron: not solved | 0/2 | 51.0s | peak 1514 MB | calls 9 | claims PARTIAL
+2gb-run1 B4_js_cart bare: not solved | 0/2 | 119.5s | peak 1477 MB | calls 5 | claims stopped: the same reply 3 times in a row
+2gb-run1 B5_js_csv bare: not solved | 0/2 | 46.0s | peak 1488 MB | calls 3 | claims stopped: the same reply 3 times in a row
+2gb-run1 B5_js_csv neuron: not solved | 0/2 | 61.0s | peak 1516 MB | calls 9 | claims PARTIAL
+2gb-run1 B6_go_payroll neuron: not solved | 0/2 | 87.0s | peak 1717 MB | calls 9 | claims PARTIAL
+2gb-run1 B6_go_payroll bare: not solved | 0/2 | 8.0s | peak 1459 MB | calls 2 | claims DONE
+2gb-run1 B7_go_stats bare: not solved | 0/2 | 54.1s | peak 1703 MB | calls 5 | claims DONE
+2gb-run1 B7_go_stats neuron: not solved | 0/2 | 101.6s | peak 1747 MB | calls 9 | claims PARTIAL
+2gb-run1 B8_cpp_bank neuron: not solved | 0/2 | 78.5s | peak 1505 MB | calls 9 | claims PARTIAL
+2gb-run1 B8_cpp_bank bare: not solved | 0/2 | 221.1s | peak 1493 MB | calls 4 | claims stopped: the same reply 3 times in a row
+2gb-run1 C1_py_invoice_discounts bare: not solved | 0/2 | 39.0s | peak 1461 MB | calls 4 | claims stopped: the same reply 3 times in a row
+2gb-run1 C1_py_invoice_discounts neuron: not solved | 0/2 | 5.0s | peak 1431 MB | calls 1 | claims VERIFIED
+2gb-run1 C2_py_inventory_export neuron: not solved | 0/2 | 10.5s | peak 1430 MB | calls 2 | claims VERIFIED
+2gb-run1 C2_py_inventory_export bare: not solved | 0/2 | 20.5s | peak 1459 MB | calls 2 | claims DONE
+2gb-run1 C3_js_cart_delivery bare: not solved | 0/2 | 29.5s | peak 1481 MB | calls 3 | claims DONE
+2gb-run1 C3_js_cart_delivery neuron: not solved | 1/2 | 5.5s | peak 1463 MB | calls 1 | claims VERIFIED
+2gb-run1 C4_go_payroll_payslip neuron: not solved | 0/2 | 11.0s | peak 1657 MB | calls 1 | claims VERIFIED
+2gb-run1 C4_go_payroll_payslip bare: SOLVED | 2/2 | 29.5s | peak 1735 MB | calls 4 | claims DONE
+2gb-run1 C5_py_notes_search bare: not solved | 0/2 | 18.0s | peak 1460 MB | calls 2 | claims DONE
+2gb-run1 C5_py_notes_search neuron: not solved | 0/2 | 732.8s | peak 1490 MB | calls 29 | claims PARTIAL
+2gb-run1 C6_js_todo_overdue neuron: not solved | 1/2 | 5.0s | peak 1450 MB | calls 1 | claims VERIFIED
+2gb-run1 C6_js_todo_overdue bare: not solved | 1/2 | 11.0s | peak 1488 MB | calls 2 | claims DONE
+2gb-run1 C7_cpp_shapes_triangle bare: not solved | 0/2 | 134.1s | peak 1534 MB | calls 4 | claims stopped: the same reply 3 times in a row
+2gb-run1 C7_cpp_shapes_triangle neuron: not solved | 0/2 | 319.1s | peak 1551 MB | calls 13 | claims PARTIAL
+2gb-run1 C8_py_units_temperature neuron: not solved | 0/2 | 7.0s | peak 1427 MB | calls 2 | claims VERIFIED
+2gb-run1 C8_py_units_temperature bare: not solved | 0/2 | 25.5s | peak 1459 MB | calls 2 | claims DONE
+2gb-run1 D1_excel_regional_sales bare: not solved | 0/1 | 128.6s | peak 1460 MB | calls 2 | claims DONE
+2gb-run1 D1_excel_regional_sales neuron: SOLVED | 10/10 | 11.0s | peak 1539 MB | calls 1 | claims VERIFIED
+2gb-run1 D2_excel_staff_costs neuron: SOLVED | 9/9 | 14.0s | peak 1607 MB | calls 1 | claims VERIFIED
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/user/neuron/benchmark/proof/run.py", line 179, in <module>
+    main()
+    ~~~~^^
+  File "/home/user/neuron/benchmark/proof/run.py", line 146, in main
+    exam = examine(task, job, scratch / cond / f"{task['id']}__shots")
+  File "/home/user/neuron/benchmark/proof/examine.py", line 134, in examine
+    return examine_document(task, delivered)
+  File "/home/user/neuron/benchmark/proof/examine.py", line 116, in examine_document
+    r = eval2_docs.excel_products(path, TASKS / task["inputs"][0], *task["args"])
+  File "/home/user/neuron/benchmark/eval2/examiners/docs.py", line 239, in excel_products
+    wb = load_workbook(path)
+  File "/usr/local/lib/python3.13/site-packages/openpyxl/reader/excel.py", line 346, in load_workbook
+    reader = ExcelReader(filename, read_only, keep_vba,
+                         data_only, keep_links, rich_text)
+  File "/usr/local/lib/python3.13/site-packages/openpyxl/reader/excel.py", line 123, in __init__
+    self.archive = _validate_archive(fn)
+                   ~~~~~~~~~~~~~~~~~^^^^
+  File "/usr/local/lib/python3.13/site-packages/openpyxl/reader/excel.py", line 95, in _validate_archive
+    archive = ZipFile(filename, 'r')
+  File "/usr/local/lib/python3.13/zipfile/__init__.py", line 1432, in __init__
+    self._RealGetContents()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/zipfile/__init__.py", line 1499, in _RealGetContents
+    raise BadZipFile("File is not a zip file")
+zipfile.BadZipFile: File is not a zip file
+RUN FAILED 2gb 1

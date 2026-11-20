@@ -70,7 +70,19 @@ fix (smoke2), and A6_gym_members (smoke3). Only harness and examiner faults may 
 
 ## Amendments
 
-(none applied; the counted runs use the examiners exactly as locked)
+(no examiner amendment applied; the counted runs use the examiners exactly as locked)
+
+Runner amendments (the runner is not part of the lock; recorded here because they change how a pass proceeds):
+
+R1. (2026-11-20 10:57, during 2 GB run 1, after 51 recorded rows) The bare model saved a Python script under the name
+   `staff_costs.xlsx` (D2). eval2's locked Excel examiner raised BadZipFile on it, which stopped the pass before a row
+   was recorded. The runner now records any examiner exception as a failed check (`examiner_could_not_read_the_delivery`,
+   with the error) and flags the row (`examiner_error`), instead of stopping; the examiner itself is unchanged, and
+   the delivery is kept so it can be looked at. Two attempts ran without producing a row and were run again, each
+   labelled in its row's `note`: 2 GB run 1 D2 bare (the crashed one) and 4 GB run 1 A1 bare (stopped after about
+   4 minutes to apply this). The crash can only happen on a delivery the examiner cannot open, so it cannot turn a
+   good delivery into a pass or a fail that would not have happened anyway; a row flagged with `examiner_error` on a
+   delivery that looks valid will be reported separately.
 
 Proposed, awaiting the owner's decision:
 
