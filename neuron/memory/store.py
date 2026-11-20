@@ -15,8 +15,11 @@ import os
 import re
 import sqlite3
 import time
+import threading
 from pathlib import Path
 
+from ..agent.document_facts import valid_note
+from .document_notes import metadata, page_finding, review_documents
 from .embed import best_embedder
 
 KINDS = ("finding", "fix", "fact")
@@ -48,6 +51,8 @@ class Memory:
                 helped INTEGER DEFAULT 0, last_checked REAL);
             CREATE VIRTUAL TABLE IF NOT EXISTS notes_fts USING fts5(text, tags, content='notes', content_rowid='id');
         """)
+        self._write_lock = threading.RLock()
+        self._hidden_docs = review_documents(self.db, self.path, write=memory_enabled())
         self.embedder = embedder if embedder is not None else best_embedder()
 
     # ---- writing ---------------------------------------------------------------------------------------------
@@ -57,27 +62,49 @@ class Memory:
             return None
         if kind not in KINDS:
             raise ValueError(f"kind must be one of {KINDS}")
-        dup = self.db.execute("SELECT id FROM notes WHERE kind=? AND text=?", (kind, text)).fetchone()
-        if dup:
-            return dup["id"]
-        vec = self.embedder.embed([text])[0]
-        cur = self.db.execute(
-            "INSERT INTO notes(kind, text, source, created, version, status, tags, meta, vector, embedder, last_checked) "
-            "VALUES(?,?,?,?,?,?,?,?,?,?,?)",
-            (kind, text, source, time.time(), version, "verified" if verified else "unverified", " ".join(tags),
-             json.dumps(meta or {}), json.dumps([round(x, 5) for x in vec]), self.embedder.name, time.time()))
-        self.db.execute("INSERT INTO notes_fts(rowid, text, tags) VALUES(?,?,?)", (cur.lastrowid, text, " ".join(tags)))
-        self.db.commit()
-        return cur.lastrowid
+        doc = page_finding(kind, source)
+        if doc and verified:
+            proof = (meta or {}).get("document_fact")
+            if proof is not None or '(quote: "' in text:
+                if not valid_note(proof, text, source):
+                    return None
+            else:
+                verified = False  # a page reference without a checked claim is still a searchable, unverified note
+        where, args = ("kind=? AND text=? AND source=?", (kind,text,source)) if doc else ("kind=? AND text=?", (kind,text))
+        with self._write_lock, self.db:
+            self.db.execute("BEGIN IMMEDIATE")
+            dup = self.db.execute("SELECT id,status FROM notes WHERE "+where, args).fetchone()
+            if dup:
+                if doc and verified and dup["status"] != "verified":
+                    self.db.execute("UPDATE notes SET status='verified',meta=?,last_checked=? WHERE id=?",
+                                    (json.dumps(meta),time.time(),dup["id"]))
+                    self._hidden_docs.discard(dup["id"])
+                return dup["id"]
+            vec = self.embedder.embed([text])[0]
+            cur = self.db.execute(
+                "INSERT INTO notes(kind, text, source, created, version, status, tags, meta, vector, embedder, last_checked) "
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+                (kind, text, source, time.time(), version, "verified" if verified else "unverified", " ".join(tags),
+                 json.dumps(meta or {}), json.dumps([round(x, 5) for x in vec]), self.embedder.name, time.time()))
+            self.db.execute("INSERT INTO notes_fts(rowid, text, tags) VALUES(?,?,?)", (cur.lastrowid, text, " ".join(tags)))
+            return cur.lastrowid
 
     def mark(self, note_id, status=None, used=False, helped=None):
-        if status:
-            self.db.execute("UPDATE notes SET status=?, last_checked=? WHERE id=?", (status, time.time(), note_id))
-        if used:
-            self.db.execute("UPDATE notes SET uses = uses + 1 WHERE id=?", (note_id,))
-        if helped:
-            self.db.execute("UPDATE notes SET helped = helped + 1 WHERE id=?", (note_id,))
-        self.db.commit()
+        if not memory_enabled():
+            return
+        with self._write_lock, self.db:
+            if status == "verified":
+                self.db.execute("BEGIN IMMEDIATE")
+                row = self.db.execute("SELECT kind,text,source,meta FROM notes WHERE id=?", (note_id,)).fetchone()
+                if row and page_finding(row["kind"],row["source"]) and not valid_note(metadata(row["meta"]).get("document_fact"),
+                                                                                     row["text"],row["source"]):
+                    status = None
+            if status:
+                self.db.execute("UPDATE notes SET status=?, last_checked=? WHERE id=?", (status, time.time(), note_id))
+            if used:
+                self.db.execute("UPDATE notes SET uses = uses + 1 WHERE id=?", (note_id,))
+            if helped:
+                self.db.execute("UPDATE notes SET helped = helped + 1 WHERE id=?", (note_id,))
 
     # ---- reading ---------------------------------------------------------------------------------------------
     def search(self, query, k=5, kinds=None, include_outdated=False):
@@ -92,6 +119,10 @@ class Memory:
                 f"SELECT n.id FROM notes_fts f JOIN notes n ON n.id = f.rowid WHERE notes_fts MATCH ?{where}{kind_sql} "
                 f"ORDER BY bm25(notes_fts) LIMIT 30", [q] + args)]
         rows = {r["id"]: dict(r) for r in self.db.execute(f"SELECT * FROM notes n WHERE 1=1{where}{kind_sql}", args)}
+        if not include_outdated and self._hidden_docs:
+            ranked_kw = [nid for nid in ranked_kw if nid not in self._hidden_docs]
+            for nid in self._hidden_docs:
+                rows.pop(nid, None)
         qv = self.embedder.embed([query])[0]
         sims = []
         for nid, r in rows.items():
