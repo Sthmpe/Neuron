@@ -62,7 +62,7 @@ class Memory:
             return None
         if kind not in KINDS:
             raise ValueError(f"kind must be one of {KINDS}")
-        doc = page_finding(kind, source)
+        doc = page_finding(kind, source) or (kind == "finding" and "document_fact" in (meta or {}))
         if doc and verified:
             proof = (meta or {}).get("document_fact")
             if proof is not None or '(quote: "' in text:
@@ -72,7 +72,8 @@ class Memory:
                 verified = False  # a page reference without a checked claim is still a searchable, unverified note
         where, args = ("kind=? AND text=? AND source=?", (kind,text,source)) if doc else ("kind=? AND text=?", (kind,text))
         with self._write_lock, self.db:
-            self.db.execute("BEGIN IMMEDIATE")
+            if not self.db.in_transaction:
+                self.db.execute("BEGIN IMMEDIATE")
             dup = self.db.execute("SELECT id,status FROM notes WHERE "+where, args).fetchone()
             if dup:
                 if doc and verified and dup["status"] != "verified":
@@ -94,11 +95,13 @@ class Memory:
             return
         with self._write_lock, self.db:
             if status == "verified":
-                self.db.execute("BEGIN IMMEDIATE")
+                if not self.db.in_transaction:
+                    self.db.execute("BEGIN IMMEDIATE")
                 row = self.db.execute("SELECT kind,text,source,meta FROM notes WHERE id=?", (note_id,)).fetchone()
-                if row and page_finding(row["kind"],row["source"]) and not valid_note(metadata(row["meta"]).get("document_fact"),
-                                                                                     row["text"],row["source"]):
-                    status = None
+                if row:
+                    proof = metadata(row["meta"]).get("document_fact")
+                    if (proof or page_finding(row["kind"], row["source"])) and not valid_note(proof, row["text"], row["source"]):
+                        status = None
             if status:
                 self.db.execute("UPDATE notes SET status=?, last_checked=? WHERE id=?", (status, time.time(), note_id))
             if used:
@@ -139,6 +142,8 @@ class Memory:
         out = []
         for nid in best:
             r = rows[nid]
+            if nid in self._hidden_docs:
+                r["status"] = "outdated"
             r["score"] = round(score[nid], 4)
             r["similarity"] = round(simd.get(nid, 0.0), 3)
             r["meta"] = json.loads(r["meta"] or "{}")

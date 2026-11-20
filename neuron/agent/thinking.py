@@ -57,6 +57,11 @@ def solve(chat, sandbox, question, max_tool_rounds=2, max_tokens=400):
             # A failed advisory review must not discard a successful execution.
             if computed is None:
                 raise
-    answer = computed if computed is not None else "" if tool_runs else (review or first)
+    if computed is not None:
+        answer = computed
+    elif tool_runs:
+        answer = ""
+    else:
+        answer = review or first
     return {"answer": answer, "first_answer": first or computed or "", "tool_runs": tool_runs, "calls": calls, "tokens": tokens,
             "computed": computed is not None, "review_answer": review}

@@ -312,7 +312,10 @@ class Sandbox:
             stdout = None
             if capture_stdout:
                 if len(data) <= self.max_output_bytes:
-                    stdout = data.decode("utf-8", "replace")
+                    try:
+                        stdout = data.decode("utf-8")
+                    except UnicodeDecodeError:
+                        pass  # Binary output cannot be delivered as a textual calculation result.
                 err.seek(0)
                 diagnostic = err.read(max(0, self.max_output_bytes + 1 - len(data)))
                 if diagnostic:

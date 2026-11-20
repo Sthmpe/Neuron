@@ -71,6 +71,26 @@ class IndexDocuments(Capability):
         return Verdict(not empty, [{"id": "text_on_every_page", "pass": not empty, "detail": empty[:5]}], "pypdf extraction")
 
 
+def indexed_pages(rows):
+    pages = {}
+    for row in rows:
+        key = (row["doc"], row["page"])
+        text = row["text"]
+        pages[key] = text if key not in pages or pages[key] == text else None
+    return pages
+
+
+def render_answers(answers):
+    lines = ["# Answers", ""]
+    for i, answer in enumerate(answers, 1):
+        lines.append(f"{i}. **{answer['question']}**  ")
+        lines.append(answer["answer"])
+        if answer.get("verified"):
+            lines[-1] += f" ({answer['doc']}, page {answer['page']})  "
+            lines.append("> " + answer["quote"])
+    return "\n".join(lines) + "\n"
+
+
 class AnswerFromDocuments(Capability):
     name = "answer_from_documents"
     purpose = "Answer questions from the indexed documents, each with document, page and a supporting quote"
@@ -83,7 +103,7 @@ class AnswerFromDocuments(Capability):
     def run(self, job, params):
         idx = Index(json.loads((job.state.dir / "index.json").read_text()))
         qs = questions_from(job.state.goal()["request"])
-        pages = {(p["doc"], p["page"]): p["text"] for p in idx.pages}
+        pages = indexed_pages(idx.pages)
         prev = {a["question"]: a for a in (job.state.task("answer").get("result") or {}).get("answers", [])}
         retry = set(params.get("retry_questions") or [])
         answers = []
@@ -103,29 +123,30 @@ class AnswerFromDocuments(Capability):
                 answers.append({"question": q, "answer": "not found", "verified": False})
                 continue
             row = {k: data.get(k) for k in ("doc", "page", "quote")}
-            row.update(question=q, answer=clean(data.get("answer")))
+            row.update(question=q, answer=data["answer"].strip() if isinstance(data.get("answer"), str) else "")
             page_text = pages.get((row["doc"], row["page"])) if isinstance(row["doc"], str) and type(row["page"]) is int else None
             row["verified"] = document_proof(row, page_text) is not None
             if not row["verified"]:
                 row["answer"] = "not found" if str(row["answer"]).strip().lower() == "not found" else "Not confirmed by the cited page."
             answers.append(row)
-        md = ["# Answers", ""] + [f"{i}. **{a['question']}**  \n{a['answer']} ({a.get('doc', '?')}, page {a.get('page', '?')})"
-                                  + (f"  \n> {a['quote']}" if a.get("quote") else "") + ("" if a["verified"] else "  \n_(The cited evidence does not establish the requested fact.)_")
-                                  for i, a in enumerate(answers, 1)]
-        (job.workspace / "answers.md").write_text("\n".join(md) + "\n")
+        (job.workspace / "answers.md").write_text(render_answers(answers))
         (job.workspace / "answers.json").write_text(json.dumps(answers, indent=1))
         ok = sum(a["verified"] for a in answers)
         return Outcome(True, f"{ok} of {len(answers)} answers supported by their cited facts", {"answers": answers},
                        ["answers.md", "answers.json"], made_by="model")
 
     def verify(self, job, params, outcome):
-        pages = {(p["doc"], p["page"]): p["text"] for p in json.loads((job.state.dir / "index.json").read_text())}
+        pages = indexed_pages(json.loads((job.state.dir / "index.json").read_text()))
         answers = outcome.result["answers"]
-        delivered = json.loads((job.workspace / "answers.json").read_text())
+        try:
+            intact = (json.loads((job.workspace / "answers.json").read_text()) == answers
+                      and (job.workspace / "answers.md").read_text() == render_answers(answers))
+        except (OSError, ValueError):
+            intact = False
         notes, checks = [], []
         for i, a in enumerate(answers, 1):
             proof = document_proof(a, pages.get((a.get("doc"), a.get("page")))) if a.get("verified") else None
-            passed = bool(proof and delivered == answers)
+            passed = bool(proof and intact)
             checks.append({"id": f"q{i}_fact_on_cited_page", "pass": passed,
                            "detail": f"{a['question'][:60]} -> {a.get('doc')} p{a.get('page')}"})
             if passed:
@@ -194,7 +215,7 @@ class AnswerQuestion(Capability):
     def verify(self, job, params, outcome):
         from ..arithmetic import exact_answer
         path = job.workspace / "answer.md"
-        delivered = path.read_text() if path.is_file() else ""
+        delivered = path.read_bytes().decode("utf-8") if path.is_file() else ""
         exact = exact_answer(job.state.goal()["request"])
         if exact is not None:
             expression, expected = exact
