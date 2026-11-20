@@ -77,14 +77,18 @@ class DocumentJobTests(unittest.TestCase):
         ex = docs.excel_simple(job.workspace / "expenses.xlsx", P5 / "sources" / "dev_expenses.csv", "category", "amount")
         self.assertEqual(ex["passed"], ex["total"], ex)
 
-    def test_word_job_reworks_when_too_short(self):
+    def test_word_job_reaches_the_length_when_first_drafts_are_short(self):
+        # Since the core proof (D4/D5): the writer meets the word range itself (expands the shortest section, trims whole
+        # sentences when long) instead of failing the check and being sent back; the finished file must be in range.
+        import docx
         outline = {"title": "New office hours", "sections": [{"heading": h, "points": "x"} for h in ("Change", "Reason", "Questions")]}
         short, long = "Brief note.", " ".join(["The office will open at eight and close at four from the first of May."] * 6)
         rep, job, llm = run("Write memo.docx to staff about the new office hours (8am to 4pm from 1 May) with headings Change, Reason, Questions. 120 to 300 words.",
                             [json.dumps(outline), short, short, short, long, long, long])
         self.assertEqual(rep["verdict"], "VERIFIED", rep)
-        decisions = (job.state.dir / "decisions.jsonl").read_text()
-        self.assertIn('"kind": "rework"', decisions)
+        words = len(re.findall(r"\b\w+\b", "\n".join(p.text for p in docx.Document(job.workspace / "memo.docx").paragraphs)))
+        self.assertTrue(120 <= words <= 300, words)
+        self.assertTrue(any("Add about" in c["messages"][-1]["content"] for c in llm.calls))
 
     def test_pptx_job_renders(self):
         plan = {"name": "Golden Crust", "tagline": "Bread baked at dawn", "slides": [{"title": "What we bake", "bullets": ["Sourdough", "Cakes"]},

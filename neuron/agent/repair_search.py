@@ -72,7 +72,7 @@ def _strip_block_comments(lines):
     return out
 
 
-def mutants(text, first, last, limit=80):
+def mutants(text, first, last, limit=140):
     """One-token changes inside lines first..last (1-based). Yields (line number, old line, new line, description)."""
     lines = text.splitlines()
     visible = _strip_block_comments(lines)
@@ -103,13 +103,56 @@ def mutants(text, first, last, limit=80):
             for nv in (v + 1, v - 1):
                 if nv >= 0:
                     found.append((n, line, line[:m.start()] + str(nv) + line[m.end():], f"{v} -> {nv}"))
-    # comparisons and arithmetic first (the commonest one-token bugs), numbers last
+        found += _wider_mutants(n, line, code, lines, first, last)
+    # comparisons and arithmetic first (the commonest one-token bugs), then numbers, then the wider changes
     order = {"'<": 0, "'>": 0, "'=": 0, "'!": 0, "'&": 1, "'|": 1, "'+": 2, "'-": 2, "'*": 2, "'/": 2, "'t": 3, "'f": 3}
-    found.sort(key=lambda x: order.get(x[3][:2], 4))
+    found.sort(key=lambda x: WIDER.get(x[3].split(":")[0], order.get(x[3][:2], 4)))
     return found[:limit]
 
 
-def search(workspace, suspects, test_cmd, sandbox, passed_fn, max_tries=60, log=print):
+# Wider standard repair operators (added after the core proof's 2 GB run 1, where NEURON fixed 0 of 8 planted bugs:
+# a rate written 0.75 for 7.5 percent, a stray '/ 100', text[0] for the first two characters, a fee charged twice).
+# Each is generic: scale or nudge a constant, drop a constant operand, widen an index to a slice, delete one statement.
+DEC = re.compile(r"(?<![\w.])(\d+\.\d+)(?![\w.])")
+DROP = re.compile(r"\s*[*/]\s*\d+(?:\.\d+)?(?![\w.])")
+INDEX = re.compile(r"(?<=[\w)\]])\[(\d)\]")
+WIDER = {"drop": 5, "scale": 6, "slice": 7, "delete": 8}
+
+
+def _num(v):
+    return f"{v:.6f}".rstrip("0").rstrip(".") if v != int(v) else (str(int(v)) + (".0" if False else ""))
+
+
+def _wider_mutants(n, line, code, lines, first, last):
+    out = []
+    for m in DROP.finditer(code):
+        out.append((n, line, line[:m.start()] + line[m.end():], f"drop: removed '{m.group(0).strip()}'"))
+    for m in DEC.finditer(code):
+        v = float(m.group(1))
+        for nv in (v * 10, v / 10, v * 2, v / 2, v + 0.25, v - 0.25, v + 0.5, v - 0.5):
+            if nv > 0 and abs(nv - v) > 1e-12:
+                txt = _num(nv) if "." in _num(nv) else _num(nv) + ".0"
+                out.append((n, line, line[:m.start()] + txt + line[m.end():], f"scale: {m.group(1)} -> {txt}"))
+    for m in NUM.finditer(code):
+        v = int(m.group(1))
+        for nv in ((v * 10, v // 10) if v % 10 == 0 and v else (v * 10,)):
+            if nv > 0:
+                out.append((n, line, line[:m.start()] + str(nv) + line[m.end():], f"scale: {v} -> {nv}"))
+    for m in INDEX.finditer(code):
+        k = int(m.group(1))
+        for sl in (f"[:{k + 1}]", f"[:{k + 2}]", f"[{k}:]"):
+            out.append((n, line, line[:m.start()] + sl + line[m.end():], f"slice: [{k}] -> {sl}"))
+    stripped = code.strip()
+    if n > first and n < last and stripped and not re.match(r"(return|def|func|fn|if|for|while|else|elif|switch|case|try|"
+                                                            r"catch|except|class|struct|let|const|var|import|package)\b", stripped) \
+            and not stripped.endswith(("{", "}", ":", ",", "(", "[")) and (re.search(r"[+\-*/]?=(?!=)", stripped) or stripped.endswith(";")):
+        indent = line[:len(line) - len(line.lstrip())]
+        repl = indent + "pass" if line.rstrip().endswith(tuple("abcdefghijklmnopqrstuvwxyz0123456789)]'\"")) and not stripped.endswith(";") else ""
+        out.append((n, line, repl, f"delete: removed line {n}"))
+    return out
+
+
+def search(workspace, suspects, test_cmd, sandbox, passed_fn, max_tries=90, log=print):
     """suspects: [(file, name, first line, last line)], most likely first. Returns a dict describing the fix, or None.
     The workspace is changed only when a change made every test pass."""
     ws = Path(workspace)

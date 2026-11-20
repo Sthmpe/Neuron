@@ -75,6 +75,11 @@ class FixBug(Capability):
             return Outcome(False, "no test command found, so a fix could not be proven", evidence={"no_retry": True})
         hint = job.memory_context(kinds=("fix",)) if hasattr(job, "memory_context") else ""
         if cmd[0] == "python3":                               # the proven step-3 loop for Python
+            import os
+            if not params.get("strategy") and os.environ.get("NEURON_REPAIR_SEARCH", "1") != "0":
+                found = self._python_search(job, ws, cmd)     # small changes first, as for the other languages
+                if found is not None:
+                    return found
             r = fix_project(ws, job.runner, job.sandbox, log=lambda *_: None, memory_hint=hint)
             if r.get("already_passing"):          # nothing failed, nothing was changed: not a fixed bug (core proof C1)
                 return Outcome(False, "the project's tests already pass, so there was no failing test to fix and nothing was changed",
@@ -86,6 +91,57 @@ class FixBug(Capability):
             return Outcome(bool(r.get("claimed")), f"python fix loop: {'fixed' if r.get('claimed') else 'not fixed'} in {r.get('attempts')} attempts",
                            res, [r["file"]] if r.get("file") else [], made_by="model")
         return self._fix_other(job, params, cmd)
+
+    def _python_search(self, job, ws, cmd):
+        """Try small standard changes in the Python functions (and module-level constants) the failing tests point at,
+        before the model loop. Core proof 2 GB run 1: the Python path never searched, and missed a rate of 0.75 that
+        should be 0.075 and text[0] that should be text[:2]."""
+        passed, res = run_project_tests(job)
+        if passed or res is None:
+            return Outcome(False, "the project's tests already pass, so there was no failing test to fix and nothing was changed",
+                           {"already": True}, evidence={"no_retry": True}) if passed else None
+        output = res.output[-4000:]
+        idents = set(re.findall(r"[A-Za-z_]\w{2,}", output))
+        for t in [f for f in files(ws) if f.endswith(".py") and re.search(r"(^|/)tests?/|test_|_test\.py$", f)]:
+            text = (ws / t).read_text(errors="replace").splitlines()
+            for ln in re.findall(rf"{re.escape(Path(t).name)}\", line (\d+)", output):
+                if 0 < int(ln) <= len(text):
+                    idents |= set(re.findall(r"[A-Za-z_]\w{2,}", text[int(ln) - 1]))
+        cands = []
+        for f in files(ws):
+            if not f.endswith(".py") or re.search(r"(^|/)tests?/|test_|_test\.py$", f):
+                continue
+            try:
+                tree = ast.parse((ws / f).read_text(errors="replace"))
+            except SyntaxError:
+                continue
+            for node in tree.body:
+                if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    score = (5 if node.name in idents else 0) + sum(1 for n in ast.walk(node) if isinstance(n, ast.Name) and n.id in idents) * 0.2
+                    cands.append((score, f, node.name, node.lineno, node.end_lineno))
+                elif isinstance(node, ast.ClassDef):
+                    for sub in node.body:
+                        if isinstance(sub, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                            score = (5 if sub.name in idents else 0) + (2 if node.name in idents else 0)
+                            cands.append((score, f, f"{node.name}.{sub.name}", sub.lineno, sub.end_lineno))
+                elif isinstance(node, (ast.Assign, ast.AnnAssign)):    # a module-level constant, used by the functions
+                    names = {t.id for t in ast.walk(node) if isinstance(t, ast.Name)}
+                    cands.append((1.5, f, "(constant " + ", ".join(sorted(names)) + ")", node.lineno, node.end_lineno))
+        cands.sort(key=lambda c: -c[0])
+        if not cands:
+            return None
+        from ..repair_search import search
+        from ...brain.tools.fix_code import tests_passed
+        win = search(ws, [(c[1], c[2], c[3], c[4]) for c in cands[:6]], cmd, job.sandbox,
+                     lambda r: tests_passed(r, True) and not r.timed_out, log=job.log)
+        if not win:
+            return None
+        problem = f"line {win['line']} had {win['change']}"
+        job.state.decide("fix", "small change", f"{win['file']}:{win['line']} {win['old']} -> {win['new']} ({win['tries']} tries)")
+        return Outcome(True, f"fixed {win['file']}::{win['function']} with a small change ({win['change']}), found by trying "
+                             f"standard small changes ({win['tries']} tries); the project's tests pass",
+                       {**win, **fix_note(job, "python", win["function"], problem, f"changed '{win['old']}' to '{win['new']}'", win["file"])},
+                       [win["file"]], made_by="search")
 
     def _fix_other(self, job, params, cmd):
         ws = job.workspace
