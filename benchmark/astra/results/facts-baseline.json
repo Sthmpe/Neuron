@@ -1,0 +1,1261 @@
+{
+  "label": "facts-baseline",
+  "revision": "bf8a6162b0b2dbd129be591e7134b0563008e778",
+  "environment": {
+    "cgroup": "/astra",
+    "memory.max": "2147483648",
+    "memory.swap.max": "0",
+    "interfaces": [
+      "lo"
+    ],
+    "external_probe": "[Errno 101] Network is unreachable",
+    "kernel": "6.12.113",
+    "python": "3.12.14"
+  },
+  "model": "qwen2.5-coder-1.5b-q4",
+  "model_sha256": "cc324af070c2ecbfd324a30884d2f951a7ff756aba85cb811a6ec436933bb046",
+  "binary_sha256": "9c3d3ae64b901e552479582971e0a4cb90a8a1a71bbebf0a695a24fec4b4c888",
+  "fixture_sha256": "bd30a68ec94b729c7b8f5402886132715b8261539de1d52925da394f8777fba5",
+  "driver_sha256": "67a9bf5ace8ab898e1ec2a6378c20868e5df8fcd82aa87fe5c4d0164e1de9adb",
+  "threads": 1,
+  "seed": 71,
+  "context": 8192,
+  "documents": [
+    {
+      "id": "crate",
+      "proposed": null,
+      "answer": {
+        "question": "How many cobalt tiles are in the crate?",
+        "answer": "6",
+        "doc": "crate",
+        "page": 1,
+        "quote": "In the crate there are 14 amber tiles and 6 cobalt tiles.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "How many cobalt tiles are in the crate? 6 (quote: \"In the crate there are 14 amber tiles and 6 cobalt tiles.\")",
+          "source": "crate page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "How many cobalt tiles are in the crate? 6 (quote: \"In the crate there are 14 amber tiles and 6 cobalt tiles.\")"
+      ],
+      "correct_content": true,
+      "pass": true,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 50,
+        "model_seconds": 5.1,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 5.563
+    },
+    {
+      "id": "dispatch",
+      "proposed": null,
+      "answer": {
+        "question": "How many parcels did West depot dispatch?",
+        "answer": "27",
+        "doc": "dispatch",
+        "page": 1,
+        "quote": "West depot dispatched 27 parcels.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "How many parcels did West depot dispatch? 27 (quote: \"West depot dispatched 27 parcels.\")",
+          "source": "dispatch page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "How many parcels did West depot dispatch? 27 (quote: \"West depot dispatched 27 parcels.\")"
+      ],
+      "correct_content": true,
+      "pass": true,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 42,
+        "model_seconds": 3.3,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 3.338
+    },
+    {
+      "id": "fee",
+      "proposed": null,
+      "answer": {
+        "question": "What is the refill fee for members?",
+        "answer": "The refill fee for members is 7 credits.",
+        "doc": "fee",
+        "page": 1,
+        "quote": "The refill fee for members is 7 credits.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "What is the refill fee for members? The refill fee for members is 7 credits. (quote: \"The refill fee for members is 7 credits.\")",
+          "source": "fee page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "What is the refill fee for members? The refill fee for members is 7 credits. (quote: \"The refill fee for members is 7 credits.\")"
+      ],
+      "correct_content": true,
+      "pass": true,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 51,
+        "model_seconds": 3.8,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 3.837
+    },
+    {
+      "id": "sample",
+      "proposed": null,
+      "answer": {
+        "question": "What is the weight of the blue sample?",
+        "answer": "3 grams",
+        "doc": "sample",
+        "page": 1,
+        "quote": "The blue sample weighs 3 grams. The red sample weighs 3 kilograms.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "What is the weight of the blue sample? 3 grams (quote: \"The blue sample weighs 3 grams. The red sample weighs 3 kilograms.\")",
+          "source": "sample page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "What is the weight of the blue sample? 3 grams (quote: \"The blue sample weighs 3 grams. The red sample weighs 3 kilograms.\")"
+      ],
+      "correct_content": true,
+      "pass": true,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 50,
+        "model_seconds": 4.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 3.98
+    },
+    {
+      "id": "schedule",
+      "proposed": null,
+      "answer": {
+        "question": "Who approved the winter schedule?",
+        "answer": "Ivo",
+        "doc": "schedule",
+        "page": 1,
+        "quote": "Ivo approved the winter schedule.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "Who approved the winter schedule? Ivo (quote: \"Ivo approved the winter schedule.\")",
+          "source": "schedule page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "Who approved the winter schedule? Ivo (quote: \"Ivo approved the winter schedule.\")"
+      ],
+      "correct_content": true,
+      "pass": true,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 41,
+        "model_seconds": 3.4,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 3.4
+    },
+    {
+      "id": "thanks",
+      "proposed": null,
+      "answer": {
+        "question": "Who thanked Rowan?",
+        "answer": "Mira thanked Rowan",
+        "doc": "thanks",
+        "page": 1,
+        "quote": "Mira thanked Rowan. Rowan thanked Oli.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "Who thanked Rowan? Mira thanked Rowan (quote: \"Mira thanked Rowan. Rowan thanked Oli.\")",
+          "source": "thanks page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "Who thanked Rowan? Mira thanked Rowan (quote: \"Mira thanked Rowan. Rowan thanked Oli.\")"
+      ],
+      "correct_content": true,
+      "pass": true,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 49,
+        "model_seconds": 3.4,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 3.417
+    },
+    {
+      "id": "clearance",
+      "proposed": null,
+      "answer": {
+        "question": "Which pod has clearance?",
+        "answer": "The south pod has clearance.",
+        "doc": "clearance",
+        "page": 1,
+        "quote": "The north pod has no clearance. The south pod has clearance.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "Which pod has clearance? The south pod has clearance. (quote: \"The north pod has no clearance. The south pod has clearance.\")",
+          "source": "clearance page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "Which pod has clearance? The south pod has clearance. (quote: \"The north pod has no clearance. The south pod has clearance.\")"
+      ],
+      "correct_content": true,
+      "pass": true,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 51,
+        "model_seconds": 3.8,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 3.844
+    },
+    {
+      "id": "permits",
+      "proposed": null,
+      "answer": {
+        "question": "How many permits are active?",
+        "answer": "not found",
+        "doc": "permits",
+        "page": 1,
+        "quote": "The register gives no count for active permits.",
+        "verified": false
+      },
+      "verdict": "PARTIAL",
+      "notes": [],
+      "verified_recall": [],
+      "correct_content": true,
+      "pass": true,
+      "usage": {
+        "model_calls": 3,
+        "tokens": 132,
+        "model_seconds": 8.1,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 8.087
+    }
+  ],
+  "calculations": [
+    {
+      "id": "multiples",
+      "answer": "\\(\\boxed{384}\\)",
+      "verdict": "UNVERIFIED",
+      "runs": [
+        {
+          "output": "384\n",
+          "exit": 0,
+          "timeout": false,
+          "oom": false
+        }
+      ],
+      "pass": true,
+      "usage": {
+        "model_calls": 3,
+        "tokens": 513,
+        "model_seconds": 30.5,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 30.822
+    },
+    {
+      "id": "squares",
+      "answer": "84",
+      "verdict": "UNVERIFIED",
+      "runs": [],
+      "pass": false,
+      "usage": {
+        "model_calls": 2,
+        "tokens": 64,
+        "model_seconds": 7.2,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 7.247
+    },
+    {
+      "id": "remainder",
+      "answer": "13",
+      "verdict": "UNVERIFIED",
+      "runs": [
+        {
+          "output": "13\n",
+          "exit": 0,
+          "timeout": false,
+          "oom": false
+        }
+      ],
+      "pass": true,
+      "usage": {
+        "model_calls": 3,
+        "tokens": 113,
+        "model_seconds": 9.7,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 9.875
+    }
+  ],
+  "claims": [
+    {
+      "id": "crate",
+      "proposed": "6 cobalt tiles",
+      "answer": {
+        "question": "How many cobalt tiles are in the crate?",
+        "answer": "6 cobalt tiles",
+        "doc": "crate",
+        "page": 1,
+        "quote": "In the crate there are 14 amber tiles and 6 cobalt tiles.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "How many cobalt tiles are in the crate? 6 cobalt tiles (quote: \"In the crate there are 14 amber tiles and 6 cobalt tiles.\")",
+          "source": "crate page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "How many cobalt tiles are in the crate? 6 cobalt tiles (quote: \"In the crate there are 14 amber tiles and 6 cobalt tiles.\")"
+      ],
+      "correct_content": true,
+      "pass": true,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.073
+    },
+    {
+      "id": "crate",
+      "proposed": "14 cobalt tiles",
+      "answer": {
+        "question": "How many cobalt tiles are in the crate?",
+        "answer": "14 cobalt tiles",
+        "doc": "crate",
+        "page": 1,
+        "quote": "In the crate there are 14 amber tiles and 6 cobalt tiles.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "How many cobalt tiles are in the crate? 14 cobalt tiles (quote: \"In the crate there are 14 amber tiles and 6 cobalt tiles.\")",
+          "source": "crate page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "How many cobalt tiles are in the crate? 14 cobalt tiles (quote: \"In the crate there are 14 amber tiles and 6 cobalt tiles.\")"
+      ],
+      "correct_content": false,
+      "pass": false,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.027
+    },
+    {
+      "id": "dispatch",
+      "proposed": "27 parcels",
+      "answer": {
+        "question": "How many parcels did West depot dispatch?",
+        "answer": "27 parcels",
+        "doc": "dispatch",
+        "page": 1,
+        "quote": "East depot dispatched 48 parcels. West depot dispatched 27 parcels.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "How many parcels did West depot dispatch? 27 parcels (quote: \"East depot dispatched 48 parcels. West depot dispatched 27 parcels.\")",
+          "source": "dispatch page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "How many parcels did West depot dispatch? 27 parcels (quote: \"East depot dispatched 48 parcels. West depot dispatched 27 parcels.\")"
+      ],
+      "correct_content": true,
+      "pass": true,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.025
+    },
+    {
+      "id": "dispatch",
+      "proposed": "48 parcels",
+      "answer": {
+        "question": "How many parcels did West depot dispatch?",
+        "answer": "48 parcels",
+        "doc": "dispatch",
+        "page": 1,
+        "quote": "East depot dispatched 48 parcels. West depot dispatched 27 parcels.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "How many parcels did West depot dispatch? 48 parcels (quote: \"East depot dispatched 48 parcels. West depot dispatched 27 parcels.\")",
+          "source": "dispatch page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "How many parcels did West depot dispatch? 48 parcels (quote: \"East depot dispatched 48 parcels. West depot dispatched 27 parcels.\")"
+      ],
+      "correct_content": false,
+      "pass": false,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.025
+    },
+    {
+      "id": "fee",
+      "proposed": "7 credits",
+      "answer": {
+        "question": "What is the refill fee for members?",
+        "answer": "7 credits",
+        "doc": "fee",
+        "page": 1,
+        "quote": "The refill fee for guests is 18 credits. The refill fee for members is 7 credits.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "What is the refill fee for members? 7 credits (quote: \"The refill fee for guests is 18 credits. The refill fee for members is 7 credits.\")",
+          "source": "fee page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "What is the refill fee for members? 7 credits (quote: \"The refill fee for guests is 18 credits. The refill fee for members is 7 credits.\")"
+      ],
+      "correct_content": true,
+      "pass": true,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.038
+    },
+    {
+      "id": "fee",
+      "proposed": "18 credits",
+      "answer": {
+        "question": "What is the refill fee for members?",
+        "answer": "18 credits",
+        "doc": "fee",
+        "page": 1,
+        "quote": "The refill fee for guests is 18 credits. The refill fee for members is 7 credits.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "What is the refill fee for members? 18 credits (quote: \"The refill fee for guests is 18 credits. The refill fee for members is 7 credits.\")",
+          "source": "fee page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "What is the refill fee for members? 18 credits (quote: \"The refill fee for guests is 18 credits. The refill fee for members is 7 credits.\")"
+      ],
+      "correct_content": false,
+      "pass": false,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.025
+    },
+    {
+      "id": "sample",
+      "proposed": "3 grams",
+      "answer": {
+        "question": "What is the weight of the blue sample?",
+        "answer": "3 grams",
+        "doc": "sample",
+        "page": 1,
+        "quote": "The blue sample weighs 3 grams. The red sample weighs 3 kilograms.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "What is the weight of the blue sample? 3 grams (quote: \"The blue sample weighs 3 grams. The red sample weighs 3 kilograms.\")",
+          "source": "sample page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "What is the weight of the blue sample? 3 grams (quote: \"The blue sample weighs 3 grams. The red sample weighs 3 kilograms.\")"
+      ],
+      "correct_content": true,
+      "pass": true,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.028
+    },
+    {
+      "id": "sample",
+      "proposed": "3 kilograms",
+      "answer": {
+        "question": "What is the weight of the blue sample?",
+        "answer": "3 kilograms",
+        "doc": "sample",
+        "page": 1,
+        "quote": "The blue sample weighs 3 grams. The red sample weighs 3 kilograms.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "What is the weight of the blue sample? 3 kilograms (quote: \"The blue sample weighs 3 grams. The red sample weighs 3 kilograms.\")",
+          "source": "sample page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "What is the weight of the blue sample? 3 kilograms (quote: \"The blue sample weighs 3 grams. The red sample weighs 3 kilograms.\")"
+      ],
+      "correct_content": false,
+      "pass": false,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.025
+    },
+    {
+      "id": "schedule",
+      "proposed": "Ivo",
+      "answer": {
+        "question": "Who approved the winter schedule?",
+        "answer": "Ivo",
+        "doc": "schedule",
+        "page": 1,
+        "quote": "Mara approved the summer schedule. Ivo approved the winter schedule.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "Who approved the winter schedule? Ivo (quote: \"Mara approved the summer schedule. Ivo approved the winter schedule.\")",
+          "source": "schedule page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "Who approved the winter schedule? Ivo (quote: \"Mara approved the summer schedule. Ivo approved the winter schedule.\")"
+      ],
+      "correct_content": true,
+      "pass": true,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.026
+    },
+    {
+      "id": "schedule",
+      "proposed": "Mara",
+      "answer": {
+        "question": "Who approved the winter schedule?",
+        "answer": "Mara",
+        "doc": "schedule",
+        "page": 1,
+        "quote": "Mara approved the summer schedule. Ivo approved the winter schedule.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "Who approved the winter schedule? Mara (quote: \"Mara approved the summer schedule. Ivo approved the winter schedule.\")",
+          "source": "schedule page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "Who approved the winter schedule? Mara (quote: \"Mara approved the summer schedule. Ivo approved the winter schedule.\")"
+      ],
+      "correct_content": false,
+      "pass": false,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.025
+    },
+    {
+      "id": "thanks",
+      "proposed": "Mira",
+      "answer": {
+        "question": "Who thanked Rowan?",
+        "answer": "Mira",
+        "doc": "thanks",
+        "page": 1,
+        "quote": "Mira thanked Rowan. Rowan thanked Oli.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "Who thanked Rowan? Mira (quote: \"Mira thanked Rowan. Rowan thanked Oli.\")",
+          "source": "thanks page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "Who thanked Rowan? Mira (quote: \"Mira thanked Rowan. Rowan thanked Oli.\")"
+      ],
+      "correct_content": true,
+      "pass": true,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.026
+    },
+    {
+      "id": "thanks",
+      "proposed": "Oli",
+      "answer": {
+        "question": "Who thanked Rowan?",
+        "answer": "Oli",
+        "doc": "thanks",
+        "page": 1,
+        "quote": "Mira thanked Rowan. Rowan thanked Oli.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "Who thanked Rowan? Oli (quote: \"Mira thanked Rowan. Rowan thanked Oli.\")",
+          "source": "thanks page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "Who thanked Rowan? Oli (quote: \"Mira thanked Rowan. Rowan thanked Oli.\")"
+      ],
+      "correct_content": false,
+      "pass": false,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.027
+    },
+    {
+      "id": "clearance",
+      "proposed": "The south pod",
+      "answer": {
+        "question": "Which pod has clearance?",
+        "answer": "The south pod",
+        "doc": "clearance",
+        "page": 1,
+        "quote": "The north pod has no clearance. The south pod has clearance.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "Which pod has clearance? The south pod (quote: \"The north pod has no clearance. The south pod has clearance.\")",
+          "source": "clearance page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "Which pod has clearance? The south pod (quote: \"The north pod has no clearance. The south pod has clearance.\")"
+      ],
+      "correct_content": true,
+      "pass": true,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.033
+    },
+    {
+      "id": "clearance",
+      "proposed": "The north pod",
+      "answer": {
+        "question": "Which pod has clearance?",
+        "answer": "The north pod",
+        "doc": "clearance",
+        "page": 1,
+        "quote": "The north pod has no clearance. The south pod has clearance.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "Which pod has clearance? The north pod (quote: \"The north pod has no clearance. The south pod has clearance.\")",
+          "source": "clearance page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "Which pod has clearance? The north pod (quote: \"The north pod has no clearance. The south pod has clearance.\")"
+      ],
+      "correct_content": false,
+      "pass": false,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.026
+    },
+    {
+      "id": "permits",
+      "proposed": "12 active permits",
+      "answer": {
+        "question": "How many permits are active?",
+        "answer": "12 active permits",
+        "doc": "permits",
+        "page": 1,
+        "quote": "There are 12 permits pending. The register gives no count for active permits.",
+        "verified": true
+      },
+      "verdict": "VERIFIED",
+      "notes": [
+        {
+          "text": "How many permits are active? 12 active permits (quote: \"There are 12 permits pending. The register gives no count for active permits.\")",
+          "source": "permits page 1",
+          "status": "verified"
+        }
+      ],
+      "verified_recall": [
+        "How many permits are active? 12 active permits (quote: \"There are 12 permits pending. The register gives no count for active permits.\")"
+      ],
+      "correct_content": false,
+      "pass": false,
+      "usage": {
+        "model_calls": 1,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.026
+    }
+  ],
+  "calculator_replays": [
+    {
+      "id": "review-conflict",
+      "answer": "129",
+      "runs": [
+        {
+          "output": "128\n",
+          "exit": 0,
+          "timeout": false,
+          "oom": false
+        }
+      ],
+      "model_replies": [
+        "```python\nprint(19 * 7 - 5)\n```",
+        "Answer: 128",
+        "Answer: 129"
+      ],
+      "pass": false,
+      "seconds": 0.195
+    },
+    {
+      "id": "inline-conflict",
+      "answer": "75",
+      "runs": [],
+      "model_replies": [
+        "```python\nprint(4 ** 3 + 9)\n```\nAnswer: 74",
+        "Answer: 75"
+      ],
+      "pass": false,
+      "seconds": 0.049
+    },
+    {
+      "id": "two-lines",
+      "answer": "18",
+      "runs": [
+        {
+          "output": "Pairs: 12\nSingles: 5\n",
+          "exit": 0,
+          "timeout": false,
+          "oom": false
+        }
+      ],
+      "model_replies": [
+        "```python\nprint('Pairs: 12')\nprint('Singles: 5')\n```",
+        "Answer: 17",
+        "Answer: 18"
+      ],
+      "pass": false,
+      "seconds": 0.189
+    },
+    {
+      "id": "diagnostic-stream",
+      "answer": "404",
+      "runs": [
+        {
+          "output": "diagnostic 404\n34\n",
+          "exit": 0,
+          "timeout": false,
+          "oom": false
+        }
+      ],
+      "model_replies": [
+        "```python\nimport sys\nprint('diagnostic 404', file=sys.stderr)\nprint(11 + 23)\n```",
+        "Answer: 34",
+        "Answer: 404"
+      ],
+      "pass": false,
+      "seconds": 0.241
+    },
+    {
+      "id": "failed-program",
+      "answer": "82",
+      "runs": [
+        {
+          "output": "81\nTraceback (most recent call last):\n  File \"/workspace/calc.py\", line 2, in <module>\n    raise ValueError('inconsistent inputs')\nValueError: inconsistent inputs\n",
+          "exit": 1,
+          "timeout": false,
+          "oom": false
+        }
+      ],
+      "model_replies": [
+        "```python\nprint(81)\nraise ValueError('inconsistent inputs')\n```",
+        "Answer: 81",
+        "Answer: 82"
+      ],
+      "pass": false,
+      "seconds": 0.286
+    },
+    {
+      "id": "empty-output",
+      "answer": "77",
+      "runs": [
+        {
+          "output": "diagnostic 77\n",
+          "exit": 0,
+          "timeout": false,
+          "oom": false
+        }
+      ],
+      "model_replies": [
+        "```python\nimport sys\nprint('diagnostic 77', file=sys.stderr)\n```",
+        "Answer: 77",
+        "Answer: 77"
+      ],
+      "pass": false,
+      "seconds": 0.222
+    },
+    {
+      "id": "no-code-control",
+      "answer": "43",
+      "runs": [],
+      "model_replies": [
+        "Answer: 42",
+        "Answer: 43"
+      ],
+      "pass": true,
+      "seconds": 0.024
+    }
+  ],
+  "migration": [
+    {
+      "opens": [
+        [
+          {
+            "id": 1,
+            "text": "How many cobalt tiles are in the crate? 6 cobalt tiles (quote: \"In the crate there are 14 amber tiles and 6 cobalt tiles.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": true,
+            "pass": true
+          },
+          {
+            "id": 2,
+            "text": "How many cobalt tiles are in the crate? 14 cobalt tiles (quote: \"In the crate there are 14 amber tiles and 6 cobalt tiles.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 3,
+            "text": "How many parcels did West depot dispatch? 27 parcels (quote: \"East depot dispatched 48 parcels. West depot dispatched 27 parcels.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": true,
+            "pass": true
+          },
+          {
+            "id": 4,
+            "text": "How many parcels did West depot dispatch? 48 parcels (quote: \"East depot dispatched 48 parcels. West depot dispatched 27 parcels.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 5,
+            "text": "What is the refill fee for members? 7 credits (quote: \"The refill fee for guests is 18 credits. The refill fee for members is 7 credits.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": true,
+            "pass": true
+          },
+          {
+            "id": 6,
+            "text": "What is the refill fee for members? 18 credits (quote: \"The refill fee for guests is 18 credits. The refill fee for members is 7 credits.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 7,
+            "text": "What is the weight of the blue sample? 3 grams (quote: \"The blue sample weighs 3 grams. The red sample weighs 3 kilograms.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": true,
+            "pass": true
+          },
+          {
+            "id": 8,
+            "text": "What is the weight of the blue sample? 3 kilograms (quote: \"The blue sample weighs 3 grams. The red sample weighs 3 kilograms.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 9,
+            "text": "Who approved the winter schedule? Ivo (quote: \"Mara approved the summer schedule. Ivo approved the winter schedule.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": true,
+            "pass": true
+          },
+          {
+            "id": 10,
+            "text": "Who approved the winter schedule? Mara (quote: \"Mara approved the summer schedule. Ivo approved the winter schedule.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 11,
+            "text": "Who thanked Rowan? Mira (quote: \"Mira thanked Rowan. Rowan thanked Oli.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": true,
+            "pass": true
+          },
+          {
+            "id": 12,
+            "text": "Who thanked Rowan? Oli (quote: \"Mira thanked Rowan. Rowan thanked Oli.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 13,
+            "text": "Which pod has clearance? The south pod (quote: \"The north pod has no clearance. The south pod has clearance.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": true,
+            "pass": true
+          },
+          {
+            "id": 14,
+            "text": "Which pod has clearance? The north pod (quote: \"The north pod has no clearance. The south pod has clearance.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 15,
+            "text": "How many permits are active? 12 active permits (quote: \"There are 12 permits pending. The register gives no count for active permits.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 16,
+            "text": "What is the pool depth? 90 m (quote: \"The pool depth is 90 m.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 17,
+            "text": "A reversed range bound in the batch counter was corrected.",
+            "status": "verified",
+            "recalled": true,
+            "wanted": true,
+            "pass": true
+          }
+        ],
+        [
+          {
+            "id": 1,
+            "text": "How many cobalt tiles are in the crate? 6 cobalt tiles (quote: \"In the crate there are 14 amber tiles and 6 cobalt tiles.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": true,
+            "pass": true
+          },
+          {
+            "id": 2,
+            "text": "How many cobalt tiles are in the crate? 14 cobalt tiles (quote: \"In the crate there are 14 amber tiles and 6 cobalt tiles.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 3,
+            "text": "How many parcels did West depot dispatch? 27 parcels (quote: \"East depot dispatched 48 parcels. West depot dispatched 27 parcels.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": true,
+            "pass": true
+          },
+          {
+            "id": 4,
+            "text": "How many parcels did West depot dispatch? 48 parcels (quote: \"East depot dispatched 48 parcels. West depot dispatched 27 parcels.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 5,
+            "text": "What is the refill fee for members? 7 credits (quote: \"The refill fee for guests is 18 credits. The refill fee for members is 7 credits.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": true,
+            "pass": true
+          },
+          {
+            "id": 6,
+            "text": "What is the refill fee for members? 18 credits (quote: \"The refill fee for guests is 18 credits. The refill fee for members is 7 credits.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 7,
+            "text": "What is the weight of the blue sample? 3 grams (quote: \"The blue sample weighs 3 grams. The red sample weighs 3 kilograms.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": true,
+            "pass": true
+          },
+          {
+            "id": 8,
+            "text": "What is the weight of the blue sample? 3 kilograms (quote: \"The blue sample weighs 3 grams. The red sample weighs 3 kilograms.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 9,
+            "text": "Who approved the winter schedule? Ivo (quote: \"Mara approved the summer schedule. Ivo approved the winter schedule.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": true,
+            "pass": true
+          },
+          {
+            "id": 10,
+            "text": "Who approved the winter schedule? Mara (quote: \"Mara approved the summer schedule. Ivo approved the winter schedule.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 11,
+            "text": "Who thanked Rowan? Mira (quote: \"Mira thanked Rowan. Rowan thanked Oli.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": true,
+            "pass": true
+          },
+          {
+            "id": 12,
+            "text": "Who thanked Rowan? Oli (quote: \"Mira thanked Rowan. Rowan thanked Oli.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 13,
+            "text": "Which pod has clearance? The south pod (quote: \"The north pod has no clearance. The south pod has clearance.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": true,
+            "pass": true
+          },
+          {
+            "id": 14,
+            "text": "Which pod has clearance? The north pod (quote: \"The north pod has no clearance. The south pod has clearance.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 15,
+            "text": "How many permits are active? 12 active permits (quote: \"There are 12 permits pending. The register gives no count for active permits.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 16,
+            "text": "What is the pool depth? 90 m (quote: \"The pool depth is 90 m.\")",
+            "status": "verified",
+            "recalled": true,
+            "wanted": false,
+            "pass": false
+          },
+          {
+            "id": 17,
+            "text": "A reversed range bound in the batch counter was corrected.",
+            "status": "verified",
+            "recalled": true,
+            "wanted": true,
+            "pass": true
+          }
+        ]
+      ],
+      "passes": 8,
+      "seconds": 0.081
+    }
+  ],
+  "delayed_phone": [
+    {
+      "id": "20261120-082211-e97f",
+      "status": "failed",
+      "answer": "",
+      "pass": false,
+      "seconds": 16.222
+    }
+  ],
+  "seconds": 114.712,
+  "peak_bytes": 2147483648,
+  "memory_events": [
+    "low 0",
+    "high 0",
+    "max 3100",
+    "oom 0",
+    "oom_kill 0",
+    "oom_group_kill 0"
+  ]
+}
