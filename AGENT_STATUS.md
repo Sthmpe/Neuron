@@ -1,3 +1,42 @@
+# Astra phase 3
+
+NEURON now checks that a cited passage connects the requested subject and relationship to the proposed answer. A number from a neighbouring fact cannot establish that connection. The document check also reads back the answer shown on the phone. Unsupported claims are withheld and do not produce verified memory notes.
+
+When a Python calculation succeeds, NEURON delivers its standard output. The reviewer can record a disagreement. Failed programs, empty output and diagnostic messages do not supply a final value. An answer that depends on model-written code still carries the UNVERIFIED label.
+
+## Before and after
+
+| New development cases, offline 2 GB tier | Accepted Phase 2 | Final Phase 3 rerun |
+| --- | ---: | ---: |
+| Wrong document claims accepted and stored as verified | 8/8 | **0/8** |
+| Correct document claims accepted and stored as verified | 7/7 | 7/7 |
+| Legacy notes with correct status and recall | 8/17 | **17/17** |
+| Calculator disagreement, failure and control cases passed | 1/7 | **7/7** |
+| Real-model document jobs passed, including one missing fact | 8/8 | 8/8 |
+| Real-model arithmetic answers correct | 2/3 | 2/3 |
+| Total elapsed time, including the delayed reply | 149.393 s | 126.702 s |
+| Peak workload RAM | 2,048 MiB | 2,048 MiB |
+
+The paired runs used the same frozen Qwen2.5-Coder-1.5B model, one CPU thread, a hard 2 GiB limit, zero swap and loopback only. The baseline was `bf8a6162b0b2dbd129be591e7134b0563008e778`. The measured candidate was `8f77a44045ff0a1768d14c8861c47e55bc74d986`. The controlled cases deliberately supplied wrong claims and conflicting reviews. The real-model rows used the model’s own replies. [Conditions, per-case results and all attempts](benchmark/astra/results/phase3.md)
+
+## What happened to old notes
+
+Opening an existing knowledge database now checks old verified document findings against the original saved answers and indexed pages. In the upgrade test, eight wrong notes and one note whose page could no longer be found were marked outdated and disappeared from normal recall. Seven supported findings and an unrelated verified fix remained. A second open produced the same result. Quarantine preserves the original text, record ID and usage history. The upgrade ran on seeded old-format databases here. The cloud workspace had no owner database at the default path.
+
+## Delayed phone reply
+
+The banner question stayed open with no interim answer or consumed attempt. I stopped its phone server and loaded model after 15 seconds, started a fresh phone server on the same home, and waited another 15 seconds. The original pairing submitted “4 metres” after 31.392 seconds. The same job returned **44 square metres**. The accepted baseline passed this check too. [Polls, process IDs and delivered answer](benchmark/astra/results/facts-candidate-rerun1.json)
+
+## What failed and what I would try next
+
+A model-written program produced 1,037,836,800 for a product whose correct value is 384. NEURON faithfully delivered that number with its unverified label. The document checker can also abstain on a supported fact expressed in unfamiliar language. I would next test paraphrases, table headings and qualified statements, alongside examples where an independent calculation can detect a mistaken program. The first benchmark attempt lost the phone check to a guest memory-mapping failure. Both paired reruns finished under the original limit.
+
+## Verification
+
+All 215 selected unit and development tests passed. The host ran 212. Three additional sandbox resource tests passed in capped guests. The process-limit guest logged a shutdown error after its first successful test. Its labeled rerun exited cleanly. Six tests that load held-out fixtures were excluded. The regression tests cover source and unit swaps, quotation context, changed answer files, upgrade idempotence, review disagreement, failed programs and delayed replies.
+
+---
+
 # Astra phase 2
 
 NEURON now pauses an ordinary question when it identifies a required fact the owner has not supplied. The phone shows the missing detail, saves the reply and continues the same job. A restart preserves the question. Re-sending the same reply does not start another job.
