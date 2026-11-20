@@ -46,5 +46,24 @@ class WiderRepair(unittest.TestCase):
         self.assertFalse([m for m in mutants(src, 1, 4) if m[0] in (2, 3) and m[3].split(":")[0] in ("scale", "drop", "slice")])
 
 
+class EditMatching(unittest.TestCase):
+    """Core proof B4, 4 GB run 1: the model's diagnosis was right but its edit 'could not be applied'."""
+    FN = "function share(total, pct) {\n  return total - total * pct;\n}"
+    FILE = "// split\n" + FN + "\nmodule.exports = { share };\n"
+
+    def test_spacing_and_semicolon_do_not_stop_an_edit(self):
+        from neuron.builder.bugfix import apply_edit
+        r = apply_edit(self.FILE, self.FN, "```js\nreturn total-total*pct\n```\n```js\nreturn total - total * pct / 100;\n```")
+        self.assertIn("total * pct / 100;", r)
+
+    def test_a_one_line_fragment_is_replaced_where_it_occurs_once(self):
+        from neuron.builder.bugfix import apply_edit
+        r = apply_edit(self.FILE, self.FN, "```\ntotal * pct\n```\n```\ntotal * pct / 100\n```")
+        self.assertIn("return total - total * pct / 100;", r)
+
+    def test_percentage_used_as_a_fraction_is_a_candidate_change(self):
+        self.assertTrue(any("/ 100" in m[2] for m in mutants(self.FILE, 2, 4)))
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -116,6 +116,7 @@ def mutants(text, first, last, limit=140):
 DEC = re.compile(r"(?<![\w.])(\d+\.\d+)(?![\w.])")
 DROP = re.compile(r"\s*[*/]\s*\d+(?:\.\d+)?(?![\w.])")
 INDEX = re.compile(r"(?<=[\w)\]])\[(\d)\]")
+PERCENT = re.compile(r"\*\s*[A-Za-z_.]*(?:percent|pct|percentage)\w*(?!\s*/)", re.I)
 WIDER = {"drop": 5, "scale": 6, "slice": 7, "delete": 8}
 
 
@@ -138,6 +139,8 @@ def _wider_mutants(n, line, code, lines, first, last):
         for nv in ((v * 10, v // 10) if v % 10 == 0 and v else (v * 10,)):
             if nv > 0:
                 out.append((n, line, line[:m.start()] + str(nv) + line[m.end():], f"scale: {v} -> {nv}"))
+    for m in PERCENT.finditer(code):          # a percentage used as a fraction: x * percent -> x * percent / 100
+        out.append((n, line, line[:m.end()] + " / 100" + line[m.end():], f"drop: added '/ 100' after '{m.group(0).strip()}'"))
     for m in INDEX.finditer(code):
         k = int(m.group(1))
         for sl in (f"[:{k + 1}]", f"[:{k + 2}]", f"[{k}:]"):

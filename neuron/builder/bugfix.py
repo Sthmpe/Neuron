@@ -64,20 +64,33 @@ def apply_edit(file_text, function_source, reply):
     if not old or [l.strip() for l in new if l.strip()] == old:
         return None
     fn_lines = function_source.splitlines()
-    for i in range(len(fn_lines)):
-        j, k = i, 0
-        while j < len(fn_lines) and k < len(old):
-            if not fn_lines[j].strip():
-                j += 1
-                continue
-            if fn_lines[j].strip() != old[k]:
-                break
-            j, k = j + 1, k + 1
-        if k == len(old):
-            first = fn_lines[i]
-            indent = first[: len(first) - len(first.lstrip())]
-            changed = fn_lines[:i] + [(indent + l if l.strip() else l) for l in new] + fn_lines[j:]
-            new_fn = "\n".join(changed)
+    # Lines match exactly (stripped), or failing that with spacing and a trailing ';' ignored: a model that copies
+    # "price-price*percent" for "price - price * percent" still means that line (core proof B4, 4 GB run 1: the model's
+    # diagnosis was right, but its edit "could not be applied").
+    loose = lambda l: re.sub(r"\s+", "", l).rstrip(";")
+    for same in (lambda a, b: a.strip() == b, lambda a, b: loose(a) == loose(b)):
+        for i in range(len(fn_lines)):
+            j, k = i, 0
+            while j < len(fn_lines) and k < len(old):
+                if not fn_lines[j].strip():
+                    j += 1
+                    continue
+                if not same(fn_lines[j], old[k]):
+                    break
+                j, k = j + 1, k + 1
+            if k == len(old):
+                first = fn_lines[i]
+                indent = first[: len(first) - len(first.lstrip())]
+                changed = fn_lines[:i] + [(indent + l if l.strip() else l) for l in new] + fn_lines[j:]
+                new_fn = "\n".join(changed)
+                return file_text.replace(function_source, new_fn, 1) if function_source in file_text else None
+    # a fragment of one line ("price * percent" -> "price * percent / 100"), when it occurs in exactly one line
+    new_s = [l.strip() for l in new if l.strip()]
+    if len(old) == 1 and len(new_s) == 1:
+        hits = [i for i, l in enumerate(fn_lines) if old[0] in l]
+        if len(hits) == 1:
+            fn_lines[hits[0]] = fn_lines[hits[0]].replace(old[0], new_s[0], 1)
+            new_fn = "\n".join(fn_lines)
             return file_text.replace(function_source, new_fn, 1) if function_source in file_text else None
     return None
 
