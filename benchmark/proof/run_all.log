@@ -324,3 +324,65 @@ Traceback (most recent call last):
 PermissionError: [Errno 13] Permission denied
 RUN FAILED 4gb 3
 ALL-PROOF-RUNS-DONE
+PROOF-DONE 2gb-run1
+PROOF-DONE 4gb-run1
+PROOF-DONE 2gb-run2
+4gb-run2 A5_library_loans bare: not solved | 5/14 | 840.9s | peak 4087 MB | calls 13 | claims stopped: model errors
+4gb-run2 A6_gym_members bare: not solved | 10/12 | 185.6s | peak 4076 MB | calls 3 | claims stopped: no report
+4gb-run2 A6_gym_members neuron: not solved | 6/12 | 158.1s | peak 4078 MB | calls 3 | claims VERIFIED
+4gb-run2 A7_event_tickets neuron: not solved | 8/15 | 261.6s | peak 4062 MB | calls 4 | claims VERIFIED
+4gb-run2 A7_event_tickets bare: not solved | 5/15 | 436.7s | peak 4086 MB | calls 8 | claims stopped: model errors
+4gb-run2 A8_repair_shop_site bare: not solved | 0/1 | 355.2s | peak 4086 MB | calls 9 | claims stopped: model errors
+4gb-run2 A8_repair_shop_site neuron: not solved | 0/1 | 0.5s | peak 12 MB | calls 0 | claims PARTIAL
+4gb-run2 B1_py_invoice neuron: SOLVED | 2/2 | 98.1s | peak 3882 MB | calls 4 | claims VERIFIED
+4gb-run2 B1_py_invoice bare: SOLVED | 2/2 | 161.6s | peak 4078 MB | calls 3 | claims DONE
+4gb-run2 B2_py_inventory bare: SOLVED | 2/2 | 117.1s | peak 4075 MB | calls 3 | claims DONE
+4gb-run2 B2_py_inventory neuron: SOLVED | 2/2 | 45.0s | peak 3878 MB | calls 2 | claims VERIFIED
+4gb-run2 B3_py_schedule neuron: SOLVED | 2/2 | 60.0s | peak 3886 MB | calls 2 | claims VERIFIED
+4gb-run2 B3_py_schedule bare: not solved | 0/2 | 43.5s | peak 4028 MB | calls 3 | claims stopped: the same reply 3 times in a row
+4gb-run2 B4_js_cart bare: SOLVED | 2/2 | 78.5s | peak 4021 MB | calls 3 | claims DONE
+4gb-run2 B4_js_cart neuron: not solved | 0/2 | 337.6s | peak 3976 MB | calls 12 | claims PARTIAL
+4gb-run2 B5_js_csv neuron: SOLVED | 2/2 | 95.5s | peak 3868 MB | calls 2 | claims VERIFIED
+4gb-run2 B5_js_csv bare: SOLVED | 2/2 | 111.5s | peak 4025 MB | calls 3 | claims DONE
+4gb-run2 B6_go_payroll bare: SOLVED | 2/2 | 288.1s | peak 4071 MB | calls 6 | claims DONE
+4gb-run2 B6_go_payroll neuron: not solved | 0/2 | 346.6s | peak 4073 MB | calls 7 | claims PARTIAL
+4gb-run2 B7_go_stats neuron: SOLVED | 2/2 | 112.1s | peak 4052 MB | calls 3 | claims VERIFIED
+4gb-run2 B7_go_stats bare: SOLVED | 2/2 | 123.6s | peak 4067 MB | calls 3 | claims DONE
+4gb-run2 B8_cpp_bank bare: SOLVED | 2/2 | 226.6s | peak 3978 MB | calls 2 | claims DONE
+4gb-run2 B8_cpp_bank neuron: SOLVED | 2/2 | 39.5s | peak 3836 MB | calls 2 | claims VERIFIED
+4gb-run2 C1_py_invoice_discounts neuron: not solved | 0/2 | 12.0s | peak 3765 MB | calls 1 | claims VERIFIED
+4gb-run2 C1_py_invoice_discounts bare: not solved | 0/2 | 72.5s | peak 3928 MB | calls 2 | claims DONE
+4gb-run2 C2_py_inventory_export bare: SOLVED | 2/2 | 64.5s | peak 3925 MB | calls 2 | claims DONE
+4gb-run2 C2_py_inventory_export neuron: not solved | 0/2 | 780.4s | peak 3927 MB | calls 9 | claims no report
+4gb-run2 C3_js_cart_delivery neuron: not solved | 1/2 | 13.0s | peak 3784 MB | calls 1 | claims VERIFIED
+4gb-run2 C3_js_cart_delivery bare: SOLVED | 2/2 | 484.7s | peak 4085 MB | calls 8 | claims stopped: model errors
+4gb-run2 C4_go_payroll_payslip bare: SOLVED | 2/2 | 124.6s | peak 4054 MB | calls 3 | claims DONE
+4gb-run2 C4_go_payroll_payslip neuron: not solved | 0/2 | 780.3s | peak 3883 MB | calls 7 | claims no report
+4gb-run2 C5_py_notes_search neuron: not solved | 0/2 | 780.3s | peak 3926 MB | calls 14 | claims no report
+4gb-run2 C5_py_notes_search bare: not solved | 0/2 | 79.5s | peak 3928 MB | calls 2 | claims DONE
+4gb-run2 C6_js_todo_overdue bare: not solved | 1/2 | 68.5s | peak 3918 MB | calls 2 | claims DONE
+4gb-run2 C6_js_todo_overdue neuron: not solved | 1/2 | 13.0s | peak 3814 MB | calls 1 | claims VERIFIED
+4gb-run2 C7_cpp_shapes_triangle neuron: not solved | 0/2 | 780.4s | peak 3944 MB | calls 9 | claims no report
+4gb-run2 C7_cpp_shapes_triangle bare: SOLVED | 2/2 | 115.0s | peak 3978 MB | calls 2 | claims DONE
+4gb-run2 C8_py_units_temperature bare: SOLVED | 2/2 | 84.0s | peak 3920 MB | calls 2 | claims DONE
+4gb-run2 C8_py_units_temperature neuron: not solved | 0/2 | 20.0s | peak 3754 MB | calls 2 | claims VERIFIED
+4gb-run2 D1_excel_regional_sales neuron: SOLVED | 10/10 | 29.0s | peak 3958 MB | calls 1 | claims VERIFIED
+4gb-run2 D1_excel_regional_sales bare: not solved | 8/10 | 540.2s | peak 4043 MB | calls 4 | claims stopped: no report
+4gb-run2 D2_excel_staff_costs bare: not solved | 7/9 | 530.8s | peak 4085 MB | calls 6 | claims stopped: time budget used up
+4gb-run2 D2_excel_staff_costs neuron: SOLVED | 9/9 | 28.0s | peak 3941 MB | calls 1 | claims VERIFIED
+4gb-run2 D3_excel_expenses neuron: SOLVED | 7/7 | 27.5s | peak 3932 MB | calls 1 | claims VERIFIED
+4gb-run2 D3_excel_expenses bare: not solved | 2/7 | 497.2s | peak 4084 MB | calls 5 | claims stopped: time budget used up
+4gb-run2 D4_word_repair_request bare: not solved | 3/5 | 229.6s | peak 4084 MB | calls 3 | claims DONE
+4gb-run2 D4_word_repair_request neuron: not solved | 3/5 | 363.7s | peak 3908 MB | calls 16 | claims PARTIAL
+4gb-run2 D5_word_leave_policy neuron: not solved | 4/5 | 284.6s | peak 3907 MB | calls 11 | claims VERIFIED
+4gb-run2 D5_word_leave_policy bare: not solved | 4/5 | 540.3s | peak 4057 MB | calls 5 | claims stopped: no report
+4gb-run2 D6_pptx_cooperative_agm bare: SOLVED | 9/9 | 367.7s | peak 4062 MB | calls 4 | claims DONE
+4gb-run2 D6_pptx_cooperative_agm neuron: SOLVED | 9/9 | 83.5s | peak 3893 MB | calls 1 | claims VERIFIED
+4gb-run2 D7_pptx_fire_safety neuron: SOLVED | 9/9 | 54.5s | peak 3976 MB | calls 1 | claims VERIFIED
+4gb-run2 D7_pptx_fire_safety bare: not solved | 7/9 | 540.2s | peak 4085 MB | calls 6 | claims stopped: no report
+4gb-run2 D8_pdf_clinic_report bare: not solved | 6/12 | 45.5s | peak 4076 MB | calls 3 | claims DONE
+4gb-run2 D8_pdf_clinic_report neuron: SOLVED | 12/12 | 278.1s | peak 3876 MB | calls 18 | claims PARTIAL
+PROOF-DONE 4gb-run2
+2gb-run3 A1_pharmacy bare: not solved | 0/2 | 256.6s | peak 1446 MB | calls 2 | claims DONE
+2gb-run3 A1_pharmacy neuron: not solved | 13/16 | 129.6s | peak 1671 MB | calls 8 | claims VERIFIED
+2gb-run3 A2_tailor neuron: SOLVED | 14/14 | 84.5s | peak 1694 MB | calls 4 | claims VERIFIED
