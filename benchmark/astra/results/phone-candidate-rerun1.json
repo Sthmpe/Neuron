@@ -1,0 +1,378 @@
+{
+  "label": "phone-candidate-rerun1",
+  "revision": "081dcec78e4626cce59437892d79b63939734306",
+  "fixture_sha256": "07ec95ac6aa46ed044fe30507e07bdba2735b30dc61e35e872e1f1767d29ea82",
+  "driver_sha256": "a8a9cdae59c9d3d8ef9eb2dfe394578c82ad0fc0a21c589b5c4faac6abd7113d",
+  "model": "qwen2.5-coder-1.5b-q4",
+  "model_sha256": "cc324af070c2ecbfd324a30884d2f951a7ff756aba85cb811a6ec436933bb046",
+  "server_sha256": "9c3d3ae64b901e552479582971e0a4cb90a8a1a71bbebf0a695a24fec4b4c888",
+  "seed": 71,
+  "threads": 1,
+  "context": 8192,
+  "environment": {
+    "cgroup": "/astra",
+    "memory.max": "2147483648",
+    "memory.swap.max": "0",
+    "interfaces": [
+      "lo"
+    ],
+    "external_probe": "[Errno 101] Network is unreachable",
+    "kernel": "6.12.113",
+    "python": "3.12.14"
+  },
+  "rows": [
+    {
+      "id": "mat-width",
+      "job": "20261120-053232-18bc",
+      "thread_jobs": [
+        "20261120-053232-18bc"
+      ],
+      "states": [
+        "queued",
+        "running",
+        "waiting_input",
+        "done"
+      ],
+      "turns": [
+        {
+          "question": "What is the width of the rectangular mat?",
+          "interim_answer": "",
+          "interim_outputs": [],
+          "fields": [
+            0
+          ],
+          "owner": "4 cm"
+        }
+      ],
+      "status": "done",
+      "answer": "36 square centimetres\n\nUnverified. NEURON interpreted the inputs and calculated 9 * 4.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 1,
+        "tokens": 96,
+        "model_seconds": 12.8,
+        "online_calls": 0,
+        "sessions": 2
+      },
+      "seconds": 13.119
+    },
+    {
+      "id": "mat-width-twin",
+      "job": "20261120-053245-1423",
+      "thread_jobs": [
+        "20261120-053245-1423"
+      ],
+      "states": [
+        "queued",
+        "running",
+        "waiting_input",
+        "done"
+      ],
+      "turns": [
+        {
+          "question": "What is the width of the rectangular mat?",
+          "interim_answer": "",
+          "interim_outputs": [],
+          "fields": [
+            0
+          ],
+          "owner": "7 cm"
+        }
+      ],
+      "status": "done",
+      "answer": "63 square centimetres\n\nUnverified. NEURON interpreted the inputs and calculated 9 * 7.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 1,
+        "tokens": 96,
+        "model_seconds": 5.3,
+        "online_calls": 0,
+        "sessions": 2
+      },
+      "seconds": 5.589
+    },
+    {
+      "id": "bike-time",
+      "job": "20261120-053250-0ef2",
+      "thread_jobs": [
+        "20261120-053250-0ef2"
+      ],
+      "states": [
+        "running",
+        "waiting_input",
+        "done"
+      ],
+      "turns": [
+        {
+          "question": "How long did you cycle?",
+          "interim_answer": "",
+          "interim_outputs": [],
+          "fields": [
+            0
+          ],
+          "owner": "3 hours"
+        }
+      ],
+      "status": "done",
+      "answer": "14 km per hour\n\nUnverified. NEURON interpreted the inputs and calculated 42 / 3.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 1,
+        "tokens": 93,
+        "model_seconds": 6.0,
+        "online_calls": 0,
+        "sessions": 2
+      },
+      "seconds": 6.285
+    },
+    {
+      "id": "ticket-count",
+      "job": "20261120-053257-1a72",
+      "thread_jobs": [
+        "20261120-053257-1a72"
+      ],
+      "states": [
+        "running",
+        "waiting_input",
+        "done"
+      ],
+      "turns": [
+        {
+          "question": "How many tickets did you buy?",
+          "interim_answer": "",
+          "interim_outputs": [],
+          "fields": [
+            0
+          ],
+          "owner": "5 tickets"
+        }
+      ],
+      "status": "done",
+      "answer": "30 dollars\n\nUnverified. NEURON interpreted the inputs and calculated 5 * 6.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 1,
+        "tokens": 94,
+        "model_seconds": 6.0,
+        "online_calls": 0,
+        "sessions": 2
+      },
+      "seconds": 6.173
+    },
+    {
+      "id": "opening-balance",
+      "job": "20261120-053303-2adc",
+      "thread_jobs": [
+        "20261120-053303-2adc"
+      ],
+      "states": [
+        "running",
+        "waiting_input",
+        "done"
+      ],
+      "turns": [
+        {
+          "question": "What was the starting amount before that change?",
+          "interim_answer": "",
+          "interim_outputs": [],
+          "fields": [
+            0
+          ],
+          "owner": "50 dollars"
+        }
+      ],
+      "status": "done",
+      "answer": "37 dollars\n\nUnverified. NEURON interpreted the inputs and calculated 50 - 13.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 0,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.327
+    },
+    {
+      "id": "paint-two-inputs",
+      "job": "20261120-053303-49e9",
+      "thread_jobs": [
+        "20261120-053303-49e9"
+      ],
+      "states": [
+        "running",
+        "waiting_input",
+        "done"
+      ],
+      "turns": [
+        {
+          "question": "What is the length of your rectangular painting in metres?",
+          "interim_answer": "",
+          "interim_outputs": [],
+          "fields": [
+            0
+          ],
+          "owner": "The length is 8 metres."
+        },
+        {
+          "question": "What is the width of your rectangular painting in metres?",
+          "interim_answer": "",
+          "interim_outputs": [],
+          "fields": [
+            1
+          ],
+          "owner": "The width is 3 metres."
+        }
+      ],
+      "status": "done",
+      "answer": "24 square metres\n\nUnverified. NEURON interpreted the inputs and calculated 8 * 3.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 1,
+        "tokens": 91,
+        "model_seconds": 5.7,
+        "online_calls": 0,
+        "sessions": 2
+      },
+      "seconds": 6.062
+    },
+    {
+      "id": "local-label",
+      "job": "20261120-053309-daee",
+      "thread_jobs": [
+        "20261120-053309-daee"
+      ],
+      "states": [
+        "running",
+        "waiting_input",
+        "done"
+      ],
+      "turns": [
+        {
+          "question": "What label did you put on your storage box?",
+          "interim_answer": "",
+          "interim_outputs": [],
+          "fields": [
+            0
+          ],
+          "owner": "Winter postcards"
+        }
+      ],
+      "status": "done",
+      "answer": "Winter postcards\n\nUnverified. You supplied this fact in your reply.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 0,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.342
+    },
+    {
+      "id": "complete-mat",
+      "job": "20261120-053310-1797",
+      "thread_jobs": [
+        "20261120-053310-1797"
+      ],
+      "states": [
+        "running",
+        "done"
+      ],
+      "turns": [],
+      "status": "done",
+      "answer": "45\n\nUnverified. The model used a second pass.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 3,
+        "tokens": 178,
+        "model_seconds": 14.3,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 14.363
+    },
+    {
+      "id": "complete-zero",
+      "job": "20261120-053324-91f7",
+      "thread_jobs": [
+        "20261120-053324-91f7"
+      ],
+      "states": [
+        "running",
+        "done"
+      ],
+      "turns": [],
+      "status": "done",
+      "answer": "0\n\nUnverified. The model used a second pass.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 3,
+        "tokens": 127,
+        "model_seconds": 15.9,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 16.009
+    },
+    {
+      "id": "arithmetic",
+      "job": "20261120-053340-7943",
+      "thread_jobs": [
+        "20261120-053340-7943"
+      ],
+      "states": [
+        "running",
+        "done"
+      ],
+      "turns": [],
+      "status": "done",
+      "answer": "41\n",
+      "verdict": "VERIFIED",
+      "usage": {
+        "model_calls": 0,
+        "tokens": 0,
+        "model_seconds": 0.0,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 0.171
+    },
+    {
+      "id": "concept",
+      "job": "20261120-053340-7810",
+      "thread_jobs": [
+        "20261120-053340-7810"
+      ],
+      "states": [
+        "running",
+        "done"
+      ],
+      "turns": [],
+      "status": "done",
+      "answer": "A thermometer measures temperature.\n\nUnverified. The local model supplied this answer.\n",
+      "verdict": "UNVERIFIED",
+      "usage": {
+        "model_calls": 1,
+        "tokens": 6,
+        "model_seconds": 1.8,
+        "online_calls": 0,
+        "sessions": 1
+      },
+      "seconds": 1.812
+    }
+  ],
+  "seconds": 86.489,
+  "peak_bytes": 2147483648,
+  "events": [
+    "low 0",
+    "high 0",
+    "max 1409",
+    "oom 0",
+    "oom_kill 0",
+    "oom_group_kill 0"
+  ],
+  "loads": 1,
+  "load_seconds": 15.529
+}
