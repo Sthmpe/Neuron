@@ -2,9 +2,10 @@
 calculation helps, then check the answer once. Nothing here knows about any benchmark."""
 import re
 import tempfile
+from pathlib import Path
 
 SOLVE_SYSTEM = ("You solve problems carefully and briefly. If a calculation or a check by code would help, write one short "
-                "Python program in a ```python block that prints what you need; you will be shown its output. "
+                "Python program in a ```python block that prints the complete final answer to stdout. Use stderr for diagnostics. "
                 "Finish with a final line exactly like: Answer: <your answer>")
 CHECK_SYSTEM = ("You check a proposed solution. Look for mistakes in reasoning and arithmetic. If it is right, keep the answer; "
                 "if it is wrong, correct it. Be brief. Finish with a final line exactly like: Answer: <your answer>")
@@ -21,27 +22,41 @@ def python_block(text):
 
 
 def solve(chat, sandbox, question, max_tool_rounds=2, max_tokens=400):
-    """chat(messages, max_tokens) -> LLMReply. Returns {"answer", "first_answer", "tool_runs", "calls", "tokens", "transcript"}."""
+    """A successful program owns the result. A review can revise a model-only answer."""
     msgs = [{"role": "system", "content": SOLVE_SYSTEM}, {"role": "user", "content": question}]
     calls = tokens = tool_runs = 0
     reply = ""
+    computed = None
     for rnd in range(max_tool_rounds + 1):
         r = chat(msgs, max_tokens)
         calls, tokens, reply = calls + 1, tokens + r.completion_tokens, r.text
         code = python_block(reply)
-        if code and not final_answer(reply) and rnd < max_tool_rounds and sandbox is not None:
-            with tempfile.TemporaryDirectory() as d:
-                (__import__("pathlib").Path(d) / "calc.py").write_text(code)
-                out = sandbox.run(["python3", "calc.py"], d, timeout=20)
-            tool_runs += 1
-            msgs += [{"role": "assistant", "content": reply},
-                     {"role": "user", "content": f"Output of your program:\n{out.output.strip()[:1500] or '(nothing printed)'}\n"
-                                                 "Continue, and finish with: Answer: <your answer>"}]
-            continue
-        break
+        if not code or rnd == max_tool_rounds or sandbox is None:
+            break
+        with tempfile.TemporaryDirectory() as directory:
+            (Path(directory) / "calc.py").write_text(code)
+            out = sandbox.run(["python3", "calc.py"], directory, timeout=20, capture_stdout=True)
+        tool_runs += 1
+        if out.ok and out.stdout and out.stdout.strip():
+            computed = out.stdout.rstrip("\r\n")
+            break
+        msgs.extend([{"role": "assistant", "content": reply}, {"role": "user", "content":
+            f"The program did not produce a complete successful result. Diagnostics:\n{out.output[:1500]}\n"
+            "Correct the program and print the final answer."}])
+
     first = final_answer(reply)
-    chk = chat([{"role": "system", "content": CHECK_SYSTEM},
-                {"role": "user", "content": f"Problem:\n{question}\n\nProposed solution:\n{reply[-2500:]}\n\nCheck it."}], max_tokens)
-    calls, tokens = calls + 1, tokens + chk.completion_tokens
-    final = final_answer(chk.text) or first
-    return {"answer": final, "first_answer": first, "tool_runs": tool_runs, "calls": calls, "tokens": tokens}
+    review = ""
+    if computed is not None or not tool_runs:
+        evidence = f"\n\nOutput of your program:\n{computed[:1500]}" if computed is not None else ""
+        try:
+            chk = chat([{"role": "system", "content": CHECK_SYSTEM}, {"role": "user", "content":
+                        f"Problem:\n{question}\n\nProposed solution:\n{reply[-2500:]}{evidence}\n\nCheck it."}], max_tokens)
+            calls, tokens = calls + 1, tokens + chk.completion_tokens
+            review = final_answer(chk.text)
+        except Exception:
+            # A failed advisory review must not discard a successful execution.
+            if computed is None:
+                raise
+    answer = computed if computed is not None else "" if tool_runs else (review or first)
+    return {"answer": answer, "first_answer": first or computed or "", "tool_runs": tool_runs, "calls": calls, "tokens": tokens,
+            "computed": computed is not None, "review_answer": review}

@@ -177,7 +177,11 @@ class AnswerQuestion(Capability):
             s = solve(lambda m, n: job.chat("builder", m, max_tokens=n, temperature=0.1), job.sandbox, q)
             text = s["answer"]
             result["tool_runs"] = s["tool_runs"]
-            method = f"The model used {s['tool_runs']} Python run(s) and a second pass." if s["tool_runs"] else "The model used a second pass."
+            result["computed"] = s["computed"]
+            method = (f"The answer is the output of {s['tool_runs']} Python run(s). The program was written by the model."
+                      if s["computed"] else "The model used a second pass.")
+            if s["computed"]:
+                result["review_answer"] = s["review_answer"]
         elif text is None:
             mem = job.memory_context() if hasattr(job, "memory_context") else ""
             text = job.ask_text("builder", "You are NEURON, an offline assistant. Answer clearly. If a specific input only the owner "
@@ -188,7 +192,7 @@ class AnswerQuestion(Capability):
             missing = re.fullmatch(r"NEED_INPUT\s*:?\s*(.{4,220}\?)", text or "", re.I)
             if missing:
                 raise NeedsOwnerInput(missing[1])
-        answer = (text if supplied and supplied.made_by == "owner" else clean(text or "")).strip()
+        answer = text if result.get("computed") else (text if supplied and supplied.made_by == "owner" else clean(text or "")).strip()
         if not answer:
             return Outcome(False, "the local model did not supply a final answer")
         (job.workspace / "answer.md").write_text(f"{answer}\n\nUnverified. {method}\n")
@@ -197,11 +201,11 @@ class AnswerQuestion(Capability):
     def verify(self, job, params, outcome):
         from ..arithmetic import exact_answer
         path = job.workspace / "answer.md"
-        delivered = path.read_text().strip() if path.is_file() else ""
+        delivered = path.read_text() if path.is_file() else ""
         exact = exact_answer(job.state.goal()["request"])
         if exact is not None:
             expression, expected = exact
-            ok = delivered == expected
+            ok = delivered.strip() == expected
             return Verdict(ok, [{"id": "exact_arithmetic", "pass": ok, "detail": f"{expression} = {expected}"}],
                            "exact rational arithmetic checked against answer.md")
         answer = outcome.result.get("answer", "")

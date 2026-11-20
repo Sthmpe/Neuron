@@ -31,6 +31,7 @@ import tempfile
 import threading
 import time
 import uuid
+from contextlib import nullcontext
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -92,6 +93,7 @@ class SandboxResult:
     oom_killed: bool
     duration: float
     peak_mem_bytes: int
+    stdout: str | None = None
 
     @property
     def ok(self):
@@ -264,7 +266,7 @@ class Sandbox:
             return scope_prefix(mem_bytes, self.max_procs), None
         return [], (max(4 * mem_bytes, 4 << 30) if self.toolchains else mem_bytes)
 
-    def run(self, argv, workspace, timeout=None):
+    def run(self, argv, workspace, timeout=None, *, capture_stdout=False):
         timeout = timeout or self.timeout
         mem_bytes = self.mem_mb * 1024 * 1024
         cmd = self._bwrap(workspace)
@@ -290,9 +292,9 @@ class Sandbox:
 
         start = time.time()
         timed_out = False
-        with tempfile.TemporaryFile() as out:
+        with tempfile.TemporaryFile() as out, (tempfile.TemporaryFile() if capture_stdout else nullcontext()) as err:
             try:
-                proc = subprocess.Popen(cmd, stdin=subprocess.DEVNULL, stdout=out, stderr=subprocess.STDOUT,
+                proc = subprocess.Popen(cmd, stdin=subprocess.DEVNULL, stdout=out, stderr=err if capture_stdout else subprocess.STDOUT,
                                         preexec_fn=preexec, pass_fds=pass_fds, cwd="/")
                 try:
                     code = proc.wait(timeout=timeout)
@@ -307,10 +309,18 @@ class Sandbox:
                 cg.close()
             out.seek(0)
             data = out.read(self.max_output_bytes + 1)
+            stdout = None
+            if capture_stdout:
+                if len(data) <= self.max_output_bytes:
+                    stdout = data.decode("utf-8", "replace")
+                err.seek(0)
+                diagnostic = err.read(max(0, self.max_output_bytes + 1 - len(data)))
+                if diagnostic:
+                    data += (b"\n" if data and not data.endswith(b"\n") else b"") + diagnostic
         text = data[: self.max_output_bytes].decode("utf-8", "replace")
         if len(data) > self.max_output_bytes:
             text += "\n[output truncated]"
-        return SandboxResult(code, text, timed_out, oom, time.time() - start, peak)
+        return SandboxResult(code, text, timed_out, oom, time.time() - start, peak, stdout)
 
     def start(self, argv, workspace, port=8000):
         """Start a long-running program (a web app) in the sandbox and make its port reachable
