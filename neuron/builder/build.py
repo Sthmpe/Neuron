@@ -256,8 +256,15 @@ def build_full(project, request, runner, sandbox, log=print, max_seconds=None, d
             m = images.prepare(project, site_images.slots(request, spec), (r["dominant"], r["support"], r["accent"]), owner_photos=photos)
             spec["images"] = [{"slot": x["slot"], "file": x["file"], "alt": x["purpose"]} for x in m.slots]
             log(f"pictures: {m.summary()}")
+        rule, why = relations.infer_missing_rule(request, spec)
+        if rule:
+            spec["rules"] = [rule]
+            spec.setdefault("inferred", []).append(why)
+        threshold_notes = relations.plain_threshold_labels(spec)
         tasks, acceptance, purposes = expand(spec)
-        spec["not_built"] = unsupported_features(request, spec) + relations.dropped_gaps(request, spec)
+        spec["not_built"] = unsupported_features(request, spec) + relations.dropped_gaps(request, spec) + \
+            (["the rule the request describes (" + why + ")"] if why and not rule and not spec.get("rules") and
+             re.search(relations.BLOCK_WORDS, request, re.I) else [])
         if spec["not_built"]:
             log(f"cannot build yet (will be reported): {spec['not_built']}")
         prepare_project(project, spec["app_name"], design)
@@ -268,9 +275,11 @@ def build_full(project, request, runner, sandbox, log=print, max_seconds=None, d
             log(f"design: {look['mood']} / {look['palette']['name']} / hero {look['variants']['hero']}")
         for d in spec.get("dropped", []):
             state.decide("plan", "dropped", d)
+        for d in spec.get("inferred", []):
+            state.decide("plan", "from the request", d)
         for n in spec.get("content_notes", []):
             state.decide("plan", "content", n)
-        for n in label_changes:
+        for n in label_changes + threshold_notes:
             state.decide("plan", "owner words", n)
         state.decide("plan", "spec", f"planned a {spec['kind']} called {spec['app_name']} with tasks: "
                      + ", ".join(t["id"] for t in tasks))

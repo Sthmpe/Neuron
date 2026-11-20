@@ -225,3 +225,61 @@ def rule_checks(spec, auth, on_add=None):
         checks.append({"name": f"adding a {on['label'].lower()} {'lowers' if r['change'] == 'subtract' else 'raises'} the "
                                f"{target['label'].lower()}'s {label(r['target_field']).lower()}", "steps": steps})
     return checks
+
+
+AMOUNT_NAMES = r"quantit|qty|amount|units?|copies|seats|tickets|number|count|pieces|items|taken|sold|bought|out"
+STOCK_NAMES = r"stock|copies|seats|units|left|available|on_hand|in_stock|quantity|balance|remaining|shelf|capacity"
+NOT_STOCK = r"price|fee|cost|rate|salary|amount_paid|total"
+BLOCK_WORDS = r"\b(refus\w*|reject\w*|not enough|cannot|can't|block\w*|prevent\w*|insufficient|too (?:many|much)|stop\w*)\b"
+UP_WORDS = r"\b(go(?:es)? up|increas\w*|rais\w*|add\w* to (?:the|its))\b"
+DOWN_WORDS = r"\b(go(?:es)? down|reduc\w*|decreas\w*|lower\w*|subtract\w*|deduct\w*|take\w*\b[^.]{0,30}\b(?:off|away|out|from))\b"
+
+
+def infer_missing_rule(request, spec):
+    """The owner asked for a number to change when a record is added ("the stock must go down, and the sale must be
+    refused if there is not enough") but the plan has no rule (core proof A1, 2 GB: the planner left rules empty and the
+    build still reported VERIFIED). If exactly one linked pair of records fits, the rule is built from the request's own
+    words; otherwise None, and the caller reports it as not built. Returns (rule, note) or (None, reason)."""
+    import re
+    if spec.get("rules") or not re.search(DOWN_WORDS + "|" + UP_WORDS, request or "", re.I):
+        return None, ""
+    ents = {e["name"]: e for e in spec.get("entities", [])}
+    fits = []
+    for child in spec.get("entities", []):
+        for lf in links_of(child):
+            target = ents.get(lf["to"])
+            if not target:
+                continue
+            amounts = [f for f in child["fields"] if f["type"] == "number" and not re.search(NOT_STOCK, f["name"], re.I)]
+            stocks = [f for f in target["fields"] if f["type"] == "number" and not re.search(NOT_STOCK, f["name"], re.I)]
+            amounts.sort(key=lambda f: not re.search(AMOUNT_NAMES, f["name"], re.I))
+            stocks.sort(key=lambda f: not re.search(STOCK_NAMES, f["name"], re.I))
+            if amounts and stocks:
+                fits.append((child, lf, target, amounts[0], stocks[0]))
+    if len(fits) != 1:
+        return None, f"{len(fits)} possible record pairs for the rule the request describes"
+    child, lf, target, amount, stock = fits[0]
+    up = re.search(UP_WORDS, request, re.I) and not re.search(DOWN_WORDS, request, re.I)
+    rule = {"on_add": child["name"], "link_field": lf["name"], "target": target["name"], "target_key": target["search_field"],
+            "target_field": stock["name"], "amount_field": amount["name"], "change": "add" if up else "subtract",
+            "block_if_negative": bool(not up and re.search(BLOCK_WORDS, request, re.I))}
+    return rule, (f"rule added from the request (the plan had none): adding a {child['name']} "
+                  f"{'raises' if up else 'lowers'} the {target['name']}'s {stock['name']} by its {amount['name']}"
+                  + (", refused if there is not enough" if rule["block_if_negative"] else ""))
+
+
+def plain_threshold_labels(spec):
+    """A dashboard count of records below a threshold must say so ("Medicines in stock" for "fewer than 10 in stock"
+    misleads the owner; core proof A1, 2 GB). Labels without a comparison word get one. Returns the notes."""
+    import re
+    notes = []
+    ents = {e["name"]: e for e in spec.get("entities", [])}
+    for d in spec.get("dashboard", []):
+        if d.get("kind") == "count_below" and not re.search(r"fewer|less|below|under|low|<", d.get("label", ""), re.I):
+            e = ents.get(d["entity"], {})
+            f = next((x for x in e.get("fields", []) if x["name"] == d.get("field")), {"label": d.get("field", "")})
+            what = (f.get("label") or str(f.get("name", "")).replace("_", " ")).lower()
+            new = f"{e.get('label', d['entity'])} with fewer than {d['below']:g} {what}".strip()
+            notes.append(f"dashboard label '{d['label']}' -> '{new}' (a count below {d['below']:g} must say so)")
+            d["label"] = new
+    return notes
