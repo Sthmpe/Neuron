@@ -1,0 +1,365 @@
+{
+  "purpose": "Additional development checks outside the registered comparison. No RAM or timing comparison claimed.",
+  "model_id": "qwen2.5-coder-1.5b-q4",
+  "model_sha256": "cc324af070c2ecbfd324a30884d2f951a7ff756aba85cb811a6ec436933bb046",
+  "threads": 1,
+  "seed": 71,
+  "interfaces": [
+    "lo"
+  ],
+  "goals": {
+    "prior-meter": "What is my meter reading after adding 17 + 4 to its previous reading? I have not supplied the previous reading.",
+    "units": "I walked 12 km. What was my speed in km per hour?",
+    "method": "How do I calculate the area of a rectangle?"
+  },
+  "attempts": [
+    {
+      "label": "candidate",
+      "revision": "2278f72ee3c65dda586bc21c0020163ca4edd440",
+      "rows": [
+        {
+          "id": "prior-meter",
+          "job": "20261120-052836-0bc3",
+          "thread_jobs": [
+            "20261120-052836-0bc3"
+          ],
+          "states": [
+            "running",
+            "waiting_input"
+          ],
+          "turns": [
+            {
+              "question": "What was your previous meter reading?",
+              "interim_answer": "",
+              "interim_outputs": [],
+              "fields": [
+                0
+              ],
+              "owner": "200"
+            },
+            {
+              "question": "What do you want to add to your previous reading?",
+              "interim_answer": "",
+              "interim_outputs": [],
+              "fields": []
+            }
+          ],
+          "status": "waiting_input",
+          "answer": "",
+          "verdict": "WAITING_INPUT",
+          "usage": {
+            "model_calls": 1,
+            "tokens": 94,
+            "model_seconds": 10.9,
+            "online_calls": 0,
+            "sessions": 2
+          },
+          "seconds": 16.064
+        },
+        {
+          "id": "units",
+          "job": "20261120-052852-43d2",
+          "thread_jobs": [
+            "20261120-052852-43d2"
+          ],
+          "states": [
+            "running",
+            "waiting_input",
+            "running",
+            "failed"
+          ],
+          "turns": [
+            {
+              "question": "How long did it take you to walk?",
+              "interim_answer": "",
+              "interim_outputs": [],
+              "fields": [
+                0
+              ],
+              "owner": "30 minutes"
+            }
+          ],
+          "status": "failed",
+          "answer": "",
+          "verdict": "FAILED",
+          "usage": {
+            "model_calls": 7,
+            "tokens": 730,
+            "model_seconds": 62.9,
+            "online_calls": 0,
+            "sessions": 2
+          },
+          "seconds": 63.156
+        },
+        {
+          "id": "method",
+          "job": "20261120-052955-95a5",
+          "thread_jobs": [
+            "20261120-052955-95a5"
+          ],
+          "states": [
+            "running",
+            "waiting_input"
+          ],
+          "turns": [
+            {
+              "question": "What is the length of the rectangle?",
+              "interim_answer": "",
+              "interim_outputs": [],
+              "fields": []
+            }
+          ],
+          "status": "waiting_input",
+          "answer": "",
+          "verdict": "WAITING_INPUT",
+          "usage": {
+            "model_calls": 1,
+            "tokens": 89,
+            "model_seconds": 10.2,
+            "online_calls": 0,
+            "sessions": 1
+          },
+          "seconds": 10.258
+        }
+      ]
+    },
+    {
+      "label": "candidate-rerun1",
+      "revision": "081dcec78e4626cce59437892d79b63939734306",
+      "rows": [
+        {
+          "id": "prior-meter",
+          "job": "20261120-053344-3c83",
+          "thread_jobs": [
+            "20261120-053344-3c83"
+          ],
+          "states": [
+            "running",
+            "waiting_input",
+            "running",
+            "done"
+          ],
+          "turns": [
+            {
+              "question": "What is the previous reading?",
+              "interim_answer": "",
+              "interim_outputs": [],
+              "fields": [
+                0
+              ],
+              "owner": "200"
+            }
+          ],
+          "status": "done",
+          "answer": "221 meter\n\nUnverified. NEURON interpreted the inputs and calculated 200 + 17 + 4.\n",
+          "verdict": "UNVERIFIED",
+          "usage": {
+            "model_calls": 1,
+            "tokens": 30,
+            "model_seconds": 3.9,
+            "online_calls": 0,
+            "sessions": 1
+          },
+          "seconds": 6.295
+        },
+        {
+          "id": "units",
+          "job": "20261120-053350-9fa8",
+          "thread_jobs": [
+            "20261120-053350-9fa8"
+          ],
+          "states": [
+            "running",
+            "waiting_input",
+            "done"
+          ],
+          "turns": [
+            {
+              "question": "What is the time it took you to walk the distance?",
+              "interim_answer": "",
+              "interim_outputs": [],
+              "fields": [
+                0
+              ],
+              "owner": "30 minutes"
+            }
+          ],
+          "status": "done",
+          "answer": "24 km per hour\n\nUnverified. NEURON interpreted the inputs and calculated 12 / (30 * 1 / 60).\n",
+          "verdict": "UNVERIFIED",
+          "usage": {
+            "model_calls": 1,
+            "tokens": 98,
+            "model_seconds": 10.6,
+            "online_calls": 0,
+            "sessions": 2
+          },
+          "seconds": 10.855
+        },
+        {
+          "id": "method",
+          "job": "20261120-053401-01c9",
+          "thread_jobs": [
+            "20261120-053401-01c9"
+          ],
+          "states": [
+            "running",
+            "done"
+          ],
+          "turns": [],
+          "status": "done",
+          "answer": "To calculate the area of a rectangle, you can use the formula: Area = length × width Where:\n- Length is the measurement of the longer side of the rectangle.\n- Width is the measurement of the shorter side of the rectangle. If you only know one of these dimensions, you can use the following formula: Area = length × width For example, if the length is 5 units and the width is 3 units, the area would be: Area = 5 × 3 = 15 square units If you only know one of these dimensions, you can use the following formula: Area = length × width For example, if the length is 5 units and the width is 3 units, the area would be: Area = 5 × 3 = 15 square units\n\nUnverified. The local model supplied this answer.\n",
+          "verdict": "UNVERIFIED",
+          "usage": {
+            "model_calls": 1,
+            "tokens": 166,
+            "model_seconds": 9.7,
+            "online_calls": 0,
+            "sessions": 1
+          },
+          "seconds": 9.795
+        }
+      ]
+    },
+    {
+      "label": "candidate-rerun2",
+      "revision": "1cc39a4683bcc9c1f2386b23231d66d689f4edc9",
+      "rows": [
+        {
+          "id": "prior-meter",
+          "job": "20261120-053825-fee7",
+          "thread_jobs": [
+            "20261120-053825-fee7"
+          ],
+          "states": [
+            "running",
+            "waiting_input",
+            "running",
+            "done"
+          ],
+          "turns": [
+            {
+              "question": "What is the previous reading?",
+              "interim_answer": "",
+              "interim_outputs": [],
+              "fields": [
+                0
+              ],
+              "owner": "200"
+            }
+          ],
+          "status": "done",
+          "answer": "221\n\nUnverified. NEURON interpreted the inputs and calculated 200 + 17 + 4.\n",
+          "verdict": "UNVERIFIED",
+          "usage": {
+            "model_calls": 1,
+            "tokens": 30,
+            "model_seconds": 4.0,
+            "online_calls": 0,
+            "sessions": 1
+          },
+          "seconds": 6.306
+        },
+        {
+          "id": "units",
+          "job": "20261120-053831-8d1e",
+          "thread_jobs": [
+            "20261120-053831-8d1e"
+          ],
+          "states": [
+            "running",
+            "waiting_input",
+            "done"
+          ],
+          "turns": [
+            {
+              "question": "What is the time it took you to walk the distance?",
+              "interim_answer": "",
+              "interim_outputs": [],
+              "fields": [
+                0
+              ],
+              "owner": "30 minutes"
+            }
+          ],
+          "status": "done",
+          "answer": "24 km per hour\n\nUnverified. NEURON interpreted the inputs and calculated 12 / (30 * 1 / 60).\n",
+          "verdict": "UNVERIFIED",
+          "usage": {
+            "model_calls": 1,
+            "tokens": 98,
+            "model_seconds": 10.8,
+            "online_calls": 0,
+            "sessions": 2
+          },
+          "seconds": 11.012
+        },
+        {
+          "id": "method",
+          "job": "20261120-053842-a357",
+          "thread_jobs": [
+            "20261120-053842-a357"
+          ],
+          "states": [
+            "running",
+            "done"
+          ],
+          "turns": [],
+          "status": "done",
+          "answer": "To calculate the area of a rectangle, you can use the formula: Area = length × width Where:\n- Length is the measurement of the longer side of the rectangle.\n- Width is the measurement of the shorter side of the rectangle. If you only know one of these dimensions, you can use the following formula: Area = length × width For example, if the length is 5 units and the width is 3 units, the area would be: Area = 5 × 3 = 15 square units If you only know one of these dimensions, you can use the following formula: Area = length × width For example, if the length is 5 units and the width is 3 units, the area would be: Area = 5 × 3 = 15 square units\n\nUnverified. The local model supplied this answer.\n",
+          "verdict": "UNVERIFIED",
+          "usage": {
+            "model_calls": 1,
+            "tokens": 166,
+            "model_seconds": 9.9,
+            "online_calls": 0,
+            "sessions": 1
+          },
+          "seconds": 9.952
+        }
+      ]
+    }
+  ],
+  "browser": [
+    {
+      "label": "first phone browser check",
+      "revision": "081dcec78e4626cce59437892d79b63939734306",
+      "browser": "156.0.8078.79",
+      "viewport": [
+        390,
+        844
+      ],
+      "interfaces": [
+        "lo"
+      ],
+      "model": "qwen2.5-coder-1.5b-q4",
+      "question": "What is the width of the rectangular mat?",
+      "owner_reply": "6 cm",
+      "answer": "54 square centimetres\n\nUnverified. NEURON interpreted the inputs and calculated 9 * 6.\n",
+      "same_url": true,
+      "jobs": 1,
+      "prompt_survived_reload": true,
+      "draft_survived_three_seconds": true
+    },
+    {
+      "label": "phone browser rerun 1",
+      "revision": "1cc39a4683bcc9c1f2386b23231d66d689f4edc9",
+      "browser": "156.0.8078.79",
+      "viewport": [
+        390,
+        844
+      ],
+      "interfaces": [
+        "lo"
+      ],
+      "model": "qwen2.5-coder-1.5b-q4",
+      "question": "What is the width of the rectangular mat?",
+      "owner_reply": "6 cm",
+      "answer": "54 square centimetres\n\nUnverified. NEURON interpreted the inputs and calculated 9 * 6.\n",
+      "same_url": true,
+      "jobs": 1,
+      "prompt_survived_reload": true,
+      "draft_survived_three_seconds": true
+    }
+  ]
+}
