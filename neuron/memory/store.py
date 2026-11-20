@@ -82,7 +82,7 @@ class Memory:
     # ---- reading ---------------------------------------------------------------------------------------------
     def search(self, query, k=5, kinds=None, include_outdated=False):
         """Hybrid search. Returns notes (dicts) with 'score', best first."""
-        where = "" if include_outdated else " AND n.status NOT IN ('outdated')"
+        where = " AND n.status NOT IN ('rejected')" if include_outdated else " AND n.status NOT IN ('outdated', 'rejected')"
         kind_sql = f" AND n.kind IN ({','.join('?' * len(kinds))})" if kinds else ""
         args = list(kinds or [])
         ranked_kw = []
@@ -120,7 +120,7 @@ class Memory:
         cutoff = time.time() - days * 86400
         return [dict(r) for r in self.db.execute(
             "SELECT id, kind, text, source, version, status, tags FROM notes WHERE last_checked < ? AND (source LIKE 'http%' OR version != '')"
-            " AND status != 'outdated'", (cutoff,))]
+            " AND status NOT IN ('outdated', 'rejected')", (cutoff,))]
 
     def stats(self):
         r = self.db.execute("SELECT COUNT(*) n, SUM(uses) uses, SUM(helped) helped FROM notes").fetchone()

@@ -26,8 +26,8 @@ CODE_ASK = ("Write one short Python program that computes the answer and prints 
 def solve(chat, sandbox, question, max_tool_rounds=2, max_tokens=400, require_code=False):
     """chat(messages, max_tokens) -> LLMReply. Returns {"answer", "first_answer", "tool_runs", "calls", "tokens", "printed"}.
     require_code: the arithmetic is always done by a real program in the sandbox, never in the model's head (small models
-    get sums wrong: the 2 GB model answered 44 for an average of 45 without running anything). The scorecard used the
-    default (False), so its measurements are unchanged."""
+    get sums wrong: the 2 GB model answered 44 for an average of 45 without running anything). The scorecard was measured
+    at commit a655659 (reproduce it there)."""
     msgs = [{"role": "system", "content": SOLVE_SYSTEM}, {"role": "user", "content": question}]
     calls = tokens = tool_runs = 0
     reply, printed = "", ""
@@ -54,6 +54,22 @@ def solve(chat, sandbox, question, max_tool_rounds=2, max_tokens=400, require_co
                 {"role": "user", "content": f"Problem:\n{question}\n\nProposed solution:\n{reply[-2500:]}\n\nCheck it."}], max_tokens)
     calls, tokens = calls + 1, tokens + chk.completion_tokens
     final = final_answer(chk.text) or first
+    disagreed = None
+    if tool_runs and printed and first and final != first and _matches(first, printed) and not _matches(final, printed):
+        # the checking pass may not overrule what the program actually printed with a number it never printed
+        # (Astra's review of main d54bf4d: the program printed 33, the answer said 33, the checker said 34 and won)
+        disagreed, final = final, first
     if require_code and not final and printed and len(printed.splitlines()) == 1:     # the printed result is the answer
         final = printed
-    return {"answer": final, "first_answer": first, "tool_runs": tool_runs, "calls": calls, "tokens": tokens, "printed": printed}
+    return {"answer": final, "first_answer": first, "tool_runs": tool_runs, "calls": calls, "tokens": tokens, "printed": printed,
+            "check_disagreed": disagreed}
+
+
+def _numbers(text):
+    return [float(n.replace(",", "")) for n in re.findall(r"-?\d[\d,]*(?:\.\d+)?", text or "")]
+
+
+def _matches(answer, printed):
+    """Every number in the answer is one the program printed (rounding to 2 decimals allowed)."""
+    said, shown = _numbers(answer), _numbers(printed)
+    return bool(said) and all(any(abs(a - b) <= max(0.005, 1e-9 * abs(b)) or round(b, 2) == a for b in shown) for a in said)

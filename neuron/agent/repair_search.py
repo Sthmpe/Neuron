@@ -42,19 +42,53 @@ def _code_part(line):
     return "".join(out)
 
 
+GENERIC_OPEN = re.compile(r"\s*(?:const\s+)?[A-Za-z_][\w:]*\s*[*&]?\s*(?:,\s*[A-Za-z_][\w:]*\s*[*&]?\s*)*>")
+GENERIC_CLOSE = re.compile(r"[A-Za-z_]\w*\s*<\s*(?:const\s+)?[A-Za-z_][\w:]*\s*[*&]?\s*(?:,\s*[A-Za-z_][\w:]*\s*[*&]?\s*)*$")
+
+
+def _strip_block_comments(lines):
+    """Lines with /* ... */ comments blanked out (also across lines), so nothing inside a comment is ever changed."""
+    out, inside = [], False
+    for line in lines:
+        res, i = [], 0
+        while i < len(line):
+            if inside:
+                end = line.find("*/", i)
+                if end < 0:
+                    res.append(" " * (len(line) - i))
+                    i = len(line)
+                else:
+                    res.append(" " * (end + 2 - i))
+                    i, inside = end + 2, False
+            else:
+                start = line.find("/*", i)
+                if start < 0:
+                    res.append(line[i:])
+                    i = len(line)
+                else:
+                    res.append(line[i:start])
+                    i, inside = start, True
+        out.append("".join(res))
+    return out
+
+
 def mutants(text, first, last, limit=80):
     """One-token changes inside lines first..last (1-based). Yields (line number, old line, new line, description)."""
     lines = text.splitlines()
+    visible = _strip_block_comments(lines)
     found = []
     for n in range(first, min(last, len(lines)) + 1):
         line = lines[n - 1]
-        code = _code_part(line)
+        code = _code_part(visible[n - 1])
         if not code.strip() or code.lstrip().startswith(("#include", "import", "package", "func ", "fn ", "use ")):
             continue
         for m in OP.finditer(code):
             tok = m.group(1)
-            if tok in ("<", ">") and re.search(r"\w<|<\w+>|template|vector|map<|std::", code[max(0, m.start() - 12): m.end() + 12]):
-                continue                                # generics, not comparisons
+            if tok == "<" and GENERIC_OPEN.match(code[m.end():]) and re.search(r"[A-Za-z_]\w*\s*$", code[:m.start()]):
+                continue                                # vector<int>, map<string, int>: a type, not a comparison
+            if tok == ">" and GENERIC_CLOSE.search(code[:m.start()]):
+                continue                                # the end of such a type
+            # (x<5 is a comparison: Astra's review of main d54bf4d found it skipped because of the old \w< test)
             before = code[:m.start()]
             if tok in ("*", "-", "+") and (not re.search(r"[\w)\]]\s*$", before) or re.search(r"\b(return|case|else|in|throw)\s*$", before)):
                 continue                                # a sign or a dereference, not arithmetic

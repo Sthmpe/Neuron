@@ -43,6 +43,9 @@ def main(argv=None):
     runner = ModelRunner(ModelManager(), a.tier, overrides=overrides, log_dir=ws / ".neuron")
     from ..memory import default_memory, memory_enabled
     memory = default_memory() if memory_enabled() else None          # evaluations run with NEURON_MEMORY=off
+    if memory is not None:
+        from ..memory.revalidate import revalidate_findings
+        revalidate_findings(memory)
     job = Job(ws, runner, Sandbox(timeout=120, mem_mb=1024, toolchains=True), registry=reg, log=lambda m: print(m, flush=True),
               memory=memory)
     from ..server import sysinfo

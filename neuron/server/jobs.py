@@ -202,6 +202,9 @@ class JobManager:
             from ..memory import Memory, memory_enabled
             try:
                 self.memory = Memory(self.dir.parent / "memory" / "knowledge.db") if memory_enabled() else False
+                if self.memory:                      # findings saved under an older, looser check are checked again once
+                    from ..memory.revalidate import revalidate_findings
+                    revalidate_findings(self.memory, log=self.log)
             except Exception as e:                       # noqa: BLE001  NEURON works without memory
                 self.log(f"knowledge memory unavailable: {e}")
                 self.memory = False

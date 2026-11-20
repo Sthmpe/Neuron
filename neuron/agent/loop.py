@@ -167,7 +167,8 @@ class Agent:
         for note in (out.result or {}).get("memory_notes", []) if isinstance(out.result, dict) else []:
             try:
                 nid = job.memory.add(note["kind"], note["text"], note.get("source", f"job {job.workspace.name}"),
-                                     version=note.get("version", ""), verified=note.get("verified", False), tags=note.get("tags", ()))
+                                     version=note.get("version", ""), verified=note.get("verified", False), tags=note.get("tags", ()),
+                                     meta=note.get("meta"))
                 self.s.journal("memory_saved", id=nid, kind=note["kind"], task=tid)
             except Exception as e:                                       # noqa: BLE001
                 job.log(f"memory save failed: {e}")

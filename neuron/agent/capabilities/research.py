@@ -52,14 +52,54 @@ NOT_FOUND = re.compile(r"^\W*(not found|not (stated|given|mentioned|in the (docu
                        r"the (document|pages?) (does|do) not (say|state|mention))\b", re.I)
 
 
+STOP = set("how many much what which who whom whose when where why is are was were be been the a an of in on at to for from by "
+           "with there their this that these those does do did per each any some all it its they them you your our we "
+           "can could should would will may might about into than then also only just not no yes".split())
+CLAUSE = re.compile(r"[;.!?]\s+|,\s*|\s+(?:and|but|while|whereas)\s+", re.I)    # "Yellow chairs: 3" stays one clause
+
+
+def _words(text):
+    return [w for w in re.findall(r"[a-z]+", (text or "").lower()) if w not in STOP and len(w) > 2]
+
+
+def tied_numbers(question, quote):
+    """The numbers in the quote that belong to what the question asks about, or None if the quote leaves no doubt.
+    "There are 16 blue chairs and 3 yellow chairs" for "How many yellow chairs?" gives {"3"}: the clause that holds
+    the question's distinguishing word (one the quote uses only once, here "yellow") holds the number that answers it.
+    Astra's review of main d54bf4d found "16 yellow chairs" accepted because 16 was somewhere in the quote."""
+    if len(numbers_in(quote)) < 2:
+        return None                                       # only one number: nothing to confuse
+    stem = lambda w: w[:5]
+    counts = Counter(stem(w) for w in _words(quote))
+    wanted = {stem(w) for w in _words(question)}
+    distinct = {w for w in wanted if counts.get(w) == 1}   # appears exactly once in the quote: it pins the clause
+    if not distinct:
+        return None
+    tied = set()
+    for clause in CLAUSE.split(quote):
+        toks = re.findall(r"[a-z]+|\d[\d,]*(?:\.\d+)?", clause.lower())
+        nums = [(i, t.replace(",", "")) for i, t in enumerate(toks) if t[0].isdigit()]
+        for i, t in enumerate(toks):
+            if nums and not t[0].isdigit() and t not in STOP and len(t) > 2 and stem(t) in distinct:
+                tied.add(min(nums, key=lambda n: abs(n[0] - i))[1])        # the number closest to that word
+    return tied or None
+
+
 def facts_backed(question, answer, quote):
-    """An answer counts as backed only if every number it states is in the quote, and a question that asks for a
-    number gets one. (The locked run found answers whose quote was on the page while the answer itself said
-    something the quote does not, such as 'half the fare' where the page gives the amount.)"""
+    """An answer counts as backed only if every number it states is in the quote AND belongs to what was asked, a
+    question that asks for a number gets one, and an answer without numbers shares words with its quote.
+    (The locked run found 'half the fare' where the page gives the amount; Astra's review found '16 yellow chairs'
+    where the page said 16 blue and 3 yellow.)"""
     said, quoted = numbers_in(answer), numbers_in(quote)
     if said - quoted:
         return False
-    return bool(said) or not NUMBER_QUESTION.search(question or "")
+    if said:
+        tied = tied_numbers(question, quote)
+        return tied is None or bool(said & tied)
+    if NUMBER_QUESTION.search(question or ""):
+        return False
+    own = set(_words(answer)) - set(_words(question))      # what the answer adds must come from the quote
+    return not own or bool(own & set(_words(quote)))
 
 
 def questions_from(request):
@@ -138,7 +178,9 @@ class AnswerFromDocuments(Capability):
         (job.workspace / "answers.json").write_text(json.dumps(answers, indent=1))
         ok = sum(a["verified"] for a in answers)
         notes = [{"kind": "finding", "text": f"{a['question']} {a['answer']} (quote: \"{a['quote'][:200]}\")",
-                  "source": f"{a['doc']} page {a['page']}", "verified": True, "tags": [a["doc"]]} for a in answers if a["verified"]]
+                  "source": f"{a['doc']} page {a['page']}", "verified": True, "tags": [a["doc"]],
+                  "meta": {"question": a["question"], "answer": a["answer"], "quote": a["quote"], "rule": "doc-facts-2"}}
+                 for a in answers if a["verified"]]
         return Outcome(True, f"{ok} of {len(answers)} answers have a quote confirmed on the cited page", {"answers": answers, "memory_notes": notes},
                        ["answers.md", "answers.json"], made_by="model")
 
@@ -177,6 +219,8 @@ class AnswerQuestion(Capability):
                 return Outcome(False, "the local model produced no answer" + (f" (its program printed: {s['printed'][:120]})" if s.get("printed") else ""))
             text = s["answer"] + (f"\n\n(Worked out with {s['tool_runs']} Python run(s) in the sandbox and checked once.)" if s["tool_runs"]
                                   else "\n\n(Checked once by a second pass.)")
+            if s.get("check_disagreed"):
+                text += f"\n(A second pass said {s['check_disagreed']}; the result the program printed is kept.)"
             (job.workspace / "answer.md").write_text(clean(text) + "\n")
             return Outcome(True, clean(text)[:300], {"answer": clean(text), "tool_runs": s["tool_runs"]}, ["answer.md"], made_by="model")
         mem = job.memory_context() if hasattr(job, "memory_context") else ""
