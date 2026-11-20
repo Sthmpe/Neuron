@@ -86,3 +86,33 @@ class EditMatching(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class WholeFileRewrite(unittest.TestCase):
+    """The plain-loop approach as NEURON's second strategy, with its guards (core proof 4 GB run 1). Invented project."""
+
+    def _job(self, replies):
+        from neuron.agent.loop import Job
+        from tests.fakes import ScriptedLLM
+        from tests.test_agent import SBX, Runner
+        ws = project("def area(w, h):\n    return w + h\n", "self.assertEqual(area(3, 4), 12)")
+        return ws, Job(ws, Runner(ScriptedLLM(replies)), SBX, log=lambda *_: None)
+
+    def test_rewrites_the_source_file_and_never_the_tests(self):
+        from neuron.agent.capabilities.code import FixBug
+        test_edit = "FILE: tests/test_core.py\n```python\nimport unittest\n```\n"
+        good = "FILE: lib/core.py\n```python\ndef area(w, h):\n    return w * h\n```\n"
+        ws, job = self._job(["I am not sure.", test_edit, good])
+        before = (ws / "tests" / "test_core.py").read_text()
+        out = FixBug()._rewrite_files(job, {})
+        self.assertTrue(out.ok, out.summary)
+        self.assertEqual((ws / "tests" / "test_core.py").read_text(), before)
+        self.assertIn("w * h", (ws / "lib" / "core.py").read_text())
+
+    def test_a_failed_rewrite_is_undone(self):
+        from neuron.agent.capabilities.code import FixBug
+        wrong = "FILE: lib/core.py\n```python\ndef area(w, h):\n    return w - h\n```\n"
+        ws, job = self._job([wrong] * 3)
+        out = FixBug()._rewrite_files(job, {})
+        self.assertFalse(out.ok)
+        self.assertIn("w + h", (ws / "lib" / "core.py").read_text())

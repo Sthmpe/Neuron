@@ -332,7 +332,7 @@ class Agent:
         if not options:
             return {"feedback": feedback, "strategy": f"retry {len(tried) + 1} with the failure as feedback"}
         choice = options[0]
-        if len(options) > 1:
+        if len(options) > 1 and not getattr(cap, "fixed_strategy_order", False):
             data = self.job.ask_json("reviewer", "A step failed. Pick the strategy most likely to work next.",
                                      f"Step: {task['title']}\nWhat failed: {feedback[:1200]}\nStrategies not tried yet: {', '.join(options)}",
                                      {"type": "object", "required": ["strategy", "reason"],

@@ -68,13 +68,21 @@ class FixBug(Capability):
     resources = {"ram_mb": 300, "uses_model": True}
     verification = "the project's own test command passes in the sandbox"
     domains = ("code",)
-    strategies = ("look at more functions", "rewrite the whole suspect function")
+    # Fixed order, no model call to choose. The whole-file rewrite comes second: the core proof's 4 GB run 1 showed the
+    # same model, given the whole (small) project and the test output in a plain loop, fixing bugs NEURON's narrow
+    # diagnose-one-function-and-patch pipeline missed. NEURON must never do worse than its own model used plainly; it
+    # keeps its guards (tests never edited, functions never dropped, the project's tests decide, nothing kept unless
+    # they pass).
+    strategies = ("rewrite whole files with the test output", "look at more functions", "rewrite the whole suspect function")
+    fixed_strategy_order = True
 
     def run(self, job, params):
         ws = job.workspace
         cmd = detect_test_command(ws)
         if cmd is None:
             return Outcome(False, "no test command found, so a fix could not be proven", evidence={"no_retry": True})
+        if params.get("strategy") == "rewrite whole files with the test output":
+            return self._rewrite_files(job, params)
         hint = job.memory_context(kinds=("fix",)) if hasattr(job, "memory_context") else ""
         if cmd[0] == "python3":                               # the proven step-3 loop for Python
             import os
@@ -93,6 +101,54 @@ class FixBug(Capability):
             return Outcome(bool(r.get("claimed")), f"python fix loop: {'fixed' if r.get('claimed') else 'not fixed'} in {r.get('attempts')} attempts",
                            res, [r["file"]] if r.get("file") else [], made_by="model")
         return self._fix_other(job, params, cmd)
+
+    def _rewrite_files(self, job, params, rounds=3):
+        from .feature import defined_names, is_test_file
+        ws = job.workspace
+        passed, res = run_project_tests(job)
+        if passed:
+            return Outcome(False, "the project's tests already pass, so there was no failing test to fix and nothing was changed",
+                           {"already": True}, evidence={"no_retry": True})
+        srcs = [f for f in files(ws) if Path(f).suffix in C_LIKE | {".py"} and not is_test_file(f)]
+        tests = [f for f in files(ws) if Path(f).suffix in C_LIKE | {".py"} and is_test_file(f)]
+        originals = {f: (ws / f).read_text(errors="replace") for f in srcs}
+        output = res.output[-3000:] if res else ""
+        for rnd in range(rounds):
+            ctx, used = [], 0
+            for f in tests + srcs:
+                text = (ws / f).read_text(errors="replace")
+                if used + len(text) < 9000:
+                    ctx.append(f"--- {f} ---\n{text}")
+                    used += len(text)
+            reply = job.ask_text("builder", "You fix a bug so a project's tests pass. The tests are correct and must not change. "
+                                 "Reply with the complete corrected content of each source file you change, each as a line "
+                                 "'FILE: <path>' followed by one code block.",
+                                 f"Test output:\n{clip(output, 2500)}\n\nProject files:\n" + "\n".join(ctx) +
+                                 "\n\nWhich source file is wrong? Send the corrected file(s), complete.", max_tokens=1800)
+            found = dict(re.findall(r"FILE:\s*[`'\"]?([\w./-]+)[`'\"]?\s*\n+```[^\n]*\n(.*?)```", reply, re.S))
+            if not found and len(srcs) == 1:
+                code = extract_code(reply)
+                found = {srcs[0]: code} if code else {}
+            changes = {}
+            for path, code in found.items():
+                path = path.strip().lstrip("./")
+                if path in originals and code.strip() and not (defined_names(path, originals[path]) - defined_names(path, code)):
+                    changes[path] = code.rstrip("\n") + "\n"
+            if not changes:
+                output = output[-2000:] + "\n(The last reply changed no source file of the project. Send FILE: <path> and the whole file.)"
+                continue
+            for path, code in changes.items():
+                (ws / path).write_text(code)
+            passed, res = run_project_tests(job)
+            if passed:
+                job.state.decide("fix", "rewrite", f"round {rnd + 1}: rewrote {', '.join(changes)}; the project's tests pass")
+                return Outcome(True, f"fixed by rewriting {', '.join(changes)} with the test output (round {rnd + 1}); the project's tests pass",
+                               {"files": list(changes)}, list(changes), made_by="model")
+            output = res.output[-3000:] if res else ""
+        for path, text in originals.items():                 # never leave a failed attempt behind
+            if (ws / path).read_text(errors="replace") != text:
+                (ws / path).write_text(text)
+        return Outcome(False, f"rewriting whole files with the test output did not make the tests pass in {rounds} rounds: {clip(output, 400)}")
 
     def _python_search(self, job, ws, cmd):
         """Try small standard changes in the Python functions (and module-level constants) the failing tests point at,
