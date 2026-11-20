@@ -1,5 +1,6 @@
 """The owner's reply belongs to one pending question on one durable job."""
 import tempfile
+import time
 import unittest
 from pathlib import Path
 
@@ -74,6 +75,40 @@ class OwnerInputTests(unittest.TestCase):
         self.assertEqual([t["id"] for t in done["thread"]], [jid])
         self.assertEqual(done["plan"][0]["tries"], 1)
         self.assertEqual(self.phone.call("POST", url + "/input", body)[0], 200)
+
+    def test_delayed_owner_keeps_the_original_question_across_restart(self):
+        from neuron.agent.capability import default_registry
+        self.close()
+        self.registry = default_registry()
+        self.connect()
+        jid = self.phone.call("POST", "/api/jobs", {"goal":"I used 9 litres from my tank. How much is left?"})[1]["id"]
+        url = "/api/jobs/" + jid
+        self.phone.call("POST", url + "/start")
+        waiting = wait_for(self.phone, jid, {"waiting_input"})
+        question = waiting["input_request"]
+        cookie = self.phone.cookie
+
+        def still_waiting():
+            d = self.phone.call("GET", url)[1]
+            self.assertEqual((d["id"], d["status"], d["input_request"], d["answer"], d["plan"][0]["tries"]),
+                             (jid, "waiting_input", question, "", 0))
+
+        for _ in range(3):
+            time.sleep(0.1)
+            still_waiting()
+        other = self.phone.call("POST", "/api/jobs", {"goal":"What is 31 + 4?"})[1]["id"]
+        self.phone.call("POST", f"/api/jobs/{other}/start")
+        self.assertEqual(wait_for(self.phone, other, {"done"})["answer"].strip(), "35")
+        self.close()
+        self.connect()
+        self.phone.cookie = cookie
+        for _ in range(3):
+            time.sleep(0.1)
+            still_waiting()
+        self.assertEqual(self.phone.call("POST", url + "/input", {"id":question["id"], "answer":"38 litres"})[0], 200)
+        d = wait_for(self.phone, jid, {"done"})
+        self.assertEqual(d["answer"].splitlines()[0], "29 litres")
+        self.assertEqual(([j["id"] for j in d["thread"]], d["plan"][0]["tries"]), ([jid], 1))
 
     def test_restart_after_reply_before_queue_write(self):
         jid, _, first = self.begin()
