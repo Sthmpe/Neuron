@@ -70,6 +70,14 @@ class EffectsTests(unittest.TestCase):
         Effects(self.f).resolve("k", happened=False)
         self.assertEqual(Effects(self.f).once("k", "x", self.act), {"n": 1})
 
+    def test_damaged_last_line_does_not_erase_the_history(self):
+        e = Effects(self.f)
+        e.once("send:3", "send the invoice", self.act)
+        with open(self.f, "a") as fh:
+            fh.write('{"key": "send:4", "status": "sta')            # the machine died mid-write
+        self.assertEqual(Effects(self.f).once("send:3", "send the invoice", self.act), {"n": 1})
+        self.assertEqual(self.calls, 1)                             # not sent twice
+
     def test_repeat_safe_action_runs_again(self):
         with self.assertRaises(Crash):
             Effects(self.f).once("file", "write a file", lambda: (_ for _ in ()).throw(Crash()), repeat_safe=True)

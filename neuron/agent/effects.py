@@ -36,10 +36,20 @@ class Effects:
         self.replayed = 0                 # duplicates blocked in this session
 
     def _lines(self):
+        """Every readable record. A damaged line (a crash in the middle of a write) is skipped, never the whole history:
+        losing the record that an action already ran could make it run twice (Astra's review of 1f65640)."""
         try:
-            return [json.loads(x) for x in self.path.read_text().splitlines() if x.strip()]
-        except (OSError, ValueError):
+            text = self.path.read_text(errors="replace")
+        except OSError:
             return []
+        out = []
+        for x in text.splitlines():
+            if x.strip():
+                try:
+                    out.append(json.loads(x))
+                except ValueError:
+                    continue
+        return out
 
     def _append(self, rec):
         with open(self.path, "a") as f:
