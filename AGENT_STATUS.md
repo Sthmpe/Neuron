@@ -1,3 +1,39 @@
+# Astra phase 2
+
+NEURON now pauses an ordinary question when it identifies a required fact the owner has not supplied. The phone shows the missing detail, saves the reply and continues the same job. A restart preserves the question. Re-sending the same reply does not start another job.
+
+## What I measured
+
+| Offline 2 GB development run | Accepted Phase 1 | Final Phase 2 rerun |
+| --- | ---: | ---: |
+| Asked for all missing inputs and finished correctly | 0/7 | 7/7 |
+| Answered complete controls correctly without asking | 4/4 | 4/4 |
+| End-to-end time | 160.356 s | 86.693 s |
+| Peak workload RAM | 2,048 MiB | 2,048 MiB |
+| Model calls | 22 | 12 |
+
+I compared `ec9396b2f80aa4d2970cd36d4da6b33d22e502e4` with `1cc39a4683bcc9c1f2386b23231d66d689f4edc9`. Both used the same frozen Qwen2.5-Coder-1.5B model, a hard 2 GiB memory limit, zero swap and loopback only. The artificial owner replied immediately. Two jobs started with the same 9 cm mat. A width of 4 cm produced 36 square centimetres. A width of 7 cm produced 63. A painting with neither dimension supplied took two replies. [Conditions, all eleven scores, earlier attempts and raw results](benchmark/astra/results/phase2.md)
+
+## What changed
+
+The local model identifies facts needed for an answer. For a simple calculation, NEURON checks that each proposed input value occurs in the request before using it. An absent value becomes a specific phone question. Zero is a valid input. NEURON can compute supported arithmetic from the owner's reply and can convert compatible units. The phone marks a result that relies on interpreting the owner's words as unverified.
+
+The pending question and accepted reply live in the job's saved plan. The paired phone session submits a reply against the question ID. The worker can handle other jobs while it waits. Reply retries are safe, and a restart after a reply was saved can still resume the work. This design builds on the branch's existing job records, local model runner and exact arithmetic.
+
+## What failed and what I would try next
+
+The first candidate passed the registered set but asked for an already-given increment, failed a minutes-to-hours conversion and requested dimensions for a formula question. A later attempt called the reading on an instrument “221 meter”. In the final checks, the owner supplied 200 and got a reading of 221, the speed calculation returned 24 km per hour, and the formula question finished without asking. [Exploratory phone records](benchmark/astra/results/phone-extra.json)
+
+The small model can still overlook a dependency or associate a number with the wrong fact. I would next test questions containing plausible but irrelevant numbers, alongside complete questions that mention an unknown value which the answer does not need. The measurements here cover short English development questions on the 2 GB tier.
+
+## Review and verification
+
+I reviewed Claude's main at `d54bf4dc629768fd39eb74e1322f1cec9a96bd2c`. A wrong number attached to the wrong chair colour passed the document verifier and became a verified memory note. A calculation returned 34 after its sandbox printed 33. Formatting also changed which C++ repairs the search considered. The review gives the inputs, outputs and code references. [Independent review](docs/reviews/astra-review.md#phase-2-review-of-claudes-main)
+
+199 selected unit and development tests passed on the final code. The selection excludes six tests that load held-out fixtures and three platform-specific sandbox resource checks. I also used Chromium at a 390 by 844 viewport with the real model and loopback only. The phone retained its question after a reload, kept a partially typed reply, and showed 54 square centimetres after a reply of 6 cm. The job URL stayed the same throughout. [Browser records](benchmark/astra/results/phone-extra.json)
+
+---
+
 # Astra phase 1
 
 I worked on a false assurance in ordinary question answering. The original system could explicitly record that a model answer was unverified and still tell the phone owner “Done and checked”. A saved release run exhibited the mismatch. My scripted check reproduced it with a deliberately wrong answer. [Independent review of 1f65640](docs/reviews/astra-review.md)
