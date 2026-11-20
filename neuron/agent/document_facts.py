@@ -11,9 +11,9 @@ TOKEN = re.compile(NUMBER + r"|[^\W_]+|[%$£€:/=<>-]", re.UNICODE)
 NUM = r"[+-]?\d+(?:\.\d+)?"
 VALUE = r"(?P<value>.+?)"
 N = rf"(?P<value>{NUM})"
-INFLECT = {"is":"be", "are":"be", "was":"be", "were":"be", "has":"have", "had":"have",
-           "did":"do", "does":"do", "paid":"pay", "used":"use", "uses":"use", "weighed":"weigh", "costs":"cost",
-           "dispatched":"dispatch", "sent":"send", "gave":"give", "took":"take", "held":"hold", "went":"go"}
+INFLECT = {"is":"be", "are":"be", "was":"was", "were":"was", "has":"have", "does":"do"}
+PAST = {"pay":"paid","send":"sent","give":"gave","take":"took","hold":"held","go":"went","weigh":"weighed","cost":"cost"}
+BOUNDARY = re.compile(r"(?<!\d)[.!?]|[.!?](?!\d)|;|\n\s*\n")
 MODAL = re.compile(r"\b(if|unless|possibly|might|would|could|perhaps|reportedly|either|or|approximate\w*|"
                    r"estimate\w*|rumou?r\w*|alleg\w*|claim|say|said|formerly|instead|hypothetical|proposed|draft|only if)\b")
 NEGATION = re.compile(r"\b(?:do )?(?:not|no|never)\b\s*")
@@ -23,24 +23,35 @@ LOCATION = r"(?:in|at|on|inside|near|under|from|during) .+"
 
 def words(text):
     items = []
-    for token in TOKEN.findall(text.casefold().replace("−", "-").replace("’", "'")):
-        if token in ("the", "a", "an"):
+    original = TOKEN.findall(text.replace("−", "-").replace("’", "'"))
+    for i,raw in enumerate(original):
+        token = raw.casefold()
+        if raw == "A" and (i or len(original)==1):
+            token = "[a]"  # Pier A and Pier are distinct identifiers.
+        elif token in ("the", "a", "an"):
             continue
-        if re.fullmatch(NUMBER, token):
+        elif re.fullmatch(NUMBER, token):
             token = token.replace(",", "")
-        elif token in INFLECT:
-            token = INFLECT[token]
-        elif token.endswith("ies") and len(token) > 4:
-            token = token[:-3]+"y"
-        elif len(token) > 3 and token.endswith("s") and not token.endswith(("ss", "us", "is")):
-            token = token[:-1]
+        else:
+            token = INFLECT.get(token,token)
         items.append(token)
-    return " ".join(items).replace("at time", "at once")
+    text = " ".join(items).replace("at time", "at once")
+    return re.sub(r"\b(?:uses|used) (most|least)\b",r"use \1",text)
+
+
+def sentences(text):
+    start = 0
+    for end in BOUNDARY.finditer(text):
+        if end[0] != "?":
+            yield text[start:end.start()]
+        start = end.end()
+    yield text[start:]
+
 
 
 def clauses(text):
     # Keep conditions attached to their statement. Split enumeration only for an explicit shared existential.
-    for sentence in re.split(r"(?<!\d)[.!?]|[.!?](?!\d)|;|\n\s*\n", text):
+    for sentence in sentences(text):
         line = words(sentence)
         if not line or MODAL.search(line) or re.search(r"\b(?:isn|aren|wasn|weren|didn|doesn|can) t\b", line):
             continue
@@ -50,7 +61,7 @@ def clauses(text):
         # Apposition after a comma can explain the amount in an otherwise complete clause.
         if re.search(r",\s*(?:half|twice|double)\b", sentence, re.I):
             line = words(sentence.split(",", 1)[0])
-        existential = re.fullmatch(r"((?:(?:in|at|on|inside) .+? )?there be )(.+)", line)
+        existential = re.fullmatch(r"((?:(?:in|at|on|inside) .+? )?there (?:be|was) )(.+)", line)
         if existential:
             head, body = existential.groups()
             parts = body.split(" and ")
@@ -67,51 +78,63 @@ def frames(q):
     out = []
     def add(pattern, noun=""):
         out.append((re.compile(pattern), noun))
-    def verb_form(word):
-        past = word+"d" if word.endswith("e") else word[:-1]+"ied" if word.endswith("y") else word+"ed"
-        return "(?:"+re.escape(word)+"|"+re.escape(past)+")"
-    count = re.fullmatch(r"how many (.+?) (be|do|may|can)\b(?: (.+))?", q)
+    def verb_form(word, aux):
+        if aux in ("did","was"):
+            past = PAST.get(word,word+"d" if word.endswith("e") else word[:-1]+"ied" if word.endswith("y") else word+"ed")
+            return re.escape(past)
+        if aux in ("may","can"):
+            return re.escape(word)
+        third = word+"es" if word.endswith(("s","sh","ch","x","o")) else word+"s"
+        return "(?:"+re.escape(word)+"|"+re.escape(third)+")"
+    def actor(subject):
+        # A singular common noun in the question can refer to a class in the source (a member / members).
+        return "(?:"+re.escape(subject)+"|"+re.escape(subject+"s")+")"
+    count = re.fullmatch(r"how many (.+?) (be|was|do|did|may|can)\b(?: (.+))?", q)
     if count:
         noun, aux, rest = count.groups()
         item = re.escape(noun)
         rest = rest or ""
-        if aux == "be":
+        if aux in ("be","was"):
             tail = re.escape(rest.removeprefix("there ").removesuffix(" there")) if rest != "there" else ""
-            add(r"(?:there be )?" + N+" "+item+(" "+tail if tail else ""), noun)
+            add(rf"(?:there {aux} )?" + N+" "+item+(" "+tail if tail else ""), noun)
             if tail:
-                add(N+" "+item+" be "+tail, noun)
-                add(r"(?:there be )?"+N+" "+tail+" "+item, noun)
+                add(N+" "+item+" "+aux+" "+tail, noun)
+                add(rf"(?:there {aux} )?"+N+" "+tail+" "+item, noun)
                 if re.fullmatch(LOCATION, rest):
-                    add(tail+r" there be "+N+" "+item, noun)
+                    add(tail+" there "+aux+" "+N+" "+item, noun)
         else:
             parts = rest.split()
             for i in range(1,len(parts)):
                 subject, verb, tail = " ".join(parts[:i]), parts[i], " ".join(parts[i+1:])
                 modal = aux+" " if aux in ("may","can") else ""
-                prefix = re.escape(subject+" "+modal)+verb_form(verb)+" "
+                prefix = actor(subject)+" "+modal+verb_form(verb,aux)+" "
                 limit = r"(?:up to |at most )?" if modal else ""
                 add(prefix+limit+N+" "+item+(" "+re.escape(tail) if tail else ""), noun)
         return out
-    much = re.fullmatch(r"how much do (.+)",q)
+    much = re.fullmatch(r"how much (do|did) (.+)",q)
     if much:
-        add(re.escape(much[1])+" "+VALUE)
-    attr = re.fullmatch(r"what be (.+)",q)
+        parts = much[2].split()
+        for i in range(1,len(parts)):
+            prefix = actor(" ".join(parts[:i]))+" "+verb_form(parts[i],much[1])
+            tail = " ".join(parts[i+1:])
+            add(prefix+" "+VALUE+(" "+re.escape(tail) if tail else ""))
+    attr = re.fullmatch(r"what (be|was) (.+)",q)
     if attr:
-        name = attr[1]
-        add(re.escape(name)+" be "+VALUE)
+        aux, name = attr.groups()
+        add(re.escape(name+" "+aux)+" "+VALUE)
         qualified = re.fullmatch(r"(.+?) (of|for) (.+)",name)
         if qualified:
             prop, _, subject = qualified.groups()
-            add(re.escape(subject+" "+prop)+" be "+VALUE)
+            add(re.escape(subject+" "+prop+" "+aux)+" "+VALUE)
             if prop in PROPERTIES:
-                add(re.escape(subject+" "+PROPERTIES[prop])+" "+VALUE)
-    obj = re.fullmatch(r"(who|what|where|when) do (.+)",q)
+                add(re.escape(subject)+" "+verb_form(PROPERTIES[prop],aux)+" "+VALUE)
+    obj = re.fullmatch(r"(who|what|where|when) (do|did) (.+)",q)
     if obj:
         prep = r" (?:in|at|on|from) " if obj[1] in ("where","when") else " "
-        subject, _, verb = obj[2].rpartition(" ")
+        subject, _, verb = obj[3].rpartition(" ")
         if subject:
-            add(re.escape(subject)+" "+verb_form(verb)+prep+VALUE)
-    subj = re.fullmatch(r"who (?!do\b)(.+)|which [\w-]+ (.+)",q)
+            add(re.escape(subject)+" "+verb_form(verb,obj[2])+prep+VALUE)
+    subj = re.fullmatch(r"who (?!(?:do|did)\b)(.+)|which [\w-]+ (.+)",q)
     if subj:
         predicate = subj[1] or subj[2]
         extra = r"(?: [\w-]+)?" if predicate.endswith((" most"," least")) else ""
@@ -134,6 +157,12 @@ def extract(q, text):
             value = match["value"]
             if len(value.split()) > 12 or re.search(r"\b(and|but|except|without|despite|not|no|never)\b", value):
                 continue
+            if q.startswith("which "):
+                category = q.split()[1]
+                ranked_name = (q.endswith((" most"," least")) and re.fullmatch(r"[\w-]+",value)
+                               and re.search(r"\b"+re.escape(value.capitalize())+r"\b",text))
+                if category not in value.split() and not ranked_name:
+                    continue
             if negative:
                 denied.add(value)
                 continue
@@ -146,16 +175,21 @@ def extract(q, text):
     return supported, denied
 
 
-def quoted_on_page(quote, page):
-    collapse = lambda s: " ".join(s.casefold().split())
-    literal = collapse(quote)
-    return len(literal) > 8 and re.search(r"(?<!\w)"+re.escape(literal)+r"(?!\w)",collapse(page)) is not None
+def citation_contexts(quote, page):
+    """Expand each verbatim occurrence to its containing sentences so clipping cannot erase a condition."""
+    literal = quote.strip()
+    if len(literal) <= 8:
+        return
+    pattern = r"(?<!\w)" + r"\s+".join(re.escape(w) for w in literal.split()) + r"(?!\w)"
+    ends = [m.end() for m in BOUNDARY.finditer(page)]
+    for m in re.finditer(pattern,page,re.I):
+        start = max((i for i in ends if i <= m.start()),default=0)
+        end = next((i for i in ends if i >= m.end()),len(page))
+        yield page[start:end]
 
 
 def facts_backed(question, answer, quote, page=None):
     if not all(isinstance(x,str) and x.strip() for x in (question,answer,quote)):
-        return False
-    if page is not None and not quoted_on_page(quote,page):
         return False
     q, claim = words(question), words(answer)
     quoted, denied = extract(q,quote)
@@ -167,7 +201,8 @@ def facts_backed(question, answer, quote, page=None):
     if page is None:
         return True
     on_page, contradictions = extract(q,page)
-    return set(on_page)=={value} and value not in contradictions
+    return (set(on_page)=={value} and value not in contradictions
+            and any(value in extract(q,context)[0] for context in citation_contexts(quote,page)))
 
 
 def legacy_identity(row):

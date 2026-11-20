@@ -44,3 +44,18 @@ class DocumentFactTests(unittest.TestCase):
             self.assertFalse(row["verified"])
             self.assertNotIn("10 paper cards",(job.workspace/"answers.md").read_text())
             self.assertIsNone(document_proof(row,quote))
+
+    def test_category_identifier_tense_and_citation_boundaries(self):
+        cases = [
+            ("Which truck has clearance?", "The south pod", "The south pod has clearance."),
+            ("What is the rate for Pier A?", "5 euros", "The rate for Pier is 5 euros."),
+            ("Who signed the receipt?", "Jame", "James signed the receipt."),
+            ("What is the price for buses?", "9 euros", "The price for buses was 9 euros."),
+            ("Who signed the receipt?", "James", "James signed the receipt?"),
+        ]
+        for q,answer,page in cases:
+            with self.subTest(q=q,answer=answer):
+                self.assertFalse(facts_backed(q,answer,page,page))
+        q="Who signed the receipt?"
+        page="If appointed, Mira signed the receipt on Tuesday. Mira signed the receipt."
+        self.assertFalse(facts_backed(q,"Mira","Mira signed the receipt on Tuesday",page))
