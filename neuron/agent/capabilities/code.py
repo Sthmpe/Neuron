@@ -76,6 +76,9 @@ class FixBug(Capability):
         hint = job.memory_context(kinds=("fix",)) if hasattr(job, "memory_context") else ""
         if cmd[0] == "python3":                               # the proven step-3 loop for Python
             r = fix_project(ws, job.runner, job.sandbox, log=lambda *_: None, memory_hint=hint)
+            if r.get("already_passing"):          # nothing failed, nothing was changed: not a fixed bug (core proof C1)
+                return Outcome(False, "the project's tests already pass, so there was no failing test to fix and nothing was changed",
+                               {"already": True}, evidence={"no_retry": True})
             res = {"history": r.get("history")}
             win = next((h for h in (r.get("history") or []) if h.get("passed")), None)
             if r.get("claimed") and win:
@@ -88,7 +91,8 @@ class FixBug(Capability):
         ws = job.workspace
         passed, res = run_project_tests(job)
         if passed:
-            return Outcome(True, "the tests already pass", {"already": True})
+            return Outcome(False, "the project's tests already pass, so there was no failing test to fix and nothing was changed",
+                           {"already": True}, evidence={"no_retry": True})
         output = res.output[-4000:]
         srcs = [f for f in files(ws) if Path(f).suffix in C_LIKE and not re.search(r"(^|/)tests?/|_test\.|test_", f)]
         tests = [f for f in files(ws) if Path(f).suffix in C_LIKE and f not in srcs]
