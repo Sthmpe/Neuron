@@ -48,7 +48,13 @@ class Memory:
                 helped INTEGER DEFAULT 0, last_checked REAL);
             CREATE VIRTUAL TABLE IF NOT EXISTS notes_fts USING fts5(text, tags, content='notes', content_rowid='id');
         """)
-        self.embedder = embedder if embedder is not None else best_embedder()
+        self._embedder = embedder                 # started only when first needed (easy questions never start it)
+
+    @property
+    def embedder(self):
+        if self._embedder is None:
+            self._embedder = best_embedder()
+        return self._embedder
 
     # ---- writing ---------------------------------------------------------------------------------------------
     def add(self, kind, text, source, version="", verified=False, tags=(), meta=None):
@@ -80,8 +86,9 @@ class Memory:
         self.db.commit()
 
     # ---- reading ---------------------------------------------------------------------------------------------
-    def search(self, query, k=5, kinds=None, include_outdated=False):
-        """Hybrid search. Returns notes (dicts) with 'score', best first."""
+    def search(self, query, k=5, kinds=None, include_outdated=False, vector=True):
+        """Hybrid search. Returns notes (dicts) with 'score', best first. vector=False: keyword search only (no
+        embedding model is started; used on the fast path for easy questions)."""
         where = " AND n.status NOT IN ('rejected')" if include_outdated else " AND n.status NOT IN ('outdated', 'rejected')"
         kind_sql = f" AND n.kind IN ({','.join('?' * len(kinds))})" if kinds else ""
         args = list(kinds or [])
@@ -92,15 +99,16 @@ class Memory:
                 f"SELECT n.id FROM notes_fts f JOIN notes n ON n.id = f.rowid WHERE notes_fts MATCH ?{where}{kind_sql} "
                 f"ORDER BY bm25(notes_fts) LIMIT 30", [q] + args)]
         rows = {r["id"]: dict(r) for r in self.db.execute(f"SELECT * FROM notes n WHERE 1=1{where}{kind_sql}", args)}
-        qv = self.embedder.embed([query])[0]
         sims = []
-        for nid, r in rows.items():
-            if r["embedder"] == self.embedder.name:          # vectors from another embedder are not comparable
-                sims.append((nid, _cos(qv, json.loads(r["vector"]))))
+        if vector and rows:
+            qv = self.embedder.embed([query])[0]
+            for nid, r in rows.items():
+                if r["embedder"] == self.embedder.name:      # vectors from another embedder are not comparable
+                    sims.append((nid, _cos(qv, json.loads(r["vector"]))))
         sims.sort(key=lambda x: -x[1])
         ranked_vec = [nid for nid, s in sims[:30] if s >= self.embedder.min_similarity]
         score, simd = {}, dict(sims)
-        w_vec = 2.0 if self.embedder.name != "hash-3gram-512" else 1.0     # meaning counts more than a shared word
+        w_vec = (2.0 if self.embedder.name != "hash-3gram-512" else 1.0) if sims else 1.0   # meaning counts more than a shared word
         for ranking, w in ((ranked_kw, 1.0), (ranked_vec, w_vec)):
             for rank, nid in enumerate(ranking):
                 score[nid] = score.get(nid, 0) + w / (60 + rank)

@@ -1,5 +1,6 @@
 """Exact arithmetic and the delivered answer's evidence label (Astra's tests from research/astra 6847ef3, adapted:
 on this branch a plain unchecked answer has the status "answered", not "done")."""
+import os
 import unittest
 
 from neuron.agent.arithmetic import exact_answer
@@ -10,6 +11,12 @@ from tests.test_agent import run
 
 
 class AnswerEvidenceTests(unittest.TestCase):
+    def setUp(self):                         # these tests exercise the careful path; the fast path has its own tests
+        os.environ["NEURON_FAST"] = "0"
+
+    def tearDown(self):
+        os.environ.pop("NEURON_FAST", None)
+
     def test_exact_arithmetic_uses_the_complete_request(self):
         cases = {"Compute (0.1 + 0.2) / 2": "0.15", "What is −5 × 2?": "-10",
                  "1 / 7": "1/7", "Evaluate 3 / 4 as a fraction": "3/4",

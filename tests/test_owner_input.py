@@ -2,6 +2,7 @@
 
 Written by Astra (Codex) on research/astra (6847ef3); adopted by Claude. Only change: none needed for these
 scenarios (a plain unchecked answer reports UNVERIFIED in both branches)."""
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -90,6 +91,12 @@ class OwnerInputTests(unittest.TestCase):
 
 
 class MissingFactTests(unittest.TestCase):
+    def setUp(self):                         # these tests exercise the careful path; the fast path has its own tests
+        os.environ["NEURON_FAST"] = "0"
+
+    def tearDown(self):
+        os.environ.pop("NEURON_FAST", None)
+
     def test_unsourced_and_reused_numbers_need_an_owner(self):
         from neuron.agent.owner_input import bind_plan
         def bind(value):

@@ -129,9 +129,17 @@ class Agent:
             for t in s.plan():
                 if t["status"] == "waiting_network" and t.get("not_before", 0) <= time.time():
                     s.update_task(t["id"], status="pending", summary="the internet is back")
+        g = s.goal()
+        if "fast" not in g:                                              # decided once per job, kept on resume
+            fast = router.is_simple(g["request"], attachments, job.workspace)
+            s.update_goal(fast=fast)
+            if fast:                                                     # easy work: straight to the model
+                s.update_goal(kind="answer", kind_reason="fast path: a single question or simple task")
+                s.decide("understand", "kind", "answer (fast path: a single question or simple task, no planning)")
+        job.fast = s.goal().get("fast", False)
         if job.memory is not None:                                       # memory first, before any reasoning
             try:
-                job.memory_notes = job.memory.search(s.goal()["request"], k=4)
+                job.memory_notes = job.memory.search(s.goal()["request"], k=4, vector=not job.fast)
             except Exception as e:                                       # noqa: BLE001  memory problems never stop a job
                 job.memory_notes = []
                 job.log(f"memory search failed: {e}")

@@ -50,6 +50,25 @@ def rule_guess(request, attachments=(), workspace=None):
     return ("answer", hits) if re.search(r"\?\s*$|^(what|why|how|who|when|where|which|explain)\b", text.strip()) else (None, hits)
 
 
+SIMPLE_MAX_CHARS = 500
+
+
+def is_simple(request, attachments=(), workspace=None):
+    """A single question or a simple task (a short request, no files, no project to work on, nothing the rules
+    recognise as a document, program, app or bug fix): it goes straight to the model, with no classification call,
+    no plan and no planning overhead, so NEURON is never meaningfully slower than the bare model on easy work."""
+    import os
+    text = (request or "").strip()
+    if os.environ.get("NEURON_FAST") == "0" or not text or len(text) > SIMPLE_MAX_CHARS or attachments:
+        return False
+    if workspace is not None:
+        ws = Path(workspace)
+        if any(p for p in ws.rglob("*") if p.is_file() and ".neuron" not in p.relative_to(ws).parts):
+            return False                          # there is something to work on: not a simple question
+    kind, hits = rule_guess(text, attachments, workspace)
+    return kind in (None, "answer") and not hits
+
+
 def understand(job, request, attachments=()):
     kind, hits = rule_guess(request, attachments, job.workspace)
     how = "rules"

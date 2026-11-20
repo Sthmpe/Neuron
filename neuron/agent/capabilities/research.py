@@ -223,6 +223,10 @@ class AnswerQuestion(Capability):
             (job.workspace / "answer.md").write_text(text + "\n")
             return Outcome(True, text, {"answer": text, "expression": expression}, ["answer.md"])
         turns = params.get("owner_inputs", [])
+        if getattr(job, "fast", False) and not turns:
+            done = self._fast(job, q)              # easy work: one model call, like the bare model
+            if done is not None:
+                return done
         q, supplied = prepare(job, q, turns)       # may pause the step with a question for the owner
         text = supplied.text if supplied else None
         method = supplied.basis if supplied else ""
@@ -253,6 +257,79 @@ class AnswerQuestion(Capability):
             return Outcome(False, "the local model did not supply a final answer")
         (job.workspace / "answer.md").write_text(f"{answer}\n\nUnverified. {method}{extra}\n")
         return Outcome(True, answer[:300], {**result, "answer": answer}, ["answer.md"], made_by=supplied.made_by if supplied else "model")
+
+    FAST_SYSTEM = ("You are NEURON, an offline assistant. Answer the request directly and clearly. If it needs a calculation, "
+                   "write one short Python program in a ```python block that computes the answer from the numbers given and "
+                   "prints only the result. If a fact only the owner can know is missing, reply only: NEED_INPUT: <one question>. "
+                   "No em dashes.")
+    @staticmethod
+    def _allowed_numbers(q):
+        """Numbers a program may use although the request does not state them: 0, 1 and 2 always; 100 and the values a
+        stated percentage implies (15% -> 0.15, 0.85, 1.15) only with a percentage; time constants only with time words;
+        1000 only with metric units. Anything else is an input the model made up (eval: '100 - 7' for 'how much is
+        left' when the starting amount was never given)."""
+        from ..owner_input import numbers
+        allowed = {0.0, 1.0, 2.0}
+        given = [float(n) for n in numbers(q)]
+        allowed |= set(given)
+        if re.search(r"%|percent", q, re.I):
+            allowed.add(100.0)
+            for n in given:
+                allowed |= {round(n / 100, 6), round(1 - n / 100, 6), round(1 + n / 100, 6)}
+        def units(family):                  # distinct units of one kind named in the request
+            return {m.lower()[:4] for m in re.findall(family, q, re.I)}
+        # a conversion factor only makes sense when two different units of the same kind appear (minutes and hours)
+        if len(units(r"\b(second|minute|hour|day|week|month|year)s?\b")) >= 2:
+            allowed |= {7.0, 12.0, 24.0, 30.0, 31.0, 52.0, 60.0, 365.0, 3600.0, 86400.0}
+        if len(units(r"\b(km|kilomet\w*|mm|millimet\w*|cm|centimet\w*|metres?|meters?|kg|kilogram\w*|grams?|ml|millilit\w*|litres?|liters?)\b")) >= 2:
+            allowed |= {10.0, 100.0, 1000.0}
+        return allowed
+
+    def _fast(self, job, q):
+        """One model call. Questions get the model's answer; calculations get a program run in the sandbox, so the number
+        comes from code, not from the model's head. Returns None to fall back to the careful path when the shortcut is
+        not safe: the program failed or used a number that is not in the request (an input the model invented)."""
+        from ..capability import NeedsOwnerInput
+        from ..owner_input import DECLARED_MISSING, PERSONAL_EVENT, QUANTITY, direct_question, numbers
+        from ..thinking import final_answer, python_block
+        missing = DECLARED_MISSING.search(q)
+        if missing and q[:missing.start()].strip():                    # "I have not given the opening balance"
+            raise NeedsOwnerInput(f"What is the {missing[1].strip()}?", {"end_of_question": missing.start()})
+        if PERSONAL_EVENT.fullmatch(q.strip()) and not QUANTITY.search(q) and not numbers(q):
+            raise NeedsOwnerInput(direct_question(q.strip()), {"direct": True})
+        mem = job.memory_context() if hasattr(job, "memory_context") else ""
+        text = job.ask_text("builder", self.FAST_SYSTEM + (f"\n\n{mem}" if mem else ""), q, max_tokens=700)
+        if not text:
+            return Outcome(False, "the local model did not supply an answer")
+        need = re.search(r"NEED_INPUT\s*:?\s*(.{4,220}\?)", text, re.I)
+        if need and not python_block(text):
+            raise NeedsOwnerInput(need[1].strip())
+        code = python_block(text)
+        if code:
+            ok = self._allowed_numbers(q)
+            invented = sorted({n.lstrip("-") for n in numbers(code) if not any(abs(abs(float(n)) - a) < 1e-9 for a in ok)})
+            if invented:
+                job.log(f"  fast path: the program uses numbers not in the request ({invented[:4]}); taking the careful path")
+                return None
+            import tempfile
+            with tempfile.TemporaryDirectory() as d:
+                (Path(d) / "calc.py").write_text(code)
+                res = job.sandbox.run(["python3", "calc.py"], d, timeout=20) if job.sandbox else None
+            printed = (res.output or "").strip() if res is not None and res.ok else ""
+            if not printed or len(printed.splitlines()) > 3:
+                return None
+            answer = printed if len(printed.splitlines()) == 1 else final_answer(text) or printed
+            method = "The model wrote a program that computed this; it ran once in the sandbox."
+        else:
+            if QUANTITY.search(q) and not numbers(text):
+                return None                        # asked for a number, got none: the careful path decides
+            answer = clean(final_answer(text) or text).strip()
+            method = "The local model supplied this answer."
+        if not answer:
+            return Outcome(False, "the local model did not supply a final answer")
+        (job.workspace / "answer.md").write_text(f"{clean(answer)}\n\nUnverified. {method}\n")
+        return Outcome(True, clean(answer)[:300], {"answer": clean(answer), "fast": True, "tool_runs": 1 if code else 0},
+                       ["answer.md"], made_by="model")
 
     def verify(self, job, params, outcome):
         from ..arithmetic import exact_answer

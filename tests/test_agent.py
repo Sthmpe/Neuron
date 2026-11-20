@@ -324,6 +324,12 @@ class NotFoundTests(unittest.TestCase):
 
 
 class ThinkingTests(unittest.TestCase):
+    def setUp(self):                         # these tests exercise the careful path; the fast path has its own tests
+        os.environ["NEURON_FAST"] = "0"
+
+    def tearDown(self):
+        os.environ.pop("NEURON_FAST", None)
+
     def test_numeric_question_is_computed_in_the_sandbox_and_checked(self):
         replies = ["Let me compute.\n```python\nprint(17 * 23 + 4)\n```",
                    "The program printed 395.\nAnswer: 395",
@@ -346,6 +352,12 @@ class ThinkingTests(unittest.TestCase):
 
 
 class RequireCodeTests(unittest.TestCase):
+    def setUp(self):                         # these tests exercise the careful path; the fast path has its own tests
+        os.environ["NEURON_FAST"] = "0"
+
+    def tearDown(self):
+        os.environ.pop("NEURON_FAST", None)
+
     def test_calculation_question_always_runs_a_program(self):
         """The 2 GB model answered an average in its head, wrongly (44 for 45); arithmetic now always goes through code."""
         plan = json.dumps({"operation": "other", "inputs": [], "unit": "loaves"})   # the fact-planning step (Astra's design)
