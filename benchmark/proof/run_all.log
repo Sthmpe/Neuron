@@ -233,3 +233,94 @@ PROOF-DONE 2gb-run2
 4gb-run2 A5_library_loans neuron: not solved | 2/14 | 309.1s | peak 3915 MB | calls 8 | claims FAILED
 benchmark/proof/run_all.sh: line 6:  5501 Killed                  python3 -m benchmark.proof.run --tier "$tier" --run "$k"
 RUN FAILED 4gb 2
+PermissionError: [Errno 13] Permission denied
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/user/neuron/benchmark/proof/run.py", line 218, in <module>
+    main()
+    ~~~~^^
+  File "/home/user/neuron/benchmark/proof/run.py", line 147, in main
+    with open("/proc/self/oom_score_adj", "w") as f:      # R2: the runner is measured but never the one the limit kills
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied
+RUN FAILED 2gb 1
+PermissionError: [Errno 13] Permission denied
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/user/neuron/benchmark/proof/run.py", line 218, in <module>
+    main()
+    ~~~~^^
+  File "/home/user/neuron/benchmark/proof/run.py", line 147, in main
+    with open("/proc/self/oom_score_adj", "w") as f:      # R2: the runner is measured but never the one the limit kills
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied
+RUN FAILED 4gb 1
+PermissionError: [Errno 13] Permission denied
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/user/neuron/benchmark/proof/run.py", line 218, in <module>
+    main()
+    ~~~~^^
+  File "/home/user/neuron/benchmark/proof/run.py", line 147, in main
+    with open("/proc/self/oom_score_adj", "w") as f:      # R2: the runner is measured but never the one the limit kills
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied
+RUN FAILED 2gb 2
+PermissionError: [Errno 13] Permission denied
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/user/neuron/benchmark/proof/run.py", line 218, in <module>
+    main()
+    ~~~~^^
+  File "/home/user/neuron/benchmark/proof/run.py", line 147, in main
+    with open("/proc/self/oom_score_adj", "w") as f:      # R2: the runner is measured but never the one the limit kills
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied
+RUN FAILED 4gb 2
+PermissionError: [Errno 13] Permission denied
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/user/neuron/benchmark/proof/run.py", line 218, in <module>
+    main()
+    ~~~~^^
+  File "/home/user/neuron/benchmark/proof/run.py", line 147, in main
+    with open("/proc/self/oom_score_adj", "w") as f:      # R2: the runner is measured but never the one the limit kills
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied
+RUN FAILED 2gb 3
+PermissionError: [Errno 13] Permission denied
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/user/neuron/benchmark/proof/run.py", line 218, in <module>
+    main()
+    ~~~~^^
+  File "/home/user/neuron/benchmark/proof/run.py", line 147, in main
+    with open("/proc/self/oom_score_adj", "w") as f:      # R2: the runner is measured but never the one the limit kills
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied
+RUN FAILED 4gb 3
+ALL-PROOF-RUNS-DONE

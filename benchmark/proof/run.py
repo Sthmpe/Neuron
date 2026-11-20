@@ -85,11 +85,13 @@ def server_usage(job):
 
 
 def _child_setup():
-    """Runner amendment R2: a measured process keeps the normal out-of-memory priority (the runner itself is protected,
-    see main), and dies if the runner dies, so no orphan keeps running beside the next condition."""
+    """Runner amendment R2: every measured process (and all it starts) gets the same raised out-of-memory priority, so
+    when the tier's limit is hit the kernel picks among the measured processes exactly as before, never the runner
+    (lowering the runner's own priority is not permitted in this container); and it dies if the runner dies, so no
+    orphan keeps running beside the next condition."""
     import ctypes
     with open("/proc/self/oom_score_adj", "w") as f:
-        f.write("0")
+        f.write("500")
     ctypes.CDLL("libc.so.6", use_errno=True).prctl(1, signal.SIGKILL)     # PR_SET_PDEATHSIG
 
 
@@ -144,8 +146,6 @@ def main(argv=None):
     scratch = ROOT / "benchmark" / "run" / "proof" / label
     scratch.mkdir(parents=True, exist_ok=True)
     tier = Tier(a.tier).enter()
-    with open("/proc/self/oom_score_adj", "w") as f:      # R2: the runner is measured but never the one the limit kills
-        f.write("-900")
     mgr = ModelManager()
     lock = json.loads((HERE / "LOCK.json").read_text())
     results.update(tier=a.tier, run=a.run, seed=a.run, tier_limit_mb=round(tier.limit / MB), network=net["method"],
