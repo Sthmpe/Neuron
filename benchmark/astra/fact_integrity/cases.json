@@ -1,0 +1,27 @@
+{
+  "documents": [
+    {"id":"crate","page":"In the crate there are 14 amber tiles and 6 cobalt tiles.","question":"How many cobalt tiles are in the crate?","answer":"6 cobalt tiles","value":"6","wrong":"14 cobalt tiles"},
+    {"id":"dispatch","page":"East depot dispatched 48 parcels. West depot dispatched 27 parcels.","question":"How many parcels did West depot dispatch?","answer":"27 parcels","value":"27","wrong":"48 parcels"},
+    {"id":"fee","page":"The refill fee for guests is 18 credits. The refill fee for members is 7 credits.","question":"What is the refill fee for members?","answer":"7 credits","value":"7","wrong":"18 credits"},
+    {"id":"sample","page":"The blue sample weighs 3 grams. The red sample weighs 3 kilograms.","question":"What is the weight of the blue sample?","answer":"3 grams","value":"3 grams","wrong":"3 kilograms"},
+    {"id":"schedule","page":"Mara approved the summer schedule. Ivo approved the winter schedule.","question":"Who approved the winter schedule?","answer":"Ivo","value":"Ivo","wrong":"Mara"},
+    {"id":"thanks","page":"Mira thanked Rowan. Rowan thanked Oli.","question":"Who thanked Rowan?","answer":"Mira","value":"Mira","wrong":"Oli"},
+    {"id":"clearance","page":"The north pod has no clearance. The south pod has clearance.","question":"Which pod has clearance?","answer":"The south pod","value":"south","wrong":"The north pod"},
+    {"id":"permits","page":"There are 12 permits pending. The register gives no count for active permits.","question":"How many permits are active?","answer":null,"value":null,"wrong":"12 active permits"}
+  ],
+  "calculations": [
+    {"id":"multiples","question":"Using Python, what is the product of all positive multiples of 4 below 14?","answer":"384"},
+    {"id":"squares","question":"Using Python, what is the sum of the squares of the integers from 2 through 7 inclusive?","answer":"139"},
+    {"id":"remainder","question":"Using Python, what is the remainder when 6821 is divided by 37?","answer":"13"}
+  ],
+  "calculator_replays": [
+    {"id":"review-conflict","code":"print(19 * 7 - 5)","draft":"128","review":"129","expect":"128"},
+    {"id":"inline-conflict","code":"print(4 ** 3 + 9)","inline":"74","draft":"74","review":"75","expect":"73"},
+    {"id":"two-lines","code":"print('Pairs: 12')\nprint('Singles: 5')","draft":"17","review":"18","expect":"Pairs: 12\nSingles: 5"},
+    {"id":"diagnostic-stream","code":"import sys\nprint('diagnostic 404', file=sys.stderr)\nprint(11 + 23)","draft":"34","review":"404","expect":"34"},
+    {"id":"failed-program","code":"print(81)\nraise ValueError('inconsistent inputs')","draft":"81","review":"82","expect":""},
+    {"id":"empty-output","code":"import sys\nprint('diagnostic 77', file=sys.stderr)","draft":"77","review":"77","expect":""},
+    {"id":"no-code-control","draft":"42","review":"43","expect":"43"}
+  ],
+  "delayed_phone":{"goal":"My rectangular banner is 11 metres long. What is its area in square metres?","owner":"4 metres","expect":"44","wait_before_restart_s":15,"wait_after_restart_s":15}
+}
