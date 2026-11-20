@@ -8,6 +8,7 @@ from pathlib import Path
 
 from ...kit_next.copy import clean
 from ..capability import Capability, Outcome, Verdict
+from ..document_facts import document_proof, facts_backed, legacy_identity
 
 WORD = re.compile(r"[a-z0-9]+(?:[.,][0-9]+)*")
 STOP = set("the a an of to in and or is are was were for on at by with from that this it as be what how which who when where much many does do".split())
@@ -15,10 +16,6 @@ STOP = set("the a an of to in and or is are was were for on at by with from that
 
 def tokens(text):
     return [w for w in WORD.findall(text.lower()) if w not in STOP]
-
-
-def norm(text):
-    return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9.,% ]", " ", text.lower())).strip()
 
 
 class Index:
@@ -38,24 +35,6 @@ class Index:
                     for w in q if w in tf)
             scores.append((s, i))
         return [self.pages[i] for s, i in sorted(scores, reverse=True)[:k] if s > 0]
-
-
-NUMBER_QUESTION = re.compile(r"^\s*(how (much|many|long|far|old)|what (is|was) the (number|amount|price|cost|fare|percentage|share|total)|"
-                             r"what percentage|in what year|when\b)", re.I)
-
-
-def numbers_in(text):
-    return {n.replace(",", "").rstrip(".") for n in re.findall(r"\d[\d,]*(?:\.\d+)?", text or "")}
-
-
-def facts_backed(question, answer, quote):
-    """An answer counts as backed only if every number it states is in the quote, and a question that asks for a
-    number gets one. (The locked run found answers whose quote was on the page while the answer itself said
-    something the quote does not, such as 'half the fare' where the page gives the amount.)"""
-    said, quoted = numbers_in(answer), numbers_in(quote)
-    if said - quoted:
-        return False
-    return bool(said) or not NUMBER_QUESTION.search(question or "")
 
 
 def questions_from(request):
@@ -97,18 +76,20 @@ class AnswerFromDocuments(Capability):
     purpose = "Answer questions from the indexed documents, each with document, page and a supporting quote"
     permissions = ("use_model", "write_workspace")
     resources = {"ram_mb": 60, "uses_model": True}
-    verification = "each quote is found on the cited page, and every number in the answer is in the quote"
+    verification = "the cited page and quote give the same unique answer to the requested fact"
     domains = ("research",)
     strategies = ("answer the failed questions again with more pages",)
 
     def run(self, job, params):
         idx = Index(json.loads((job.state.dir / "index.json").read_text()))
         qs = questions_from(job.state.goal()["request"])
+        pages = {(p["doc"], p["page"]): p["text"] for p in idx.pages}
         prev = {a["question"]: a for a in (job.state.task("answer").get("result") or {}).get("answers", [])}
         retry = set(params.get("retry_questions") or [])
         answers = []
         for q in qs:
-            if q in prev and prev[q].get("verified") and q not in retry:
+            prior = prev.get(q, {})
+            if q not in retry and prior.get("verified") and document_proof(prior, pages.get((prior.get("doc"), prior.get("page")))):
                 answers.append(prev[q])
                 continue
             hits = idx.search(q, k=4 if params.get("strategy") else 3)
@@ -121,28 +102,40 @@ class AnswerFromDocuments(Capability):
             if not data:
                 answers.append({"question": q, "answer": "not found", "verified": False})
                 continue
-            page = next((p for p in idx.pages if p["doc"] == data["doc"] and p["page"] == data["page"]), None)
-            verified = page is not None and len(norm(data["quote"])) > 8 and norm(data["quote"]) in norm(page["text"]) \
-                and facts_backed(q, data["answer"], data["quote"])
-            answers.append({"question": q, "answer": clean(data["answer"]), "doc": data["doc"], "page": data["page"], "quote": data["quote"],
-                            "verified": verified})
+            row = {k: data.get(k) for k in ("doc", "page", "quote")}
+            row.update(question=q, answer=clean(data.get("answer")))
+            page_text = pages.get((row["doc"], row["page"])) if isinstance(row["doc"], str) and type(row["page"]) is int else None
+            row["verified"] = document_proof(row, page_text) is not None
+            if not row["verified"]:
+                row["answer"] = "not found" if str(row["answer"]).strip().lower() == "not found" else "Not confirmed by the cited page."
+            answers.append(row)
         md = ["# Answers", ""] + [f"{i}. **{a['question']}**  \n{a['answer']} ({a.get('doc', '?')}, page {a.get('page', '?')})"
-                                  + (f"  \n> {a['quote']}" if a.get("quote") else "") + ("" if a["verified"] else "  \n_(not confirmed: the quote is not on that page, or the answer says more than the quote)_")
+                                  + (f"  \n> {a['quote']}" if a.get("quote") else "") + ("" if a["verified"] else "  \n_(The cited evidence does not establish the requested fact.)_")
                                   for i, a in enumerate(answers, 1)]
         (job.workspace / "answers.md").write_text("\n".join(md) + "\n")
         (job.workspace / "answers.json").write_text(json.dumps(answers, indent=1))
         ok = sum(a["verified"] for a in answers)
-        notes = [{"kind": "finding", "text": f"{a['question']} {a['answer']} (quote: \"{a['quote'][:200]}\")",
-                  "source": f"{a['doc']} page {a['page']}", "verified": True, "tags": [a["doc"]]} for a in answers if a["verified"]]
-        return Outcome(True, f"{ok} of {len(answers)} answers have a quote confirmed on the cited page", {"answers": answers, "memory_notes": notes},
+        return Outcome(True, f"{ok} of {len(answers)} answers supported by their cited facts", {"answers": answers},
                        ["answers.md", "answers.json"], made_by="model")
 
     def verify(self, job, params, outcome):
-        checks = [{"id": f"q{i}_quote_on_cited_page", "pass": a["verified"], "detail": f"{a['question'][:60]} -> {a.get('doc')} p{a.get('page')}"}
-                  for i, a in enumerate(outcome.result["answers"], 1)]
+        pages = {(p["doc"], p["page"]): p["text"] for p in json.loads((job.state.dir / "index.json").read_text())}
+        answers = outcome.result["answers"]
+        delivered = json.loads((job.workspace / "answers.json").read_text())
+        notes, checks = [], []
+        for i, a in enumerate(answers, 1):
+            proof = document_proof(a, pages.get((a.get("doc"), a.get("page")))) if a.get("verified") else None
+            passed = bool(proof and delivered == answers)
+            checks.append({"id": f"q{i}_fact_on_cited_page", "pass": passed,
+                           "detail": f"{a['question'][:60]} -> {a.get('doc')} p{a.get('page')}"})
+            if passed:
+                text, source = legacy_identity(a)
+                notes.append({"kind":"finding", "text":text, "source":source, "verified":True, "tags":[a["doc"]],
+                              "meta":{"document_fact":proof}})
+        outcome.result["memory_notes"] = notes
         if not all(c["pass"] for c in checks):
             job.state.update_task("answer", params={"retry_questions": [a["question"] for a in outcome.result["answers"] if not a["verified"]]})
-        return Verdict(all(c["pass"] for c in checks), checks, "quote found on the cited page and the answer's numbers in the quote (deterministic)")
+        return Verdict(all(c["pass"] for c in checks), checks, "the question, answer and cited page agree on a unique fact")
 
 
 COMPUTE = re.compile(r"\d|\b(calculate|compute|how (much|many)|percent|average|total|sum|probability|solve)\b", re.I)
