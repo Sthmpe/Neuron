@@ -78,3 +78,17 @@ Traceback (most recent call last):
     raise BadZipFile("File is not a zip file")
 zipfile.BadZipFile: File is not a zip file
 RUN FAILED 2gb 1
+2gb-run1 D2_excel_staff_costs bare: not solved | 0/1 | 14.0s | peak 1443 MB | calls 2 | claims DONE
+2gb-run1 D3_excel_expenses bare: not solved | 0/1 | 17.0s | peak 1458 MB | calls 4 | claims stopped: the same reply 3 times in a row
+2gb-run1 D3_excel_expenses neuron: SOLVED | 7/7 | 11.5s | peak 1571 MB | calls 1 | claims VERIFIED
+2gb-run1 D4_word_repair_request neuron: not solved | 3/5 | 106.5s | peak 1467 MB | calls 16 | claims PARTIAL
+2gb-run1 D4_word_repair_request bare: not solved | 0/1 | 33.0s | peak 1454 MB | calls 5 | claims DONE
+2gb-run1 D5_word_leave_policy bare: not solved | 0/1 | 59.5s | peak 1451 MB | calls 3 | claims stopped: the same reply 3 times in a row
+2gb-run1 D5_word_leave_policy neuron: not solved | 3/5 | 133.1s | peak 1474 MB | calls 16 | claims PARTIAL
+2gb-run1 D6_pptx_cooperative_agm neuron: SOLVED | 9/9 | 18.0s | peak 1513 MB | calls 1 | claims VERIFIED
+2gb-run1 D6_pptx_cooperative_agm bare: not solved | 0/1 | 18.5s | peak 1462 MB | calls 1 | claims DONE
+2gb-run1 D7_pptx_fire_safety bare: not solved | 0/1 | 22.0s | peak 1461 MB | calls 3 | claims DONE
+2gb-run1 D7_pptx_fire_safety neuron: SOLVED | 9/9 | 15.5s | peak 1614 MB | calls 1 | claims VERIFIED
+2gb-run1 D8_pdf_clinic_report neuron: not solved | 10/12 | 104.6s | peak 1504 MB | calls 18 | claims PARTIAL
+2gb-run1 D8_pdf_clinic_report bare: not solved | 0/12 | 12.5s | peak 1487 MB | calls 1 | claims DONE
+PROOF-DONE 2gb-run1

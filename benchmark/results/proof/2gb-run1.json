@@ -1627,6 +1627,447 @@
     "template": 1
    },
    "bare_detail": null
+  },
+  {
+   "task": "D2_excel_staff_costs",
+   "category": "document",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "examiner_could_not_read_the_delivery: BadZipFile: File is not a zip file"
+   ],
+   "seconds": 14.0,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1443,
+   "model_calls": 2,
+   "generated_tokens": 156,
+   "prompt_tokens_processed": 524,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 1341
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "examiner_error": "BadZipFile: File is not a zip file",
+   "note": "second attempt: the first attempt's examination crashed (BadZipFile on a text file named .xlsx) before runner amendment R1, so no row was recorded and the condition ran again",
+   "bare_detail": {
+    "turns": 2,
+    "writes": 1,
+    "runs": 0,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "D3_excel_expenses",
+   "category": "document",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "file_exists: /home/user/neuron/benchmark/run/proof/2gb-run1/bare/D3_excel_expenses/expenses_summary.xlsx"
+   ],
+   "seconds": 17.0,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1458,
+   "model_calls": 4,
+   "generated_tokens": 156,
+   "prompt_tokens_processed": 995,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 4014
+   },
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 4,
+    "writes": 0,
+    "runs": 3,
+    "reads": 0,
+    "ended": "the same reply 3 times in a row",
+    "errors": []
+   }
+  },
+  {
+   "task": "D3_excel_expenses",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 7,
+   "checks_total": 7,
+   "failed_checks": [],
+   "seconds": 11.5,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1571,
+   "model_calls": 1,
+   "generated_tokens": 115,
+   "prompt_tokens_processed": 203,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 115
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1,
+    "template": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D4_word_repair_request",
+   "category": "document",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 3,
+   "checks_total": 5,
+   "failed_checks": [
+    "length_in_range: 473 words",
+    "budget_table_correct: no table found"
+   ],
+   "seconds": 106.5,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1467,
+   "model_calls": 16,
+   "generated_tokens": 1826,
+   "prompt_tokens_processed": 840,
+   "self_reported": {
+    "model_calls": 16,
+    "tokens": 1826
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "model": 1,
+    "model+template": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D4_word_repair_request",
+   "category": "document",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "examiner_could_not_read_the_delivery: BadZipFile: File is not a zip file"
+   ],
+   "seconds": 33.0,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1454,
+   "model_calls": 5,
+   "generated_tokens": 388,
+   "prompt_tokens_processed": 1519,
+   "self_reported": {
+    "model_calls": 5,
+    "tokens": 6137
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "examiner_error": "BadZipFile: File is not a zip file",
+   "note": null,
+   "bare_detail": {
+    "turns": 5,
+    "writes": 1,
+    "runs": 2,
+    "reads": 1,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "D5_word_leave_policy",
+   "category": "document",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "file_exists: /home/user/neuron/benchmark/run/proof/2gb-run1/bare/D5_word_leave_policy/leave_policy.docx"
+   ],
+   "seconds": 59.5,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1451,
+   "model_calls": 3,
+   "generated_tokens": 939,
+   "prompt_tokens_processed": 431,
+   "self_reported": {
+    "model_calls": 3,
+    "tokens": 3102
+   },
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 3,
+    "writes": 0,
+    "runs": 0,
+    "reads": 0,
+    "ended": "the same reply 3 times in a row",
+    "errors": []
+   }
+  },
+  {
+   "task": "D5_word_leave_policy",
+   "category": "document",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 3,
+   "checks_total": 5,
+   "failed_checks": [
+    "length_in_range: 597 words",
+    "budget_table_correct: no table found"
+   ],
+   "seconds": 133.1,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1474,
+   "model_calls": 16,
+   "generated_tokens": 2223,
+   "prompt_tokens_processed": 1116,
+   "self_reported": {
+    "model_calls": 16,
+    "tokens": 2223
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "model": 1,
+    "model+template": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D6_pptx_cooperative_agm",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 9,
+   "checks_total": 9,
+   "failed_checks": [],
+   "seconds": 18.0,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1513,
+   "model_calls": 1,
+   "generated_tokens": 246,
+   "prompt_tokens_processed": 129,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 246
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model": 1,
+    "template": 1,
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D6_pptx_cooperative_agm",
+   "category": "document",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "examiner_could_not_read_the_delivery: BadZipFile: File is not a zip file"
+   ],
+   "seconds": 18.5,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1462,
+   "model_calls": 1,
+   "generated_tokens": 258,
+   "prompt_tokens_processed": 391,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 649
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "examiner_error": "BadZipFile: File is not a zip file",
+   "note": null,
+   "bare_detail": {
+    "turns": 1,
+    "writes": 1,
+    "runs": 0,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "D7_pptx_fire_safety",
+   "category": "document",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "examiner_could_not_read_the_delivery: BadZipFile: File is not a zip file"
+   ],
+   "seconds": 22.0,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1461,
+   "model_calls": 3,
+   "generated_tokens": 292,
+   "prompt_tokens_processed": 692,
+   "self_reported": {
+    "model_calls": 3,
+    "tokens": 2344
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "examiner_error": "BadZipFile: File is not a zip file",
+   "note": null,
+   "bare_detail": {
+    "turns": 3,
+    "writes": 1,
+    "runs": 0,
+    "reads": 1,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "D7_pptx_fire_safety",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 9,
+   "checks_total": 9,
+   "failed_checks": [],
+   "seconds": 15.5,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1614,
+   "model_calls": 1,
+   "generated_tokens": 189,
+   "prompt_tokens_processed": 128,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 189
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model": 1,
+    "template": 1,
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D8_pdf_clinic_report",
+   "category": "document",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 10,
+   "checks_total": 12,
+   "failed_checks": [
+    "q2_cites_right_page: needs riverside_clinic_report_2026 page 1",
+    "q4_cites_right_page: needs riverside_clinic_report_2026 page 2"
+   ],
+   "seconds": 104.6,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1504,
+   "model_calls": 18,
+   "generated_tokens": 1212,
+   "prompt_tokens_processed": 6794,
+   "self_reported": {
+    "model_calls": 18,
+    "tokens": 1212
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D8_pdf_clinic_report",
+   "category": "document",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 12,
+   "failed_checks": [
+    "q1_answer_correct",
+    "q1_cites_right_page: needs riverside_clinic_report_2026 page 1",
+    "q2_answer_correct",
+    "q2_cites_right_page: needs riverside_clinic_report_2026 page 1",
+    "q3_answer_correct",
+    "q3_cites_right_page: needs riverside_clinic_report_2026 page 2",
+    "q4_answer_correct",
+    "q4_cites_right_page: needs riverside_clinic_report_2026 page 2",
+    "q5_answer_correct",
+    "q5_cites_right_page: needs riverside_clinic_report_2026 page 3",
+    "q6_answer_correct",
+    "q6_cites_right_page: needs riverside_clinic_report_2026 page 3"
+   ],
+   "seconds": 12.5,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1487,
+   "model_calls": 1,
+   "generated_tokens": 108,
+   "prompt_tokens_processed": 804,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 912
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 1,
+    "writes": 0,
+    "runs": 0,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
   }
  ],
  "tier": "2gb",
@@ -1642,7 +2083,7 @@
  "lock": "15be2767e9b9ca782441561ba62792dc1b9b4d253a28772e48b10c615acda609",
  "grace_s": 60,
  "started": "2026-11-20 09:34:48",
- "code_commit": "d41f5b0a959b047c039fd3ef82b7a2bc3cc028ef",
+ "code_commit": "6ec9ac30d1b99f19cb8f0dad518068340f5da924",
  "tier_limit_hits": 0,
  "oom_kills": 0
 }
