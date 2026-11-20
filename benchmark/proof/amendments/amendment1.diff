@@ -1,0 +1,33 @@
+diff --git a/benchmark/proof/app_exam.js b/benchmark/proof/app_exam.js
+index f267496..30380c8 100644
+--- a/benchmark/proof/app_exam.js
++++ b/benchmark/proof/app_exam.js
+@@ -44,12 +44,23 @@ async function login(p) {
+   await p.locator('input[type=password]').first().fill(LOGIN.password); await p.locator('input[type=password]').first().press('Enter'); await p.waitForLoadState();
+ }
+ async function open(p, word) {
++  // Amendment 1: a person clicks the menu item named like the page, not the first link that merely contains the word
++  // (the logo "Gym Members" contains "Members"). Exact name first, then the shortest visible name containing the word;
++  // the phone menu is opened if the links are hidden; the address /<word> is the last resort.
+   await p.goto(base + '/');
+-  const a = p.getByRole('link', { name: rx(word) }).first();
+-  if (await a.count() && await a.isVisible()) await a.click();
+-  else { const t = p.locator('label.nav-toggle, button[aria-label*=menu i]').first(); if (await t.count() && await t.isVisible()) await t.click();
+-         if (await a.count() && await a.isVisible()) await a.click(); else await p.goto(base + '/' + word.toLowerCase()); }
+-  await p.waitForLoadState();
++  if (word === '/' || word === '') { await p.waitForLoadState(); return; }
++  const esc = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
++  for (const tryMenu of [false, true]) {
++    if (tryMenu) { const t = p.locator('label.nav-toggle, button[aria-label*=menu i]').first();
++      if (await t.count() && await t.isVisible()) await t.click(); else break; }
++    const exact = p.getByRole('link', { name: new RegExp(`^\\s*${esc}\\s*$`, 'i') });
++    for (let i = 0; i < await exact.count(); i++) if (await exact.nth(i).isVisible()) { await exact.nth(i).click(); await p.waitForLoadState(); return; }
++    const loose = p.getByRole('link', { name: rx(esc) }); let best = null, bestLen = 1e9;
++    for (let i = 0; i < await loose.count(); i++) { const l = loose.nth(i); if (!(await l.isVisible())) continue;
++      const n = (await l.innerText()).trim().length; if (n < bestLen) { best = l; bestLen = n; } }
++    if (best) { await best.click(); await p.waitForLoadState(); return; }
++  }
++  await p.goto(base + '/' + word.toLowerCase()); await p.waitForLoadState();
+ }
+ const near = (t, label, value) => new RegExp(`${label}[^0-9]{0,40}${value}(?![0-9])`, 'i').test(t.replace(/,/g, '').replace(/\.0+\b/g, '')) ||
+   new RegExp(`(?<![0-9])${value}[^0-9]{0,30}${label}`, 'i').test(t.replace(/,/g, '').replace(/\.0+\b/g, ''));

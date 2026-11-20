@@ -1,0 +1,77 @@
+{
+ "rows": [
+  {
+   "task": "B1_py_invoice",
+   "category": "bug",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: st_total_includes_vat\n    self.assertEqual(total([Line(\"bag\", 2, 1000000)]), 2150000)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionE",
+    "hidden_tests_pass: st_total_includes_vat\n    self.assertEqual(total([Line(\"bag\", 2, 1000000)]), 2150000)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionE"
+   ],
+   "seconds": 49.5,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1445,
+   "model_calls": 4,
+   "tokens": 7587,
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 4,
+    "writes": 9,
+    "runs": 3,
+    "reads": 0,
+    "ended": "the same reply 3 times in a row",
+    "errors": []
+   }
+  },
+  {
+   "task": "D3_excel_expenses",
+   "category": "document",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "file_exists: /home/user/neuron/benchmark/run/proof/2gb-run1-smoke2/bare/D3_excel_expenses/expenses_summary.xlsx"
+   ],
+   "seconds": 15.0,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1444,
+   "model_calls": 4,
+   "tokens": 4014,
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 4,
+    "writes": 0,
+    "runs": 3,
+    "reads": 0,
+    "ended": "the same reply 3 times in a row",
+    "errors": []
+   }
+  }
+ ],
+ "tier": "2gb",
+ "run": 1,
+ "seed": 1,
+ "tier_limit_mb": 2048,
+ "network": "new empty network namespace (loopback only)",
+ "model": {
+  "planner": "qwen2.5-coder-1.5b-q4",
+  "reviewer": "qwen2.5-coder-1.5b-q4",
+  "builder": "qwen2.5-coder-1.5b-q4"
+ },
+ "lock": "15be2767e9b9ca782441561ba62792dc1b9b4d253a28772e48b10c615acda609",
+ "grace_s": 60,
+ "started": "2026-11-20 08:54:24",
+ "code_commit": "bd4bc8e887c04541243fec557cbff22b6a89f109",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

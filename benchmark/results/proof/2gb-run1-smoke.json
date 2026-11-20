@@ -1,0 +1,124 @@
+{
+ "rows": [
+  {
+   "task": "B1_py_invoice",
+   "category": "bug",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: st_total_includes_vat\n    self.assertEqual(total([Line(\"bag\", 2, 1000000)]), 2150000)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionE",
+    "hidden_tests_pass: st_total_includes_vat\n    self.assertEqual(total([Line(\"bag\", 2, 1000000)]), 2150000)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionE"
+   ],
+   "seconds": 110.7,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1446,
+   "model_calls": 4,
+   "tokens": 8900,
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 4,
+    "writes": 6,
+    "runs": 3,
+    "reads": 0,
+    "ended": "the same reply 3 times in a row",
+    "errors": []
+   }
+  },
+  {
+   "task": "B1_py_invoice",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: st_total_includes_vat\n    self.assertEqual(total([Line(\"bag\", 2, 1000000)]), 2150000)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionE",
+    "hidden_tests_pass: st_total_includes_vat\n    self.assertEqual(total([Line(\"bag\", 2, 1000000)]), 2150000)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionE"
+   ],
+   "seconds": 30.5,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1474,
+   "model_calls": 1,
+   "tokens": 50,
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "D3_excel_expenses",
+   "category": "document",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "file_exists: /home/user/neuron/benchmark/run/proof/2gb-run1-smoke/bare/D3_excel_expenses/expenses_summary.xlsx"
+   ],
+   "seconds": 134.6,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1482,
+   "model_calls": 5,
+   "tokens": 14650,
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 5,
+    "writes": 0,
+    "runs": 4,
+    "reads": 0,
+    "ended": "the same reply 3 times in a row",
+    "errors": []
+   }
+  },
+  {
+   "task": "D3_excel_expenses",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 7,
+   "checks_total": 7,
+   "failed_checks": [],
+   "seconds": 10.0,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1595,
+   "model_calls": 1,
+   "tokens": 115,
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1,
+    "template": 1
+   },
+   "bare_detail": null
+  }
+ ],
+ "tier": "2gb",
+ "run": 1,
+ "seed": 1,
+ "tier_limit_mb": 2048,
+ "network": "new empty network namespace (loopback only)",
+ "model": {
+  "planner": "qwen2.5-coder-1.5b-q4",
+  "reviewer": "qwen2.5-coder-1.5b-q4",
+  "builder": "qwen2.5-coder-1.5b-q4"
+ },
+ "lock": "15be2767e9b9ca782441561ba62792dc1b9b4d253a28772e48b10c615acda609",
+ "grace_s": 60,
+ "started": "2026-11-20 08:48:31",
+ "code_commit": "bd4bc8e887c04541243fec557cbff22b6a89f109",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

@@ -1,0 +1,87 @@
+{
+ "rows": [
+  {
+   "task": "A6_gym_members",
+   "category": "app",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 6,
+   "checks_total": 12,
+   "failed_checks": [
+    "add_member_1: no field for Name",
+    "add_member_2: no field for Name",
+    "add_member_3: no field for Name",
+    "dashboard_numbers: not near: members=3, (income|total)=31000, (less|below)=2",
+    "search_members: locator.fill: Timeout 30000ms exceeded.",
+    "data_survives_restart: missing Obinna Eze; "
+   ],
+   "seconds": 177.1,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1666,
+   "model_calls": 4,
+   "generated_tokens": 921,
+   "prompt_tokens_processed": 3774,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 921
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "bare_detail": null
+  },
+  {
+   "task": "A6_gym_members",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "app_runs_phase_1: the app did not answer on port 8000",
+    "app_runs_phase_2: the app did not answer on port 8000"
+   ],
+   "seconds": 53.0,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1448,
+   "model_calls": 1,
+   "generated_tokens": 718,
+   "prompt_tokens_processed": 1605,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 2323
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "bare_detail": {
+    "turns": 1,
+    "writes": 4,
+    "runs": 0,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  }
+ ],
+ "tier": "2gb",
+ "run": 1,
+ "seed": 1,
+ "tier_limit_mb": 2048,
+ "network": "new empty network namespace (loopback only)",
+ "model": {
+  "planner": "qwen2.5-coder-1.5b-q4",
+  "reviewer": "qwen2.5-coder-1.5b-q4",
+  "builder": "qwen2.5-coder-1.5b-q4"
+ },
+ "lock": "15be2767e9b9ca782441561ba62792dc1b9b4d253a28772e48b10c615acda609",
+ "grace_s": 60,
+ "started": "2026-11-20 09:02:00",
+ "code_commit": "bd4bc8e887c04541243fec557cbff22b6a89f109",
+ "tier_limit_hits": 0,
+ "oom_kills": 0
+}

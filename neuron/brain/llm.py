@@ -1,5 +1,6 @@
 """Client for a local llama.cpp server (`llama-server`). Local HTTP only, never through a proxy."""
 import json
+import os
 import time
 import urllib.error
 import urllib.request
@@ -63,6 +64,8 @@ class LlamaClient:
     def chat(self, messages, max_tokens=1024, temperature=0.2, json_schema=None):
         body = {"messages": messages, "max_tokens": max_tokens, "temperature": temperature,
                 "cache_prompt": True}
+        if os.environ.get("NEURON_SEED"):          # repeated measurement runs: the same seed for bare model and NEURON
+            body["seed"] = int(os.environ["NEURON_SEED"])
         body.update(self.extra_body)
         if json_schema is not None:
             body["response_format"] = {"type": "json_object", "schema": json_schema}
