@@ -92,7 +92,8 @@ R2. (2026-11-20 18:45, during 4 GB run 2, after 9 recorded rows) The runner live
    out-of-memory priority (+500; lowering the runner's own is not permitted in this container), so the kernel still
    chooses among the measured processes exactly as before and never the runner, (b) makes each measured process die if the runner dies, and (c) clears stray agent, bare and model-server
    processes before each condition starts. The two attempts that produced no row run again, labelled in their rows'
-   `note` (4 GB run 2 A5 bare, 2 GB run 3 A1 bare). 4 GB run 2 is completed after 2 GB run 3 (the driver resumes it).
+   `note` (4 GB run 2 A5 bare, 2 GB run 3 A1 bare). The driver resumed in the original order: the rest of 4 GB run 2,
+   then the run-3 passes.
 
 Proposed, awaiting the owner's decision:
 
