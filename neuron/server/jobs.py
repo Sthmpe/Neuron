@@ -283,7 +283,7 @@ class JobManager:
         prompt = next((t["input_request"] for t in tasks if t["status"] == "waiting_input"), None)
         asking = m["status"] == "waiting_input" and prompt is not None
         history = [{"question": turn["question"], "answer": turn["answer"]} for t in tasks for turn in t.get("owner_inputs", [])]
-        hide_answer = any(t["capability"] == "answer_question" and t["status"] != "done" for t in tasks)
+        hide_answer = any(t.get("capability") == "answer_question" and t["status"] != "done" for t in tasks)
         plan = [{"id": t["id"], "title": t["title"], "status": t["status"], "summary": t.get("summary", ""), "made_by": t.get("made_by"),
                  "verification": t.get("verification"), "tries": len(t.get("attempts", [])), "gaps": t.get("gaps", []),
                  "last_failure": (t["attempts"][-1].get("failure") if t.get("attempts") and not t["attempts"][-1].get("passed") else "")}

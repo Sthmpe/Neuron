@@ -159,7 +159,7 @@ class AnswerQuestion(Capability):
     def run(self, job, params):
         from ..arithmetic import exact_answer
         from ..capability import NeedsOwnerInput
-        from ..owner_input import prepare
+        from ..owner_input import METHOD, prepare
         q = job.state.goal()["request"]
         exact = exact_answer(q)
         if exact is not None:
@@ -172,7 +172,7 @@ class AnswerQuestion(Capability):
         text = supplied.text if supplied else None
         method = supplied.basis if supplied else ""
         result = {}
-        if text is None and COMPUTE.search(q):
+        if text is None and COMPUTE.search(q) and not METHOD.search(q):
             from ..thinking import solve
             s = solve(lambda m, n: job.chat("builder", m, max_tokens=n, temperature=0.1), job.sandbox, q)
             text = s["answer"]
@@ -182,7 +182,7 @@ class AnswerQuestion(Capability):
             mem = job.memory_context() if hasattr(job, "memory_context") else ""
             text = job.ask_text("builder", "You are NEURON, an offline assistant. Answer clearly. If a specific input only the owner "
                                 "can provide is missing, reply with NEED_INPUT followed by one question asking for that fact. "
-                                "Say so if you are not sure. No em dashes."
+                                "For a formula or method, explain with variables. Say so if you are not sure. No em dashes."
                                 + (f"\n\n{mem}" if mem else ""), q, max_tokens=700)
             method = "The local model supplied this answer."
             missing = re.fullmatch(r"NEED_INPUT\s*:?\s*(.{4,220}\?)", text or "", re.I)

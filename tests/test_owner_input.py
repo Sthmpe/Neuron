@@ -128,3 +128,31 @@ class MissingFactTests(unittest.TestCase):
         job.state.answer_input(prompt["id"], "Room B", accept_new=True)
         self.assertEqual(Agent(job).run("")["verdict"], "UNVERIFIED")
         self.assertIn("Room B", (job.workspace / "answer.md").read_text())
+
+    def test_mixed_units_use_the_requested_scale(self):
+        import json
+        from neuron.agent.loop import Agent
+        from tests.test_agent import run
+        plan = {"operation": "divide", "unit": "km/h", "inputs": [
+            {"name": "distance", "value": "15", "question": "How far did you go?"},
+            {"name": "duration", "value": "?", "question": "How long did you travel?"}]}
+        _, job, _ = run("I went 15 km. What was my speed in km per hour?", [json.dumps(plan)])
+        for reply in ("30 kg", "30 minutes"):
+            prompt = job.state.task("answer")["input_request"]
+            job.state.answer_input(prompt["id"], reply, accept_new=True)
+            report = Agent(job).run("")
+        self.assertEqual(report["verdict"], "UNVERIFIED")
+        self.assertTrue((job.workspace / "answer.md").read_text().startswith("30 km per hour\n"))
+
+    def test_explicit_missing_fact_keeps_compound_arithmetic(self):
+        from neuron.agent.loop import Agent
+        from tests.test_agent import run
+        report, job, model = run("What is the balance after adding 9 + 8? I have not given the opening balance.",
+                                 ['{"expression":"110+9+8","unit":""}'])
+        self.assertEqual(len(model.calls), 0)
+        prompt = job.state.task("answer")["input_request"]
+        self.assertEqual(prompt["question"], "What is the opening balance?")
+        job.state.answer_input(prompt["id"], "110", accept_new=True)
+        self.assertEqual(Agent(job).run("")["verdict"], "UNVERIFIED")
+        self.assertTrue((job.workspace / "answer.md").read_text().startswith("127\n"))
+        self.assertEqual(len(model.calls), 1)
