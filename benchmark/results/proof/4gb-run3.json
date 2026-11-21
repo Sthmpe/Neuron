@@ -1,0 +1,2165 @@
+{
+ "rows": [
+  {
+   "task": "A1_pharmacy",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "app_runs_phase_1: the app did not answer on port 8000",
+    "app_runs_phase_2: the app did not answer on port 8000"
+   ],
+   "seconds": 520.2,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4087,
+   "model_calls": 11,
+   "generated_tokens": 1875,
+   "prompt_tokens_processed": 13400,
+   "self_reported": {
+    "model_calls": 11,
+    "tokens": 36615
+   },
+   "claim": "stopped: model errors",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 11,
+    "writes": 6,
+    "runs": 10,
+    "reads": 0,
+    "ended": "model errors",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:18080: Remote end closed connection without response",
+     "local model server not reachable at http://127.0.0.1:47883: Remote end closed connection without response",
+     "local model server not reachable at http://127.0.0.1:18080: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "A1_pharmacy",
+   "category": "app",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 16,
+   "checks_total": 16,
+   "failed_checks": [],
+   "seconds": 280.1,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4064,
+   "model_calls": 4,
+   "generated_tokens": 1252,
+   "prompt_tokens_processed": 5097,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 1252
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A2_tailor",
+   "category": "app",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 14,
+   "checks_total": 14,
+   "failed_checks": [],
+   "seconds": 212.6,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4062,
+   "model_calls": 4,
+   "generated_tokens": 1014,
+   "prompt_tokens_processed": 4004,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 1014
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A2_tailor",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "app_runs_phase_1: the app did not answer on port 8000",
+    "app_runs_phase_2: the app did not answer on port 8000"
+   ],
+   "seconds": 337.5,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4079,
+   "model_calls": 4,
+   "generated_tokens": 1525,
+   "prompt_tokens_processed": 6442,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 12716
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 4,
+    "writes": 5,
+    "runs": 3,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:50273: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "A3_school_fees",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 9,
+   "checks_total": 13,
+   "failed_checks": [
+    "add_payment_1: locator.fill: Error: Cannot type text into input[type=number]",
+    "add_payment_2: locator.fill: Error: Cannot type text into input[type=number]",
+    "dashboard_numbers: not near: paid=105000",
+    "no_server_errors: 500 /students; 500 /students"
+   ],
+   "seconds": 432.7,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4080,
+   "model_calls": 9,
+   "generated_tokens": 1683,
+   "prompt_tokens_processed": 10146,
+   "self_reported": {
+    "model_calls": 9,
+    "tokens": 30009
+   },
+   "claim": "stopped: model errors",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 9,
+    "writes": 4,
+    "runs": 9,
+    "reads": 0,
+    "ended": "model errors",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:41353: Remote end closed connection without response",
+     "local model server not reachable at http://127.0.0.1:18080: Remote end closed connection without response",
+     "local model server not reachable at http://127.0.0.1:37985: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "A3_school_fees",
+   "category": "app",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 13,
+   "checks_total": 13,
+   "failed_checks": [],
+   "seconds": 208.1,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4077,
+   "model_calls": 4,
+   "generated_tokens": 924,
+   "prompt_tokens_processed": 3900,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 924
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A4_savings_group",
+   "category": "app",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 13,
+   "checks_total": 14,
+   "failed_checks": [
+    "dashboard_numbers: not near: below=1"
+   ],
+   "seconds": 209.6,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4069,
+   "model_calls": 4,
+   "generated_tokens": 931,
+   "prompt_tokens_processed": 3931,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 931
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A4_savings_group",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "app_runs_phase_1: the app did not answer on port 8000",
+    "app_runs_phase_2: the app did not answer on port 8000"
+   ],
+   "seconds": 327.6,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4086,
+   "model_calls": 6,
+   "generated_tokens": 1406,
+   "prompt_tokens_processed": 6376,
+   "self_reported": {
+    "model_calls": 6,
+    "tokens": 18820
+   },
+   "claim": "stopped: the same reply 3 times in a row",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 6,
+    "writes": 6,
+    "runs": 5,
+    "reads": 0,
+    "ended": "the same reply 3 times in a row",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:18080: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "A5_library_loans",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "app_runs_phase_1: the app did not answer on port 8000",
+    "app_runs_phase_2: the app did not answer on port 8000"
+   ],
+   "seconds": 388.2,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4086,
+   "model_calls": 6,
+   "generated_tokens": 1592,
+   "prompt_tokens_processed": 7414,
+   "self_reported": {
+    "model_calls": null,
+    "tokens": null
+   },
+   "claim": "stopped: no report",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": null,
+    "writes": null,
+    "runs": null,
+    "reads": null,
+    "ended": null,
+    "errors": null
+   }
+  },
+  {
+   "task": "A5_library_loans",
+   "category": "app",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 2,
+   "checks_total": 14,
+   "failed_checks": [
+    "login_required: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:43141/",
+    "wrong_password_rejected: page.goto: Navigation to \"http://127.0.0.1:43141/login\" is interrupted by another navigation to \"chrome-error://chromewebdata/\"",
+    "login_works: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:43141/",
+    "add_book_1: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:43141/",
+    "add_book_2: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:43141/",
+    "add_loan: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:43141/",
+    "copies_went_down: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:43141/",
+    "too_large_loan_refused: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:43141/",
+    "dashboard_numbers: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:43141/",
+    "search_by_borrower: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:43141/",
+    "works_on_a_phone: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:43141/",
+    "data_survives_restart: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:46839/"
+   ],
+   "seconds": 301.6,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 3908,
+   "model_calls": 8,
+   "generated_tokens": 1517,
+   "prompt_tokens_processed": 5887,
+   "self_reported": {
+    "model_calls": 8,
+    "tokens": 1517
+   },
+   "claim": "FAILED",
+   "false_claim": false,
+   "made_by": {},
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A6_gym_members",
+   "category": "app",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 6,
+   "checks_total": 12,
+   "failed_checks": [
+    "add_member_1: no field for Name",
+    "add_member_2: no field for Name",
+    "add_member_3: no field for Name",
+    "dashboard_numbers: not near: members=3, (income|total)=31000, (less|below)=2",
+    "search_members: locator.fill: Timeout 30000ms exceeded.",
+    "data_survives_restart: missing Obinna Eze; "
+   ],
+   "seconds": 157.1,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4071,
+   "model_calls": 3,
+   "generated_tokens": 623,
+   "prompt_tokens_processed": 3032,
+   "self_reported": {
+    "model_calls": 3,
+    "tokens": 623
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "model (2 files) + code (1 file)": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A6_gym_members",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "app_runs_phase_1: the app did not answer on port 8000",
+    "app_runs_phase_2: the app did not answer on port 8000"
+   ],
+   "seconds": 438.2,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4086,
+   "model_calls": 6,
+   "generated_tokens": 1600,
+   "prompt_tokens_processed": 10303,
+   "self_reported": {
+    "model_calls": 6,
+    "tokens": 20389
+   },
+   "claim": "stopped: model errors",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 6,
+    "writes": 6,
+    "runs": 6,
+    "reads": 0,
+    "ended": "model errors",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:18080: Remote end closed connection without response",
+     "local model server not reachable at http://127.0.0.1:59373: Remote end closed connection without response",
+     "local model server not reachable at http://127.0.0.1:18080: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "A7_event_tickets",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 5,
+   "checks_total": 15,
+   "failed_checks": [
+    "login_works: false",
+    "add_event_1: no field for Price",
+    "add_event_2: no field for Price",
+    "add_sale: no field for Event",
+    "sale_cost_shown: missing 15000; ",
+    "seats_went_down: missing 97; ",
+    "too_large_sale_refused: no field for Event",
+    "dashboard_numbers: not near: sales=1, revenue=15000",
+    "search_by_buyer: locator.fill: Timeout 30000ms exceeded.",
+    "data_survives_restart: missing Ada Eze; "
+   ],
+   "seconds": 435.7,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4085,
+   "model_calls": 6,
+   "generated_tokens": 1612,
+   "prompt_tokens_processed": 9971,
+   "self_reported": {
+    "model_calls": 6,
+    "tokens": 19921
+   },
+   "claim": "stopped: model errors",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 6,
+    "writes": 5,
+    "runs": 6,
+    "reads": 0,
+    "ended": "model errors",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:53475: Remote end closed connection without response",
+     "local model server not reachable at http://127.0.0.1:18080: Remote end closed connection without response",
+     "local model server not reachable at http://127.0.0.1:52433: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "A7_event_tickets",
+   "category": "app",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 8,
+   "checks_total": 15,
+   "failed_checks": [
+    "add_sale: no field for Event",
+    "sale_cost_shown: missing 15000; ",
+    "seats_went_down: missing 97; ",
+    "too_large_sale_refused: no field for Event",
+    "dashboard_numbers: not near: sales=1, revenue=15000",
+    "search_by_buyer: locator.fill: Timeout 30000ms exceeded.",
+    "data_survives_restart: missing Ada Eze; "
+   ],
+   "seconds": 252.6,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4068,
+   "model_calls": 4,
+   "generated_tokens": 1184,
+   "prompt_tokens_processed": 4172,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 1184
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A8_repair_shop_site",
+   "category": "app",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "app_delivered: no app.py"
+   ],
+   "seconds": 0.5,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 30,
+   "model_calls": 0,
+   "generated_tokens": 0,
+   "prompt_tokens_processed": 0,
+   "self_reported": {
+    "model_calls": 0,
+    "tokens": 0
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A8_repair_shop_site",
+   "category": "app",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "app_runs_phase_1: the app did not answer on port 8000"
+   ],
+   "seconds": 323.6,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 4085,
+   "model_calls": 6,
+   "generated_tokens": 1165,
+   "prompt_tokens_processed": 9302,
+   "self_reported": {
+    "model_calls": 6,
+    "tokens": 18281
+   },
+   "claim": "stopped: model errors",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 6,
+    "writes": 5,
+    "runs": 2,
+    "reads": 4,
+    "ended": "model errors",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:32809: Remote end closed connection without response",
+     "local model server not reachable at http://127.0.0.1:18080: Remote end closed connection without response",
+     "local model server not reachable at http://127.0.0.1:32795: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "B1_py_invoice",
+   "category": "bug",
+   "condition": "bare",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 94.6,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 4035,
+   "model_calls": 3,
+   "generated_tokens": 483,
+   "prompt_tokens_processed": 1538,
+   "self_reported": {
+    "model_calls": 3,
+    "tokens": 3921
+   },
+   "claim": "DONE",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 3,
+    "writes": 1,
+    "runs": 2,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "B1_py_invoice",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 83.0,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 3889,
+   "model_calls": 4,
+   "generated_tokens": 334,
+   "prompt_tokens_processed": 2023,
+   "self_reported": {
+    "model_calls": 0,
+    "tokens": 0
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "B2_py_inventory",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 41.5,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 3885,
+   "model_calls": 2,
+   "generated_tokens": 153,
+   "prompt_tokens_processed": 1080,
+   "self_reported": {
+    "model_calls": 0,
+    "tokens": 0
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "B2_py_inventory",
+   "category": "bug",
+   "condition": "bare",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 72.5,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 4078,
+   "model_calls": 4,
+   "generated_tokens": 183,
+   "prompt_tokens_processed": 2396,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 4335
+   },
+   "claim": "DONE",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 4,
+    "writes": 1,
+    "runs": 2,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:55939: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "B3_py_schedule",
+   "category": "bug",
+   "condition": "bare",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 153.6,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 4035,
+   "model_calls": 4,
+   "generated_tokens": 581,
+   "prompt_tokens_processed": 3537,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 6439
+   },
+   "claim": "DONE",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 4,
+    "writes": 1,
+    "runs": 2,
+    "reads": 1,
+    "ended": "the model said DONE",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:18080: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "B3_py_schedule",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 445.2,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 3894,
+   "model_calls": 6,
+   "generated_tokens": 2586,
+   "prompt_tokens_processed": 4873,
+   "self_reported": {
+    "model_calls": 0,
+    "tokens": 0
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "B4_js_cart",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 72.0,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 3834,
+   "model_calls": 2,
+   "generated_tokens": 362,
+   "prompt_tokens_processed": 879,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 362
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "B4_js_cart",
+   "category": "bug",
+   "condition": "bare",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 83.5,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 4029,
+   "model_calls": 3,
+   "generated_tokens": 380,
+   "prompt_tokens_processed": 1370,
+   "self_reported": {
+    "model_calls": 3,
+    "tokens": 3523
+   },
+   "claim": "DONE",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 3,
+    "writes": 1,
+    "runs": 2,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "B5_js_csv",
+   "category": "bug",
+   "condition": "bare",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 107.6,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 4032,
+   "model_calls": 3,
+   "generated_tokens": 503,
+   "prompt_tokens_processed": 1597,
+   "self_reported": {
+    "model_calls": 3,
+    "tokens": 3993
+   },
+   "claim": "DONE",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 3,
+    "writes": 1,
+    "runs": 2,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "B5_js_csv",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 76.5,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 3875,
+   "model_calls": 2,
+   "generated_tokens": 362,
+   "prompt_tokens_processed": 936,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 362
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "B6_go_payroll",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: --- FAIL: TestGross (0.00s)\n    gross_test.go:10: Gross(44, 1000) = 45000, want 46000\n--- FAIL: TestHiddenOvertime (0.00s)\n    hidden_b6_test.go:7: Gross(50, 80",
+    "hidden_tests_pass: --- FAIL: TestGross (0.00s)\n    gross_test.go:10: Gross(44, 1000) = 45000, want 46000\n--- FAIL: TestHiddenOvertime (0.00s)\n    hidden_b6_test.go:7: Gross(50, 80"
+   ],
+   "seconds": 249.1,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 4041,
+   "model_calls": 8,
+   "generated_tokens": 1084,
+   "prompt_tokens_processed": 1761,
+   "self_reported": {
+    "model_calls": 8,
+    "tokens": 1084
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "B6_go_payroll",
+   "category": "bug",
+   "condition": "bare",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 180.6,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 4076,
+   "model_calls": 3,
+   "generated_tokens": 897,
+   "prompt_tokens_processed": 2316,
+   "self_reported": {
+    "model_calls": 3,
+    "tokens": 4002
+   },
+   "claim": "DONE",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 3,
+    "writes": 1,
+    "runs": 2,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "B7_go_stats",
+   "category": "bug",
+   "condition": "bare",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 153.6,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 4083,
+   "model_calls": 4,
+   "generated_tokens": 594,
+   "prompt_tokens_processed": 2954,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 4476
+   },
+   "claim": "DONE",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 4,
+    "writes": 1,
+    "runs": 3,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "B7_go_stats",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 166.1,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 4078,
+   "model_calls": 6,
+   "generated_tokens": 581,
+   "prompt_tokens_processed": 1723,
+   "self_reported": {
+    "model_calls": 6,
+    "tokens": 581
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "B8_cpp_bank",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: FAIL line 9: a.balance() == 8950\nFAIL line 11: a.balance() == 9000\nmake: *** [Makefile:2: test] Error 2\n",
+    "hidden_tests_pass: hidden failed\n"
+   ],
+   "seconds": 143.6,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 3863,
+   "model_calls": 9,
+   "generated_tokens": 719,
+   "prompt_tokens_processed": 2156,
+   "self_reported": {
+    "model_calls": 9,
+    "tokens": 719
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "B8_cpp_bank",
+   "category": "bug",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: FAIL line 9: a.balance() == 8950\nFAIL line 11: a.balance() == 9000\nmake: *** [Makefile:2: test] Error 2\n",
+    "hidden_tests_pass: hidden failed\n"
+   ],
+   "seconds": 585.8,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 4084,
+   "model_calls": 7,
+   "generated_tokens": 2721,
+   "prompt_tokens_processed": 7520,
+   "self_reported": {
+    "model_calls": 7,
+    "tokens": 17671
+   },
+   "claim": "stopped: model errors",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 7,
+    "writes": 4,
+    "runs": 5,
+    "reads": 2,
+    "ended": "model errors",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:52351: Remote end closed connection without response",
+     "local model server not reachable at http://127.0.0.1:18080: Remote end closed connection without response",
+     "local model server not reachable at http://127.0.0.1:34267: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "C1_py_invoice_discounts",
+   "category": "feature",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass:    self.assertEqual(total([Line(\"bag\", 1, 100000)], code=\"FLAT500\"), 53750)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAsserti",
+    "hidden_tests_pass:    self.assertEqual(total([Line(\"bag\", 1, 100000)], code=\"FLAT500\"), 53750)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAsserti"
+   ],
+   "seconds": 70.5,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 3935,
+   "model_calls": 2,
+   "generated_tokens": 301,
+   "prompt_tokens_processed": 1290,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 2509
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 2,
+    "writes": 2,
+    "runs": 1,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "C1_py_invoice_discounts",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass:   ~~~~~~~~~~^^^^^^\n  File \"/workspace/tests/test_hidden_c1.py\", line 3, in <module>\n    from invoice.discounts import apply_code\nModuleNotFoundError: No module ",
+    "hidden_tests_pass:   ~~~~~~~~~~^^^^^^\n  File \"/workspace/tests/test_hidden_c1.py\", line 3, in <module>\n    from invoice.discounts import apply_code\nModuleNotFoundError: No module "
+   ],
+   "seconds": 12.5,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 3770,
+   "model_calls": 1,
+   "generated_tokens": 13,
+   "prompt_tokens_processed": 280,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 13
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "C2_py_inventory_export",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: ort__(name)\n    ~~~~~~~~~~^^^^^^\n  File \"/workspace/tests/test_hidden_c2.py\", line 8, in <module>\n    from stock.export import to_csv\nModuleNotFoundError: No mo",
+    "hidden_tests_pass: ort__(name)\n    ~~~~~~~~~~^^^^^^\n  File \"/workspace/tests/test_hidden_c2.py\", line 8, in <module>\n    from stock.export import to_csv\nModuleNotFoundError: No mo"
+   ],
+   "seconds": 780.4,
+   "budget_s": 720,
+   "ended": "killed at the time limit",
+   "peak_mb": 3888,
+   "model_calls": 9,
+   "generated_tokens": 4641,
+   "prompt_tokens_processed": 4558,
+   "self_reported": {
+    "model_calls": null,
+    "tokens": null
+   },
+   "claim": "no report",
+   "false_claim": false,
+   "made_by": null,
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "C2_py_inventory_export",
+   "category": "feature",
+   "condition": "bare",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 67.0,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 3932,
+   "model_calls": 2,
+   "generated_tokens": 285,
+   "prompt_tokens_processed": 1113,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 2165
+   },
+   "claim": "DONE",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 2,
+    "writes": 1,
+    "runs": 1,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "C3_js_cart_delivery",
+   "category": "feature",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 1,
+   "checks_total": 2,
+   "failed_checks": [
+    "hidden_tests_pass:     at Object.<anonymous> (/workspace/test/hidden_c3.test.js:2:25)\n    at Module._compile (node:internal/modules/cjs/loader:1781:14)\n    at Object..js (node:int"
+   ],
+   "seconds": 475.7,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 4084,
+   "model_calls": 6,
+   "generated_tokens": 2029,
+   "prompt_tokens_processed": 8575,
+   "self_reported": {
+    "model_calls": 6,
+    "tokens": 14888
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 6,
+    "writes": 6,
+    "runs": 4,
+    "reads": 1,
+    "ended": "the model said DONE",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:59981: Remote end closed connection without response",
+     "local model server not reachable at http://127.0.0.1:18080: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "C3_js_cart_delivery",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 1,
+   "checks_total": 2,
+   "failed_checks": [
+    "hidden_tests_pass:     at Object.<anonymous> (/workspace/test/hidden_c3.test.js:2:25)\n    at Module._compile (node:internal/modules/cjs/loader:1781:14)\n    at Object..js (node:int"
+   ],
+   "seconds": 13.0,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 3789,
+   "model_calls": 1,
+   "generated_tokens": 13,
+   "prompt_tokens_processed": 263,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 13
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "deterministic": 2
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "C4_go_payroll_payslip",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: m/payroll/pay.test]\npay/hidden_c4_test.go:6:10: undefined: Tax\npay/hidden_c4_test.go:9:10: undefined: Tax\npay/hidden_c4_test.go:12:10: undefined: Payslip\npay/hi",
+    "hidden_tests_pass: m/payroll/pay.test]\npay/hidden_c4_test.go:6:10: undefined: Tax\npay/hidden_c4_test.go:9:10: undefined: Tax\npay/hidden_c4_test.go:12:10: undefined: Payslip\npay/hi"
+   ],
+   "seconds": 702.3,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 3884,
+   "model_calls": 20,
+   "generated_tokens": 3971,
+   "prompt_tokens_processed": 7273,
+   "self_reported": {
+    "model_calls": 20,
+    "tokens": 3971
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "model": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "C4_go_payroll_payslip",
+   "category": "feature",
+   "condition": "bare",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 133.1,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 4081,
+   "model_calls": 3,
+   "generated_tokens": 492,
+   "prompt_tokens_processed": 2063,
+   "self_reported": {
+    "model_calls": 3,
+    "tokens": 3657
+   },
+   "claim": "DONE",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 3,
+    "writes": 3,
+    "runs": 2,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "C5_py_notes_search",
+   "category": "feature",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'usage: add TITLE BODY | list | search WORD' != 'Market'\n- usage: add TITLE BODY | list",
+    "hidden_tests_pass: ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'usage: add TITLE BODY | list | search WORD' != 'Market'\n- usage: add TITLE BODY | list"
+   ],
+   "seconds": 84.0,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 3935,
+   "model_calls": 2,
+   "generated_tokens": 372,
+   "prompt_tokens_processed": 1322,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 2576
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 2,
+    "writes": 2,
+    "runs": 1,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "C5_py_notes_search",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: \", \"Shopping\", \"rice and oil\").strip(), \"added\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: '' != 'a",
+    "hidden_tests_pass: \", \"Shopping\", \"rice and oil\").strip(), \"added\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: '' != 'a"
+   ],
+   "seconds": 780.4,
+   "budget_s": 720,
+   "ended": "killed at the time limit",
+   "peak_mb": 3882,
+   "model_calls": 8,
+   "generated_tokens": 4479,
+   "prompt_tokens_processed": 2798,
+   "self_reported": {
+    "model_calls": null,
+    "tokens": null
+   },
+   "claim": "no report",
+   "false_claim": false,
+   "made_by": null,
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "C6_js_todo_overdue",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 1,
+   "checks_total": 2,
+   "failed_checks": [
+    "hidden_tests_pass:     at Object.<anonymous> (/workspace/test/hidden_c6.test.js:3:21)\n    at Module._compile (node:internal/modules/cjs/loader:1781:14)\n    at Object..js (node:int"
+   ],
+   "seconds": 13.0,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 3825,
+   "model_calls": 1,
+   "generated_tokens": 13,
+   "prompt_tokens_processed": 263,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 13
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "deterministic": 2
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "C6_js_todo_overdue",
+   "category": "feature",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 1,
+   "checks_total": 2,
+   "failed_checks": [
+    "hidden_tests_pass:     at Object.<anonymous> (/workspace/test/hidden_c6.test.js:3:21)\n    at Module._compile (node:internal/modules/cjs/loader:1781:14)\n    at Object..js (node:int"
+   ],
+   "seconds": 69.5,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 3925,
+   "model_calls": 2,
+   "generated_tokens": 345,
+   "prompt_tokens_processed": 990,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 2005
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 2,
+    "writes": 1,
+    "runs": 1,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "C7_cpp_shapes_triangle",
+   "category": "feature",
+   "condition": "bare",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 118.0,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 3985,
+   "model_calls": 2,
+   "generated_tokens": 596,
+   "prompt_tokens_processed": 1630,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 3214
+   },
+   "claim": "DONE",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 2,
+    "writes": 2,
+    "runs": 1,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  },
+  {
+   "task": "C7_cpp_shapes_triangle",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass:      |                         ^~~~~~~~\nsrc/shapes.cpp: In function \u2018double total_area(const int&)\u2019:\nsrc/shapes.cpp:37:14: error: request for member \u2018area\u2019 in \u2018",
+    "hidden_tests_pass: catch (const std::invalid_argument&) {}\n      |                   ^~\n      |                   ;\ntests/hidden_c7.cpp:15:19: error: expected \u2018;\u2019 before \u2018x\u2019\n   15"
+   ],
+   "seconds": 780.3,
+   "budget_s": 720,
+   "ended": "killed at the time limit",
+   "peak_mb": 3987,
+   "model_calls": 5,
+   "generated_tokens": 4777,
+   "prompt_tokens_processed": 3047,
+   "self_reported": {
+    "model_calls": null,
+    "tokens": null
+   },
+   "claim": "no report",
+   "false_claim": false,
+   "made_by": null,
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "C8_py_units_temperature",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass:        ~~~~~~~^^^^^^^^^^^^^^^\n  File \"/workspace/units/__init__.py\", line 8, in convert\n    raise ValueError(f\"cannot convert {from_unit} to {to_unit}\")\nValueEr",
+    "hidden_tests_pass:        ~~~~~~~^^^^^^^^^^^^^^^\n  File \"/workspace/units/__init__.py\", line 8, in convert\n    raise ValueError(f\"cannot convert {from_unit} to {to_unit}\")\nValueEr"
+   ],
+   "seconds": 18.5,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 3762,
+   "model_calls": 2,
+   "generated_tokens": 52,
+   "prompt_tokens_processed": 347,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 52
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "C8_py_units_temperature",
+   "category": "feature",
+   "condition": "bare",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 342.1,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 4083,
+   "model_calls": 4,
+   "generated_tokens": 1832,
+   "prompt_tokens_processed": 4080,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 8551
+   },
+   "claim": "DONE",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 4,
+    "writes": 3,
+    "runs": 3,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:51941: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "D1_excel_regional_sales",
+   "category": "document",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 7,
+   "checks_total": 10,
+   "failed_checks": [
+    "data_sheet_has_all_rows: 15 of 16",
+    "summary_uses_formulas: 0 formulas",
+    "formulas_refer_to_data_sheet"
+   ],
+   "seconds": 540.3,
+   "budget_s": 480,
+   "ended": "killed at the time limit",
+   "peak_mb": 4084,
+   "model_calls": 5,
+   "generated_tokens": 1495,
+   "prompt_tokens_processed": 9320,
+   "self_reported": {
+    "model_calls": null,
+    "tokens": null
+   },
+   "claim": "stopped: no report",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": null,
+    "writes": null,
+    "runs": null,
+    "reads": null,
+    "ended": null,
+    "errors": null
+   }
+  },
+  {
+   "task": "D1_excel_regional_sales",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 10,
+   "checks_total": 10,
+   "failed_checks": [],
+   "seconds": 27.0,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 3974,
+   "model_calls": 1,
+   "generated_tokens": 109,
+   "prompt_tokens_processed": 229,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 109
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1,
+    "template": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D2_excel_staff_costs",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 9,
+   "checks_total": 9,
+   "failed_checks": [],
+   "seconds": 27.0,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 3931,
+   "model_calls": 1,
+   "generated_tokens": 110,
+   "prompt_tokens_processed": 215,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 110
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1,
+    "template": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D2_excel_staff_costs",
+   "category": "document",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 5,
+   "checks_total": 9,
+   "failed_checks": [
+    "no_formula_errors: ['#NAME?', '#NAME?', '#NAME?']",
+    "cleaning_totals_correct: want 354 and 385800.00; row ['Cleaning', '#NAME?', '#NAME?']",
+    "kitchen_totals_correct: want 371 and 409300.00; row ['Kitchen', '#NAME?', '#NAME?']",
+    "security_totals_correct: want 325 and 401100.00; row ['Security', '#NAME?', '#NAME?']"
+   ],
+   "seconds": 540.2,
+   "budget_s": 480,
+   "ended": "killed at the time limit",
+   "peak_mb": 4084,
+   "model_calls": 4,
+   "generated_tokens": 1795,
+   "prompt_tokens_processed": 5392,
+   "self_reported": {
+    "model_calls": null,
+    "tokens": null
+   },
+   "claim": "stopped: no report",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": null,
+    "writes": null,
+    "runs": null,
+    "reads": null,
+    "ended": null,
+    "errors": null
+   }
+  },
+  {
+   "task": "D3_excel_expenses",
+   "category": "document",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 5,
+   "checks_total": 7,
+   "failed_checks": [
+    "summary_uses_formulas",
+    "total_row: []"
+   ],
+   "seconds": 491.7,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 4084,
+   "model_calls": 6,
+   "generated_tokens": 1363,
+   "prompt_tokens_processed": 13620,
+   "self_reported": {
+    "model_calls": 6,
+    "tokens": 25082
+   },
+   "claim": "stopped: time budget used up",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 6,
+    "writes": 3,
+    "runs": 4,
+    "reads": 2,
+    "ended": "time budget used up",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:18080: Remote end closed connection without response",
+     "local model server not reachable at http://127.0.0.1:47501: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "D3_excel_expenses",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 7,
+   "checks_total": 7,
+   "failed_checks": [],
+   "seconds": 28.5,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 3953,
+   "model_calls": 1,
+   "generated_tokens": 106,
+   "prompt_tokens_processed": 209,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 106
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1,
+    "template": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D4_word_repair_request",
+   "category": "document",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 3,
+   "checks_total": 5,
+   "failed_checks": [
+    "length_in_range: 546 words",
+    "budget_table_correct: no table found"
+   ],
+   "seconds": 374.6,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 3903,
+   "model_calls": 16,
+   "generated_tokens": 2189,
+   "prompt_tokens_processed": 2558,
+   "self_reported": {
+    "model_calls": 16,
+    "tokens": 2189
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "model": 1,
+    "model+template": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D4_word_repair_request",
+   "category": "document",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 4,
+   "checks_total": 5,
+   "failed_checks": [
+    "budget_table_correct: [['Item', 'Cost (NGN)'], ['Kitchen tap', '12000'], ['Bathroom door lock', '8500'], ['Total', '40500']]"
+   ],
+   "seconds": 267.2,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 4084,
+   "model_calls": 3,
+   "generated_tokens": 989,
+   "prompt_tokens_processed": 4562,
+   "self_reported": {
+    "model_calls": 3,
+    "tokens": 5972
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 3,
+    "writes": 1,
+    "runs": 1,
+    "reads": 1,
+    "ended": "the model said DONE",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:18080: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "D5_word_leave_policy",
+   "category": "document",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 4,
+   "checks_total": 5,
+   "failed_checks": [
+    "length_in_range: 85 words"
+   ],
+   "seconds": 540.2,
+   "budget_s": 480,
+   "ended": "killed at the time limit",
+   "peak_mb": 4084,
+   "model_calls": 4,
+   "generated_tokens": 1595,
+   "prompt_tokens_processed": 4943,
+   "self_reported": {
+    "model_calls": null,
+    "tokens": null
+   },
+   "claim": "stopped: no report",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": null,
+    "writes": null,
+    "runs": null,
+    "reads": null,
+    "ended": null,
+    "errors": null
+   }
+  },
+  {
+   "task": "D5_word_leave_policy",
+   "category": "document",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 3,
+   "checks_total": 5,
+   "failed_checks": [
+    "length_in_range: 615 words",
+    "budget_table_correct: no table found"
+   ],
+   "seconds": 405.1,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 3928,
+   "model_calls": 16,
+   "generated_tokens": 2436,
+   "prompt_tokens_processed": 2170,
+   "self_reported": {
+    "model_calls": 16,
+    "tokens": 2436
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "model": 1,
+    "model+template": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D6_pptx_cooperative_agm",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 9,
+   "checks_total": 9,
+   "failed_checks": [],
+   "seconds": 89.0,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 3980,
+   "model_calls": 1,
+   "generated_tokens": 510,
+   "prompt_tokens_processed": 133,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 510
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model": 1,
+    "template": 1,
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D6_pptx_cooperative_agm",
+   "category": "document",
+   "condition": "bare",
+   "solved": true,
+   "checks_passed": 9,
+   "checks_total": 9,
+   "failed_checks": [],
+   "seconds": 356.7,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 4064,
+   "model_calls": 4,
+   "generated_tokens": 1751,
+   "prompt_tokens_processed": 3700,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 8069
+   },
+   "claim": "DONE",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 4,
+    "writes": 2,
+    "runs": 3,
+    "reads": 0,
+    "ended": "the model said DONE",
+    "errors": [
+     "local model server not reachable at http://127.0.0.1:18080: Remote end closed connection without response"
+    ]
+   }
+  },
+  {
+   "task": "D7_pptx_fire_safety",
+   "category": "document",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 1,
+   "failed_checks": [
+    "file_exists: /home/user/neuron/benchmark/run/proof/4gb-run3/bare/D7_pptx_fire_safety/fire_safety.pptx"
+   ],
+   "seconds": 540.2,
+   "budget_s": 480,
+   "ended": "killed at the time limit",
+   "peak_mb": 4068,
+   "model_calls": 2,
+   "generated_tokens": 2499,
+   "prompt_tokens_processed": 1783,
+   "self_reported": {
+    "model_calls": null,
+    "tokens": null
+   },
+   "claim": "stopped: no report",
+   "false_claim": false,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": null,
+    "writes": null,
+    "runs": null,
+    "reads": null,
+    "ended": null,
+    "errors": null
+   }
+  },
+  {
+   "task": "D7_pptx_fire_safety",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 9,
+   "checks_total": 9,
+   "failed_checks": [],
+   "seconds": 55.5,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 3926,
+   "model_calls": 1,
+   "generated_tokens": 301,
+   "prompt_tokens_processed": 132,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 301
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model": 1,
+    "template": 1,
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D8_pdf_clinic_report",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 12,
+   "checks_total": 12,
+   "failed_checks": [],
+   "seconds": 278.1,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 3856,
+   "model_calls": 18,
+   "generated_tokens": 1227,
+   "prompt_tokens_processed": 7290,
+   "self_reported": {
+    "model_calls": 18,
+    "tokens": 1227
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D8_pdf_clinic_report",
+   "category": "document",
+   "condition": "bare",
+   "solved": false,
+   "checks_passed": 6,
+   "checks_total": 12,
+   "failed_checks": [
+    "q1_cites_right_page: needs riverside_clinic_report_2026 page 1",
+    "q2_cites_right_page: needs riverside_clinic_report_2026 page 1",
+    "q3_cites_right_page: needs riverside_clinic_report_2026 page 2",
+    "q4_cites_right_page: needs riverside_clinic_report_2026 page 2",
+    "q5_cites_right_page: needs riverside_clinic_report_2026 page 3",
+    "q6_cites_right_page: needs riverside_clinic_report_2026 page 3"
+   ],
+   "seconds": 73.0,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 4078,
+   "model_calls": 3,
+   "generated_tokens": 347,
+   "prompt_tokens_processed": 1091,
+   "self_reported": {
+    "model_calls": 3,
+    "tokens": 3247
+   },
+   "claim": "DONE",
+   "false_claim": true,
+   "made_by": "model",
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": {
+    "turns": 3,
+    "writes": 1,
+    "runs": 0,
+    "reads": 1,
+    "ended": "the model said DONE",
+    "errors": []
+   }
+  }
+ ],
+ "tier": "4gb",
+ "run": 3,
+ "seed": 3,
+ "tier_limit_mb": 4096,
+ "network": "new empty network namespace (loopback only)",
+ "model": {
+  "planner": "qwen3.5-4b-q4",
+  "reviewer": "qwen3.5-4b-q4",
+  "builder": "qwen3.5-4b-q4"
+ },
+ "lock": "15be2767e9b9ca782441561ba62792dc1b9b4d253a28772e48b10c615acda609",
+ "grace_s": 60,
+ "started": "2026-11-21 00:07:24",
+ "code_commit": "dca7ff74437296ac7d197becd6a61c4a61949bb8",
+ "tier_limit_hits": 0,
+ "oom_kills": 52
+}
