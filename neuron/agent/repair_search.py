@@ -228,4 +228,5 @@ def choose(job, wins, source_of):
     job.state.decide("fix", "small change chosen", f"{len(wins)} different small changes passed the tests; the model chose "
                      f"{data['change']} ({str(data.get('why', ''))[:160]})")
     win["change"] += f" (chosen by the model from {len(wins)} changes that pass the tests)"
+    win["chosen"] = True       # the tests cannot tell these changes apart, so the choice is not independently verified
     return win

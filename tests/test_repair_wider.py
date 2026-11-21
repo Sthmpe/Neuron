@@ -138,6 +138,7 @@ class AmbiguousSmallChanges(unittest.TestCase):
         rep, job, llm = run(REQUEST, [self._pick("[:2]")] + ["no idea"] * 30, workspace=ws)
         self.assertIn("text[:2]", (ws / "lib" / "core.py").read_text())
         self.assertIn("chose", (job.state.dir / "decisions.jsonl").read_text())
+        self.assertEqual(rep["verdict"], "UNVERIFIED", rep)        # the tests could not tell the changes apart
 
     def test_without_a_valid_choice_the_search_claims_nothing(self):
         ws = project(self.SRC, self.CHECK)

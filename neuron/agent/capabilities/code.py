@@ -323,8 +323,13 @@ class FixBug(Capability):
 
     def verify(self, job, params, outcome):
         passed, res = run_project_tests(job)
-        return Verdict(bool(passed), [{"id": "project_tests_pass", "pass": bool(passed), "detail": (res.output if res else "")[-500:]}],
-                       "project test command in the sandbox")
+        chosen = bool(outcome.result.get("chosen"))
+        # several different small changes passed the tests and the model picked one: the tests cannot tell which is right,
+        # so the fix is delivered as unverified (after-fixes rerun try 2, B3 on 2 GB: the 1.5B model picked text[1])
+        return Verdict(bool(passed), [{"id": "project_tests_pass", "pass": bool(passed), "detail": (res.output if res else "")[-500:]}]
+                       + ([{"id": "fix_unambiguous", "pass": True, "detail": "several changes passed the tests; the model chose one"}] if chosen else []),
+                       "project test command in the sandbox" + ("; the tests could not tell several changes apart" if chosen else ""),
+                       unverified=chosen)
 
 
 def _strip_docs(src):
