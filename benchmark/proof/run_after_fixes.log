@@ -1,0 +1,34 @@
+2gb-run1-after-fixes A1_pharmacy neuron: SOLVED | 16/16 | 146.6s | peak 1672 MB | calls 8 | claims VERIFIED
+2gb-run1-after-fixes A2_tailor neuron: SOLVED | 14/14 | 85.0s | peak 1688 MB | calls 4 | claims VERIFIED
+2gb-run1-after-fixes A3_school_fees neuron: SOLVED | 13/13 | 78.5s | peak 1669 MB | calls 4 | claims VERIFIED
+2gb-run1-after-fixes A4_savings_group neuron: SOLVED | 14/14 | 85.5s | peak 1664 MB | calls 4 | claims VERIFIED
+2gb-run1-after-fixes A5_library_loans neuron: not solved | 2/14 | 220.1s | peak 1500 MB | calls 12 | claims FAILED
+2gb-run1-after-fixes A6_gym_members neuron: not solved | 6/12 | 82.5s | peak 1669 MB | calls 4 | claims VERIFIED
+2gb-run1-after-fixes A7_event_tickets neuron: not solved | 8/15 | 209.6s | peak 1677 MB | calls 8 | claims VERIFIED
+2gb-run1-after-fixes A8_repair_shop_site neuron: SOLVED | 6/6 | 179.1s | peak 1656 MB | calls 12 | claims PARTIAL
+2gb-run1-after-fixes B1_py_invoice neuron: SOLVED | 2/2 | 1.5s | peak 30 MB | calls 0 | claims VERIFIED
+2gb-run1-after-fixes B2_py_inventory neuron: SOLVED | 2/2 | 1.0s | peak 27 MB | calls 0 | claims VERIFIED
+2gb-run1-after-fixes B3_py_schedule neuron: not solved | 0/2 | 13.5s | peak 1443 MB | calls 1 | claims UNVERIFIED
+2gb-run1-after-fixes B4_js_cart neuron: not solved | 0/2 | 58.5s | peak 1499 MB | calls 9 | claims PARTIAL
+2gb-run1-after-fixes B5_js_csv neuron: not solved | 0/2 | 67.0s | peak 1555 MB | calls 9 | claims PARTIAL
+2gb-run1-after-fixes B6_go_payroll neuron: SOLVED | 2/2 | 23.0s | peak 288 MB | calls 0 | claims VERIFIED
+2gb-run1-after-fixes B7_go_stats neuron: not solved | 0/2 | 104.6s | peak 1720 MB | calls 9 | claims PARTIAL
+2gb-run1-after-fixes B8_cpp_bank neuron: not solved | 0/2 | 88.0s | peak 1518 MB | calls 9 | claims PARTIAL
+2gb-run1-after-fixes C1_py_invoice_discounts neuron: not solved | 0/2 | 108.0s | peak 1459 MB | calls 9 | claims PARTIAL
+2gb-run1-after-fixes C2_py_inventory_export neuron: not solved | 0/2 | 16.5s | peak 1459 MB | calls 2 | claims UNVERIFIED
+2gb-run1-after-fixes C3_js_cart_delivery neuron: not solved | 1/2 | 210.6s | peak 1489 MB | calls 10 | claims PARTIAL
+2gb-run1-after-fixes C4_go_payroll_payslip neuron: not solved | 0/2 | 230.6s | peak 1453 MB | calls 9 | claims PARTIAL
+2gb-run1-after-fixes C5_py_notes_search neuron: not solved | 0/2 | 396.7s | peak 2037 MB | calls 8 | claims PARTIAL
+2gb-run1-after-fixes C6_js_todo_overdue neuron: not solved | 1/2 | 51.5s | peak 1472 MB | calls 6 | claims UNVERIFIED
+2gb-run1-after-fixes C7_cpp_shapes_triangle neuron: not solved | 1/2 | 274.6s | peak 1516 MB | calls 15 | claims PARTIAL
+2gb-run1-after-fixes C8_py_units_temperature neuron: not solved | 0/2 | 140.6s | peak 1445 MB | calls 9 | claims PARTIAL
+2gb-run1-after-fixes D1_excel_regional_sales neuron: SOLVED | 10/10 | 10.0s | peak 1593 MB | calls 1 | claims VERIFIED
+2gb-run1-after-fixes D2_excel_staff_costs neuron: SOLVED | 9/9 | 13.5s | peak 1606 MB | calls 1 | claims VERIFIED
+2gb-run1-after-fixes D3_excel_expenses neuron: SOLVED | 7/7 | 10.5s | peak 1618 MB | calls 1 | claims VERIFIED
+2gb-run1-after-fixes D4_word_repair_request neuron: SOLVED | 5/5 | 50.0s | peak 1451 MB | calls 6 | claims VERIFIED
+2gb-run1-after-fixes D5_word_leave_policy neuron: SOLVED | 5/5 | 66.5s | peak 1456 MB | calls 6 | claims VERIFIED
+2gb-run1-after-fixes D6_pptx_cooperative_agm neuron: SOLVED | 9/9 | 17.5s | peak 1611 MB | calls 1 | claims VERIFIED
+2gb-run1-after-fixes D7_pptx_fire_safety neuron: SOLVED | 9/9 | 14.5s | peak 1595 MB | calls 1 | claims VERIFIED
+2gb-run1-after-fixes D8_pdf_clinic_report neuron: SOLVED | 12/12 | 95.0s | peak 1513 MB | calls 18 | claims PARTIAL
+PROOF-DONE 2gb-run1-after-fixes
+4gb-run1-after-fixes A1_pharmacy neuron: SOLVED | 16/16 | 287.6s | peak 4047 MB | calls 4 | claims VERIFIED

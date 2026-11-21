@@ -1,0 +1,998 @@
+{
+ "rows": [
+  {
+   "task": "A1_pharmacy",
+   "category": "app",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 16,
+   "checks_total": 16,
+   "failed_checks": [],
+   "seconds": 146.6,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1672,
+   "model_calls": 8,
+   "generated_tokens": 1791,
+   "prompt_tokens_processed": 6408,
+   "self_reported": {
+    "model_calls": 8,
+    "tokens": 1791
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model (2 files) + template (1 file) + code (1 file)": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A2_tailor",
+   "category": "app",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 14,
+   "checks_total": 14,
+   "failed_checks": [],
+   "seconds": 85.0,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1688,
+   "model_calls": 4,
+   "generated_tokens": 978,
+   "prompt_tokens_processed": 3839,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 978
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A3_school_fees",
+   "category": "app",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 13,
+   "checks_total": 13,
+   "failed_checks": [],
+   "seconds": 78.5,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1669,
+   "model_calls": 4,
+   "generated_tokens": 876,
+   "prompt_tokens_processed": 3766,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 876
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A4_savings_group",
+   "category": "app",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 14,
+   "checks_total": 14,
+   "failed_checks": [],
+   "seconds": 85.5,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1664,
+   "model_calls": 4,
+   "generated_tokens": 941,
+   "prompt_tokens_processed": 3797,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 941
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A5_library_loans",
+   "category": "app",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 2,
+   "checks_total": 14,
+   "failed_checks": [
+    "login_required: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:40311/",
+    "wrong_password_rejected: page.goto: Navigation to \"http://127.0.0.1:40311/login\" is interrupted by another navigation to \"chrome-error://chromewebdata/\"",
+    "login_works: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:40311/",
+    "add_book_1: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:40311/",
+    "add_book_2: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:40311/",
+    "add_loan: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:40311/",
+    "copies_went_down: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:40311/",
+    "too_large_loan_refused: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:40311/",
+    "dashboard_numbers: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:40311/",
+    "search_by_borrower: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:40311/",
+    "works_on_a_phone: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:40311/",
+    "data_survives_restart: page.goto: net::ERR_TOO_MANY_REDIRECTS at http://127.0.0.1:41155/"
+   ],
+   "seconds": 220.1,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1500,
+   "model_calls": 12,
+   "generated_tokens": 2883,
+   "prompt_tokens_processed": 11872,
+   "self_reported": {
+    "model_calls": 12,
+    "tokens": 2883
+   },
+   "claim": "FAILED",
+   "false_claim": false,
+   "made_by": {},
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A6_gym_members",
+   "category": "app",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 6,
+   "checks_total": 12,
+   "failed_checks": [
+    "add_member_1: no field for Name",
+    "add_member_2: no field for Name",
+    "add_member_3: no field for Name",
+    "dashboard_numbers: not near: members=3, (income|total)=31000, (less|below)=2",
+    "search_members: locator.fill: Timeout 30000ms exceeded.",
+    "data_survives_restart: missing Obinna Eze; "
+   ],
+   "seconds": 82.5,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1669,
+   "model_calls": 4,
+   "generated_tokens": 921,
+   "prompt_tokens_processed": 3774,
+   "self_reported": {
+    "model_calls": 4,
+    "tokens": 921
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "model (3 files) + code (1 file)": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A7_event_tickets",
+   "category": "app",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 8,
+   "checks_total": 15,
+   "failed_checks": [
+    "add_sale: no field for Event",
+    "sale_cost_shown: missing 15000; ",
+    "seats_went_down: missing 97; ",
+    "too_large_sale_refused: no field for Event",
+    "dashboard_numbers: not near: sales=1, revenue=15000",
+    "search_by_buyer: locator.fill: Timeout 30000ms exceeded.",
+    "data_survives_restart: missing Ada Eze; "
+   ],
+   "seconds": 209.6,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1677,
+   "model_calls": 8,
+   "generated_tokens": 2505,
+   "prompt_tokens_processed": 10885,
+   "self_reported": {
+    "model_calls": 8,
+    "tokens": 2505
+   },
+   "claim": "VERIFIED",
+   "false_claim": true,
+   "made_by": {
+    "model (2 files) + template (1 file) + code (1 file)": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "A8_repair_shop_site",
+   "category": "app",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 6,
+   "checks_total": 6,
+   "failed_checks": [],
+   "seconds": 179.1,
+   "budget_s": 900,
+   "ended": "exited",
+   "peak_mb": 1656,
+   "model_calls": 12,
+   "generated_tokens": 2219,
+   "prompt_tokens_processed": 10491,
+   "self_reported": {
+    "model_calls": 12,
+    "tokens": 2219
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "template (2 files) + code (1 file)": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "B1_py_invoice",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 1.5,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 30,
+   "model_calls": 0,
+   "generated_tokens": 0,
+   "prompt_tokens_processed": 0,
+   "self_reported": {
+    "model_calls": 0,
+    "tokens": 0
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1,
+    "search": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "B2_py_inventory",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 1.0,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 27,
+   "model_calls": 0,
+   "generated_tokens": 0,
+   "prompt_tokens_processed": 0,
+   "self_reported": {
+    "model_calls": 0,
+    "tokens": 0
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1,
+    "search": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "B3_py_schedule",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: ile \"/workspace/tests/test_hidden_b3.py\", line 9, in test_parse\n    self.assertEqual(to_minutes(\"12:45\"), 765)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\nAs",
+    "hidden_tests_pass: ile \"/workspace/tests/test_hidden_b3.py\", line 9, in test_parse\n    self.assertEqual(to_minutes(\"12:45\"), 765)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\nAs"
+   ],
+   "seconds": 13.5,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1443,
+   "model_calls": 1,
+   "generated_tokens": 107,
+   "prompt_tokens_processed": 242,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 107
+   },
+   "claim": "UNVERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1,
+    "search": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "B4_js_cart",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: 54:19)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49 {\n  generatedMe",
+    "hidden_tests_pass: r:254:19)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49 {\n  generate"
+   ],
+   "seconds": 58.5,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1499,
+   "model_calls": 9,
+   "generated_tokens": 815,
+   "prompt_tokens_processed": 2040,
+   "self_reported": {
+    "model_calls": 9,
+    "tokens": 815
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "B5_js_csv",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: nMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: { L",
+    "hidden_tests_pass: EntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTIO"
+   ],
+   "seconds": 67.0,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1555,
+   "model_calls": 9,
+   "generated_tokens": 889,
+   "prompt_tokens_processed": 3174,
+   "self_reported": {
+    "model_calls": 9,
+    "tokens": 889
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "B6_go_payroll",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 2,
+   "checks_total": 2,
+   "failed_checks": [],
+   "seconds": 23.0,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 288,
+   "model_calls": 0,
+   "generated_tokens": 0,
+   "prompt_tokens_processed": 0,
+   "self_reported": {
+    "model_calls": 0,
+    "tokens": 0
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1,
+    "search": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "B7_go_stats",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: --- FAIL: TestHiddenMedian (0.00s)\n    hidden_b7_test.go:9: Median([1 2 3 4]) = 3, want 2.5\n--- FAIL: TestSummary (0.00s)\n    report_test.go:7: got \"days 4, tot",
+    "hidden_tests_pass: --- FAIL: TestHiddenMedian (0.00s)\n    hidden_b7_test.go:9: Median([1 2 3 4]) = 3, want 2.5\n--- FAIL: TestSummary (0.00s)\n    report_test.go:7: got \"days 4, tot"
+   ],
+   "seconds": 104.6,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1720,
+   "model_calls": 9,
+   "generated_tokens": 1178,
+   "prompt_tokens_processed": 2137,
+   "self_reported": {
+    "model_calls": 9,
+    "tokens": 1178
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "B8_cpp_bank",
+   "category": "bug",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: FAIL line 9: a.balance() == 8950\nFAIL line 11: a.balance() == 9000\nmake: *** [Makefile:2: test] Error 2\n",
+    "hidden_tests_pass: hidden failed\n"
+   ],
+   "seconds": 88.0,
+   "budget_s": 600,
+   "ended": "exited",
+   "peak_mb": 1518,
+   "model_calls": 9,
+   "generated_tokens": 1319,
+   "prompt_tokens_processed": 2998,
+   "self_reported": {
+    "model_calls": 9,
+    "tokens": 1319
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "C1_py_invoice_discounts",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: ile \"/workspace/invoice/totals.py\", line 11, in total\n    s = subtotal\n        ^^^^^^^^\nUnboundLocalError: cannot access local variable 'subtotal' where it is n",
+    "hidden_tests_pass: ile \"/workspace/invoice/totals.py\", line 11, in total\n    s = subtotal\n        ^^^^^^^^\nUnboundLocalError: cannot access local variable 'subtotal' where it is n"
+   ],
+   "seconds": 108.0,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1459,
+   "model_calls": 9,
+   "generated_tokens": 1818,
+   "prompt_tokens_processed": 1390,
+   "self_reported": {
+    "model_calls": 9,
+    "tokens": 1818
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "C2_py_inventory_export",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: ,yes']\n\nSecond list contains 2 additional elements.\nFirst extra element 0:\n'name,on_hand,reorder_level,reorder'\n\n- []\n+ ['name,on_hand,reorder_level,reorder', '",
+    "hidden_tests_pass: ,yes']\n\nSecond list contains 2 additional elements.\nFirst extra element 0:\n'name,on_hand,reorder_level,reorder'\n\n- []\n+ ['name,on_hand,reorder_level,reorder', '"
+   ],
+   "seconds": 16.5,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1459,
+   "model_calls": 2,
+   "generated_tokens": 179,
+   "prompt_tokens_processed": 1029,
+   "self_reported": {
+    "model_calls": 2,
+    "tokens": 179
+   },
+   "claim": "UNVERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "C3_js_cart_delivery",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 1,
+   "checks_total": 2,
+   "failed_checks": [
+    "hidden_tests_pass: er:254:19)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49 {\n  generat"
+   ],
+   "seconds": 210.6,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1489,
+   "model_calls": 10,
+   "generated_tokens": 3693,
+   "prompt_tokens_processed": 2583,
+   "self_reported": {
+    "model_calls": 10,
+    "tokens": 3693
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "C4_go_payroll_payslip",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: # example.com/payroll/pay [example.com/payroll/pay.test]\npay/hidden_c4_test.go:6:10: undefined: Tax\npay/hidden_c4_test.go:9:10: undefined: Tax\npay/hidden_c4_tes",
+    "hidden_tests_pass: # example.com/payroll/pay [example.com/payroll/pay.test]\npay/hidden_c4_test.go:6:10: undefined: Tax\npay/hidden_c4_test.go:9:10: undefined: Tax\npay/hidden_c4_tes"
+   ],
+   "seconds": 230.6,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1453,
+   "model_calls": 9,
+   "generated_tokens": 3949,
+   "prompt_tokens_processed": 596,
+   "self_reported": {
+    "model_calls": 9,
+    "tokens": 3949
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "C5_py_notes_search",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass: strip(), \"Market\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'usage: add TITLE BODY | list' != 'Market'\n- usage: add TIT",
+    "hidden_tests_pass: strip(), \"Market\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'usage: add TITLE BODY | list' != 'Market'\n- usage: add TIT"
+   ],
+   "seconds": 396.7,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 2037,
+   "model_calls": 8,
+   "generated_tokens": 6015,
+   "prompt_tokens_processed": 2799,
+   "self_reported": {
+    "model_calls": 8,
+    "tokens": 6015
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "C6_js_todo_overdue",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 1,
+   "checks_total": 2,
+   "failed_checks": [
+    "hidden_tests_pass: oader:1505:32)\n    at Function._load (node:internal/modules/cjs/loader:1309:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)\n    at Function."
+   ],
+   "seconds": 51.5,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1472,
+   "model_calls": 6,
+   "generated_tokens": 811,
+   "prompt_tokens_processed": 922,
+   "self_reported": {
+    "model_calls": 6,
+    "tokens": 811
+   },
+   "claim": "UNVERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1,
+    "model": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "C7_cpp_shapes_triangle",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 1,
+   "checks_total": 2,
+   "failed_checks": [
+    "hidden_tests_pass: catch (const std::invalid_argument&) {}\n      |                   ^~\n      |                   ;\ntests/hidden_c7.cpp:15:19: error: expected \u2018;\u2019 before \u2018x\u2019\n   15"
+   ],
+   "seconds": 274.6,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1516,
+   "model_calls": 15,
+   "generated_tokens": 4061,
+   "prompt_tokens_processed": 7611,
+   "self_reported": {
+    "model_calls": 15,
+    "tokens": 4061
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "C8_py_units_temperature",
+   "category": "feature",
+   "condition": "neuron",
+   "solved": false,
+   "checks_passed": 0,
+   "checks_total": 2,
+   "failed_checks": [
+    "original_tests_pass:        ~~~~~~~^^^^^^^^^^^^^^^\n  File \"/workspace/units/__init__.py\", line 8, in convert\n    raise ValueError(f\"cannot convert {from_unit} to {to_unit}\")\nValueEr",
+    "hidden_tests_pass:        ~~~~~~~^^^^^^^^^^^^^^^\n  File \"/workspace/units/__init__.py\", line 8, in convert\n    raise ValueError(f\"cannot convert {from_unit} to {to_unit}\")\nValueEr"
+   ],
+   "seconds": 140.6,
+   "budget_s": 720,
+   "ended": "exited",
+   "peak_mb": 1445,
+   "model_calls": 9,
+   "generated_tokens": 2494,
+   "prompt_tokens_processed": 514,
+   "self_reported": {
+    "model_calls": 9,
+    "tokens": 2494
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D1_excel_regional_sales",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 10,
+   "checks_total": 10,
+   "failed_checks": [],
+   "seconds": 10.0,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1593,
+   "model_calls": 1,
+   "generated_tokens": 97,
+   "prompt_tokens_processed": 223,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 97
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1,
+    "template": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D2_excel_staff_costs",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 9,
+   "checks_total": 9,
+   "failed_checks": [],
+   "seconds": 13.5,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1606,
+   "model_calls": 1,
+   "generated_tokens": 158,
+   "prompt_tokens_processed": 209,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 158
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1,
+    "template": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D3_excel_expenses",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 7,
+   "checks_total": 7,
+   "failed_checks": [],
+   "seconds": 10.5,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1618,
+   "model_calls": 1,
+   "generated_tokens": 115,
+   "prompt_tokens_processed": 203,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 115
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 2,
+    "model": 1,
+    "template": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D4_word_repair_request",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 5,
+   "checks_total": 5,
+   "failed_checks": [],
+   "seconds": 50.0,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1451,
+   "model_calls": 6,
+   "generated_tokens": 824,
+   "prompt_tokens_processed": 546,
+   "self_reported": {
+    "model_calls": 6,
+    "tokens": 824
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model": 1,
+    "model+template": 1,
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D5_word_leave_policy",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 5,
+   "checks_total": 5,
+   "failed_checks": [],
+   "seconds": 66.5,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1456,
+   "model_calls": 6,
+   "generated_tokens": 1161,
+   "prompt_tokens_processed": 618,
+   "self_reported": {
+    "model_calls": 6,
+    "tokens": 1161
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model": 1,
+    "model+template": 1,
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D6_pptx_cooperative_agm",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 9,
+   "checks_total": 9,
+   "failed_checks": [],
+   "seconds": 17.5,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1611,
+   "model_calls": 1,
+   "generated_tokens": 246,
+   "prompt_tokens_processed": 129,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 246
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model": 1,
+    "template": 1,
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D7_pptx_fire_safety",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 9,
+   "checks_total": 9,
+   "failed_checks": [],
+   "seconds": 14.5,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1595,
+   "model_calls": 1,
+   "generated_tokens": 189,
+   "prompt_tokens_processed": 128,
+   "self_reported": {
+    "model_calls": 1,
+    "tokens": 189
+   },
+   "claim": "VERIFIED",
+   "false_claim": false,
+   "made_by": {
+    "model": 1,
+    "template": 1,
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  },
+  {
+   "task": "D8_pdf_clinic_report",
+   "category": "document",
+   "condition": "neuron",
+   "solved": true,
+   "checks_passed": 12,
+   "checks_total": 12,
+   "failed_checks": [],
+   "seconds": 95.0,
+   "budget_s": 480,
+   "ended": "exited",
+   "peak_mb": 1513,
+   "model_calls": 18,
+   "generated_tokens": 1212,
+   "prompt_tokens_processed": 6794,
+   "self_reported": {
+    "model_calls": 18,
+    "tokens": 1212
+   },
+   "claim": "PARTIAL",
+   "false_claim": false,
+   "made_by": {
+    "deterministic": 1
+   },
+   "examiner_error": null,
+   "note": null,
+   "bare_detail": null
+  }
+ ],
+ "tier": "2gb",
+ "run": 1,
+ "seed": 1,
+ "tier_limit_mb": 2048,
+ "network": "new empty network namespace (loopback only)",
+ "model": {
+  "planner": "qwen2.5-coder-1.5b-q4",
+  "reviewer": "qwen2.5-coder-1.5b-q4",
+  "builder": "qwen2.5-coder-1.5b-q4"
+ },
+ "lock": "15be2767e9b9ca782441561ba62792dc1b9b4d253a28772e48b10c615acda609",
+ "grace_s": 60,
+ "started": "2026-11-21 06:06:32",
+ "code_commit": "5e4f5a9aa54455da0694fbaf5186f2910c91a523",
+ "tier_limit_hits": 0,
+ "oom_kills": 2
+}
