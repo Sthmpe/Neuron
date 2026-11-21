@@ -13,7 +13,7 @@ class Citations(unittest.TestCase):
     def test_exact_quote_with_the_wrong_page_is_cited_where_it_is(self):
         req = "Answer from the attached PDF with page numbers.\n1. How long is the standard loan period?"
         wrong_page = json.dumps({"answer": "21 days", "doc": "dev_library_rules", "page": 2, "quote": "The standard loan period is 21 days."})
-        rep, job, llm = run(req, [wrong_page], [PDF])
+        rep, job, llm = run(req, [wrong_page] * 4, [PDF])      # the stricter fact check may send it round again
         a = json.loads((job.workspace / "answers.json").read_text())[0]
         self.assertEqual(a["page"], 1)
         self.assertIn("cited where it is", (job.state.dir / "decisions.jsonl").read_text())

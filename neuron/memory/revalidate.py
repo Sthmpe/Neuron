@@ -8,7 +8,7 @@ evidence. Runs once per rule version (recorded in the database), so it costs not
 import json
 import re
 
-RULE_VERSION = "doc-facts-2"           # bump when facts_backed becomes stricter
+RULE_VERSION = "doc-facts-3"           # bump when facts_backed becomes stricter (3: Astra's relation matcher)
 OLD_TEXT = re.compile(r"(.+?\?)\s+(.*?)\s+\(quote: \"(.*)\"\)$", re.S)
 
 
@@ -28,7 +28,7 @@ def revalidate_findings(memory, log=print):
                 continue
             q, a, quote = m.groups()
         checked += 1
-        if not facts_backed(q, a or "", quote):
+        if not facts_backed(q, a or "", quote, meta.get("page_text") or None):
             memory.mark(row["id"], status="rejected")
             meta["rejected_by"] = RULE_VERSION
             db.execute("UPDATE notes SET meta=? WHERE id=?", (json.dumps(meta), row["id"]))

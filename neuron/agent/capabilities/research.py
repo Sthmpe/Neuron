@@ -85,21 +85,15 @@ def tied_numbers(question, quote):
     return tied or None
 
 
-def facts_backed(question, answer, quote):
-    """An answer counts as backed only if every number it states is in the quote AND belongs to what was asked, a
-    question that asks for a number gets one, and an answer without numbers shares words with its quote.
-    (The locked run found 'half the fare' where the page gives the amount; Astra's review found '16 yellow chairs'
-    where the page said 16 blue and 3 yellow.)"""
-    said, quoted = numbers_in(answer), numbers_in(quote)
-    if said - quoted:
-        return False
-    if said:
-        tied = tied_numbers(question, quote)
-        return tied is None or bool(said & tied)
-    if NUMBER_QUESTION.search(question or ""):
-        return False
-    own = set(_words(answer)) - set(_words(question))      # what the answer adds must come from the quote
-    return not own or bool(own & set(_words(quote)))
+def facts_backed(question, answer, quote, page=None):
+    """Whether the quote (and, when given, the cited page) really says the answer to this question. Astra's extractive
+    relation matcher (neuron/agent/document_facts.py, adopted from research/astra 8f77a44): the question becomes a
+    relation with one answer slot, and only a complete source clause that fills the slot with exactly the claimed value
+    confirms it; anything ambiguous or paraphrased stays unconfirmed (delivered, labelled unverified). It replaced my
+    nearest-number rule ('doc-facts-2'), which accepted 3 of 8 wrong answers on invented probes, e.g. '12 drivers' from
+    '12 staff and 2 drivers'. tied_numbers above is kept only for its tests and history."""
+    from ..document_facts import facts_backed as relation_backed
+    return relation_backed(question, answer, quote, page)
 
 
 def questions_from(request):
@@ -178,7 +172,7 @@ class AnswerFromDocuments(Capability):
                     page, data["doc"], data["page"] = where[0], where[0]["doc"], where[0]["page"]
             not_found = bool(NOT_FOUND.search(data["answer"] or ""))       # honest, but not an answer: never confirmed
             verified = not not_found and page is not None and len(norm(data["quote"])) > 8 and norm(data["quote"]) in norm(page["text"]) \
-                and facts_backed(q, data["answer"], data["quote"])
+                and facts_backed(q, data["answer"], data["quote"], page["text"])
             answers.append({"question": q, "answer": clean(data["answer"]), "doc": data["doc"], "page": data["page"], "quote": data["quote"],
                             "verified": verified, "not_found": not_found})
         md = ["# Answers", ""] + [f"{i}. **{a['question']}**  \n{a['answer']} ({a.get('doc', '?')}, page {a.get('page', '?')})"
@@ -187,9 +181,12 @@ class AnswerFromDocuments(Capability):
         (job.workspace / "answers.md").write_text("\n".join(md) + "\n")
         (job.workspace / "answers.json").write_text(json.dumps(answers, indent=1))
         ok = sum(a["verified"] for a in answers)
+        page_of = {(x["doc"], x["page"]): x["text"] for x in idx.pages}
+        # the cited page is kept with the note (Astra's design, 1f77d27), so a later, stricter rule can check it again
         notes = [{"kind": "finding", "text": f"{a['question']} {a['answer']} (quote: \"{a['quote'][:200]}\")",
                   "source": f"{a['doc']} page {a['page']}", "verified": True, "tags": [a["doc"]],
-                  "meta": {"question": a["question"], "answer": a["answer"], "quote": a["quote"], "rule": "doc-facts-2"}}
+                  "meta": {"question": a["question"], "answer": a["answer"], "quote": a["quote"], "rule": "doc-facts-3",
+                           "page_text": page_of.get((a["doc"], a["page"]), "")[:6000]}}
                  for a in answers if a["verified"]]
         return Outcome(True, f"{ok} of {len(answers)} answers have a quote confirmed on the cited page", {"answers": answers, "memory_notes": notes},
                        ["answers.md", "answers.json"], made_by="model")
