@@ -28,6 +28,8 @@ WORKFLOWS = {
     "pdf_qa": [("index", "index_documents", "Read and index the documents page by page"), ("answer", "answer_from_documents", "Answer each question with a cited page")],
     "fix_bug": [("inspect", "inspect_workspace", "Look at the project: languages, build and test commands"),
                 ("fix", "fix_bug", "Find the faulty code, change it, run the tests")],
+    "add_feature": [("inspect", "inspect_workspace", "Look at the project: languages, build and test commands"),
+                    ("feature", "add_feature", "Write the new code, keep the project's tests passing, test the new behaviour")],
     "document_code": [("inspect", "inspect_workspace", "Look at the project"), ("document", "document_functions", "Write a docstring for every undocumented function"),
                       ("check", "run_tests", "Run the tests to prove behaviour is unchanged")],
     "build_program": [("design", "plan_program", "Decide the files and what each must do"), ("write", "write_program", "Write the files, build them, test them against examples")],
@@ -330,7 +332,7 @@ class Agent:
         if not options:
             return {"feedback": feedback, "strategy": f"retry {len(tried) + 1} with the failure as feedback"}
         choice = options[0]
-        if len(options) > 1:
+        if len(options) > 1 and not getattr(cap, "fixed_strategy_order", False):
             data = self.job.ask_json("reviewer", "A step failed. Pick the strategy most likely to work next.",
                                      f"Step: {task['title']}\nWhat failed: {feedback[:1200]}\nStrategies not tried yet: {', '.join(options)}",
                                      {"type": "object", "required": ["strategy", "reason"],

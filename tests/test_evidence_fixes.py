@@ -38,17 +38,21 @@ class Runner:
 
 class DocumentAssociationTests(unittest.TestCase):
     def test_number_must_belong_to_the_thing_asked_about(self):
+        # Since adopting Astra's relation matcher (doc-facts-3): a wrong number is never confirmed in any phrasing; a
+        # right one is confirmed only where the sentence states the relation plainly. The rephrased forms below are
+        # delivered but labelled unverified: precision over recall, by decision (claude-review.md, second review).
         for quote in ["There are 16 blue chairs and 3 yellow chairs.", "Yellow chairs: 3, blue chairs: 16.",
                       "3 of the chairs are yellow, 16 are blue.", "The hall has 19 chairs: 16 blue and 3 yellow."]:
             with self.subTest(quote=quote):
                 self.assertFalse(facts_backed(Q, "16 yellow chairs.", quote))
-                self.assertTrue(facts_backed(Q, "3 yellow chairs.", quote))
+        self.assertTrue(facts_backed(Q, "3 yellow chairs.", "There are 16 blue chairs and 3 yellow chairs."))
         self.assertIsNone(tied_numbers(Q, "There are 3 yellow chairs."))          # one number: nothing to confuse
 
-    def test_answer_without_numbers_must_share_words_with_its_quote(self):
+    def test_answer_without_numbers_must_come_from_its_quote(self):
         quote = "The library was founded by Ada Obi in 1901."
-        self.assertTrue(facts_backed("Who founded the library?", "Ada Obi", quote))
         self.assertFalse(facts_backed("Who founded the library?", "Mars", quote))
+        # the passive "was founded by" is not matched by the stricter check: delivered, labelled unverified
+        self.assertFalse(facts_backed("Who founded the library?", "Ada Obi", quote))
 
     def test_wrong_answer_is_not_confirmed_and_not_saved_to_memory(self):
         ws = Path(tempfile.mkdtemp()) / "job"

@@ -13,6 +13,7 @@ KINDS = {
     "build_program": "writing a new command-line program in a compiled or scripting language",
     "web_app": "building a website or web app",
     "upgrade_packages": "updating an existing project's packages or dependencies to newer versions, safely",
+    "add_feature": "adding new behaviour or a new feature to an existing project's code",
     "answer": "answering a question or explaining something",
 }
 RULES = [
@@ -24,7 +25,27 @@ RULES = [
     ("fix_bug", r"\bfix\b|\bbug\b|failing tests?|tests? (are )?fail|broken|doesn't work|does not work"),
     ("build_program", r"command[- ]line|\bcli\b|\bc\+\+|\brust\b|\bgolang\b|\bgo program|\bjava program|makefile"),
     ("web_app", r"website|web app|landing page|\bweb page\b|app (where|that|for) (i|my|we)|dashboard|log in first"),
+    # only decides when there is a project to change (see rule_guess): new behaviour in existing code
+    ("add_feature", r"^\s*(please\s+)?(add|implement|extend|support|introduce|create|make)\b|\b(add|implement) (a |an |the )?(new )?\w+|"
+                    r"\bcreate [\w/-]+\.(py|js|ts|go|cpp|cc|h|hpp|rs|java)\b|\bnew (command|function|option|field|feature|method|endpoint)\b"),
 ]
+
+
+CODE_GLOBS = ("*.py", "*.cpp", "*.go", "*.rs", "*.java", "*.js")
+
+
+def project_has_code(workspace):
+    """True if the folder holds a code project of the owner's. An app NEURON built (its kit, pages and schema) is not
+    one: a follow-up like "Add a contact page" there belongs to the app builder, not to the code-feature step."""
+    ws = Path(workspace)
+    built_apps = {p.parent.parent for p in ws.rglob("kit/web.py")}      # the app folder that holds the kit
+    for pattern in CODE_GLOBS:
+        for f in ws.rglob(pattern):
+            rel = f.relative_to(ws)
+            if ".neuron" in rel.parts or "__pycache__" in rel.parts or any(f.is_relative_to(a) for a in built_apps):
+                continue
+            return True
+    return False
 
 
 def rule_guess(request, attachments=(), workspace=None):
@@ -35,9 +56,15 @@ def rule_guess(request, attachments=(), workspace=None):
         hits.append("pdf_qa")
     if ".csv" in exts or ".xlsx" in exts:
         hits = ["excel"] + [h for h in hits if h != "excel"] if "excel" in hits or not hits else hits
-    has_code = workspace is not None and any(Path(workspace).rglob(p) for p in ("*.py", "*.cpp", "*.go", "*.rs", "*.java", "*.js"))
+    # any(...) over the generators themselves was always True (a generator object is truthy), so a request containing
+    # "fix" went to the bug fixer even in an empty folder (core proof A8: "fix charging ports" on a website request)
+    has_code = workspace is not None and project_has_code(workspace)
+    if not has_code:                          # "add"/"make" means new behaviour only when there is a project to change
+        hits = [h for h in hits if h != "add_feature"]
     if has_code and "fix_bug" in hits and "document_code" not in hits:
         return "fix_bug", hits
+    if has_code and "add_feature" in hits and "document_code" not in hits and "upgrade_packages" not in hits:
+        return "add_feature", hits
     if "document_code" in hits and has_code:
         return "document_code", hits
     if "upgrade_packages" in hits and workspace is not None and \
@@ -82,7 +109,7 @@ def understand(job, request, attachments=()):
     named = re.search(r"\b[\w-]+\.(xlsx|docx|pptx)\b", request, re.I)
     if named:                  # the owner named the file to make: that decides ("write letter.docx ... fix the roof" is a letter)
         return {"xlsx": "excel", "docx": "word", "pptx": "pptx"}[named.group(1).lower()], "rules (named output file)"
-    if kind is None or len(set(hits)) > 1 and kind not in ("fix_bug", "document_code", "excel"):
+    if kind is None or len(set(hits)) > 1 and kind not in ("fix_bug", "document_code", "excel", "add_feature"):
         options = sorted(KINDS)
         data = job.ask_json("planner", "You classify a request into exactly one kind of job.",
                             "Request:\n" + request + "\n\nKinds:\n" + "\n".join(f"- {k}: {v}" for k, v in KINDS.items()),

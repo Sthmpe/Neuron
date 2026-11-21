@@ -21,6 +21,8 @@ FUNC = {
     "default": re.compile(r"^[\w:<>\*&\s,~]*?\b((?:[A-Za-z_]\w*::)*[A-Za-z_~]\w*)\s*\([^;{]*\)\s*(?:const)?\s*(?:noexcept)?\s*(?:->\s*[\w:<>]+)?\s*\{?\s*$"),
 }
 KEYWORDS = {"if", "for", "while", "switch", "return", "catch", "sizeof", "else", "do"}
+CONST_LINE = re.compile(r"^\s*(?:export\s+)?(?:static\s+)?(?:const(?:expr)?|var|let|#define|final)\s+(?:[\w:<>]+\s+)?([A-Za-z_]\w*)"
+                        r"\s*(?:[:=]|\s)\s*[^;(){}]*\d[^;(){}]*;?\s*(?://.*)?$")
 
 
 def functions_in(path, text):
@@ -66,16 +68,32 @@ class FixBug(Capability):
     resources = {"ram_mb": 300, "uses_model": True}
     verification = "the project's own test command passes in the sandbox"
     domains = ("code",)
-    strategies = ("look at more functions", "rewrite the whole suspect function")
+    # Fixed order, no model call to choose. The whole-file rewrite comes second: the core proof's 4 GB run 1 showed the
+    # same model, given the whole (small) project and the test output in a plain loop, fixing bugs NEURON's narrow
+    # diagnose-one-function-and-patch pipeline missed. NEURON must never do worse than its own model used plainly; it
+    # keeps its guards (tests never edited, functions never dropped, the project's tests decide, nothing kept unless
+    # they pass).
+    strategies = ("rewrite whole files with the test output", "look at more functions", "rewrite the whole suspect function")
+    fixed_strategy_order = True
 
     def run(self, job, params):
         ws = job.workspace
         cmd = detect_test_command(ws)
         if cmd is None:
             return Outcome(False, "no test command found, so a fix could not be proven", evidence={"no_retry": True})
+        if params.get("strategy") == "rewrite whole files with the test output":
+            return self._rewrite_files(job, params)
         hint = job.memory_context(kinds=("fix",)) if hasattr(job, "memory_context") else ""
         if cmd[0] == "python3":                               # the proven step-3 loop for Python
+            import os
+            if not params.get("strategy") and os.environ.get("NEURON_REPAIR_SEARCH", "1") != "0":
+                found = self._python_search(job, ws, cmd)     # small changes first, as for the other languages
+                if found is not None:
+                    return found
             r = fix_project(ws, job.runner, job.sandbox, log=lambda *_: None, memory_hint=hint)
+            if r.get("already_passing"):          # nothing failed, nothing was changed: not a fixed bug (core proof C1)
+                return Outcome(False, "the project's tests already pass, so there was no failing test to fix and nothing was changed",
+                               {"already": True}, evidence={"no_retry": True})
             res = {"history": r.get("history")}
             win = next((h for h in (r.get("history") or []) if h.get("passed")), None)
             if r.get("claimed") and win:
@@ -84,11 +102,111 @@ class FixBug(Capability):
                            res, [r["file"]] if r.get("file") else [], made_by="model")
         return self._fix_other(job, params, cmd)
 
+    def _rewrite_files(self, job, params, rounds=3):
+        from .feature import defined_names, is_test_file
+        ws = job.workspace
+        passed, res = run_project_tests(job)
+        if passed:
+            return Outcome(False, "the project's tests already pass, so there was no failing test to fix and nothing was changed",
+                           {"already": True}, evidence={"no_retry": True})
+        srcs = [f for f in files(ws) if Path(f).suffix in C_LIKE | {".py"} and not is_test_file(f)]
+        tests = [f for f in files(ws) if Path(f).suffix in C_LIKE | {".py"} and is_test_file(f)]
+        originals = {f: (ws / f).read_text(errors="replace") for f in srcs}
+        output = res.output[-3000:] if res else ""
+        for rnd in range(rounds):
+            ctx, used = [], 0
+            for f in tests + srcs:
+                text = (ws / f).read_text(errors="replace")
+                if used + len(text) < 9000:
+                    ctx.append(f"--- {f} ---\n{text}")
+                    used += len(text)
+            reply = job.ask_text("builder", "You fix a bug so a project's tests pass. The tests are correct and must not change. "
+                                 "Reply with the complete corrected content of each source file you change, each as a line "
+                                 "'FILE: <path>' followed by one code block.",
+                                 f"Test output:\n{clip(output, 2500)}\n\nProject files:\n" + "\n".join(ctx) +
+                                 "\n\nWhich source file is wrong? Send the corrected file(s), complete.", max_tokens=1800)
+            found = dict(re.findall(r"FILE:\s*[`'\"]?([\w./-]+)[`'\"]?\s*\n+```[^\n]*\n(.*?)```", reply, re.S))
+            if not found and len(srcs) == 1:
+                code = extract_code(reply)
+                found = {srcs[0]: code} if code else {}
+            changes = {}
+            for path, code in found.items():
+                path = path.strip().lstrip("./")
+                if path in originals and code.strip() and not (defined_names(path, originals[path]) - defined_names(path, code)):
+                    changes[path] = code.rstrip("\n") + "\n"
+            if not changes:
+                output = output[-2000:] + "\n(The last reply changed no source file of the project. Send FILE: <path> and the whole file.)"
+                continue
+            for path, code in changes.items():
+                (ws / path).write_text(code)
+            passed, res = run_project_tests(job)
+            if passed:
+                job.state.decide("fix", "rewrite", f"round {rnd + 1}: rewrote {', '.join(changes)}; the project's tests pass")
+                return Outcome(True, f"fixed by rewriting {', '.join(changes)} with the test output (round {rnd + 1}); the project's tests pass",
+                               {"files": list(changes)}, list(changes), made_by="model")
+            output = res.output[-3000:] if res else ""
+        for path, text in originals.items():                 # never leave a failed attempt behind
+            if (ws / path).read_text(errors="replace") != text:
+                (ws / path).write_text(text)
+        return Outcome(False, f"rewriting whole files with the test output did not make the tests pass in {rounds} rounds: {clip(output, 400)}")
+
+    def _python_search(self, job, ws, cmd):
+        """Try small standard changes in the Python functions (and module-level constants) the failing tests point at,
+        before the model loop. Core proof 2 GB run 1: the Python path never searched, and missed a rate of 0.75 that
+        should be 0.075 and text[0] that should be text[:2]."""
+        passed, res = run_project_tests(job)
+        if passed or res is None:
+            return Outcome(False, "the project's tests already pass, so there was no failing test to fix and nothing was changed",
+                           {"already": True}, evidence={"no_retry": True}) if passed else None
+        output = res.output[-4000:]
+        idents = set(re.findall(r"[A-Za-z_]\w{2,}", output))
+        for t in [f for f in files(ws) if f.endswith(".py") and re.search(r"(^|/)tests?/|test_|_test\.py$", f)]:
+            text = (ws / t).read_text(errors="replace").splitlines()
+            for ln in re.findall(rf"{re.escape(Path(t).name)}\", line (\d+)", output):
+                if 0 < int(ln) <= len(text):
+                    idents |= set(re.findall(r"[A-Za-z_]\w{2,}", text[int(ln) - 1]))
+        cands = []
+        for f in files(ws):
+            if not f.endswith(".py") or re.search(r"(^|/)tests?/|test_|_test\.py$", f):
+                continue
+            try:
+                tree = ast.parse((ws / f).read_text(errors="replace"))
+            except SyntaxError:
+                continue
+            for node in tree.body:
+                if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    score = (5 if node.name in idents else 0) + sum(1 for n in ast.walk(node) if isinstance(n, ast.Name) and n.id in idents) * 0.2
+                    cands.append((score, f, node.name, node.lineno, node.end_lineno))
+                elif isinstance(node, ast.ClassDef):
+                    for sub in node.body:
+                        if isinstance(sub, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                            score = (5 if sub.name in idents else 0) + (2 if node.name in idents else 0)
+                            cands.append((score, f, f"{node.name}.{sub.name}", sub.lineno, sub.end_lineno))
+                elif isinstance(node, (ast.Assign, ast.AnnAssign)):    # a module-level constant, used by the functions
+                    names = {t.id for t in ast.walk(node) if isinstance(t, ast.Name)}
+                    cands.append((1.5, f, "(constant " + ", ".join(sorted(names)) + ")", node.lineno, node.end_lineno))
+        cands.sort(key=lambda c: -c[0])
+        if not cands:
+            return None
+        from ..repair_search import search
+        from ...brain.tools.fix_code import tests_passed
+        win = search(ws, [(c[1], c[2], c[3], c[4]) for c in cands[:6]], cmd, job.sandbox,
+                     lambda r: tests_passed(r, True) and not r.timed_out, log=job.log)
+        if not win:
+            return None
+        problem = f"line {win['line']} had {win['change']}"
+        job.state.decide("fix", "small change", f"{win['file']}:{win['line']} {win['old']} -> {win['new']} ({win['tries']} tries)")
+        return Outcome(True, f"fixed {win['file']}::{win['function']} with a small change ({win['change']}), found by trying "
+                             f"standard small changes ({win['tries']} tries); the project's tests pass",
+                       {**win, **fix_note(job, "python", win["function"], problem, f"changed '{win['old']}' to '{win['new']}'", win["file"])},
+                       [win["file"]], made_by="search")
+
     def _fix_other(self, job, params, cmd):
         ws = job.workspace
         passed, res = run_project_tests(job)
         if passed:
-            return Outcome(True, "the tests already pass", {"already": True})
+            return Outcome(False, "the project's tests already pass, so there was no failing test to fix and nothing was changed",
+                           {"already": True}, evidence={"no_retry": True})
         output = res.output[-4000:]
         srcs = [f for f in files(ws) if Path(f).suffix in C_LIKE and not re.search(r"(^|/)tests?/|_test\.|test_", f)]
         tests = [f for f in files(ws) if Path(f).suffix in C_LIKE and f not in srcs]
@@ -110,12 +228,21 @@ class FixBug(Capability):
                 short = name.split("::")[-1]
                 score = (5 if short in idents else 0) + sum(1 for i in idents if re.search(rf"\b{re.escape(i)}\b", body)) * 0.2
                 cands.append((score, f, name, a, b, body))
+        # constants outside any function ("const OvertimeRate = 1.25"): the functions above use them, and a wrong value
+        # there is a common bug (core proof B6, 4 GB run 1: only functions were searched and diagnosed)
+        bodies = " ".join(c[5] for c in sorted(cands, key=lambda c: -c[0])[:3])
+        for f in srcs:
+            for n, line in enumerate((ws / f).read_text(errors="replace").splitlines(), 1):
+                m = CONST_LINE.match(line)
+                if m and not any(c[1] == f and c[3] <= n <= c[4] for c in cands):
+                    score = 1.5 + (3 if re.search(rf"\b{re.escape(m.group(1))}\b", bodies) else 0) + (5 if m.group(1) in idents else 0)
+                    cands.append((score, f, f"(constant {m.group(1)})", n, n, line))
         cands.sort(key=lambda c: -c[0])
         import os
         if not params.get("strategy") and cands and cands[0][0] > 0 and os.environ.get("NEURON_REPAIR_SEARCH", "1") != "0":
             # first, small one-token changes to the functions the failing tests point at (no model needed)
             from ..repair_search import search
-            win = search(ws, [(c[1], c[2], c[3], c[4]) for c in cands[:3] if c[0] > 0], cmd, job.sandbox,
+            win = search(ws, [(c[1], c[2], c[3], c[4]) for c in cands[:5] if c[0] > 0], cmd, job.sandbox,
                          lambda r: r.ok and not r.timed_out, log=job.log)
             if win:
                 lang = {".go": "go", ".rs": "rust", ".java": "java", ".js": "javascript", ".ts": "typescript"}.get(Path(win["file"]).suffix, "c++")
@@ -140,7 +267,7 @@ class FixBug(Capability):
                             + "Which function has the bug, what is wrong, and what is the fix?",
                             {"type": "object", "required": ["function", "problem", "fix"],
                              "properties": {"function": {"type": "string", "enum": keys}, "problem": {"type": "string"}, "fix": {"type": "string"}}},
-                            max_tokens=300)
+                            max_tokens=700)              # 300 cut the 4B model's JSON off mid-sentence: "no diagnosis" 3 times (B6)
         if not diag:
             return Outcome(False, "no diagnosis from the model")
         pick = top[keys.index(diag["function"])] if diag["function"] in keys else top[0]
