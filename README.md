@@ -10,7 +10,13 @@ Read [`VISION.md`](VISION.md) for where this is going, [`TESTING.md`](TESTING.md
 [`PROGRESS.md`](PROGRESS.md) for the detailed log, [`HARDWARE.md`](HARDWARE.md) for what limits it on real
 machines.
 
-## Where it stands (2026-11-18)
+## Where it stands (2026-11-21)
+
+Latest: the core proof, bare model vs full NEURON with the same model on 32 locked complex tasks (below and
+[`benchmark/proof/RESULTS.md`](benchmark/proof/RESULTS.md)). Easy work: NEURON is never meaningfully slower than the
+bare model ([`benchmark/easy/RESULTS.md`](benchmark/easy/RESULTS.md)).
+
+### Earlier status (2026-11-18)
 
 | Phase | What | State |
 |---|---|---|
@@ -80,6 +86,25 @@ granite-4.1-8b's 10th task overlapped my installer test, so its time is inflated
 The dev set was also used for tuning, so these scores are optimistic. The held-out scores below are the real test.
 
 ## Results
+
+### Core proof: the same model, bare vs inside NEURON, on 32 complex tasks (2026-11-20/21)
+
+32 new tasks locked before any run or tuning: 8 business app builds, 8 whole-project bug fixes, 8 multi-file features,
+8 documents. The same frozen model, tier, sandbox, time budget and seed for both sides; 3 runs per task on 2 GB and
+4 GB; 384 runs. The bare model ran a plain tool loop and was given extra help (project files, test command, input
+text, NEURON's app kit). Completed means an independent examiner passed every check (a real browser for apps, the
+original plus hidden tests for code, eval2's examiners for documents). Full report:
+[`benchmark/proof/RESULTS.md`](benchmark/proof/RESULTS.md).
+
+| Tier | Bare model | NEURON | Median time when completed | False claims (bare / NEURON) |
+|---|---|---|---|---|
+| 2 GB | 4 of 96 (4%) | **25 of 96 (26%)** | 42.5 s / 17.5 s | 61 / 31 |
+| 4 GB | 39 of 96 (41%) | **44 of 96 (46%)** | 124.6 s / 90.0 s | 20 / 22 |
+
+NEURON completes the business apps, Excel workbooks, PowerPoint decks and (on 4 GB) PDF answers that the bare model
+does not. The bare model is better at adding features (NEURON had no capability for it) and, with the 4 GB model, at
+bug fixing. Peak memory is the same: the model fills the tier either way. These are the counted results of the frozen
+code; the fixes made afterwards are measured in labelled reruns in the same report.
 
 ### Release retest from a clean setup (2026-11-18)
 

@@ -9,7 +9,26 @@ session, or a new model, to continue. Update this file after every meaningful st
 - `dev`: all work in progress (created 2026-11-17). Frozen evaluations run from this working copy; new
   code goes into new files until those runs finish, so the evaluations measure a fixed system.
 
-## Owner's execution plan (2026-11-18), the current one
+## Owner's instructions of 2026-11-20 (the current ones)
+
+No more public benchmarks (SCORECARD.md stays as recorded); measure with our own tasks only. Goal: the same model
+completing complex tasks more effectively and efficiently. Work on `research/claude`, merge to `main` when the tests
+pass; Astra (Codex) works on `research/astra` (never push there); reviews in `docs/reviews/`.
+
+| Item | State |
+|---|---|
+| 1. Astra's two defects (wrong document answer saved as verified; review overriding a computed result) | **Done**: reproduced, fixed, tests; wrong verified notes purged (none existed). Astra's stricter fact matcher adopted after the proof (0 of 8 wrong answers accepted on probes vs 3 for mine). Reviews: `docs/reviews/claude-review.md` (Astra at 6847ef3, then 8f77a44) |
+| 2. Fast routing for easy work | **Done**: `benchmark/easy/RESULTS.md` (never meaningfully slower than the bare model) |
+| 3. Core proof: 32 locked tasks, bare vs NEURON, 3 runs, 2 GB and 4 GB | **Counted runs done** (384): 2 GB NEURON 25/96 vs bare 4/96; 4 GB 44/96 vs 39/96. `benchmark/proof/RESULTS.md`. Post-run fixes merged; labelled after-fixes reruns (NEURON only) in progress: `benchmark/proof/run_after_fixes.sh` |
+
+Waiting for the owner: proposed examiner amendment 1 (app examiner clicked the logo; would make 4 GB NEURON 46/96;
+`benchmark/proof/LOCKED.md`), step 7 approval (reference sites), the Windows test (TESTING.md 1b).
+
+Resume notes: the after-fixes driver is resumable (`setsid nohup bash benchmark/proof/run_after_fixes.sh >>
+benchmark/proof/run_after_fixes.log 2>&1 &`); summary with `python3 -m benchmark.proof.summary --with-tag after-fixes`;
+failure reasons with `python3 -m benchmark.proof.explain`. Keep CPU-heavy work off the machine while runs measure time.
+
+## Owner's execution plan (2026-11-18)
 
 Backlog with status, evidence and acceptance criteria: **`MASTER_ROADMAP.md`**. Order: (1) roadmap, (2) usable release
 (clean Linux retest, Windows via WSL2), (3) `SCORECARD.md`, (4) knowledge memory, (5) new locked tasks, zero false

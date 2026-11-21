@@ -14,6 +14,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 RES = ROOT / "benchmark" / "results" / "proof"
 COUNTED = re.compile(r"^(2gb|4gb)-run([123])\.json$")
+TAGGED = re.compile(r"^(2gb|4gb)-run([123])-(.+)\.json$")
+
+
+def load_tag(tag):
+    """NEURON rows from a labelled rerun (e.g. after-fixes), to set beside the counted rows."""
+    rows = []
+    for f in sorted(RES.glob(f"*-{tag}.json")):
+        m = TAGGED.match(f.name)
+        if m and m.group(3) == tag:
+            for r in json.loads(f.read_text())["rows"]:
+                rows.append(dict(r, tier=m.group(1), run=int(m.group(2)), condition=r["condition"] + "-" + tag))
+    return rows
 
 
 def load():
@@ -48,15 +60,20 @@ def stats(rows):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--json", action="store_true")
+    ap.add_argument("--with-tag", help="also show NEURON rows of this labelled rerun, e.g. after-fixes")
     a = ap.parse_args()
     rows, files, other = load()
+    conds = ["bare", "neuron"]
+    if a.with_tag:
+        rows += load_tag(a.with_tag)
+        conds.append("neuron-" + a.with_tag)
     by = defaultdict(list)
     for r in rows:
         by[(r["tier"], r["condition"])].append(r)
         by[(r["tier"], r["condition"], r["category"])].append(r)
     out = {"files": files, "other_files": other,
-           "overall": {f"{t} {c}": stats(by[(t, c)]) for t in ("2gb", "4gb") for c in ("bare", "neuron")},
-           "by_category": {f"{t} {c} {cat}": stats(by[(t, c, cat)]) for t in ("2gb", "4gb") for c in ("bare", "neuron")
+           "overall": {f"{t} {c}": stats(by[(t, c)]) for t in ("2gb", "4gb") for c in conds},
+           "by_category": {f"{t} {c} {cat}": stats(by[(t, c, cat)]) for t in ("2gb", "4gb") for c in conds
                            for cat in ("app", "bug", "feature", "document")}}
     tasks = defaultdict(lambda: defaultdict(lambda: [0, 0]))
     for r in rows:
@@ -72,16 +89,16 @@ def main():
     for k, s in out["overall"].items():
         if s:
             t, c = k.split()
-            print(f"| {t.upper()} | {'NEURON' if c == 'neuron' else 'bare model'} | {s['n']} | {s['solved']} | {s['rate']}% | {s['median_s']} s | "
+            print(f"| {t.upper()} | {'bare model' if c == 'bare' else 'NEURON' + (' (' + c[7:] + ', labelled)' if c != 'neuron' else '')} | {s['n']} | {s['solved']} | {s['rate']}% | {s['median_s']} s | "
                   f"{s['median_s_when_solved'] if s['median_s_when_solved'] is not None else '-'} s | {s['peak_mb_max']} MB | {s['model_calls_median']} | {s['false_claims']} |")
-    print("\n| Tier | Category | Bare model | NEURON |\n|---|---|---|---|")
+    print("\n| Tier | Category | " + " | ".join(conds) + " |\n|---|---|" + "---|" * len(conds))
     for t in ("2gb", "4gb"):
         for cat in ("app", "bug", "feature", "document"):
-            b, n = out["by_category"][f"{t} bare {cat}"], out["by_category"][f"{t} neuron {cat}"]
-            if b or n:
+            cells = [out["by_category"][f"{t} {c} {cat}"] for c in conds]
+            if any(cells):
                 f = lambda s: f"{s['solved']}/{s['n']} ({s['rate']}%), median {s['median_s']} s" if s else "-"
-                print(f"| {t.upper()} | {cat} | {f(b)} | {f(n)} |")
-    cols = [f"{t} {c}" for t in ("2gb", "4gb") for c in ("bare", "neuron")]
+                print(f"| {t.upper()} | {cat} | " + " | ".join(f(x) for x in cells) + " |")
+    cols = [f"{t} {c}" for t in ("2gb", "4gb") for c in conds]
     print("\n| Task | " + " | ".join(cols) + " |\n|---|" + "---|" * len(cols))
     for t, c in out["by_task"].items():
         print(f"| {t} | " + " | ".join(c.get(k, "-") for k in cols) + " |")
