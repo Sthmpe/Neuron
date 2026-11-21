@@ -1,0 +1,142 @@
+[
+ {
+  "run": "2gb-run1",
+  "task": "A6_gym_members",
+  "locked_examiner": "6/12",
+  "with_amendment_1": "11/12",
+  "solved_with_amendment_1": false,
+  "still_failing": [
+   "dashboard_numbers: not near: (income|total)=31000, (less|below)=2"
+  ]
+ },
+ {
+  "run": "2gb-run1",
+  "task": "A7_event_tickets",
+  "locked_examiner": "8/15",
+  "with_amendment_1": "8/15",
+  "solved_with_amendment_1": false,
+  "still_failing": [
+   "add_sale: no field for Tickets",
+   "sale_cost_shown: missing 15000; ",
+   "seats_went_down: missing 97; ",
+   "too_large_sale_refused: no field for Tickets",
+   "dashboard_numbers: not near: sales=1, revenue=15000",
+   "search_by_buyer: missing Ada Eze; ",
+   "data_survives_restart: missing Ada Eze; "
+  ]
+ },
+ {
+  "run": "2gb-run2",
+  "task": "A6_gym_members",
+  "locked_examiner": "6/12",
+  "with_amendment_1": "11/12",
+  "solved_with_amendment_1": false,
+  "still_failing": [
+   "dashboard_numbers: not near: (income|total)=31000, (less|below)=2"
+  ]
+ },
+ {
+  "run": "2gb-run2",
+  "task": "A7_event_tickets",
+  "locked_examiner": "8/15",
+  "with_amendment_1": "8/15",
+  "solved_with_amendment_1": false,
+  "still_failing": [
+   "add_sale: no field for Tickets",
+   "sale_cost_shown: missing 15000; ",
+   "seats_went_down: missing 97; ",
+   "too_large_sale_refused: no field for Tickets",
+   "dashboard_numbers: not near: sales=1, revenue=15000",
+   "search_by_buyer: missing Ada Eze; ",
+   "data_survives_restart: missing Ada Eze; "
+  ]
+ },
+ {
+  "run": "2gb-run3",
+  "task": "A6_gym_members",
+  "locked_examiner": "6/12",
+  "with_amendment_1": "11/12",
+  "solved_with_amendment_1": false,
+  "still_failing": [
+   "dashboard_numbers: not near: (income|total)=31000, (less|below)=2"
+  ]
+ },
+ {
+  "run": "2gb-run3",
+  "task": "A7_event_tickets",
+  "locked_examiner": "8/15",
+  "with_amendment_1": "8/15",
+  "solved_with_amendment_1": false,
+  "still_failing": [
+   "add_sale: no field for Tickets",
+   "sale_cost_shown: missing 15000; ",
+   "seats_went_down: missing 97; ",
+   "too_large_sale_refused: no field for Tickets",
+   "dashboard_numbers: not near: sales=1, revenue=15000",
+   "search_by_buyer: missing Ada Eze; ",
+   "data_survives_restart: missing Ada Eze; "
+  ]
+ },
+ {
+  "run": "4gb-run1",
+  "task": "A6_gym_members",
+  "locked_examiner": "6/12",
+  "with_amendment_1": "11/12",
+  "solved_with_amendment_1": false,
+  "still_failing": [
+   "dashboard_numbers: not near: (less|below)=2"
+  ]
+ },
+ {
+  "run": "4gb-run1",
+  "task": "A7_event_tickets",
+  "locked_examiner": "8/15",
+  "with_amendment_1": "8/15",
+  "solved_with_amendment_1": false,
+  "still_failing": [
+   "add_sale: no field for Tickets",
+   "sale_cost_shown: missing 15000; ",
+   "seats_went_down: missing 97; ",
+   "too_large_sale_refused: no field for Tickets",
+   "dashboard_numbers: not near: sales=1, revenue=15000",
+   "search_by_buyer: missing Ada Eze; ",
+   "data_survives_restart: missing Ada Eze; "
+  ]
+ },
+ {
+  "run": "4gb-run2",
+  "task": "A6_gym_members",
+  "locked_examiner": "6/12",
+  "with_amendment_1": "11/12",
+  "solved_with_amendment_1": false,
+  "still_failing": [
+   "dashboard_numbers: not near: (less|below)=2"
+  ]
+ },
+ {
+  "run": "4gb-run2",
+  "task": "A7_event_tickets",
+  "locked_examiner": "8/15",
+  "with_amendment_1": "15/15",
+  "solved_with_amendment_1": true,
+  "still_failing": []
+ },
+ {
+  "run": "4gb-run3",
+  "task": "A6_gym_members",
+  "locked_examiner": "6/12",
+  "with_amendment_1": "11/12",
+  "solved_with_amendment_1": false,
+  "still_failing": [
+   "dashboard_numbers: not near: (less|below)=2"
+  ]
+ },
+ {
+  "run": "4gb-run3",
+  "task": "A7_event_tickets",
+  "locked_examiner": "8/15",
+  "with_amendment_1": "15/15",
+  "solved_with_amendment_1": true,
+  "still_failing": []
+ }
+]
