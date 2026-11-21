@@ -1,5 +1,6 @@
 """Wider standard repair changes, tried before the model (core proof 2 GB run 1: NEURON fixed 0 of 8 planted bugs).
 Invented projects, not the locked ones; the scripted model gives only useless replies, so only the search can fix them."""
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -11,7 +12,8 @@ REQUEST = "The tests of this project fail. Find the bug in the source code and f
 CASES = {
     "constant written ten times too big": ("DISCOUNT = 1.5\n\n\ndef discounted(price):\n    return round(price * (1 - DISCOUNT))\n",
                                            "self.assertEqual(discounted(1000), 850)"),
-    "index that should be a slice": ("def initials(name):\n    return name[0].upper()\n", "self.assertEqual(initials('ng'), 'NG')"),
+    # 'ngozi' rather than 'ng': for 'ng' both [:2] and [0:] pass, which is genuinely ambiguous (see AmbiguousSmallChanges)
+    "index that should be a slice": ("def initials(name):\n    return name[0].upper()\n", "self.assertEqual(initials('ngozi'), 'NG')"),
     "stray division by a constant": ("def kobo_to_total(kobo):\n    return kobo / 100\n", "self.assertEqual(kobo_to_total(500), 500)"),
     "statement done twice": ("def charge(balance, fee):\n    balance -= fee\n    balance -= fee\n    return balance\n",
                              "self.assertEqual(charge(1000, 50), 950)"),
@@ -116,3 +118,29 @@ class WholeFileRewrite(unittest.TestCase):
         out = FixBug()._rewrite_files(job, {})
         self.assertFalse(out.ok)
         self.assertIn("w + h", (ws / "lib" / "core.py").read_text())
+
+
+class AmbiguousSmallChanges(unittest.TestCase):
+    """After-fixes rerun try 1 (B3, 2 GB): text[0] -> text[1] passed the visible tests but was wrong. When several
+    different changes pass, the model must choose; with no valid choice nothing is claimed. Invented project."""
+    SRC = "def to_minutes(text):\n    return int(text[0]) * 60 + int(text[3:5])\n"
+    CHECK = "self.assertEqual(to_minutes('09:30') - to_minutes('08:00'), 90)"      # text[1] and text[:2] both pass
+
+    def _pick(self, want):
+        def reply(messages):
+            opts = [l[2:] for l in messages[-1]["content"].splitlines() if l.startswith("- ")]
+            pick = next((o for o in opts if want in o), None)
+            return json.dumps({"change": pick or "none of them", "why": "two digits for the hour"})
+        return reply
+
+    def test_the_models_choice_among_passing_changes_is_applied(self):
+        ws = project(self.SRC, self.CHECK)
+        rep, job, llm = run(REQUEST, [self._pick("[:2]")] + ["no idea"] * 30, workspace=ws)
+        self.assertIn("text[:2]", (ws / "lib" / "core.py").read_text())
+        self.assertIn("chose", (job.state.dir / "decisions.jsonl").read_text())
+
+    def test_without_a_valid_choice_the_search_claims_nothing(self):
+        ws = project(self.SRC, self.CHECK)
+        rep, job, llm = run(REQUEST, [self._pick("no such change")] + ["no idea"] * 30, workspace=ws)
+        decisions = (job.state.dir / "decisions.jsonl").read_text()
+        self.assertNotIn('"kind": "small change"', decisions)

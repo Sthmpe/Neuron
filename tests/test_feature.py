@@ -90,7 +90,7 @@ class AddFeatureTests(unittest.TestCase):
         ws = project()
         rep, job, llm = run(REQUEST, [files(shop__cards_py=CARDS_PY), f"```python\n{FEATURE_TEST}```"], workspace=ws)
         self.assertEqual(rep["kind"], "add_feature")
-        self.assertEqual(rep["verdict"], "VERIFIED", rep)
+        self.assertEqual(rep["verdict"], "UNVERIFIED", rep)      # done; own test is not independent
         self.assertTrue((ws / "shop" / "cards.py").exists())
         self.assertTrue((ws / "tests" / "test_neuron_feature.py").exists())
         self.assertEqual((ws / "shop" / "prices.py").read_text(), PRICES_PY)
@@ -100,7 +100,7 @@ class AddFeatureTests(unittest.TestCase):
         wrong = files(shop__cards_py="def balance_after(balance, spend):\n    return balance - spend\n")
         replies = [wrong, f"```python\n{FEATURE_TEST}```", wrong, wrong]
         rep, job, llm = run(REQUEST, replies, workspace=ws)
-        self.assertNotEqual(rep["verdict"], "VERIFIED", rep)
+        self.assertNotIn(rep["verdict"], ("VERIFIED", "UNVERIFIED"), rep)
         self.assertFalse((ws / "tests" / "test_neuron_feature.py").exists())
 
     def test_a_rewrite_that_drops_an_existing_function_is_refused(self):
@@ -111,7 +111,7 @@ class AddFeatureTests(unittest.TestCase):
         test = ("```python\nimport unittest\nfrom shop.prices import with_discount\n\n\nclass T(unittest.TestCase):\n"
                 "    def test_d(self):\n        self.assertEqual(with_discount(2000, 10), 1800)\n\n\nif __name__ == '__main__':\n    unittest.main()\n```")
         rep, job, llm = run(req, [dropped, kept, test], workspace=ws)
-        self.assertEqual(rep["verdict"], "VERIFIED", rep)
+        self.assertEqual(rep["verdict"], "UNVERIFIED", rep)      # done; own test is not independent
         self.assertIn("def with_tax", (ws / "shop" / "prices.py").read_text())
 
     def test_a_wrong_own_test_is_corrected_instead_of_breaking_the_code(self):
@@ -119,7 +119,7 @@ class AddFeatureTests(unittest.TestCase):
         wrong_test = FEATURE_TEST.replace("3800", "3700")
         fix = files(tests__test_neuron_feature_py=FEATURE_TEST)
         rep, job, llm = run(REQUEST, [files(shop__cards_py=CARDS_PY), f"```python\n{wrong_test}```", fix], workspace=ws)
-        self.assertEqual(rep["verdict"], "VERIFIED", rep)
+        self.assertEqual(rep["verdict"], "UNVERIFIED", rep)      # done; own test is not independent
         self.assertEqual((ws / "shop" / "cards.py").read_text(), CARDS_PY)
 
     def test_a_bug_request_whose_tests_already_pass_is_not_verified(self):

@@ -155,31 +155,77 @@ def _wider_mutants(n, line, code, lines, first, last):
     return out
 
 
-def search(workspace, suspects, test_cmd, sandbox, passed_fn, max_tries=90, log=print):
-    """suspects: [(file, name, first line, last line)], most likely first. Returns a dict describing the fix, or None.
-    The workspace is changed only when a change made every test pass."""
+def _equivalent_form(lines):
+    """A form in which two changes that mean the same thing look the same, so they do not count as two different fixes:
+    deleting either of two identical lines; 'x > 64' and 'x >= 65' (and '<= 64' / '< 65') with whole numbers; spacing."""
+    text = "\n".join(l.strip() for l in lines if l.strip() and l.strip() != "pass")
+    text = re.sub(r"(?<![-<>=!])>(?!=)\s*(\d+)(?![\d.])", lambda m: ">=" + str(int(m.group(1)) + 1), text)
+    text = re.sub(r"(?<![<>=!])<=\s*(\d+)(?![\d.])", lambda m: "<" + str(int(m.group(1)) + 1), text)
+    return re.sub(r"\s+", "", text)
+
+
+def search(workspace, suspects, test_cmd, sandbox, passed_fn, max_tries=90, log=print, look_further=25):
+    """suspects: [(file, name, first line, last line)], most likely first. Returns a dict describing the fix, a dict
+    {"ambiguous": [fixes]} when several different changes pass, or None. The workspace is changed only for a single
+    unambiguous fix.
+
+    A change can pass the project's tests and still be wrong (after-fixes rerun try 1, B3 on 2 GB: text[0] -> text[1]
+    passed the tests, which use hours like 08 and 13, but is wrong for "12:45"). So after the first passing change the
+    search looks further (up to `look_further` more tries); if a different change also passes, the caller must choose
+    (the model picks among them) instead of trusting the first."""
     ws = Path(workspace)
     scratch = ws.parent / (ws.name + "__repair")
     shutil.rmtree(scratch, ignore_errors=True)
     shutil.copytree(ws, scratch, ignore=shutil.ignore_patterns(".neuron", "__pycache__", ".git", "*.o"))
-    tries = 0
+    tries, first, wins, seen = 0, None, [], set()
     try:
         for f, name, a, b in suspects:
             original = (ws / f).read_text()
             for n, old, new, desc in mutants(original, a, b):
-                if tries >= max_tries:
-                    return None
+                if tries >= max_tries or (first is not None and tries - first >= look_further):
+                    break
                 tries += 1
                 lines = original.splitlines()
                 lines[n - 1] = new
-                (scratch / f).write_text("\n".join(lines) + ("\n" if original.endswith("\n") else ""))
+                text = "\n".join(lines) + ("\n" if original.endswith("\n") else "")
+                same = _equivalent_form(lines)
+                if (f, same) in seen:
+                    continue
+                (scratch / f).write_text(text)
                 res = sandbox.run(test_cmd, scratch, timeout=120)
                 if passed_fn(res):
-                    (ws / f).write_text((scratch / f).read_text())
-                    log(f"    small change fixed it after {tries} tries: {f}:{n} {desc}")
-                    return {"file": f, "function": name, "line": n, "old": old.strip(), "new": new.strip(), "change": desc,
-                            "tries": tries}
+                    seen.add((f, same))
+                    wins.append({"file": f, "function": name, "line": n, "old": old.strip(), "new": new.strip(), "change": desc,
+                                 "tries": tries, "text": text})
+                    first = tries if first is None else first
+                    log(f"    small change passes the tests after {tries} tries: {f}:{n} {desc}")
             (scratch / f).write_text(original)
-        return None
+        if not wins:
+            return None
+        if len(wins) > 1:
+            return {"ambiguous": wins, "tries": tries}
+        win = wins[0]
+        (ws / win["file"]).write_text(win.pop("text"))
+        return win
     finally:
         shutil.rmtree(scratch, ignore_errors=True)
+
+
+def choose(job, wins, source_of):
+    """Several different small changes pass the tests: the model picks the one that is right for all inputs, or none.
+    Returns the chosen fix (applied to the workspace) or None."""
+    opts = [f"{w['file']} line {w['line']}: {w['old']}  ->  {w['new']}" for w in wins]
+    data = job.ask_json("reviewer", "Several small changes make a project's tests pass, but only a correct one works for all "
+                        "inputs, not just the tested ones. Pick the correct change, judged by what the code is meant to do.",
+                        "Code:\n" + "\n\n".join(dict.fromkeys(source_of(w) for w in wins)) + "\n\nCandidate changes:\n"
+                        + "\n".join(f"- {o}" for o in opts),
+                        {"type": "object", "required": ["change", "why"],
+                         "properties": {"change": {"type": "string", "enum": opts}, "why": {"type": "string"}}}, max_tokens=400)
+    if not data or data.get("change") not in opts:
+        return None
+    win = dict(wins[opts.index(data["change"])])
+    (Path(job.workspace) / win["file"]).write_text(win.pop("text"))
+    job.state.decide("fix", "small change chosen", f"{len(wins)} different small changes passed the tests; the model chose "
+                     f"{data['change']} ({str(data.get('why', ''))[:160]})")
+    win["change"] += f" (chosen by the model from {len(wins)} changes that pass the tests)"
+    return win

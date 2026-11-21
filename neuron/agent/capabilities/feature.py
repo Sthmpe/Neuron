@@ -243,7 +243,12 @@ class AddFeature(Capability):
             checks.append({"id": "new_behaviour_test_passes", "pass": False, "detail": "no passing test of the new behaviour"})
         for p in outcome.result.get("named_files", []):
             checks.append({"id": f"file {p} exists", "pass": (ws / p).exists()})
-        return Verdict(all(c["pass"] for c in checks), checks, "project tests + NEURON's test of the requested behaviour, run in the sandbox")
+        # The project's tests prove nothing broke, but the only check of the NEW behaviour is a test the same model wrote,
+        # which can share the code's mistake (after-fixes rerun try 1, C2 on 2 GB: both agreed on a wrong export, the
+        # hidden tests failed, and the job said VERIFIED). So a finished feature is reported as done but unverified.
+        return Verdict(all(c["pass"] for c in checks), checks,
+                       "project tests (nothing broke) + NEURON's own test of the new behaviour (written by the same model, "
+                       "so not independent)", unverified=True)
 
 
 CAPABILITIES = [AddFeature]

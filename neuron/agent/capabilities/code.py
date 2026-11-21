@@ -50,6 +50,12 @@ def functions_in(path, text):
     return out
 
 
+def _source_around(path, line, before=12, after=12):
+    lines = Path(path).read_text(errors="replace").splitlines()
+    lo = max(0, line - 1 - before)
+    return f"// {Path(path).name}\n" + "\n".join(lines[lo:line + after])
+
+
 def fix_note(job, lang, function, problem, fix, file):
     """What a verified fix teaches, for memory: the symptom, the cause and the change; plus which remembered fixes were
     in front of the model (they helped only in the sense that this fix then passed the tests)."""
@@ -188,10 +194,12 @@ class FixBug(Capability):
         cands.sort(key=lambda c: -c[0])
         if not cands:
             return None
-        from ..repair_search import search
+        from ..repair_search import choose, search
         from ...brain.tools.fix_code import tests_passed
         win = search(ws, [(c[1], c[2], c[3], c[4]) for c in cands[:6]], cmd, job.sandbox,
                      lambda r: tests_passed(r, True) and not r.timed_out, log=job.log)
+        if win and "ambiguous" in win:
+            win = choose(job, win["ambiguous"], lambda w: _source_around(ws / w["file"], w["line"]))
         if not win:
             return None
         problem = f"line {win['line']} had {win['change']}"
@@ -244,6 +252,9 @@ class FixBug(Capability):
             from ..repair_search import search
             win = search(ws, [(c[1], c[2], c[3], c[4]) for c in cands[:5] if c[0] > 0], cmd, job.sandbox,
                          lambda r: r.ok and not r.timed_out, log=job.log)
+            if win and "ambiguous" in win:
+                from ..repair_search import choose
+                win = choose(job, win["ambiguous"], lambda w: _source_around(ws / w["file"], w["line"]))
             if win:
                 lang = {".go": "go", ".rs": "rust", ".java": "java", ".js": "javascript", ".ts": "typescript"}.get(Path(win["file"]).suffix, "c++")
                 problem = f"line {win['line']} had {win['change'].split(' -> ')[0]} where {win['change'].split(' -> ')[1]} was needed"
